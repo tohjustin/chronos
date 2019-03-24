@@ -1,6 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
+import { hot } from "react-hot-loader";
+
 import "./App.css";
+import logo from "./logo.svg";
+
 class App extends React.Component<{}, {}> {
   render(): React.ReactNode {
     return (
@@ -24,4 +27,6 @@ class App extends React.Component<{}, {}> {
   }
 }
 
-export default App;
+export default (process.env.NODE_ENV === "development"
+  ? hot(module)(App)
+  : App);
