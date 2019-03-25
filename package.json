@@ -15,8 +15,10 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start:chrome": "REACT_APP_BUILD_TARGET=CHROME react-app-rewired start",
+    "start:firefox": "REACT_APP_BUILD_TARGET=FIREFOX react-app-rewired start",
     "build": "react-app-rewired build",
     "build:chrome": "REACT_APP_BUILD_TARGET=CHROME react-app-rewired build",
+    "build:firefox": "REACT_APP_BUILD_TARGET=FIREFOX react-app-rewired build",
     "tsc": "tsc",
     "lint": "eslint --fix -- ./src/**/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --write -- ./src/**/*.{js,jsx,ts,tsx}",
@@ -47,6 +49,7 @@
   "devDependencies": {
     "@hot-loader/react-dom": "^16.8.4",
     "@types/chrome": "^0.0.81",
+    "@types/firefox-webext-browser": "^65.0.2",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
