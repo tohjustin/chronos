@@ -1,4 +1,5 @@
 import {
+  ChromeHistoryAPI,
   HistoryItem,
   HistoryQuery,
   HistoryService,
@@ -8,34 +9,40 @@ import {
   VisitItem
 } from "./types";
 
-export default class ChromeHistoryService implements HistoryService {
+export class ChromeHistoryService implements HistoryService {
+  private history: ChromeHistoryAPI;
+
+  constructor(history: ChromeHistoryAPI = chrome.history) {
+    this.history = history;
+  }
+
   addUrl(details: Url): Promise<void> {
     return new Promise(resolve => {
-      chrome.history.addUrl(details, resolve);
+      this.history.addUrl(details, resolve);
     });
   }
 
   deleteAll(): Promise<void> {
     return new Promise(resolve => {
-      chrome.history.deleteAll(resolve);
+      this.history.deleteAll(resolve);
     });
   }
 
   deleteRange(range: Range): Promise<void> {
     return new Promise(resolve => {
-      chrome.history.deleteRange(range, resolve);
+      this.history.deleteRange(range, resolve);
     });
   }
 
   deleteUrl(details: Url): Promise<void> {
     return new Promise(resolve => {
-      chrome.history.deleteUrl(details, resolve);
+      this.history.deleteUrl(details, resolve);
     });
   }
 
   getVisits(details: Url): Promise<VisitItem[]> {
     return new Promise(resolve => {
-      chrome.history.getVisits(details, visitItems => {
+      this.history.getVisits(details, visitItems => {
         const items = visitItems.map(item => ({
           ...item,
           transition: item.transition as TransitionType
@@ -47,7 +54,7 @@ export default class ChromeHistoryService implements HistoryService {
 
   search(query: HistoryQuery): Promise<HistoryItem[]> {
     return new Promise(resolve => {
-      chrome.history.search(query, resolve);
+      this.history.search(query, resolve);
     });
   }
 }
