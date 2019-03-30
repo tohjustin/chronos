@@ -1,3 +1,4 @@
+import { ChromeTabsService } from "./chrome";
 import { FirefoxTabsService } from "./firefox";
 import { TabsService } from "./types";
 
@@ -9,6 +10,8 @@ import { TabsService } from "./types";
  */
 export function InitTabsService(): TabsService | undefined {
   switch (process.env.REACT_APP_BUILD_TARGET) {
+    case "chrome":
+      return new ChromeTabsService();
     case "firefox":
       return new FirefoxTabsService();
     default:
