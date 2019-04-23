@@ -6,16 +6,15 @@ import {
   WindowsService
 } from "./types";
 
-/** The `windowId` value that represents the absence of a browser window. */
-export const FIREFOX_WINDOW_ID_NONE = browser.windows.WINDOW_ID_NONE;
-
 export class FirefoxWindowsService implements WindowsService {
   private windows: FirefoxWindowsAPI;
 
+  public WINDOW_ID_NONE: number;
   public onFocusChanged: BrowserWindowFocusChangedEvent;
 
   constructor(windows: FirefoxWindowsAPI = browser.windows) {
     this.windows = windows;
+    this.WINDOW_ID_NONE = windows.WINDOW_ID_NONE;
     this.onFocusChanged = {
       addListener(callback: BrowserWindowFocusChangedEventCallback): void {
         windows.onFocusChanged.addListener(callback);

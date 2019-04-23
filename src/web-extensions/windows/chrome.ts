@@ -6,16 +6,15 @@ import {
   WindowsService
 } from "./types";
 
-/** The `windowId` value that represents the absence of a browser window. */
-export const CHROME_WINDOW_ID_NONE = chrome.windows.WINDOW_ID_NONE;
-
 export class ChromeWindowsService implements WindowsService {
   private windows: ChromeWindowsAPI;
 
+  public WINDOW_ID_NONE: number;
   public onFocusChanged: BrowserWindowFocusChangedEvent;
 
   constructor(windows: ChromeWindowsAPI = chrome.windows) {
     this.windows = windows;
+    this.WINDOW_ID_NONE = windows.WINDOW_ID_NONE;
     this.onFocusChanged = {
       addListener(callback: BrowserWindowFocusChangedEventCallback): void {
         windows.onFocusChanged.addListener(callback);

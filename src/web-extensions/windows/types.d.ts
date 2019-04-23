@@ -63,6 +63,9 @@ export type BrowserWindowFocusChangedEvent = BrowserWindowEvent<
 
 /** Service for interacting with browser windows */
 export interface WindowsService {
+  /** The windowId value that represents the absence of a browser window. */
+  WINDOW_ID_NONE: number;
+
   /** Gets details about a window. */
   get(windowId: number): Promise<BrowserWindow>;
 
@@ -75,6 +78,11 @@ export interface WindowsService {
 
 /** An object implementing a subset of Chrome Extension Windows API */
 export interface ChromeWindowsAPI {
+  /**
+   * The windowId value that represents the absence of a chrome browser window.
+   */
+  WINDOW_ID_NONE: number;
+
   /**
    * Gets details about a window.
    * @since Chrome 18.
@@ -97,6 +105,9 @@ export interface ChromeWindowsAPI {
 
 /** An object implementing a subset of Web Extensions Windows API (Firefox) */
 export interface FirefoxWindowsAPI {
+  /** The windowId value that represents the absence of a browser window. */
+  WINDOW_ID_NONE: number;
+
   /** Gets details about a window. */
   get(
     windowId: number,
