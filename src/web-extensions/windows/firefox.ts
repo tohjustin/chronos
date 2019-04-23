@@ -1,9 +1,9 @@
 import {
-  FirefoxWindowsAPI,
+  BrowserWindow,
   BrowserWindowFocusChangedEvent,
   BrowserWindowFocusChangedEventCallback,
-  WindowsService,
-  BrowserWindow
+  FirefoxWindowsAPI,
+  WindowsService
 } from "./types";
 
 /** The `windowId` value that represents the absence of a browser window. */

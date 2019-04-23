@@ -1,9 +1,9 @@
 import {
-  ChromeWindowsAPI,
+  BrowserWindow,
   BrowserWindowFocusChangedEvent,
   BrowserWindowFocusChangedEventCallback,
-  WindowsService,
-  BrowserWindow
+  ChromeWindowsAPI,
+  WindowsService
 } from "./types";
 
 /** The `windowId` value that represents the absence of a browser window. */
