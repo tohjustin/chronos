@@ -20,6 +20,9 @@ export class FirefoxWindowsService implements WindowsService {
       addListener(callback: BrowserWindowFocusChangedEventCallback): void {
         windows.onFocusChanged.addListener(callback);
       },
+      hasListener(callback: BrowserWindowFocusChangedEventCallback): boolean {
+        return windows.onFocusChanged.hasListener(callback);
+      },
       removeListener(callback: BrowserWindowFocusChangedEventCallback): void {
         windows.onFocusChanged.removeListener(callback);
       }

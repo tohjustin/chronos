@@ -22,6 +22,9 @@ export class FirefoxTabsService implements TabsService {
       addListener(callback: TabActivatedEventCallback): void {
         tabs.onActivated.addListener(callback);
       },
+      hasListener(callback: TabActivatedEventCallback): boolean {
+        return tabs.onActivated.hasListener(callback);
+      },
       removeListener(callback: TabActivatedEventCallback): void {
         tabs.onActivated.removeListener(callback);
       }
@@ -30,6 +33,9 @@ export class FirefoxTabsService implements TabsService {
       addListener(callback: TabRemovedEventCallback): void {
         tabs.onRemoved.addListener(callback);
       },
+      hasListener(callback: TabRemovedEventCallback): boolean {
+        return tabs.onRemoved.hasListener(callback);
+      },
       removeListener(callback: TabRemovedEventCallback): void {
         tabs.onRemoved.removeListener(callback);
       }
@@ -37,6 +43,9 @@ export class FirefoxTabsService implements TabsService {
     this.onUpdated = {
       addListener(callback: TabUpdatedEventCallback): void {
         tabs.onUpdated.addListener(callback);
+      },
+      hasListener(callback: TabUpdatedEventCallback): boolean {
+        return tabs.onUpdated.hasListener(callback);
       },
       removeListener(callback: TabUpdatedEventCallback): void {
         tabs.onUpdated.removeListener(callback);

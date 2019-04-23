@@ -44,6 +44,10 @@ export interface BrowserWindowEvent<T extends Function> {
    */
   addListener(callback: T): void;
   /**
+   * @param callback Listener whose registration status shall be tested.
+   */
+  hasListener(callback: T): boolean;
+  /**
    * Deregisters an event listener callback from an event.
    * @param callback Listener that shall be unregistered. The callback parameter
    * should be a function that looks like this: `function() {...};`
