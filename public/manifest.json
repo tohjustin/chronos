@@ -1,10 +1,13 @@
 {
   "name": "chronos",
-  "chrome_url_overrides": {
-    "history": "index.html"
+  "background": {
+    "page": "index.html"
   },
   "content_security_policy": "script-src 'self'  'unsafe-eval'; object-src 'self';",
   "manifest_version": 2,
-  "permissions": ["history"],
+  "permissions": [
+    "history",
+    "tabs"
+  ],
   "version": "0.0.1"
 }
