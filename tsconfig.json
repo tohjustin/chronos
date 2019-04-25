@@ -15,11 +15,17 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "sourceMap": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve"
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "src/**/*.spec.*"
   ]
 }
