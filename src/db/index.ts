@@ -23,23 +23,16 @@ export class ChronosDatabase extends Dexie implements ActivityService {
     startTime: number,
     endTime: number
   ): Promise<number> {
-    return new Promise((resolve, reject) => {
-      const { hostname, pathname, search } = new URL(url);
-      this.transaction("rw", this[ACTIVITY_TABLE], async () => {
-        const activityId = await this[ACTIVITY_TABLE].add({
-          url,
-          hostname,
-          pathname,
-          search,
-          favIconUrl,
-          title,
-          startTime,
-          endTime
-        });
-        resolve(activityId);
-      }).catch(e => {
-        reject(e.stack || e);
-      });
+    const { hostname, pathname, search } = new URL(url);
+    return this[ACTIVITY_TABLE].add({
+      url,
+      hostname,
+      pathname,
+      search,
+      favIconUrl,
+      title,
+      startTime,
+      endTime
     });
   }
 }
