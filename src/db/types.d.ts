@@ -29,4 +29,10 @@ export interface ActivityService {
     startTime: number,
     endTime: number
   ): Promise<number>;
+
+  /**
+   * Fetches all stored activity records
+   * @returns Collection of Activity Records
+   */
+  fetchAllRecords(): Promise<ActivityRecord[]>;
 }

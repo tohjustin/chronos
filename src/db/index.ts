@@ -35,6 +35,10 @@ export class ChronosDatabase extends Dexie implements ActivityService {
       endTime
     });
   }
+
+  public fetchAllRecords(): Promise<ActivityRecord[]> {
+    return this[ACTIVITY_TABLE].toCollection().toArray();
+  }
 }
 
 /**
