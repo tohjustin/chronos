@@ -1,11 +1,14 @@
+import { routerMiddleware } from "connected-react-router";
+import { createHashHistory } from "history";
 import { createStore, applyMiddleware, Middleware } from "redux";
 import { composeWithDevTools } from "remote-redux-devtools";
 import thunk from "redux-thunk";
 
-import rootReducer from "./root-reducer";
+import createRootReducer from "./root-reducer";
 
 // configure middlewares
-const middlewares: Middleware[] = [thunk];
+export const history = createHashHistory();
+const middlewares: Middleware[] = [routerMiddleware(history), thunk];
 // compose enhancers
 const composeEnhancers = composeWithDevTools({
   realtime: true,
@@ -17,7 +20,7 @@ const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 const initialState = {};
 
 // create store
-const store = createStore(rootReducer, initialState, enhancer);
+const store = createStore(createRootReducer(history), initialState, enhancer);
 
 // export store singleton instance
 export default store;
