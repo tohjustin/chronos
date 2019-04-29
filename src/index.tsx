@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import App from "./App";
 import { InitActivityLogger } from "./activity-logger";
+import "./styles/app.scss";
 
 // use `window.innerHeight` & `window.innerWidth` to determined if script
 // is loading in the context of a web extension background page
