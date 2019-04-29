@@ -1,0 +1,54 @@
+@import '../../styles/variables';
+
+$navbar__height: 100vh;
+$navbar__width: 10 * $base__size;
+
+$navbar-item__iconSize: 2.5 * $base__size;
+$navbar-item__height: 9 * $base__size;
+$navbar-item__width: $navbar__width;
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: $navbar__height;
+  width: $navbar__width;
+  background: $color__black;
+  color: $color__gray;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.navbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: $navbar-item__height;
+  width: $navbar-item__width;
+
+  &.active {
+    background: $color__primary;
+    color: $color__white;
+  }
+
+  svg {
+    height: $navbar-item__iconSize;
+    width: $navbar-item__iconSize;
+    margin: 0.5 * $base__size;
+  }
+
+  &__description {
+    font-size: $font-size__sm;
+    font-weight: 600;
+  }
+}
