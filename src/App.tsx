@@ -1,25 +1,32 @@
-import React from "react";
+import { ConnectedRouter } from "connected-react-router";
+import React, { Component } from "react";
 import { hot } from "react-hot-loader";
+import { Provider } from "react-redux";
+import { Switch, Route, Redirect } from "react-router";
+import { HashRouter } from "react-router-dom";
 
-class App extends React.Component<{}, {}> {
-  render(): React.ReactNode {
+import store, { history } from "./store";
+import AnalyticsView from "./views/analytics";
+import SettingsView from "./views/settings";
+
+class App extends Component<{}, {}> {
+  render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <HashRouter basename="">
+            <div className="app-container">
+              <div className="view-container">
+                <Switch>
+                  <Route path="/analytics" component={AnalyticsView} />
+                  <Route path="/settings" component={SettingsView} />
+                  <Redirect exact to="/analytics" />
+                </Switch>
+              </div>
+            </div>
+          </HashRouter>
+        </ConnectedRouter>
+      </Provider>
     );
   }
 }

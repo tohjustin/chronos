@@ -10,3 +10,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+
+.app-container {
+  display: flex;
+}
+
+.view-container {
+  height: 100vh;
+  overflow-y: scroll;
+  width: 100%;
+}
