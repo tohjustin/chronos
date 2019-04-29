@@ -34,10 +34,14 @@
     "last 1 firefox version"
   ],
   "dependencies": {
+    "@emotion/core": "10.0.10",
+    "@emotion/styled": "10.0.10",
     "connected-react-router": "6.4.0",
     "dexie": "2.0.4",
+    "emotion-theming": "10.0.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-feather": "1.1.6",
     "react-redux": "7.0.2",
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
@@ -49,6 +53,7 @@
     "utility-types": "3.5.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-typescript": "7.4.4",
     "@hot-loader/react-dom": "16.8.6",
     "@types/chrome": "0.0.83",
     "@types/firefox-webext-browser": "67.0.0",
