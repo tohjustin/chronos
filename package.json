@@ -10,7 +10,9 @@
     "build:chrome": "REACT_APP_BUILD_TARGET=CHROME react-app-rewired build",
     "build:firefox": "REACT_APP_BUILD_TARGET=FIREFOX react-app-rewired build",
     "tsc": "tsc",
-    "lint": "eslint --fix -- ./src/**/*.{ts,tsx}",
+    "lint": "npm run lint:ts && npm run lint:scss",
+    "lint:ts": "eslint --fix -- ./src/**/*.{ts,tsx}",
+    "lint:scss": "stylelint --fix -- ./src/**/*.scss",
     "prettier": "prettier --write -- ./src/**/*.{ts,tsx}",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
@@ -26,6 +28,10 @@
     "*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write",
+      "git add"
+    ],
+    "*.{scss}": [
+      "stylelint --fix",
       "git add"
     ]
   },

@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": [
+    "stylelint-config-standard"
+  ],
+  "rules": {
+    "indentation": 2,
+    "scss/dollar-variable-colon-space-after": "always",
+    "scss/dollar-variable-colon-space-before": "never"
+  }
+}
