@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
-class SettingsView extends Component<{}, {}> {
-  render() {
-    return <div>Settings View</div>;
-  }
-}
+import View from "../../components/View";
+
+const SettingsView = () => (
+  <View.Container>
+    <View.Header>Extension Settings</View.Header>
+    <View.Body>Lorem Ipsum</View.Body>
+  </View.Container>
+);
 
 export default SettingsView;
