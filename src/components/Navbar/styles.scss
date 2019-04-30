@@ -3,7 +3,9 @@
 $navbar__height: 100vh;
 $navbar__width: 10 * $base__size;
 
-$navbar-item__iconSize: 2.5 * $base__size;
+$navbar__logoSize: 4 * $base__size;
+
+$navbar-item__iconSize: 3 * $base__size;
 $navbar-item__height: 9 * $base__size;
 $navbar-item__width: $navbar__width;
 
@@ -25,6 +27,19 @@ $navbar-item__width: $navbar__width;
     list-style-type: none;
     margin: 0;
     padding: 0;
+  }
+
+  &__logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $navbar-item__height;
+    width: $navbar-item__width;
+
+    img {
+      height: $navbar__logoSize;
+      width: $navbar__logoSize;
+    }
   }
 }
 
