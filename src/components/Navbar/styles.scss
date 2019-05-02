@@ -17,6 +17,7 @@ $navbar-item__width: $navbar__width;
   width: $navbar__width;
   background: $color__black;
   color: $color__gray;
+  z-index: $z-index__navbar;
 
   a {
     text-decoration: none;
