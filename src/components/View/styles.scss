@@ -14,7 +14,7 @@ $view-header__padding-x: 3 * $base__size;
 .view-header {
   box-shadow: $shadow__header;
   padding: $view-header__padding-y $view-header__padding-x;
-  font-size: $font-size__md;
+  font-size: $font-size__lg;
   font-weight: 600;
   z-index: $z-index__view-header;
 }
