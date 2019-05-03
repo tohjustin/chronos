@@ -6,7 +6,9 @@
     "stylelint-config-standard"
   ],
   "rules": {
+    "at-rule-no-unknown": null,
     "indentation": 2,
+    "scss/at-rule-no-unknown": true,
     "scss/dollar-variable-colon-space-after": "always",
     "scss/dollar-variable-colon-space-before": "never"
   }

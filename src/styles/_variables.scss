@@ -12,12 +12,14 @@ $font-size__lg: 16px;
 
 $color__primary: #379af7;
 $color__black: #244360;
+$color__dark-gray: #62778c;
 $color__gray: #c0c9d1;
 $color__light-gray: #f6f6f6;
 $color__white: #fff;
 
 $shadow__color: #{$color__black}6d;
 $shadow__header: 0 0 1px $shadow__color;
+$shadow__card: 0 0 2px $shadow__color;
 
 $z-index__navbar: 1000;
 $z-index__view-header: 100;

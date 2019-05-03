@@ -1,0 +1,29 @@
+@import '../../styles/variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: $color__white;
+  box-shadow: $shadow__card;
+  border-radius: 4px;
+
+  &__header {
+    margin: 2 * $base__size;
+    word-break: break-word;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-size: $font-size__md;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  p {
+    color: $color__dark-gray;
+    font-size: $font-size__base;
+    font-weight: 400;
+    margin: 0;
+  }
+}
