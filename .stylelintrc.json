@@ -5,6 +5,9 @@
   "extends": [
     "stylelint-config-standard"
   ],
+  "ignoreFiles": [
+    "**/*.tsx"
+  ],
   "rules": {
     "at-rule-no-unknown": null,
     "indentation": 2,
