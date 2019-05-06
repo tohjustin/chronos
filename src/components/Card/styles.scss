@@ -8,22 +8,30 @@
   border-radius: 4px;
 
   &__header {
-    margin: 2 * $base__size;
-    word-break: break-word;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid $color__light-gray;
+    padding: 2 * $base__size 2 * $base__size $base__size;
+    word-break: break-word;
+
+    h2 {
+      font-size: $font-size__md;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p {
+      color: $color__darker-gray;
+      font-size: $font-size__base;
+      font-weight: 400;
+      margin: 0;
+    }
   }
 
-  h2 {
-    font-size: $font-size__md;
-    font-weight: 600;
-    margin: 0;
-  }
-
-  p {
-    color: $color__dark-gray;
-    font-size: $font-size__base;
-    font-weight: 400;
-    margin: 0;
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2 * $base__size;
   }
 }
