@@ -1,12 +1,71 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { bindActionCreators, Dispatch } from "redux";
+import { connect } from "react-redux";
 
+import Card from "../../components/Card";
+import LineChart from "../../components/LineChart";
 import View from "../../components/View";
+import { loadActivity } from "../../store/activity/actions";
+import selector from "../../store/selectors";
+import { RootAction, RootState } from "../../store/types";
 
-const AnalyticsView = () => (
-  <View.Container>
-    <View.Header>Analytics Overview</View.Header>
-    <View.Body>Lorem Ipsum</View.Body>
-  </View.Container>
-);
+import "./style.scss";
 
-export default AnalyticsView;
+interface AnalyticsViewProps {
+  isLoadingRecords: boolean;
+  loadActivity: () => void;
+  totalDurationByDate: {
+    timestamp: number;
+    totalDuration: number;
+  }[];
+}
+
+const AnalyticsView = (props: AnalyticsViewProps) => {
+  useEffect(() => {
+    props.loadActivity();
+  }, []);
+
+  let viewContent;
+  if (props.isLoadingRecords) {
+    viewContent = "Loading...";
+  } else {
+    viewContent = (
+      <>
+        <div className="analytics-view__cards-container">
+          <Card
+            className="analytics-view__card analytics-view__card--md"
+            title="Usage per day"
+            description="Amount of time spent on the internet each day"
+          >
+            <LineChart
+              data={props.totalDurationByDate.map(datum => ({
+                x: datum.timestamp,
+                y: datum.totalDuration
+              }))}
+            />
+          </Card>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <View.Container>
+      <View.Header>Usage Analytics</View.Header>
+      <View.Body>{viewContent}</View.Body>
+    </View.Container>
+  );
+};
+
+const mapStateToProps = (state: RootState) => ({
+  isLoadingRecords: selector.getIsLoadingRecords(state),
+  totalDurationByDate: selector.getTotalDurationByDate(state)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators({ loadActivity }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnalyticsView);
