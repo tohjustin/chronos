@@ -57,6 +57,7 @@ export function getTotalDurationByDate(
     }
   }
 
+  // Sort results by chronological order
   return Object.entries(totalDurationByDate)
     .map(([key, value]) => ({
       timestamp: Number(key),
@@ -64,5 +65,29 @@ export function getTotalDurationByDate(
     }))
     .sort((a, b) => {
       return a.timestamp < b.timestamp ? -1 : 1;
+    });
+}
+
+export function getTotalDurationByDomain(
+  state: RootState
+): { totalDuration: number; domain: string }[] {
+  const totalDurationByDate: { [timestamp: string]: number } = {};
+
+  state.activity.records.forEach(record => {
+    let { origin: domain, startTime, endTime } = record;
+
+    const duration = endTime - startTime;
+    const prevTotalDuration = totalDurationByDate[domain] || 0;
+    totalDurationByDate[domain] = prevTotalDuration + duration;
+  });
+
+  // Sort results by domains with highest duration
+  return Object.entries(totalDurationByDate)
+    .map(([key, value]) => ({
+      domain: key,
+      totalDuration: value
+    }))
+    .sort((a, b) => {
+      return a.totalDuration > b.totalDuration ? -1 : 1;
     });
 }
