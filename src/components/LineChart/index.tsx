@@ -28,14 +28,18 @@ const LineChart = (props: LineChartProps) => {
     Math.max(containerWidth - CHART_MARGIN.left - CHART_MARGIN.right, 0)
   ];
 
-  const xMin = new Date(d3.min(props.data.map(d => d.x)) || Date.now());
-  const xMax = new Date(d3.max(props.data.map(d => d.x)) || Date.now());
+  const startOfTheDayInMs = new Date().setHours(0, 0, 0, 0);
+  const xMin = new Date(d3.min(props.data.map(d => d.x)) || startOfTheDayInMs);
+  const xMax = new Date(d3.max(props.data.map(d => d.x)) || startOfTheDayInMs);
   const xScale = d3
     .scaleTime()
     .domain([xMin, xMax])
     .range([0, chartWidth]);
-  const dayRange = Math.floor((xMax.valueOf() - xMin.valueOf()) / MS_PER_DAY);
-  const xTickValues = d3.timeDays(xMin, xMax, Math.floor(dayRange / 5));
+  const dayRange = (xMax.valueOf() - xMin.valueOf()) / MS_PER_DAY;
+  const xTickValues = [
+    ...d3.timeDays(xMin, xMax, Math.ceil(dayRange / 5)),
+    xMax
+  ];
 
   const yDatasetMax = d3.max(props.data.map(d => d.y)) || 24 * MS_PER_HOUR;
   const yMax = yDatasetMax + MS_PER_HOUR;
