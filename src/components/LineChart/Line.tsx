@@ -28,6 +28,18 @@ const Line = (props: LineProps) => {
       .datum(data)
       .attr("class", "line")
       .attr("d", lineGenerator);
+
+    // Draw single dot if there's only a single datapoint
+    if (data.length === 1) {
+      svg
+        .selectAll(".dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "dot")
+        .attr("cx", d => scaleX(d.x))
+        .attr("cy", d => scaleY(d.y));
+    }
   }, [data, scaleX, scaleY]);
 
   return <g className="line__container" ref={ref} />;
