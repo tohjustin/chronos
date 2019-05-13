@@ -18,7 +18,6 @@ interface LineChartProps {
 const CHART_MARGIN = { top: 8, left: 60, bottom: 24, right: 24 };
 const MS_PER_HOUR = 3600000;
 const MS_PER_DAY = 24 * MS_PER_HOUR;
-const Y_STEP = 2 * MS_PER_HOUR;
 
 const LineChart = (props: LineChartProps) => {
   const [containerRef, containerHeight, containerWidth] = useClientDimensions();
@@ -41,13 +40,14 @@ const LineChart = (props: LineChartProps) => {
     xMax
   ];
 
-  const yDatasetMax = d3.max(props.data.map(d => d.y)) || 24 * MS_PER_HOUR;
+  const yDatasetMax = d3.max(props.data.map(d => d.y)) || MS_PER_HOUR;
   const yMax = yDatasetMax + MS_PER_HOUR;
   const yScale = d3
     .scaleLinear()
     .domain([0, yMax])
     .range([chartHeight, 0]);
-  const yTickValues = d3.range(0, yMax, Y_STEP);
+  const yStep = yMax > 8 * MS_PER_HOUR ? 2 * MS_PER_HOUR : MS_PER_HOUR;
+  const yTickValues = d3.range(0, yMax, yStep);
 
   return (
     <div className="line-chart" ref={containerRef}>
