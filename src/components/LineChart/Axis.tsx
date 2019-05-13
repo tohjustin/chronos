@@ -12,6 +12,7 @@ interface AxisProps {
 
 const Axis = (props: AxisProps) => {
   const ref = useRef(null);
+  const { height, width, scaleX, scaleY, tickValuesX, tickValuesY } = props;
 
   useEffect(() => {
     const svg = d3.select(ref.current);
@@ -21,24 +22,24 @@ const Axis = (props: AxisProps) => {
 
     // Draw x-axis
     const xAxis = d3
-      .axisBottom(props.scaleX)
+      .axisBottom(scaleX)
       .tickPadding(8)
       .tickSize(-4)
       .tickSizeOuter(0)
-      .tickValues(props.tickValuesX);
+      .tickValues(tickValuesX);
     svg
       .append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + props.height + ")")
+      .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
     // Draw y-axis
     const yAxis = d3
-      .axisLeft(props.scaleY)
+      .axisLeft(scaleY)
       .tickFormat(datum => `${Number(datum) / 1000 / 60 / 60} hours`)
       .tickPadding(8)
       .tickSize(0)
-      .tickValues(props.tickValuesY);
+      .tickValues(tickValuesY);
     svg
       .append("g")
       .attr("class", "y axis")
@@ -46,31 +47,31 @@ const Axis = (props: AxisProps) => {
 
     // Draw vertical grid lines
     const verticalGridLines = d3
-      .axisBottom(props.scaleX)
-      .tickSize(-1 * props.height)
+      .axisBottom(scaleX)
+      .tickSize(-1 * height)
       .tickSizeOuter(0)
-      .tickValues(props.tickValuesX);
+      .tickValues(tickValuesX);
     svg
       .append("g")
       .attr("class", "y grid")
-      .attr("transform", "translate(0," + props.height + ")")
+      .attr("transform", "translate(0," + height + ")")
       .call(verticalGridLines)
       .selectAll(".tick text")
       .remove();
 
     // Draw horizontal grid lines
     const horizontalGridLines = d3
-      .axisLeft(props.scaleY)
-      .tickSize(-1 * props.width)
+      .axisLeft(scaleY)
+      .tickSize(-1 * width)
       .tickSizeOuter(0)
-      .tickValues(props.tickValuesY);
+      .tickValues(tickValuesY);
     svg
       .append("g")
       .attr("class", "x grid")
       .call(horizontalGridLines)
       .selectAll(".tick text")
       .remove();
-  }, [props.height, props.width, props.scaleX, props.scaleY]);
+  }, [height, scaleX, scaleY, tickValuesX, tickValuesY, width]);
 
   return <g className="axis__container" ref={ref} />;
 };

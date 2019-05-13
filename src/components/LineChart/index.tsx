@@ -57,13 +57,7 @@ const LineChart = (props: LineChartProps) => {
             tickValuesX={xTickValues}
             tickValuesY={yTickValues}
           />
-          <Line
-            data={props.data}
-            height={chartHeight}
-            width={chartWidth}
-            scaleX={xScale}
-            scaleY={yScale}
-          />
+          <Line data={props.data} scaleX={xScale} scaleY={yScale} />
         </g>
       </svg>
       <Tooltip

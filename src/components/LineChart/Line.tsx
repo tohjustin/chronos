@@ -3,14 +3,13 @@ import React, { useEffect, useRef } from "react";
 
 interface LineProps {
   data: { x: number; y: number }[];
-  height: number;
-  width: number;
   scaleX: d3.ScaleTime<number, number>;
   scaleY: d3.ScaleLinear<number, number>;
 }
 
 const Line = (props: LineProps) => {
   const ref = useRef(null);
+  const { data, scaleX, scaleY } = props;
 
   useEffect(() => {
     const svg = d3.select(ref.current);
@@ -22,14 +21,14 @@ const Line = (props: LineProps) => {
     // Draw line
     const lineGenerator = d3
       .line<{ x: number; y: number }>()
-      .x(d => props.scaleX(d.x))
-      .y(d => props.scaleY(d.y));
+      .x(d => scaleX(d.x))
+      .y(d => scaleY(d.y));
     svg
       .append("path")
-      .datum(props.data)
+      .datum(data)
       .attr("class", "line")
       .attr("d", lineGenerator);
-  }, [props.data, props.height, props.width, props.scaleX, props.scaleY]);
+  }, [data, scaleX, scaleY]);
 
   return <g className="line__container" ref={ref} />;
 };
