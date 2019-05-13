@@ -10,7 +10,7 @@ export class ChronosDatabase extends Dexie implements ActivityService {
   public constructor() {
     super("ChronosDatabase");
     this.version(1).stores({
-      [ACTIVITY_TABLE]: "++id, hostname, title, startTime, endTime"
+      [ACTIVITY_TABLE]: "++id, origin, title, startTime, endTime"
     });
 
     this[ACTIVITY_TABLE] = this.table(ACTIVITY_TABLE);
@@ -23,10 +23,10 @@ export class ChronosDatabase extends Dexie implements ActivityService {
     startTime: number,
     endTime: number
   ): Promise<number> {
-    const { hostname, pathname, search } = new URL(url);
+    const { origin, pathname, search } = new URL(url);
     return this[ACTIVITY_TABLE].add({
       url,
-      hostname,
+      origin,
       pathname,
       search,
       favIconUrl,

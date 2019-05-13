@@ -3,7 +3,7 @@ export interface ActivityRecord {
   id?: number;
   startTime: number;
   endTime: number;
-  hostname: string;
+  origin: string;
   pathname: string;
   search: string;
   title: string;
