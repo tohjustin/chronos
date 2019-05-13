@@ -46,7 +46,7 @@ const LineChart = (props: LineChartProps) => {
   const yTickValues = d3.range(0, yMax, Y_STEP);
 
   return (
-    <div className="line-graph__container" ref={containerRef}>
+    <div className="line-chart" ref={containerRef}>
       <svg height={containerHeight} width={containerWidth}>
         <g transform={`translate(${CHART_MARGIN.left}, ${CHART_MARGIN.top})`}>
           <Axis

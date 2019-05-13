@@ -5,7 +5,7 @@ $dot__stroke-width: 2px;
 $line__stroke-width: 2px;
 $hover__transition--opacity: opacity 0.25s;
 
-.line-graph__container {
+.line-chart {
   height: 300px;
   width: 100%;
   position: relative;
@@ -15,50 +15,6 @@ $hover__transition--opacity: opacity 0.25s;
     top: 0;
     left: 0;
   }
-
-  .line {
-    fill: none;
-    stroke: $color__primary;
-    stroke-width: $line__stroke-width;
-  }
-}
-
-.axis__container {
-  .axis {
-    path,
-    line {
-      color: $color__light-gray;
-    }
-
-    text {
-      color: $color__dark-gray;
-      font-weight: 600;
-      font-size: 12px;
-      font-family: $font-family;
-    }
-  }
-
-  // Hide 1st tick on y-axis
-  .y.axis .tick:first-of-type {
-    display: none;
-  }
-
-  .grid {
-    color: $color__light-gray;
-    stroke-width: 1px;
-    stroke-dasharray: 2, 2;
-  }
-}
-
-.overlay__container {
-  .overlay {
-    cursor: crosshair;
-    opacity: 0;
-  }
-}
-
-.ruler__container {
-  transition: $hover__transition--opacity;
 
   .dot {
     fill: $color__white;
@@ -87,22 +43,68 @@ $hover__transition--opacity: opacity 0.25s;
     }
   }
 
-  .ruler {
-    stroke-width: 1px;
-    stroke: $color__gray;
+  .line__container {
+    .line {
+      fill: none;
+      stroke: $color__primary;
+      stroke-width: $line__stroke-width;
+    }
   }
-}
 
-.tooltip__container {
-  position: absolute;
-  padding: $base__size;
-  transition: $hover__transition--opacity;
+  .axis__container {
+    .axis {
+      path,
+      line {
+        color: $color__light-gray;
+      }
 
-  .tooltip {
+      text {
+        color: $color__dark-gray;
+        font-weight: 600;
+        font-size: 12px;
+        font-family: $font-family;
+      }
+    }
+
+    // Hide 1st tick on y-axis
+    .y.axis .tick:first-of-type {
+      display: none;
+    }
+
+    .grid {
+      color: $color__light-gray;
+      stroke-width: 1px;
+      stroke-dasharray: 2, 2;
+    }
+  }
+
+  .overlay__container {
+    .overlay {
+      cursor: crosshair;
+      opacity: 0;
+    }
+  }
+
+  .ruler__container {
+    transition: $hover__transition--opacity;
+
+    .ruler {
+      stroke-width: 1px;
+      stroke: $color__gray;
+    }
+  }
+
+  .tooltip__container {
+    position: absolute;
     padding: $base__size;
-    border-radius: 2px;
-    white-space: nowrap;
-    background-color: $color__black;
-    color: $color__white;
+    transition: $hover__transition--opacity;
+
+    .tooltip {
+      padding: $base__size;
+      border-radius: 2px;
+      white-space: nowrap;
+      background-color: $color__black;
+      color: $color__white;
+    }
   }
 }
