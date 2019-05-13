@@ -6,6 +6,7 @@ export interface ActivityRecord {
   origin: string;
   pathname: string;
   search: string;
+  hash: string;
   title: string;
   favIconUrl: string;
   url: string;

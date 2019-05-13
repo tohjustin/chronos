@@ -23,12 +23,13 @@ export class ChronosDatabase extends Dexie implements ActivityService {
     startTime: number,
     endTime: number
   ): Promise<number> {
-    const { origin, pathname, search } = new URL(url);
+    const { hash, origin, pathname, search } = new URL(url);
     return this[ACTIVITY_TABLE].add({
       url,
       origin,
       pathname,
       search,
+      hash,
       favIconUrl,
       title,
       startTime,
