@@ -21,9 +21,11 @@ interface AnalyticsViewProps {
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
+  const { loadActivity } = props;
+
   useEffect(() => {
-    props.loadActivity();
-  }, []);
+    loadActivity();
+  }, [loadActivity]);
 
   let viewContent;
   if (props.isLoadingRecords) {
