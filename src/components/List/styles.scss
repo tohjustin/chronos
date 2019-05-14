@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2 * $base__size 3 * $base__size;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $color__light-gray;
+    }
+
+    &__label {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    &__value {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
