@@ -9,6 +9,24 @@ export function getIsLoadingRecords(state: RootState): boolean {
   return state.activity.isLoadingRecords;
 }
 
+export function getOldestActivityRecordTimestamp(
+  state: RootState
+): number | undefined {
+  if (state.activity.records.length === 0) {
+    return;
+  }
+
+  let oldestTimestamp = undefined;
+  for (let i = 0; i < state.activity.records.length; i++) {
+    const timestamp = state.activity.records[i].startTime;
+    if (oldestTimestamp === undefined || oldestTimestamp > timestamp) {
+      oldestTimestamp = timestamp;
+    }
+  }
+
+  return oldestTimestamp;
+}
+
 export function getTotalDurationByDate(
   state: RootState
 ): { totalDuration: number; timestamp: number }[] {
