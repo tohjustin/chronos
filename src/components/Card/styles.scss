@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $color__light-gray;
-    padding: 2 * $base__size 2 * $base__size $base__size;
+    padding: 2 * $base__size;
     word-break: break-word;
 
     h2 {
@@ -32,6 +32,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2 * $base__size;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid $color__light-gray;
     padding: 2 * $base__size;
   }
 }

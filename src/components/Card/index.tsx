@@ -5,9 +5,10 @@ import "./styles.scss";
 
 interface CardProps {
   title: string;
-  description: string;
-  children?: React.ReactNode;
+  body?: React.ReactNode;
+  description?: string;
   className?: string;
+  footer?: React.ReactNode;
 }
 
 const Card = (props: CardProps) => (
@@ -18,7 +19,8 @@ const Card = (props: CardProps) => (
         <p>{props.description}</p>
       </div>
     </div>
-    <div className="card__body">{props.children}</div>
+    {props.body && <div className="card__body">{props.body}</div>}
+    {props.footer && <div className="card__footer">{props.footer}</div>}
   </div>
 );
 

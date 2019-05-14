@@ -38,14 +38,15 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
             className="analytics-view__card analytics-view__card--md"
             title="Usage per day"
             description="Amount of time spent on the internet each day"
-          >
-            <LineChart
-              data={props.totalDurationByDate.map(datum => ({
-                x: datum.timestamp,
-                y: datum.totalDuration
-              }))}
-            />
-          </Card>
+            body={
+              <LineChart
+                data={props.totalDurationByDate.map(datum => ({
+                  x: datum.timestamp,
+                  y: datum.totalDuration
+                }))}
+              />
+            }
+          />
         </div>
       </>
     );
