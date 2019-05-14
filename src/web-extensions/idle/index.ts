@@ -1,4 +1,5 @@
 import { ChromeIdleService } from "./chrome";
+import { FirefoxIdleService } from "./firefox";
 import { IdleService } from "./types";
 
 /**
@@ -11,6 +12,8 @@ export function InitIdleService(): IdleService | undefined {
   switch (process.env.REACT_APP_BUILD_TARGET) {
     case "chrome":
       return new ChromeIdleService();
+    case "firefox":
+      return new FirefoxIdleService();
     default:
       return undefined;
   }
