@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAsyncAction } from "typesafe-actions";
 
-import { InitChronosDatabase } from "../../db";
+import { InitDatabase } from "../../db";
 import { ActivityRecord } from "../../db/types";
 
 export const loadActivityAsync = createAsyncAction(
@@ -13,9 +13,9 @@ export const loadActivityAsync = createAsyncAction(
 export const loadActivity = () => async (dispatch: Dispatch): Promise<void> => {
   dispatch(loadActivityAsync.request());
   try {
-    const db = InitChronosDatabase();
+    const db = InitDatabase();
     if (db === undefined) {
-      throw "Unable to intialize DB";
+      throw "Unable to initialize DB";
     }
 
     const payload = await db.fetchAllRecords();

@@ -1,4 +1,4 @@
-import { InitChronosDatabase } from "../db";
+import { InitDatabase } from "../db";
 import { ActivityService } from "../db/types";
 import { InitIdleService } from "../web-extensions/idle";
 import { IdleService, IdleState } from "../web-extensions/idle/types";
@@ -206,7 +206,7 @@ export class ActivityLogger {
  */
 export function InitActivityLogger(): void {
   // Initialize all dependencies
-  const db = InitChronosDatabase();
+  const db = InitDatabase();
   const activityService = db;
   const idleService = InitIdleService();
   const tabsService = InitTabsService();

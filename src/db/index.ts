@@ -4,7 +4,7 @@ import { ActivityRecord, ActivityService } from "./types";
 
 export const ACTIVITY_TABLE = "activity";
 
-export class ChronosDatabase extends Dexie implements ActivityService {
+export class Database extends Dexie implements ActivityService {
   private [ACTIVITY_TABLE]: Dexie.Table<ActivityRecord, number>;
 
   public constructor() {
@@ -45,14 +45,14 @@ export class ChronosDatabase extends Dexie implements ActivityService {
 /**
  * Initialize database for interacting with browser storage
  *
- * @returns `ChronosDatabase` object or `undefined` if the browser does not
+ * @returns `Database` object or `undefined` if the browser does not
  * support interactions with browser storage.
  */
-export function InitChronosDatabase(): ChronosDatabase | undefined {
+export function InitDatabase(): Database | undefined {
   switch (process.env.REACT_APP_BUILD_TARGET) {
     case "chrome":
     case "firefox":
-      return new ChronosDatabase();
+      return new Database();
     default:
       return undefined;
   }
