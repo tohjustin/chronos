@@ -1,5 +1,7 @@
 import { InitChronosDatabase } from "../db";
 import { ActivityService } from "../db/types";
+import { InitIdleService } from "../web-extensions/idle";
+import { IdleService, IdleState } from "../web-extensions/idle/types";
 import { InitTabsService } from "../web-extensions/tabs";
 import {
   Tab,
@@ -20,6 +22,7 @@ export interface Activity {
 
 export interface ActivityLoggerDependencies {
   activityService: ActivityService;
+  idleService: IdleService;
   tabsService: TabsService;
   windowsService: WindowsService;
 }
@@ -37,9 +40,11 @@ const EMPTY_ACTIVITY = {
   startTime: 0,
   endTime: 0
 };
+const IDLE_DETECTION_INTERVAL = 600; // 10 minutes
 
 export class ActivityLogger {
   private activityService: ActivityService;
+  private idleService: IdleService;
   private tabsService: TabsService;
   private windowsService: WindowsService;
 
@@ -47,6 +52,7 @@ export class ActivityLogger {
 
   constructor(dependencies: ActivityLoggerDependencies) {
     this.activityService = dependencies.activityService;
+    this.idleService = dependencies.idleService;
     this.tabsService = dependencies.tabsService;
     this.windowsService = dependencies.windowsService;
 
@@ -68,6 +74,29 @@ export class ActivityLogger {
     );
   }
 
+  private handleIdleOnStateChanged = async (
+    newState: IdleState
+  ): Promise<void> => {
+    if (!this.hasActiveActivity(this.currentActivity)) {
+      return;
+    }
+
+    switch (newState) {
+      case "active": {
+        this.currentActivity.startTime = Date.now();
+        break;
+      }
+      case "idle":
+      case "locked": {
+        const activity = { ...this.currentActivity, endTime: Date.now() };
+        this.currentActivity.startTime = EMPTY_ACTIVITY.startTime;
+
+        await this.log(activity);
+        break;
+      }
+    }
+  };
+
   private handleTabsOnActivated = async (
     activeInfo: TabActiveInfo
   ): Promise<void> => {
@@ -82,9 +111,7 @@ export class ActivityLogger {
         endTime: 0
       };
 
-      if (this.hasActiveActivity(activity)) {
-        await this.log(activity);
-      }
+      await this.log(activity);
     }
   };
 
@@ -103,23 +130,19 @@ export class ActivityLogger {
         endTime: 0
       };
 
-      if (this.hasActiveActivity(activity)) {
-        await this.log(activity);
-      }
+      await this.log(activity);
     }
   };
 
   private handleWindowsOnFocusChange = async (
     windowId: number
   ): Promise<void> => {
-    // When browser window is being defocused
+    // When browser window is being unfocused
     if (windowId === this.windowsService.WINDOW_ID_NONE) {
       const activity = { ...this.currentActivity, endTime: Date.now() };
       this.currentActivity = EMPTY_ACTIVITY;
 
-      if (this.hasActiveActivity(activity)) {
-        await this.log(activity);
-      }
+      await this.log(activity);
       return;
     }
 
@@ -135,31 +158,27 @@ export class ActivityLogger {
         endTime: 0
       };
 
-      if (this.hasActiveActivity(activity)) {
-        await this.log(activity);
-      }
+      await this.log(activity);
     }
   };
 
   /**
-   * Logs current activity, activity will not be logged if URL matches any
-   * blacklisted domains
+   * Logs current activity, activity will not be logged if its URL is invalid or
+   * matches any blacklisted domains
    */
-  private async log({
-    url,
-    favIconUrl,
-    title,
-    startTime,
-    endTime
-  }: Activity): Promise<void> {
+  private async log(activity: Activity): Promise<void> {
+    if (!this.hasActiveActivity(activity)) {
+      return;
+    }
+
     // TODO: Add logic to exclude tracking user-defined blacklisted domains
     try {
       await this.activityService.createRecord(
-        url,
-        favIconUrl,
-        title,
-        startTime,
-        endTime
+        activity.url,
+        activity.favIconUrl,
+        activity.title,
+        activity.startTime,
+        activity.endTime
       );
     } catch (e) {
       console.error("[activity-logger]:", e.stack || e);
@@ -167,9 +186,13 @@ export class ActivityLogger {
   }
 
   /**
-   * Register event-handlers to start logging web browsing activity
+   * Set logging configuration & register event-handlers to start logging web
+   * browsing activity
    */
   public run(): void {
+    this.idleService.setDetectionInterval(IDLE_DETECTION_INTERVAL);
+
+    this.idleService.onStateChanged.addListener(this.handleIdleOnStateChanged);
     this.tabsService.onActivated.addListener(this.handleTabsOnActivated);
     this.tabsService.onUpdated.addListener(this.handleTabsOnUpdated);
     this.windowsService.onFocusChanged.addListener(
@@ -185,12 +208,14 @@ export function InitActivityLogger(): void {
   // Initialize all dependencies
   const db = InitChronosDatabase();
   const activityService = db;
+  const idleService = InitIdleService();
   const tabsService = InitTabsService();
   const windowsService = InitWindowsService();
 
-  if (activityService && tabsService && windowsService) {
+  if (activityService && idleService && tabsService && windowsService) {
     const logger = new ActivityLogger({
       activityService,
+      idleService,
       tabsService,
       windowsService
     });
