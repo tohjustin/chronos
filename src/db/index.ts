@@ -1,10 +1,17 @@
 import Dexie from "dexie";
 
-import { ActivityRecord, ActivityService } from "./types";
+import {
+  ActivityRecord,
+  ActivityService,
+  DatabaseRecords,
+  DataMigrationService
+} from "./types";
+import { exportTableRecords } from "./utils";
 
 export const ACTIVITY_TABLE = "activity";
 
-export class Database extends Dexie implements ActivityService {
+export class Database extends Dexie
+  implements ActivityService, DataMigrationService {
   private [ACTIVITY_TABLE]: Dexie.Table<ActivityRecord, number>;
 
   public constructor() {
@@ -39,6 +46,35 @@ export class Database extends Dexie implements ActivityService {
 
   public fetchAllActivityRecords(): Promise<ActivityRecord[]> {
     return this[ACTIVITY_TABLE].toCollection().toArray();
+  }
+
+  public async exportDatabaseRecords(): Promise<DatabaseRecords> {
+    return {
+      [ACTIVITY_TABLE]: await exportTableRecords<ActivityRecord>(
+        this[ACTIVITY_TABLE]
+      )
+    };
+  }
+
+  public async importDatabaseRecords(data: DatabaseRecords): Promise<void> {
+    const totalRecordCount = data[ACTIVITY_TABLE].length;
+
+    try {
+      // TODO: Clear existing records before importing
+      await this[ACTIVITY_TABLE].bulkAdd(data[ACTIVITY_TABLE]);
+      console.log(
+        `[db] ${totalRecordCount} records were imported successfully`
+      );
+    } catch (err) {
+      if (err instanceof Dexie.BulkError) {
+        const successRecordCount = totalRecordCount - err.failures.length;
+        console.error(
+          `[db] ${successRecordCount} out of ${totalRecordCount} records were imported successfully`
+        );
+      } else {
+        console.error(`[db] ${err}`);
+      }
+    }
   }
 }
 

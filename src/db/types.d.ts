@@ -1,4 +1,8 @@
-/** Object representing a segment of web browsing acivity */
+export interface DatabaseRecords {
+  activity: ActivityRecord[];
+}
+
+/** Object representing a segment of web browsing activity */
 export interface ActivityRecord {
   id?: number;
   startTime: number;
@@ -36,4 +40,18 @@ export interface ActivityService {
    * @returns Collection of Activity Records
    */
   fetchAllActivityRecords(): Promise<ActivityRecord[]>;
+}
+
+/** Service for interacting with activity records */
+export interface DataMigrationService {
+  /**
+   * Export all table records in database
+   * @returns object containing all records keyed by their respective table name
+   */
+  exportDatabaseRecords(): Promise<DatabaseRecords>;
+
+  /**
+   * Import table records into database (overwrites existing records)
+   */
+  importDatabaseRecords(records: DatabaseRecords): void;
 }
