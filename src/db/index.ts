@@ -8,7 +8,7 @@ export class Database extends Dexie implements ActivityService {
   private [ACTIVITY_TABLE]: Dexie.Table<ActivityRecord, number>;
 
   public constructor() {
-    super("ChronosDatabase");
+    super("Database");
     this.version(1).stores({
       [ACTIVITY_TABLE]: "++id, origin, title, startTime, endTime"
     });
