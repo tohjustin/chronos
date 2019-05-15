@@ -2,22 +2,18 @@ import React, { useEffect } from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
-import Card from "../../components/Card";
-import LineChart from "../../components/LineChart";
 import View from "../../components/View";
 import { loadActivity } from "../../store/activity/actions";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
+
+import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 
 import "./style.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
   loadActivity: () => void;
-  totalDurationByDate: {
-    timestamp: number;
-    totalDuration: number;
-  }[];
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
@@ -34,19 +30,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
     viewContent = (
       <>
         <div className="analytics-view__cards-container">
-          <Card
-            className="analytics-view__card analytics-view__card--md"
-            title="Usage per day"
-            description="Amount of time spent on the internet each day"
-            body={
-              <LineChart
-                data={props.totalDurationByDate.map(datum => ({
-                  x: datum.timestamp,
-                  y: datum.totalDuration
-                }))}
-              />
-            }
-          />
+          <TotalUsagePerDayCard />
         </div>
       </>
     );
@@ -61,8 +45,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  isLoadingRecords: selector.getIsLoadingRecords(state),
-  totalDurationByDate: selector.getTotalDurationByDate(state)
+  isLoadingRecords: selector.getIsLoadingRecords(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
