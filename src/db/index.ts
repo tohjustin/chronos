@@ -16,7 +16,7 @@ export class Database extends Dexie implements ActivityService {
     this[ACTIVITY_TABLE] = this.table(ACTIVITY_TABLE);
   }
 
-  public createRecord(
+  public createActivityRecord(
     url: string,
     favIconUrl: string,
     title: string,
@@ -37,7 +37,7 @@ export class Database extends Dexie implements ActivityService {
     });
   }
 
-  public fetchAllRecords(): Promise<ActivityRecord[]> {
+  public fetchAllActivityRecords(): Promise<ActivityRecord[]> {
     return this[ACTIVITY_TABLE].toCollection().toArray();
   }
 }

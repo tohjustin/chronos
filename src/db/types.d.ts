@@ -23,7 +23,7 @@ export interface ActivityService {
    * @param endTime activity end time in milliseconds
    * @returns ID of the created record
    */
-  createRecord(
+  createActivityRecord(
     url: string,
     favIconUrl: string,
     title: string,
@@ -35,5 +35,5 @@ export interface ActivityService {
    * Fetches all stored activity records
    * @returns Collection of Activity Records
    */
-  fetchAllRecords(): Promise<ActivityRecord[]>;
+  fetchAllActivityRecords(): Promise<ActivityRecord[]>;
 }

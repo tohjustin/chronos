@@ -173,7 +173,7 @@ export class ActivityLogger {
 
     // TODO: Add logic to exclude tracking user-defined blacklisted domains
     try {
-      await this.activityService.createRecord(
+      await this.activityService.createActivityRecord(
         activity.url,
         activity.favIconUrl,
         activity.title,

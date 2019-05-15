@@ -18,7 +18,7 @@ export const loadActivity = () => async (dispatch: Dispatch): Promise<void> => {
       throw "Unable to initialize DB";
     }
 
-    const payload = await db.fetchAllRecords();
+    const payload = await db.fetchAllActivityRecords();
     dispatch(loadActivityAsync.success(payload));
   } catch (error) {
     dispatch(loadActivityAsync.failure(error));
