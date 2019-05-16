@@ -88,24 +88,30 @@ export function getTotalDurationByDate(
 
 export function getTotalDurationByDomain(
   state: RootState
-): { totalDuration: number; domain: string }[] {
-  const totalDurationByDate: { [timestamp: string]: number } = {};
+): { totalDuration: number; domain: string; favIconUrl: string }[] {
+  const totalDurationByDomain: { [domain: string]: number } = {};
+  const favIconUrlByDomain: { [domain: string]: string } = {};
 
   state.activity.records.forEach(record => {
     let { origin: domain, startTime, endTime } = record;
 
-    const duration = endTime - startTime;
-    const prevTotalDuration = totalDurationByDate[domain] || 0;
-    totalDurationByDate[domain] = prevTotalDuration + duration;
+    if (domain !== undefined) {
+      const duration = endTime - startTime;
+      const prevTotalDuration = totalDurationByDomain[domain] || 0;
+      totalDurationByDomain[domain] = prevTotalDuration + duration;
+      favIconUrlByDomain[domain] = record.favIconUrl;
+    }
   });
 
   // Sort results by domains with highest duration
-  return Object.entries(totalDurationByDate)
+  return Object.entries(totalDurationByDomain)
     .map(([key, value]) => ({
-      domain: key,
+      domain: key.replace(/(https:\/\/|www\.)/g, ""),
+      favIconUrl: favIconUrlByDomain[key],
       totalDuration: value
     }))
     .sort((a, b) => {
       return a.totalDuration > b.totalDuration ? -1 : 1;
-    });
+    })
+    .slice(0, 10);
 }
