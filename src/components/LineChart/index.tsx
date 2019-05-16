@@ -3,7 +3,7 @@ import React from "react";
 
 import { useClientDimensions } from "../../hooks";
 import Axis from "./Axis";
-import Line from "./Line";
+import Chart from "./Chart";
 import Tooltip from "./Tooltip";
 
 import "./styles.scss";
@@ -61,7 +61,7 @@ const LineChart = (props: LineChartProps) => {
             tickValuesX={xTickValues}
             tickValuesY={yTickValues}
           />
-          <Line data={props.data} scaleX={xScale} scaleY={yScale} />
+          <Chart data={props.data} scaleX={xScale} scaleY={yScale} />
         </g>
       </svg>
       <Tooltip
