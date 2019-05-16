@@ -8,6 +8,7 @@ import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
 
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
+import TotalUsageRankingCard from "./TotalUsageRankingCard";
 
 import "./style.scss";
 
@@ -31,6 +32,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
       <>
         <div className="analytics-view__cards-container">
           <TotalUsagePerDayCard />
+          <TotalUsageRankingCard />
         </div>
       </>
     );
