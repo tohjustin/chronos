@@ -100,11 +100,27 @@ $hover__transition--opacity: opacity 0.25s;
     transition: $hover__transition--opacity;
 
     .tooltip {
+      min-width: 80px;
+      max-width: 240px;
       padding: $base__size;
       border-radius: 2px;
-      white-space: nowrap;
       background-color: $color__black;
       color: $color__white;
+
+      &__header {
+        display: flex;
+        align-content: center;
+
+        strong {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &__description {
+        text-align: right;
+      }
     }
   }
 }
