@@ -5,6 +5,20 @@ function getDateInMs(timestamp: number): number {
   return new Date(timestamp).setHours(0, 0, 0, 0);
 }
 
+/**
+ * Computes the hour-of-day & day-of-week value of the input timestamp
+ * @param {number} timestamp
+ * @returns {{ hour: number; day: number }}
+ * hour-of-day & day-of-week value
+ */
+function getHourOfWeek(timestamp: number): { hour: number; day: number } {
+  const time = new Date(timestamp);
+  return {
+    hour: time.getHours(),
+    day: time.getDay()
+  };
+}
+
 export function getIsLoadingRecords(state: RootState): boolean {
   return state.activity.isLoadingRecords;
 }
@@ -114,4 +128,60 @@ export function getTotalDurationByDomain(
       return a.totalDuration > b.totalDuration ? -1 : 1;
     })
     .slice(0, 10);
+}
+
+export function getTotalDurationByHourOfWeek(
+  state: RootState
+): { totalDuration: number; day: number; hour: number }[] {
+  const totalDurationByHourOfWeek: { [hourOfWeek: string]: number } = {};
+
+  state.activity.records.forEach(record => {
+    let { startTime, endTime } = record;
+    let startHourOfWeek = getHourOfWeek(startTime);
+    let endHourOfWeek = getHourOfWeek(endTime);
+
+    // Handle records spanning over different hour of the week
+    while (
+      startHourOfWeek.day !== endHourOfWeek.day ||
+      startHourOfWeek.hour !== endHourOfWeek.hour
+    ) {
+      const newEndTime = new Date(endTime).setMinutes(0, 0, 0) - 1;
+
+      const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
+      const duration = endTime - newEndTime;
+      const prevTotalDuration = totalDurationByHourOfWeek[hourOfWeekKey] || 0;
+      totalDurationByHourOfWeek[hourOfWeekKey] = prevTotalDuration + duration;
+
+      [endTime, endHourOfWeek] = [newEndTime, getHourOfWeek(newEndTime)];
+    }
+
+    const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
+    const duration = endTime - startTime;
+    const prevTotalDuration = totalDurationByHourOfWeek[hourOfWeekKey] || 0;
+    totalDurationByHourOfWeek[hourOfWeekKey] = prevTotalDuration + duration;
+  });
+
+  // Manually zero out hour-of-week with no activity
+  for (let day = 0; day < 7; day++) {
+    for (let hour = 0; hour < 24; hour++) {
+      const hourOfWeekKey = String([day, hour]);
+      if (totalDurationByHourOfWeek[hourOfWeekKey] === undefined) {
+        totalDurationByHourOfWeek[hourOfWeekKey] = 0;
+      }
+    }
+  }
+
+  // Sort results by chronological order
+  return Object.entries(totalDurationByHourOfWeek)
+    .map(([key, value]) => {
+      const [day, hour] = key.split(",");
+      return {
+        day: Number(day),
+        hour: Number(hour),
+        totalDuration: value
+      };
+    })
+    .sort((a, b) => {
+      return a.day * 24 + a.hour < b.day * 24 + b.hour ? -1 : 1;
+    });
 }
