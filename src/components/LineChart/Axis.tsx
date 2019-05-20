@@ -38,7 +38,8 @@ const Axis = (props: AxisProps) => {
       .axisLeft(scaleY)
       .tickFormat(datum => {
         const hours = Number(datum) / 1000 / 60 / 60;
-        return `${hours} ${hours > 1 ? "hours" : "hour"}`;
+        // return `${hours}${hours > 1 ? "hours" : "hour"}`;
+        return `${hours}h`;
       })
       .tickPadding(8)
       .tickSize(0)

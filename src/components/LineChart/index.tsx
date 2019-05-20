@@ -15,7 +15,7 @@ interface LineChartProps {
   }[];
 }
 
-const CHART_MARGIN = { top: 8, left: 60, bottom: 24, right: 24 };
+const CHART_MARGIN = { top: 8, left: 40, bottom: 24, right: 24 };
 const MS_PER_HOUR = 3600000;
 const MS_PER_DAY = 24 * MS_PER_HOUR;
 
