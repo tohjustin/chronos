@@ -76,7 +76,7 @@ export function getTotalDurationByDate(
   if (minDate !== undefined && maxDate !== undefined) {
     let currentDate = minDate;
     while (currentDate < maxDate) {
-      // Manually zero out days with no records
+      // Manually zero out days with no activity
       if (totalDurationByDate[currentDate] === undefined) {
         totalDurationByDate[currentDate] = 0;
       }
