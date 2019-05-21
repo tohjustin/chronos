@@ -1,6 +1,11 @@
 import * as d3 from "d3";
 import { RootState } from "../../store/types";
 
+/**
+ * Computes input timestamp's date
+ * @param {number} timestamp
+ * @returns {number} date in unix time format
+ */
 function getDateInMs(timestamp: number): number {
   return new Date(timestamp).setHours(0, 0, 0, 0);
 }
@@ -8,8 +13,7 @@ function getDateInMs(timestamp: number): number {
 /**
  * Computes the hour-of-day & day-of-week value of the input timestamp
  * @param {number} timestamp
- * @returns {{ hour: number; day: number }}
- * hour-of-day & day-of-week value
+ * @returns {{ hour: number; day: number }} hour-of-day & day-of-week value
  */
 function getHourOfWeek(timestamp: number): { hour: number; day: number } {
   const time = new Date(timestamp);
