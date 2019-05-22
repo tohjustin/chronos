@@ -1,0 +1,112 @@
+@import '../../styles/variables';
+
+$dot__radius: 3;
+$dot__stroke-width: 2px;
+$line__stroke-width: 2px;
+$hover__transition--opacity: opacity 0.25s;
+
+.heatmap-chart {
+  display: flex;
+  height: 300px;
+  width: 100%;
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .chart__container {
+    width: 100%;
+    position: relative;
+  }
+
+  .heatmap__container {
+    .heatmap__cell {
+      fill: $color__primary;
+    }
+  }
+
+  .axis__container {
+    .axis {
+      path {
+        display: none;
+      }
+
+      text {
+        color: $color__dark-gray;
+        font-weight: 600;
+        font-size: 12px;
+        font-family: $font-family;
+      }
+    }
+
+    .y text {
+      text-align: right;
+    }
+  }
+
+  .legend__container {
+    .heatmap__legend-ticks {
+      path {
+        display: none;
+      }
+
+      text {
+        color: $color__dark-gray;
+        font-weight: 600;
+        font-size: 12px;
+        font-family: $font-family;
+      }
+    }
+  }
+
+  .overlay__container {
+    .overlay {
+      cursor: crosshair;
+      opacity: 0;
+    }
+  }
+
+  .tooltip__container {
+    position: absolute;
+    padding: 0 0.5 * $base__size;
+    transition: $hover__transition--opacity;
+
+    .tooltip {
+      min-width: 80px;
+      max-width: 240px;
+      padding: $base__size;
+      border-radius: 2px;
+      background-color: $color__black;
+      color: $color__white;
+
+      &__header {
+        display: flex;
+        align-content: center;
+
+        strong {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &__favicon {
+        height: (12px * 1.5) - 2;
+        width: (12px * 1.5) - 2;
+        flex-grow: 0;
+        flex-shrink: 0;
+        background-color: $color__white;
+        border: 1px solid $color__white;
+        border-radius: 100%;
+        margin-right: $base__size;
+        overflow: hidden;
+      }
+
+      &__description {
+        text-align: right;
+      }
+    }
+  }
+}
