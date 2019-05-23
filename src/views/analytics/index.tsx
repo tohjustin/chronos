@@ -7,6 +7,7 @@ import { loadActivity } from "../../store/activity/actions";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
 
+import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
 
@@ -33,6 +34,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
         <div className="analytics-view__cards-container">
           <TotalUsagePerDayCard />
           <TotalUsageRankingCard />
+        </div>
+        <div className="analytics-view__cards-container">
+          <AverageUsageByHourOfWeekCard />
         </div>
       </>
     );
