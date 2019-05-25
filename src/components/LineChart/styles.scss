@@ -86,6 +86,7 @@ $hover__transition--opacity: opacity 0.25s;
   }
 
   .ruler__container {
+    overflow: visible;
     transition: $hover__transition--opacity;
 
     .ruler {

@@ -22,7 +22,7 @@ const Axis = (props: AxisProps) => {
 
     // Draw x-axis
     const xAxis = d3
-      .axisBottom(scaleX)
+      .axisBottom<Date>(scaleX)
       .tickPadding(8)
       .tickSize(-4)
       .tickSizeOuter(0)
@@ -35,9 +35,9 @@ const Axis = (props: AxisProps) => {
 
     // Draw y-axis
     const yAxis = d3
-      .axisLeft(scaleY)
+      .axisLeft<number>(scaleY)
       .tickFormat(datum => {
-        const hours = Number(datum) / 1000 / 60 / 60;
+        const hours = datum / 1000 / 60 / 60;
         return `${hours}h`;
       })
       .tickPadding(8)

@@ -15,7 +15,7 @@ interface LineChartProps {
   }[];
 }
 
-const CHART_MARGIN = { top: 8, left: 40, bottom: 24, right: 24 };
+const CHART_MARGIN = { top: 0, left: 40, bottom: 24, right: 8 };
 const MS_PER_HOUR = 3600000;
 const MS_PER_DAY = 24 * MS_PER_HOUR;
 
@@ -35,10 +35,7 @@ const LineChart = (props: LineChartProps) => {
     .domain([xMin, xMax])
     .range([0, chartWidth]);
   const dayRange = (xMax.valueOf() - xMin.valueOf()) / MS_PER_DAY;
-  const xTickValues = [
-    ...d3.timeDays(xMin, xMax, Math.ceil(dayRange / 5)),
-    xMax
-  ];
+  const xTickValues = [...d3.timeDays(xMin, xMax, Math.ceil(dayRange / 5))];
 
   const yDatasetMax = d3.max(props.data.map(d => d.y)) || MS_PER_HOUR;
   const yMax = yDatasetMax + MS_PER_HOUR;
