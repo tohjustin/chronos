@@ -17,7 +17,7 @@ interface ApplicationDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
   loadActivity: () => void;
-  firstActivityTimestamp?: number;
+  activityDateRange: [number, number] | null;
 }
 
 const ApplicationDataCard = (props: ApplicationDataCardProps) => {
@@ -60,8 +60,8 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
           <ListItem
             label="Total data collected"
             value={
-              props.firstActivityTimestamp
-                ? formatDateDistance(props.firstActivityTimestamp, Date.now())
+              props.activityDateRange
+                ? formatDateDistance(props.activityDateRange[0], Date.now())
                 : "-"
             }
           />
@@ -86,7 +86,7 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  firstActivityTimestamp: selector.getOldestActivityRecordTimestamp(state)
+  activityDateRange: selector.getActivityDateRange(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>

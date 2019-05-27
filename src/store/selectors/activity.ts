@@ -27,22 +27,27 @@ export function getIsLoadingRecords(state: RootState): boolean {
   return state.activity.isLoadingRecords;
 }
 
-export function getOldestActivityRecordTimestamp(
+export function getActivityDateRange(
   state: RootState
-): number | undefined {
+): [number, number] | null {
   if (state.activity.records.length === 0) {
-    return;
+    return null;
   }
 
-  let oldestTimestamp = undefined;
-  for (let i = 0; i < state.activity.records.length; i++) {
+  let oldestTimestamp = state.activity.records[0].startTime;
+  let newestTimestamp = state.activity.records[0].startTime;
+  for (let i = 1; i < state.activity.records.length; i++) {
     const timestamp = state.activity.records[i].startTime;
-    if (oldestTimestamp === undefined || oldestTimestamp > timestamp) {
+
+    if (timestamp < oldestTimestamp) {
       oldestTimestamp = timestamp;
+    }
+    if (timestamp > newestTimestamp) {
+      newestTimestamp = timestamp;
     }
   }
 
-  return oldestTimestamp;
+  return [oldestTimestamp, newestTimestamp];
 }
 
 export function getTotalDurationByDate(
