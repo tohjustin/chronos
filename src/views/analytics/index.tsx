@@ -11,7 +11,7 @@ import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
 
-import "./style.scss";
+import "./styles.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;

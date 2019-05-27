@@ -4,7 +4,7 @@ import View from "../../components/View";
 
 import ApplicationDataCard from "./ApplicationDataCard";
 
-import "./style.scss";
+import "./styles.scss";
 
 const SettingsView = () => (
   <View.Container>
