@@ -11,6 +11,10 @@ $font-size__md: 14px;
 $font-size__lg: 16px;
 
 $color__primary: #379af7;
+$color__primary-dark: darken($color__primary, 15%);
+$color__primary-darker: darken($color__primary, 30%);
+$color__primary-light: lighten($color__primary, 15%);
+$color__primary-lighter: lighten($color__primary, 30%);
 $color__black: #244360;
 $color__darker-gray: #62778c;
 $color__dark-gray: #8da2b5;
@@ -20,8 +24,9 @@ $color__lighter-gray: #f6f6f6;
 $color__white: #fff;
 
 $shadow__color: #{$color__black}6d;
-$shadow__header: 0 0 1px $shadow__color;
 $shadow__card: 0 0 2px $shadow__color;
+$shadow__header: 0 0 1px $shadow__color;
+$shadow__input: 0 0 1px $shadow__color;
 
 $z-index__navbar: 1000;
 $z-index__view-header: 100;
