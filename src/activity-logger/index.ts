@@ -237,7 +237,10 @@ export class ActivityLogger {
         activity.endTime
       );
     } catch (e) {
-      console.error("[activity-logger]:", e.stack || e);
+      console.error(
+        "[activity-logger] log: Unable to create activity record",
+        e.stack || e
+      );
     }
   }
 
