@@ -1,16 +1,50 @@
 import { InitDatabase } from "../db";
 import { ActivityService } from "../db/types";
 import { InitIdleService } from "../web-extensions/idle";
-import { IdleService, IdleState } from "../web-extensions/idle/types";
+import {
+  IdleService,
+  IdleState,
+  IdleStateChangeEventCallback
+} from "../web-extensions/idle/types";
 import { InitTabsService } from "../web-extensions/tabs";
 import {
   Tab,
   TabChangeInfo,
   TabsService,
-  TabActiveInfo
+  TabActiveInfo,
+  TabActivatedEventCallback,
+  TabUpdatedEventCallback
 } from "../web-extensions/tabs/types";
 import { InitWindowsService } from "../web-extensions/windows";
-import { WindowsService } from "../web-extensions/windows/types";
+import {
+  BrowserWindowFocusChangedEventCallback,
+  WindowsService
+} from "../web-extensions/windows/types";
+
+export enum EventType {
+  IDLE_ON_STATE_CHANGED = "IDLE_ON_STATE_CHANGED",
+  TABS_ON_ACTIVATED = "TABS_ON_ACTIVATED",
+  TABS_ON_UPDATED = "TABS_ON_UPDATED",
+  WINDOWS_ON_FOCUS_CHANGE = "WINDOWS_ON_FOCUS_CHANGE"
+}
+
+export type EventCallback =
+  | {
+      type: EventType.IDLE_ON_STATE_CHANGED;
+      args: Parameters<IdleStateChangeEventCallback>;
+    }
+  | {
+      type: EventType.TABS_ON_ACTIVATED;
+      args: Parameters<TabActivatedEventCallback>;
+    }
+  | {
+      type: EventType.TABS_ON_UPDATED;
+      args: Parameters<TabUpdatedEventCallback>;
+    }
+  | {
+      type: EventType.WINDOWS_ON_FOCUS_CHANGE;
+      args: Parameters<BrowserWindowFocusChangedEventCallback>;
+    };
 
 export interface Activity {
   endTime: number;
@@ -77,10 +111,6 @@ export class ActivityLogger {
   private handleIdleOnStateChanged = async (
     newState: IdleState
   ): Promise<void> => {
-    if (!this.hasActiveActivity(this.currentActivity)) {
-      return;
-    }
-
     switch (newState) {
       case "active": {
         this.currentActivity.startTime = Date.now();
@@ -146,6 +176,7 @@ export class ActivityLogger {
       return;
     }
 
+    // When another browser window instance is being focused
     const { tabs = [] } = await this.windowsService.get(windowId);
     const activeTab: Tab = tabs.find(tab => tab.active);
     if (this.hasSwitchedToValidTab(activeTab)) {
@@ -161,6 +192,31 @@ export class ActivityLogger {
       await this.log(activity);
     }
   };
+
+  /**
+   * Main handler that determines which event handler to dispatch based on the
+   * type of callback event.
+   */
+  private handleEvent(event: EventCallback): void {
+    if (this.currentActivity.startTime === 0) {
+      this.currentActivity.startTime = Date.now();
+    }
+
+    switch (event.type) {
+      case EventType.IDLE_ON_STATE_CHANGED:
+        this.handleIdleOnStateChanged(...event.args);
+        break;
+      case EventType.TABS_ON_ACTIVATED:
+        this.handleTabsOnActivated(...event.args);
+        break;
+      case EventType.TABS_ON_UPDATED:
+        this.handleTabsOnUpdated(...event.args);
+        break;
+      case EventType.WINDOWS_ON_FOCUS_CHANGE:
+        this.handleWindowsOnFocusChange(...event.args);
+        break;
+    }
+  }
 
   /**
    * Logs current activity, activity will not be logged if its URL is invalid or
@@ -192,12 +248,18 @@ export class ActivityLogger {
   public run(): void {
     this.idleService.setDetectionInterval(IDLE_DETECTION_INTERVAL);
 
-    this.idleService.onStateChanged.addListener(this.handleIdleOnStateChanged);
-    this.tabsService.onActivated.addListener(this.handleTabsOnActivated);
-    this.tabsService.onUpdated.addListener(this.handleTabsOnUpdated);
-    this.windowsService.onFocusChanged.addListener(
-      this.handleWindowsOnFocusChange
-    );
+    this.idleService.onStateChanged.addListener((...args) => {
+      this.handleEvent({ type: EventType.IDLE_ON_STATE_CHANGED, args });
+    });
+    this.tabsService.onActivated.addListener((...args) => {
+      this.handleEvent({ type: EventType.TABS_ON_ACTIVATED, args });
+    });
+    this.tabsService.onUpdated.addListener((...args) => {
+      this.handleEvent({ type: EventType.TABS_ON_UPDATED, args });
+    });
+    this.windowsService.onFocusChanged.addListener((...args) => {
+      this.handleEvent({ type: EventType.WINDOWS_ON_FOCUS_CHANGE, args });
+    });
   }
 }
 
