@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
-import { bindActionCreators, Dispatch } from "redux";
+import React from "react";
 import { connect } from "react-redux";
 
 import View from "../../components/View";
-import { loadActivity } from "../../store/activity/actions";
 import selector from "../../store/selectors";
-import { RootAction, RootState } from "../../store/types";
+import { RootState } from "../../store/types";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
@@ -15,16 +13,9 @@ import "./styles.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
-  loadActivity: () => void;
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
-  const { loadActivity } = props;
-
-  useEffect(() => {
-    loadActivity();
-  }, [loadActivity]);
-
   let viewContent;
   if (props.isLoadingRecords) {
     viewContent = "Loading...";
@@ -54,10 +45,4 @@ const mapStateToProps = (state: RootState) => ({
   isLoadingRecords: selector.getIsLoadingRecords(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
-  bindActionCreators({ loadActivity }, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AnalyticsView);
+export default connect(mapStateToProps)(AnalyticsView);

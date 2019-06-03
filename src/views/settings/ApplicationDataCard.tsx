@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
@@ -16,16 +16,10 @@ import { formatBytes, formatDateDistance } from "./utils";
 interface ApplicationDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
-  loadActivity: () => void;
   activityDateRange: [number, number] | null;
 }
 
 const ApplicationDataCard = (props: ApplicationDataCardProps) => {
-  const { loadActivity } = props;
-
-  useEffect(() => {
-    loadActivity();
-  }, [loadActivity]);
   const [storageUsage, storageQuota] = useStorageEstimate();
 
   function handleFileUploadChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -93,8 +87,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(
     {
       exportDatabaseRecords: actions.dataMigration.exportDatabaseRecords,
-      importDatabaseRecords: actions.dataMigration.importDatabaseRecords,
-      loadActivity: actions.activity.loadActivity
+      importDatabaseRecords: actions.dataMigration.importDatabaseRecords
     },
     dispatch
   );
