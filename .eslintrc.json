@@ -20,8 +20,9 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": false,
     "@typescript-eslint/explicit-member-accessibility": false,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "@typescript-eslint/prefer-interface": false,
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error"
   },
   "settings": {
     "react": {
