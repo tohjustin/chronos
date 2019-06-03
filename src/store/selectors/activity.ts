@@ -26,16 +26,16 @@ function getHourOfWeek(timestamp: number): { hour: number; day: number } {
   };
 }
 
+export const getAllRecords = (state: RootState) => state.activity.records;
+
 export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoadingRecords;
-
-export const getRecords = (state: RootState) => state.activity.records;
 
 export const getSelectedTimeRange = (state: RootState) =>
   state.activity.selectedTimeRange;
 
 export const getActivityTimeRange = createSelector(
-  getRecords,
+  getAllRecords,
   (records): TimeRange | null => {
     if (records.length === 0) {
       return null;
@@ -55,6 +55,32 @@ export const getActivityTimeRange = createSelector(
     }
 
     return { start: oldestTimestamp, end: newestTimestamp };
+  }
+);
+
+export const getRecords = createSelector(
+  [getAllRecords, getSelectedTimeRange],
+  (records, selectedTimeRange) => {
+    // If no time range is being selected, fallback to defaults
+    if (selectedTimeRange === null) {
+      // TODO: Retrieve default time range
+      return records;
+    }
+
+    const { start: startTime, end: endTime } = selectedTimeRange;
+    if (startTime && endTime) {
+      return records.filter(
+        record => record.startTime >= startTime && record.endTime <= endTime
+      );
+    }
+    if (startTime) {
+      return records.filter(record => record.startTime >= startTime);
+    }
+    if (endTime) {
+      return records.filter(record => record.endTime <= endTime);
+    }
+
+    return records;
   }
 );
 
