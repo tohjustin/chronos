@@ -1,8 +1,9 @@
 import { Dispatch } from "redux";
-import { createAsyncAction } from "typesafe-actions";
+import { createAction, createAsyncAction } from "typesafe-actions";
 
 import { InitDatabase } from "../../db";
 import { ActivityRecord } from "../../db/types";
+import { TimeRange } from "../../models/time";
 
 export const loadActivityAsync = createAsyncAction(
   "LOAD_ACTIVITY_REQUEST",
@@ -25,7 +26,15 @@ export const loadActivity = () => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
+export const setSelectedTimeRange = createAction(
+  "SET_SELECTED_TIME_RANGE",
+  action => {
+    return (range: TimeRange | null) => action(range);
+  }
+);
+
 export const actions = {
   loadActivityAsync,
-  loadActivity
+  loadActivity,
+  setSelectedTimeRange
 };

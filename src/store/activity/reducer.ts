@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { combineReducers } from "redux";
-import { createReducer } from "typesafe-actions";
+import { createReducer, getType } from "typesafe-actions";
 import { DeepReadonly } from "utility-types";
 
 import { ActivityRecord } from "../../db/types";
+import { TimeRange } from "../../models/time";
 
-import { loadActivityAsync } from "./actions";
+import { loadActivityAsync, setSelectedTimeRange } from "./actions";
 
 type State = DeepReadonly<{
   isLoadingRecords: boolean;
   records: ActivityRecord[];
+  selectedTimeRange: TimeRange | null;
 }>;
 
 const INITIAL_STATE: State = {
   isLoadingRecords: false,
-  records: []
+  records: [],
+  selectedTimeRange: null
 };
 
 export const reducer = combineReducers({
@@ -27,6 +30,12 @@ export const reducer = combineReducers({
     ),
   records: createReducer(INITIAL_STATE.records).handleAction(
     [loadActivityAsync.success],
+    (state, action) => action.payload
+  ),
+  selectedTimeRange: createReducer(
+    INITIAL_STATE.selectedTimeRange
+  ).handleAction(
+    [getType(setSelectedTimeRange)],
     (state, action) => action.payload
   )
 });

@@ -31,6 +31,9 @@ export const getIsLoadingRecords = (state: RootState) =>
 
 export const getRecords = (state: RootState) => state.activity.records;
 
+export const getSelectedTimeRange = (state: RootState) =>
+  state.activity.selectedTimeRange;
+
 export const getActivityTimeRange = createSelector(
   getRecords,
   (records): TimeRange | null => {
