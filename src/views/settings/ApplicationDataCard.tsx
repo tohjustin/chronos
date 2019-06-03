@@ -7,6 +7,7 @@ import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
 import { List, ListItem } from "../../components/List";
 import { useStorageEstimate } from "../../hooks";
+import { TimeRange } from "../../models/time";
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
@@ -16,7 +17,7 @@ import { formatBytes, formatDateDistance } from "./utils";
 interface ApplicationDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
-  activityDateRange: [number, number] | null;
+  activityTimeRange: TimeRange | null;
 }
 
 const ApplicationDataCard = (props: ApplicationDataCardProps) => {
@@ -54,8 +55,8 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
           <ListItem
             label="Total data collected"
             value={
-              props.activityDateRange
-                ? formatDateDistance(props.activityDateRange[0], Date.now())
+              props.activityTimeRange && props.activityTimeRange.start
+                ? formatDateDistance(props.activityTimeRange.start, Date.now())
                 : "-"
             }
           />
@@ -80,7 +81,7 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  activityDateRange: selector.getActivityDateRange(state)
+  activityTimeRange: selector.getActivityTimeRange(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>

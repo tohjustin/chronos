@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { createSelector } from "reselect";
 
+import { TimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 
 /**
@@ -30,9 +31,9 @@ export const getIsLoadingRecords = (state: RootState) =>
 
 export const getRecords = (state: RootState) => state.activity.records;
 
-export const getActivityDateRange = createSelector(
+export const getActivityTimeRange = createSelector(
   getRecords,
-  (records): [number, number] | null => {
+  (records): TimeRange | null => {
     if (records.length === 0) {
       return null;
     }
@@ -50,7 +51,7 @@ export const getActivityDateRange = createSelector(
       }
     }
 
-    return [oldestTimestamp, newestTimestamp];
+    return { start: oldestTimestamp, end: newestTimestamp };
   }
 );
 
