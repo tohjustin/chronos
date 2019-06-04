@@ -7,6 +7,8 @@ import React from "react";
 import "antd/lib/date-picker/style/css";
 import "./styles.scss";
 
+export type DateRangePickerValue = RangePickerValue;
+
 interface DateRangePickerProps {
   value: [moment.Moment, moment.Moment];
   className?: string;

@@ -6,6 +6,7 @@ import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
+import TimeRangePicker from "./TimeRangePicker";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
 
@@ -16,22 +17,22 @@ interface AnalyticsViewProps {
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
-  let viewContent;
-  if (props.isLoadingRecords) {
-    viewContent = "Loading...";
-  } else {
-    viewContent = (
-      <>
-        <div className="analytics-view__cards-container">
-          <TotalUsagePerDayCard />
-          <TotalUsageRankingCard />
-        </div>
-        <div className="analytics-view__cards-container">
-          <AverageUsageByHourOfWeekCard />
-        </div>
-      </>
-    );
-  }
+  const viewContent = props.isLoadingRecords ? (
+    "Loading..."
+  ) : (
+    <div>
+      <div className="analytics-view__control-panel">
+        <TimeRangePicker />
+      </div>
+      <div className="analytics-view__cards-container">
+        <TotalUsagePerDayCard />
+        <TotalUsageRankingCard />
+      </div>
+      <div className="analytics-view__cards-container">
+        <AverageUsageByHourOfWeekCard />
+      </div>
+    </div>
+  );
 
   return (
     <View.Container>

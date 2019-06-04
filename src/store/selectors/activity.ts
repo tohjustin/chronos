@@ -1,8 +1,17 @@
 import * as d3 from "d3";
+import moment from "moment";
 import { createSelector } from "reselect";
 
 import { TimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
+
+const DEFAULT_TIME_RANGE = {
+  start: moment()
+    .subtract(4, "week")
+    .startOf("day")
+    .valueOf(),
+  end: null
+};
 
 /**
  * Computes input timestamp's date
@@ -31,8 +40,10 @@ export const getAllRecords = (state: RootState) => state.activity.records;
 export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoadingRecords;
 
-export const getSelectedTimeRange = (state: RootState) =>
-  state.activity.selectedTimeRange;
+export const getSelectedTimeRange = (state: RootState) => {
+  const selectedTimeRange = state.activity.selectedTimeRange;
+  return selectedTimeRange === null ? DEFAULT_TIME_RANGE : selectedTimeRange;
+};
 
 export const getActivityTimeRange = createSelector(
   getAllRecords,
@@ -61,12 +72,6 @@ export const getActivityTimeRange = createSelector(
 export const getRecords = createSelector(
   [getAllRecords, getSelectedTimeRange],
   (records, selectedTimeRange) => {
-    // If no time range is being selected, fallback to defaults
-    if (selectedTimeRange === null) {
-      // TODO: Retrieve default time range
-      return records;
-    }
-
     const { start: startTime, end: endTime } = selectedTimeRange;
     if (startTime && endTime) {
       return records.filter(
