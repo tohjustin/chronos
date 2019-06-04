@@ -21,10 +21,7 @@ const Tooltip = (props: TooltipProps) => {
   const [hoveredDatumIndex, setHoveredDatumIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
-  const hoveredDatum = props.data[hoveredDatumIndex];
-  if (hoveredDatum === undefined) {
-    return null;
-  }
+  const hoveredDatum = props.data[hoveredDatumIndex] || { x: 0, y: 0 };
 
   // Compute ruler & tooltip positions
   const x = props.scaleX(hoveredDatum.x);
@@ -106,7 +103,10 @@ const Tooltip = (props: TooltipProps) => {
                 }
               }
 
+              setIsHovering(Boolean(props.data[closestDatumIndex]));
               setHoveredDatumIndex(closestDatumIndex);
+            } else {
+              setIsHovering(false);
             }
           }}
         />
