@@ -1,4 +1,3 @@
-import * as d3 from "d3";
 import moment from "moment";
 import { createSelector } from "reselect";
 
@@ -169,9 +168,13 @@ export const getAverageDurationByHourOfWeek = createSelector(
 );
 
 export const getTotalDurationByDate = createSelector(
-  getRecords,
-  records => {
+  [getRecords, getActivityTimeRange, getSelectedTimeRange],
+  (records, activityTimeRange, selectedTimeRange) => {
     const totalDurationByDate: { [timestamp: string]: number } = {};
+
+    if (activityTimeRange === null) {
+      return [];
+    }
 
     records.forEach(record => {
       let { startTime, endTime } = record;
@@ -193,27 +196,26 @@ export const getTotalDurationByDate = createSelector(
       totalDurationByDate[endDate] = prevTotalDuration + duration;
     });
 
-    const [minDate, maxDate] = d3.extent(
-      Object.keys(totalDurationByDate).map(Number)
-    );
-    if (minDate !== undefined && maxDate !== undefined) {
-      let currentDate = minDate;
-      while (currentDate < maxDate) {
-        // Manually zero out days with no activity
-        if (totalDurationByDate[currentDate] === undefined) {
-          totalDurationByDate[currentDate] = 0;
-        }
-
-        // Limit usage time up to maximum value of 24 hours
-        if (totalDurationByDate[currentDate] > 0) {
-          totalDurationByDate[currentDate] = Math.min(
-            1000 * 60 * 60 * 24,
-            totalDurationByDate[currentDate]
-          );
-        }
-
-        currentDate += 1000 * 60 * 60 * 24;
+    const { start: startTime, end: endTime } = selectedTimeRange;
+    const { start: minTime, end: maxTime } = activityTimeRange;
+    const minDate = getDateInMs(startTime || minTime || 0);
+    const maxDate = getDateInMs(endTime || maxTime || Date.now());
+    let currentDate = minDate;
+    while (currentDate < maxDate) {
+      // Manually zero out days with no activity
+      if (totalDurationByDate[currentDate] === undefined) {
+        totalDurationByDate[currentDate] = 0;
       }
+
+      // Limit usage time up to maximum value of 24 hours
+      if (totalDurationByDate[currentDate] > 0) {
+        totalDurationByDate[currentDate] = Math.min(
+          1000 * 60 * 60 * 24,
+          totalDurationByDate[currentDate]
+        );
+      }
+
+      currentDate += 1000 * 60 * 60 * 24;
     }
 
     // Sort results by chronological order
