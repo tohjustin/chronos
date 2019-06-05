@@ -14,8 +14,9 @@
     "lint:ts": "eslint --fix -- ./src/**/*.{ts,tsx}",
     "lint:scss": "stylelint --fix -- ./src/**/*.scss",
     "prettier": "prettier --write -- ./src/**/*.{ts,tsx}",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject",
+    "test": "react-app-rewired test --watchAll=false",
+    "test:debug": "react-app-rewired --inspect test --runInBand --no-cache",
+    "test:watch": "react-app-rewired test",
     "react-devtools": "react-devtools",
     "redux-devtools": "redux-devtools --hostname=localhost --port=8098"
   },
@@ -72,7 +73,7 @@
     "@types/file-saver": "2.0.0",
     "@types/firefox-webext-browser": "67.0.0",
     "@types/history": "4.7.2",
-    "@types/jest": "24.0.11",
+    "@types/jest": "23.3.14",
     "@types/lodash": "4.14.132",
     "@types/node": "11.13.7",
     "@types/react": "16.8.14",
@@ -90,6 +91,7 @@
     "eslint-plugin-react": "7.12.4",
     "eslint-plugin-react-hooks": "1.6.0",
     "husky": "2.1.0",
+    "jest": "23.6.0",
     "lint-staged": "8.1.5",
     "prettier": "1.17.0",
     "react-app-rewire-hot-loader": "2.0.1",
@@ -102,6 +104,7 @@
     "stylelint": "10.0.1",
     "stylelint-config-standard": "18.3.0",
     "stylelint-scss": "3.6.0",
+    "ts-jest": "23.10.5",
     "write-file-webpack-plugin": "4.5.0"
   }
 }

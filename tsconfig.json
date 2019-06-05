@@ -22,11 +22,11 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules",
     "build",
-    "src/**/*.spec.*"
   ]
 }
