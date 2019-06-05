@@ -3,6 +3,10 @@ import { createSelector } from "reselect";
 
 import { TimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
+import {
+  getDateInMs,
+  getHourOfWeek
+} from "../../utils/dateUtils";
 
 const DEFAULT_TIME_RANGE = {
   start: moment()
@@ -11,28 +15,6 @@ const DEFAULT_TIME_RANGE = {
     .valueOf(),
   end: null
 };
-
-/**
- * Computes input timestamp's date
- * @param {number} timestamp
- * @returns {number} date in unix time format
- */
-function getDateInMs(timestamp: number): number {
-  return new Date(timestamp).setHours(0, 0, 0, 0);
-}
-
-/**
- * Computes the hour-of-day & day-of-week value of the input timestamp
- * @param {number} timestamp
- * @returns {{ hour: number; day: number }} hour-of-day & day-of-week value
- */
-function getHourOfWeek(timestamp: number): { hour: number; day: number } {
-  const time = new Date(timestamp);
-  return {
-    hour: time.getHours(),
-    day: time.getDay()
-  };
-}
 
 export const getAllRecords = (state: RootState) => state.activity.records;
 
