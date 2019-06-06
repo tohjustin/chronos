@@ -16,6 +16,9 @@ const DEFAULT_TIME_RANGE = {
   end: null
 };
 
+/**
+ * Get all activity records
+ */
 export const getAllRecords = (state: RootState) => state.activity.records;
 
 export const getIsLoadingRecords = (state: RootState) =>
@@ -50,23 +53,26 @@ export const getActivityTimeRange = createSelector(
   }
 );
 
+/**
+ * Get all activity records that falls within the selected time range
+ *
+ * @remarks
+ * Includes records with time intervals that overlaps with the time range
+ * boundaries
+ */
 export const getRecords = createSelector(
   [getAllRecords, getSelectedTimeRange],
   (records, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
-    if (startTime && endTime) {
-      return records.filter(
-        record => record.startTime >= startTime && record.endTime <= endTime
-      );
-    }
-    if (startTime) {
-      return records.filter(record => record.startTime >= startTime);
-    }
-    if (endTime) {
-      return records.filter(record => record.endTime <= endTime);
-    }
-
-    return records;
+    return records.filter(
+      record =>
+        (startTime === null ||
+          record.startTime >= startTime ||
+          record.endTime >= startTime) &&
+        (endTime === null ||
+          record.endTime <= endTime ||
+          record.startTime <= endTime)
+    );
   }
 );
 
