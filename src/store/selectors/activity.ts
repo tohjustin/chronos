@@ -1,7 +1,7 @@
 import moment from "moment";
 import { createSelector } from "reselect";
 
-import { TimeRange } from "../../models/time";
+import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
   getDateInMs,
@@ -28,7 +28,7 @@ export const getSelectedTimeRange = (state: RootState) => {
 
 export const getActivityTimeRange = createSelector(
   getAllRecords,
-  (records): TimeRange | null => {
+  (records): DefiniteTimeRange | null => {
     if (records.length === 0) {
       return null;
     }
