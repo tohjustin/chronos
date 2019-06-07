@@ -18,18 +18,29 @@ const DEFAULT_TIME_RANGE = {
 };
 
 /**
- * Get all activity records
+ * Retrieves all activity records
  */
 export const getAllRecords = (state: RootState) => state.activity.records;
 
+/**
+ * Retrieves the state loading activity records from IndexedDB into the redux
+ * store
+ */
 export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoadingRecords;
 
+/**
+ * Retrieves the user selected time range
+ */
 export const getSelectedTimeRange = (state: RootState) => {
   const selectedTimeRange = state.activity.selectedTimeRange;
   return selectedTimeRange === null ? DEFAULT_TIME_RANGE : selectedTimeRange;
 };
 
+/**
+ * Retrieves the time range of all recorded activity (oldest & most recently
+ * recorded activity in IndexedDB)
+ */
 export const getActivityTimeRange = createSelector(
   getAllRecords,
   (records): DefiniteTimeRange | null => {
@@ -54,6 +65,10 @@ export const getActivityTimeRange = createSelector(
   }
 );
 
+/**
+ * Retrieves the effective time range - result of combining the selected time
+ * range & the time range of all recorded activity
+ */
 export const getEffectiveTimeRange = createSelector(
   [getActivityTimeRange, getSelectedTimeRange],
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
@@ -78,7 +93,7 @@ export const getEffectiveTimeRange = createSelector(
 );
 
 /**
- * Get all activity records that falls within the selected time range
+ * Retrieves all activity records that falls within the selected time range
  *
  * @remarks
  * Includes records with time intervals that overlaps with the time range
@@ -100,6 +115,11 @@ export const getRecords = createSelector(
   }
 );
 
+/**
+ * Retrieves average duration of all activity records that falls within the
+ * selected time range, grouped by the hour-of-day & day-of-week of the
+ * activity's timestamp
+ */
 export const getAverageDurationByHourOfWeek = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
@@ -198,6 +218,10 @@ export const getAverageDurationByHourOfWeek = createSelector(
   }
 );
 
+/**
+ * Retrieves total duration of all activity records that falls within the
+ * selected time range, grouped by the date of the activity's timestamp
+ */
 export const getTotalDurationByDate = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
@@ -260,6 +284,10 @@ export const getTotalDurationByDate = createSelector(
   }
 );
 
+/**
+ * Retrieves total duration of all activity records that falls within the
+ * selected time range, grouped by domain of the activity's URL
+ */
 export const getTotalDurationByDomain = createSelector(
   getRecords,
   records => {
