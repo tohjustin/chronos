@@ -19,9 +19,9 @@ export function formatDayOfWeek(day: number): string {
  * human-readable format
  */
 export function formatDuration(duration: number): string {
-  const durationInMins = duration / 1000 / 60;
-  const hours = Math.floor(durationInMins / 60);
+  const durationInMins = Math.round(duration / 1000 / 60);
   const minutes = Math.floor(durationInMins) % 60;
+  const hours = Math.floor(durationInMins / 60);
   let result = "";
 
   if (hours > 0) {
