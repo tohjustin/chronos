@@ -5,6 +5,7 @@ import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
   getDateInMs,
+  getDayOfWeekCount,
   getHourOfWeek
 } from "../../utils/dateUtils";
 
@@ -100,12 +101,14 @@ export const getRecords = createSelector(
 );
 
 export const getAverageDurationByHourOfWeek = createSelector(
-  getRecords,
-  records => {
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
     const avgDurationByHourOfWeek: { [hourOfWeek: string]: number } = {};
     const totalDurationByHourOfWeek: {
       [hourOfWeek: string]: { [date: string]: number };
     } = {};
+    const minDate = getDateInMs(effectiveTimeRange.start);
+    const maxDate = getDateInMs(effectiveTimeRange.end);
 
     records.forEach(record => {
       let { startTime, endTime } = record;
@@ -118,9 +121,33 @@ export const getAverageDurationByHourOfWeek = createSelector(
         startHourOfWeek.hour !== endHourOfWeek.hour
       ) {
         const newEndTime = new Date(endTime).setMinutes(0, 0, 0) - 1;
+        const newEndHourOfWeek = getHourOfWeek(newEndTime);
 
-        const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
-        const duration = endTime - newEndTime;
+        if (
+          getDateInMs(endTime) >= minDate &&
+          getDateInMs(endTime) <= maxDate
+        ) {
+          const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
+          if (totalDurationByHourOfWeek[hourOfWeekKey] === undefined) {
+            totalDurationByHourOfWeek[hourOfWeekKey] = {};
+          }
+          const duration = endTime - newEndTime;
+          const prevTotalDuration =
+            totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] || 0;
+          totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] =
+            prevTotalDuration + duration;
+        }
+
+        [endTime, endHourOfWeek] = [newEndTime, newEndHourOfWeek];
+      }
+
+      // Compute total duration
+      if (
+        getDateInMs(startTime) >= minDate &&
+        getDateInMs(startTime) <= maxDate
+      ) {
+        const hourOfWeekKey = `${endHourOfWeek.day},${endHourOfWeek.hour}`;
+        const duration = endTime - startTime;
         if (totalDurationByHourOfWeek[hourOfWeekKey] === undefined) {
           totalDurationByHourOfWeek[hourOfWeekKey] = {};
         }
@@ -128,34 +155,27 @@ export const getAverageDurationByHourOfWeek = createSelector(
           totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] || 0;
         totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] =
           prevTotalDuration + duration;
-
-        [endTime, endHourOfWeek] = [newEndTime, getHourOfWeek(newEndTime)];
       }
-
-      // Compute total duration
-      const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
-      const duration = endTime - startTime;
-      if (totalDurationByHourOfWeek[hourOfWeekKey] === undefined) {
-        totalDurationByHourOfWeek[hourOfWeekKey] = {};
-      }
-      const prevTotalDuration =
-        totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] || 0;
-      totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] =
-        prevTotalDuration + duration;
     });
 
     // Compute average duration
-    for (let i = 0; i < Object.keys(totalDurationByHourOfWeek).length; i++) {
-      const key = Object.keys(totalDurationByHourOfWeek)[i];
-      const dates = Object.values(totalDurationByHourOfWeek[key]);
-      const avg = dates.reduce((acc, val) => acc + val, 0) / dates.length;
-      avgDurationByHourOfWeek[key] = avg;
+    const hourOfWeekKeys = Object.keys(totalDurationByHourOfWeek);
+    for (let i = 0; i < hourOfWeekKeys.length; i++) {
+      const hourOfWeekKey = hourOfWeekKeys[i];
+      const dayOfWeek = Number(hourOfWeekKey.split(",")[0]);
+      const dates = Object.values(totalDurationByHourOfWeek[hourOfWeekKey]);
+
+      const totalDuration = dates.reduce((acc, val) => acc + val, 0);
+      const dayOfWeekCount = getDayOfWeekCount(dayOfWeek, minDate, maxDate);
+
+      avgDurationByHourOfWeek[hourOfWeekKey] =
+        totalDuration / Math.max(dayOfWeekCount, 1);
     }
 
     // Manually zero out hour-of-week with no activity
     for (let day = 0; day < 7; day++) {
       for (let hour = 0; hour < 24; hour++) {
-        const hourOfWeekKey = String([day, hour]);
+        const hourOfWeekKey = `${day},${hour}`;
         if (avgDurationByHourOfWeek[hourOfWeekKey] === undefined) {
           avgDurationByHourOfWeek[hourOfWeekKey] = 0;
         }
