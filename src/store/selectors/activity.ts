@@ -53,6 +53,29 @@ export const getActivityTimeRange = createSelector(
   }
 );
 
+export const getEffectiveTimeRange = createSelector(
+  [getActivityTimeRange, getSelectedTimeRange],
+  (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
+    if (activityTimeRange === null) {
+      return {
+        start: selectedTimeRange.start || 0,
+        end: selectedTimeRange.end || 0
+      };
+    }
+
+    return {
+      start:
+        selectedTimeRange.start === null
+          ? activityTimeRange.start
+          : selectedTimeRange.start,
+      end:
+        selectedTimeRange.end === null
+          ? activityTimeRange.end
+          : selectedTimeRange.end
+    };
+  }
+);
+
 /**
  * Get all activity records that falls within the selected time range
  *
@@ -156,13 +179,11 @@ export const getAverageDurationByHourOfWeek = createSelector(
 );
 
 export const getTotalDurationByDate = createSelector(
-  [getRecords, getActivityTimeRange, getSelectedTimeRange],
-  (records, activityTimeRange, selectedTimeRange) => {
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
     const totalDurationByDate: { [timestamp: string]: number } = {};
-
-    if (activityTimeRange === null) {
-      return [];
-    }
+    const minDate = getDateInMs(effectiveTimeRange.start);
+    const maxDate = getDateInMs(effectiveTimeRange.end);
 
     records.forEach(record => {
       let { startTime, endTime } = record;
@@ -171,23 +192,24 @@ export const getTotalDurationByDate = createSelector(
       // Handle records spanning over different dates
       while (startDate !== endDate) {
         const newEndTime = getDateInMs(endTime) - 1;
+        const newEndDate = getDateInMs(newEndTime);
 
-        const duration = endTime - newEndTime;
-        const prevTotalDuration = totalDurationByDate[endDate] || 0;
-        totalDurationByDate[endDate] = prevTotalDuration + duration;
+        if (endDate >= minDate && endDate <= maxDate) {
+          const duration = endTime - newEndTime;
+          const prevTotalDuration = totalDurationByDate[endDate] || 0;
+          totalDurationByDate[endDate] = prevTotalDuration + duration;
+        }
 
-        [endTime, endDate] = [newEndTime, getDateInMs(newEndTime)];
+        [endTime, endDate] = [newEndTime, newEndDate];
       }
 
-      const duration = endTime - startTime;
-      const prevTotalDuration = totalDurationByDate[endDate] || 0;
-      totalDurationByDate[endDate] = prevTotalDuration + duration;
+      if (endDate >= minDate && endDate <= maxDate) {
+        const duration = endTime - startTime;
+        const prevTotalDuration = totalDurationByDate[endDate] || 0;
+        totalDurationByDate[endDate] = prevTotalDuration + duration;
+      }
     });
 
-    const { start: startTime, end: endTime } = selectedTimeRange;
-    const { start: minTime, end: maxTime } = activityTimeRange;
-    const minDate = getDateInMs(startTime || minTime || 0);
-    const maxDate = getDateInMs(endTime || maxTime || Date.now());
     let currentDate = minDate;
     while (currentDate < maxDate) {
       // Manually zero out days with no activity
