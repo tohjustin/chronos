@@ -27,6 +27,8 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
     props.setSelectedTimeRange(timeRange);
   };
 
+  const startOfDay = moment().startOf("day");
+  const endOfDay = moment().endOf("day");
   return (
     <div>
       <h3 className="label">Selected Time Range</h3>
@@ -44,15 +46,15 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
         format="MMM DD, YYYY"
         onChange={handleTimeRangeChange}
         ranges={{
-          "Last week": [moment().subtract(1, "week"), moment()],
-          "Last 2 weeks": [moment().subtract(2, "week"), moment()],
-          "Last 4 weeks": [moment().subtract(4, "week"), moment()],
+          "Last week": [moment(startOfDay).subtract(1, "week"), endOfDay],
+          "Last 2 weeks": [moment(startOfDay).subtract(2, "week"), endOfDay],
+          "Last 4 weeks": [moment(startOfDay).subtract(4, "week"), endOfDay],
           All: props.activityTimeRange
             ? [
                 moment(props.activityTimeRange.start || 0),
                 moment(props.activityTimeRange.end || undefined)
               ]
-            : [moment(0), moment()]
+            : [moment(0), endOfDay]
         }}
         value={
           props.selectedTimeRange
@@ -60,7 +62,7 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
                 moment(props.selectedTimeRange.start || undefined),
                 moment(props.selectedTimeRange.end || undefined)
               ]
-            : [moment(), moment()]
+            : [moment(startOfDay), moment(endOfDay)]
         }
       />
     </div>
