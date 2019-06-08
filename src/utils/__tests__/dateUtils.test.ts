@@ -1,8 +1,8 @@
 import { getDateInMs, getDayOfWeekCount, getHourOfWeek } from "../dateUtils";
 
 describe("getDateInMs", () => {
-  const START_OF_DAY = 1556434800000; // Apr 28, 2019 0000H (Sun)
-  const START_OF_NEXT_DAY = 1556521200000; // Apr 29, 2019 0000H (Sun)
+  const START_OF_DAY = 1556434800000; // Apr 28, 2019 00:00:00.000 (Sun)
+  const START_OF_NEXT_DAY = 1556521200000; // Apr 29, 2019 00:00:00.000 (Sun)
   const TEST_CASES = [...Array(13)].map((val, index) => [
     START_OF_DAY + index * 2 * 60 * 60 * 1000,
     index < 12 ? START_OF_DAY : START_OF_NEXT_DAY
@@ -14,9 +14,9 @@ describe("getDateInMs", () => {
 });
 
 describe("getDayOfWeekCount", () => {
-  const START_DATE = 1556694000000; // May 1, 2019 (Wed)
-  const END_DATE_NEAR = 1556866800000; // May 3, 2019 (Fri)
-  const END_DATE_FAR = 1559890800000; // June 7, 2019 (Fri)
+  const START_DATE = 1556694000000; // May 1, 2019 00:00:00.000 (Wed)
+  const END_DATE_NEAR = 1556866800000; // May 3, 2019 00:00:00.000 (Fri)
+  const END_DATE_FAR = 1559890800000; // June 7, 2019 00:00:00.000 (Fri)
 
   describe("time interval = 0", () => {
     test.each([
