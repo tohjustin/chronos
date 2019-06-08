@@ -105,12 +105,8 @@ export const getRecords = createSelector(
     const { start: startTime, end: endTime } = selectedTimeRange;
     return records.filter(
       record =>
-        (startTime === null ||
-          record.startTime >= startTime ||
-          record.endTime >= startTime) &&
-        (endTime === null ||
-          record.endTime <= endTime ||
-          record.startTime <= endTime)
+        (startTime === null || record.endTime >= startTime) &&
+        (endTime === null || record.startTime <= endTime)
     );
   }
 );
