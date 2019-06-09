@@ -97,7 +97,6 @@ export const getEffectiveTimeRange = createSelector(
 
 /**
  * Retrieves all activity records that falls within the selected time range
- *
  * @remarks
  * Includes records with time intervals that overlaps with the time range
  * boundaries
@@ -215,6 +214,41 @@ export const getAverageDurationByHourOfWeek = createSelector(
       .sort((a, b) => {
         return a.day * 24 + a.hour < b.day * 24 + b.hour ? -1 : 1;
       });
+  }
+);
+
+/**
+ * Retrieves the set of domains & the domain's favion URL from all activity
+ * records
+ * @remarks We return a hashmap to enable faster lookups for `favIconUrl`
+ */
+export const getAllDomains = createSelector(
+  getAllRecords,
+  records => {
+    const allDomains = new Set<string>();
+    const favIconUrlByDomain = new Map<string, string>();
+
+    records.forEach(record => {
+      let { origin, favIconUrl } = record;
+      const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
+      if (!allDomains.has(domain)) {
+        allDomains.add(domain);
+      }
+      if (allDomains.has(domain) && favIconUrl) {
+        favIconUrlByDomain.set(domain, favIconUrl);
+      }
+    });
+
+    // Sort results by domains with highest duration
+    return [...allDomains].reduce(
+      (acc: { [domain: string]: { favIconUrl?: string } }, domain) => {
+        acc[domain] = {
+          favIconUrl: favIconUrlByDomain.get(domain)
+        };
+        return acc;
+      },
+      {}
+    );
   }
 );
 
