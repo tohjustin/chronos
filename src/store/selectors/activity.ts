@@ -171,62 +171,35 @@ export const getAverageDurationByHourOfWeek = createSelector(
 export const getTotalDurationByDate = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
-    const totalDurationByDate: { [timestamp: string]: number } = {};
     const minDate = getDateInMs(effectiveTimeRange.start);
     const maxDate = getDateInMs(effectiveTimeRange.end);
 
-    records.forEach(record => {
-      let { startTime, endTime } = record;
-      let [startDate, endDate] = [getDateInMs(startTime), getDateInMs(endTime)];
-
-      // Handle records spanning over different dates
-      while (startDate !== endDate) {
-        const newEndTime = getDateInMs(endTime) - 1;
-        const newEndDate = getDateInMs(newEndTime);
-
-        if (endDate >= minDate && endDate <= maxDate) {
-          const duration = endTime - newEndTime;
-          const prevTotalDuration = totalDurationByDate[endDate] || 0;
-          totalDurationByDate[endDate] = prevTotalDuration + duration;
-        }
-
-        [endTime, endDate] = [newEndTime, newEndDate];
-      }
-
-      if (endDate >= minDate && endDate <= maxDate) {
-        const duration = endTime - startTime;
-        const prevTotalDuration = totalDurationByDate[endDate] || 0;
-        totalDurationByDate[endDate] = prevTotalDuration + duration;
-      }
-    });
-
-    let currentDate = minDate;
-    while (currentDate < maxDate) {
-      // Manually zero out days with no activity
-      if (totalDurationByDate[currentDate] === undefined) {
-        totalDurationByDate[currentDate] = 0;
-      }
-
-      // Limit usage time up to maximum value of 24 hours
-      if (totalDurationByDate[currentDate] > 0) {
-        totalDurationByDate[currentDate] = Math.min(
-          1000 * 60 * 60 * 24,
-          totalDurationByDate[currentDate]
-        );
-      }
-
-      currentDate += 1000 * 60 * 60 * 24;
-    }
-
-    // Sort results by chronological order
-    return Object.entries(totalDurationByDate)
-      .map(([key, value]) => ({
-        timestamp: Number(key),
-        totalDuration: value
-      }))
-      .sort((a, b) => {
-        return a.timestamp < b.timestamp ? -1 : 1;
-      });
+    return _.chain(records)
+      .reduce(createActivitySplittingReducer("day"), [])
+      .filter(
+        r =>
+          r.startTime >= effectiveTimeRange.start &&
+          r.endTime <= effectiveTimeRange.end
+      )
+      .groupBy(record => getDateInMs(record.startTime))
+      .merge(
+        _.range(minDate, maxDate, 24 * 60 * 60 * 1000).reduce<{
+          [dateInMs: number]: ActivityRecord[];
+        }>((acc, dateInMs) => {
+          acc[dateInMs] = [];
+          return acc;
+        }, {})
+      )
+      .mapValues((records: ActivityRecord[], dateInMs: string) => {
+        const totalDuration = _.sumBy(records, r => r.endTime - r.startTime);
+        return {
+          timestamp: Number(dateInMs),
+          totalDuration
+        };
+      })
+      .values()
+      .sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1))
+      .value();
   }
 );
 
