@@ -1,5 +1,4 @@
-import moment from "moment";
-
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 /**
  * Returns the number of day-of-week that are in the time interval
@@ -14,13 +13,14 @@ export function getDayOfWeekCount(
   startTime: number,
   endTime: number
 ): number {
-  const start = moment(startTime);
-  const end = moment(endTime);
-  const dayOffset = (dayOfWeek - start.get("day") + 7) % 7;
-  const dayRange = end.diff(start, "days");
+  const startTimeDayOfWeek = new Date(startTime).getDay();
+  const dayOfWeekOffset = (dayOfWeek - startTimeDayOfWeek + 7) % 7;
+  const dayRange = Math.floor((endTime - startTime) / MS_PER_DAY);
 
-  const result = Math.ceil((dayRange - dayOffset) / 7);
-  return dayOffset >= dayRange ? 0 : Math.max(result, 1);
+  if (dayRange <= dayOfWeekOffset) {
+    return 0;
+  }
+  return Math.max(1, Math.ceil((dayRange - dayOfWeekOffset) / 7));
 }
 
 /**
