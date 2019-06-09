@@ -1,14 +1,5 @@
 import moment from "moment";
 
-/**
- * Returns the date of a timestamp
- *
- * @param timestamp - timestamp in milliseconds
- * @returns date in milliseconds (unix time)
- */
-export function getDateInMs(timestamp: number): number {
-  return new Date(timestamp).setHours(0, 0, 0, 0);
-}
 
 /**
  * Returns the number of day-of-week that are in the time interval
@@ -46,4 +37,14 @@ export function getHourOfWeek(
     hour: time.getHours(),
     day: time.getDay()
   };
+}
+
+/**
+ * Returns the start of day based on the given timestamp
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @returns start of day in milliseconds (unix time)
+ */
+export function getStartOfDay(timestamp: number): number {
+  return new Date(timestamp).setHours(0, 0, 0, 0);
 }

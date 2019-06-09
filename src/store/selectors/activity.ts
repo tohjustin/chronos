@@ -4,9 +4,9 @@ import { createSelector } from "reselect";
 import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
-  getDateInMs,
   getDayOfWeekCount,
-  getHourOfWeek
+  getHourOfWeek,
+  getStartOfDay
 } from "../../utils/dateUtils";
 
 const DEFAULT_TIME_RANGE = {
@@ -123,8 +123,8 @@ export const getAverageDurationByHourOfWeek = createSelector(
     const totalDurationByHourOfWeek: {
       [hourOfWeek: string]: { [date: string]: number };
     } = {};
-    const minDate = getDateInMs(effectiveTimeRange.start);
-    const maxDate = getDateInMs(effectiveTimeRange.end);
+    const minDate = getStartOfDay(effectiveTimeRange.start);
+    const maxDate = getStartOfDay(effectiveTimeRange.end);
 
     records.forEach(record => {
       let { startTime, endTime } = record;
@@ -140,8 +140,8 @@ export const getAverageDurationByHourOfWeek = createSelector(
         const newEndHourOfWeek = getHourOfWeek(newEndTime);
 
         if (
-          getDateInMs(endTime) >= minDate &&
-          getDateInMs(endTime) <= maxDate
+          getStartOfDay(endTime) >= minDate &&
+          getStartOfDay(endTime) <= maxDate
         ) {
           const hourOfWeekKey = String([endHourOfWeek.day, endHourOfWeek.hour]);
           if (totalDurationByHourOfWeek[hourOfWeekKey] === undefined) {
@@ -149,8 +149,9 @@ export const getAverageDurationByHourOfWeek = createSelector(
           }
           const duration = endTime - newEndTime;
           const prevTotalDuration =
-            totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] || 0;
-          totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] =
+            totalDurationByHourOfWeek[hourOfWeekKey][getStartOfDay(endTime)] ||
+            0;
+          totalDurationByHourOfWeek[hourOfWeekKey][getStartOfDay(endTime)] =
             prevTotalDuration + duration;
         }
 
@@ -159,8 +160,8 @@ export const getAverageDurationByHourOfWeek = createSelector(
 
       // Compute total duration
       if (
-        getDateInMs(startTime) >= minDate &&
-        getDateInMs(startTime) <= maxDate
+        getStartOfDay(startTime) >= minDate &&
+        getStartOfDay(startTime) <= maxDate
       ) {
         const hourOfWeekKey = `${endHourOfWeek.day},${endHourOfWeek.hour}`;
         const duration = endTime - startTime;
@@ -168,8 +169,8 @@ export const getAverageDurationByHourOfWeek = createSelector(
           totalDurationByHourOfWeek[hourOfWeekKey] = {};
         }
         const prevTotalDuration =
-          totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] || 0;
-        totalDurationByHourOfWeek[hourOfWeekKey][getDateInMs(endTime)] =
+          totalDurationByHourOfWeek[hourOfWeekKey][getStartOfDay(endTime)] || 0;
+        totalDurationByHourOfWeek[hourOfWeekKey][getStartOfDay(endTime)] =
           prevTotalDuration + duration;
       }
     });
@@ -222,17 +223,20 @@ export const getTotalDurationByDate = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
     const totalDurationByDate: { [timestamp: string]: number } = {};
-    const minDate = getDateInMs(effectiveTimeRange.start);
-    const maxDate = getDateInMs(effectiveTimeRange.end);
+    const minDate = getStartOfDay(effectiveTimeRange.start);
+    const maxDate = getStartOfDay(effectiveTimeRange.end);
 
     records.forEach(record => {
       let { startTime, endTime } = record;
-      let [startDate, endDate] = [getDateInMs(startTime), getDateInMs(endTime)];
+      let [startDate, endDate] = [
+        getStartOfDay(startTime),
+        getStartOfDay(endTime)
+      ];
 
       // Handle records spanning over different dates
       while (startDate !== endDate) {
-        const newEndTime = getDateInMs(endTime) - 1;
-        const newEndDate = getDateInMs(newEndTime);
+        const newEndTime = getStartOfDay(endTime) - 1;
+        const newEndDate = getStartOfDay(newEndTime);
 
         if (endDate >= minDate && endDate <= maxDate) {
           const duration = endTime - newEndTime;

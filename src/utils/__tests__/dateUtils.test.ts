@@ -1,6 +1,6 @@
-import { getDateInMs, getDayOfWeekCount, getHourOfWeek } from "../dateUtils";
+import { getStartOfDay, getDayOfWeekCount, getHourOfWeek } from "../dateUtils";
 
-describe("getDateInMs", () => {
+describe("getStartOfDay", () => {
   const START_OF_DAY = 1556434800000; // Apr 28, 2019 00:00:00.000 (Sun)
   const START_OF_NEXT_DAY = 1556521200000; // Apr 29, 2019 00:00:00.000 (Sun)
   const TEST_CASES = [...Array(13)].map((val, index) => [
@@ -8,8 +8,8 @@ describe("getDateInMs", () => {
     index < 12 ? START_OF_DAY : START_OF_NEXT_DAY
   ]);
 
-  test.each(TEST_CASES)("getDateInMs(%i) returns %i", (a, expected) => {
-    expect(getDateInMs(a)).toEqual(expected);
+  test.each(TEST_CASES)("getStartOfDay(%i) returns %i", (a, expected) => {
+    expect(getStartOfDay(a)).toEqual(expected);
   });
 });
 
