@@ -1,4 +1,3 @@
-import moment from "moment";
 import { createSelector } from "reselect";
 
 import { DefiniteTimeRange } from "../../models/time";
@@ -9,11 +8,9 @@ import {
   getStartOfDay
 } from "../../utils/dateUtils";
 
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
 const DEFAULT_TIME_RANGE = {
-  start: moment()
-    .subtract(4, "week")
-    .startOf("day")
-    .valueOf(),
+  start: getStartOfDay(Date.now() - 4 * MS_PER_WEEK),
   end: null
 };
 
