@@ -33,8 +33,13 @@ export const setSelectedTimeRange = createAction(
   }
 );
 
+export const setSelectedDomain = createAction("SET_SELECTED_DOMAIN", action => {
+  return (domain: string | null) => action(domain);
+});
+
 export const actions = {
   loadActivityAsync,
   loadActivity,
+  setSelectedDomain,
   setSelectedTimeRange
 };

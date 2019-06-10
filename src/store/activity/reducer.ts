@@ -7,17 +7,23 @@ import { DeepReadonly } from "utility-types";
 import { ActivityRecord } from "../../db/types";
 import { TimeRange } from "../../models/time";
 
-import { loadActivityAsync, setSelectedTimeRange } from "./actions";
+import {
+  loadActivityAsync,
+  setSelectedDomain,
+  setSelectedTimeRange
+} from "./actions";
 
 type State = DeepReadonly<{
   isLoadingRecords: boolean;
   records: ActivityRecord[];
+  selectedDomain: string | null;
   selectedTimeRange: TimeRange | null;
 }>;
 
 const INITIAL_STATE: State = {
   isLoadingRecords: false,
   records: [],
+  selectedDomain: null,
   selectedTimeRange: null
 };
 
@@ -30,6 +36,10 @@ export const reducer = combineReducers({
     ),
   records: createReducer(INITIAL_STATE.records).handleAction(
     [loadActivityAsync.success],
+    (state, action) => action.payload
+  ),
+  selectedDomain: createReducer(INITIAL_STATE.selectedDomain).handleAction(
+    [getType(setSelectedDomain)],
     (state, action) => action.payload
   ),
   selectedTimeRange: createReducer(

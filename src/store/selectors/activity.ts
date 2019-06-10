@@ -27,6 +27,12 @@ export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoadingRecords;
 
 /**
+ * Retrieves the user selected domain
+ */
+export const getSelectedDomain = (state: RootState) =>
+  state.activity.selectedDomain;
+
+/**
  * Retrieves the user selected time range
  */
 export const getSelectedTimeRange = (state: RootState) => {
