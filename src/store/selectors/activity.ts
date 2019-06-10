@@ -111,6 +111,26 @@ export const getRecords = createSelector(
 );
 
 /**
+ * Retrieves all activity records of a selected domain that falls within the
+ * selected time range
+ * @remarks
+ * Includes records with time intervals that overlaps with the time range
+ * boundaries
+ */
+export const getSelectedDomainRecords = createSelector(
+  [getAllRecords, getSelectedDomain, getSelectedTimeRange],
+  (records, selectedDomain, selectedTimeRange) => {
+    const { start: startTime, end: endTime } = selectedTimeRange;
+    return records.filter(
+      record =>
+        selectedDomain === record.origin.replace(/(https?:\/\/|www\.)/g, "") &&
+        (startTime === null || record.endTime >= startTime) &&
+        (endTime === null || record.startTime <= endTime)
+    );
+  }
+);
+
+/**
  * Retrieves average duration of all activity records that falls within the
  * selected time range, grouped by the hour-of-day & day-of-week of the
  * activity's timestamp
