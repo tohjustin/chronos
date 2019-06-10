@@ -6,7 +6,7 @@ import HeatmapChart from "../../components/HeatmapChart";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 
-interface AverageUsageByHourOfWeekProps {
+interface AverageUsageByHourOfWeekCardProps {
   getAverageDurationByHourOfWeek: {
     duration: number;
     hour: number;
@@ -14,7 +14,9 @@ interface AverageUsageByHourOfWeekProps {
   }[];
 }
 
-const AverageUsageByHourOfWeek = (props: AverageUsageByHourOfWeekProps) => (
+const AverageUsageByHourOfWeekCard = (
+  props: AverageUsageByHourOfWeekCardProps
+) => (
   <Card
     className="analytics-view__card analytics-view__card--sm"
     title="Usage by Time of Day"
@@ -35,4 +37,4 @@ const mapStateToProps = (state: RootState) => ({
   getAverageDurationByHourOfWeek: selector.getAverageDurationByHourOfWeek(state)
 });
 
-export default connect(mapStateToProps)(AverageUsageByHourOfWeek);
+export default connect(mapStateToProps)(AverageUsageByHourOfWeekCard);
