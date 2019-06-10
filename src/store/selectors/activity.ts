@@ -292,7 +292,8 @@ export const getTotalDurationByDomain = createSelector(
     const favIconUrlByDomain: { [domain: string]: string } = {};
 
     records.forEach(record => {
-      let { origin: domain, startTime, endTime } = record;
+      let { origin, startTime, endTime } = record;
+      const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
 
       if (domain !== undefined) {
         const duration = endTime - startTime;
@@ -305,7 +306,7 @@ export const getTotalDurationByDomain = createSelector(
     // Sort results by domains with highest duration
     return Object.entries(totalDurationByDomain)
       .map(([key, value]) => ({
-        domain: key.replace(/(https:\/\/|www\.)/g, ""),
+        domain: key,
         favIconUrl: favIconUrlByDomain[key],
         totalDuration: value
       }))
