@@ -73,4 +73,45 @@ $card__margin-y: 2 * $base__size;
       padding: 0.5 * $base__size;
     }
   }
+
+  &__domain-picker {
+    display: flex;
+    align-items: center;
+    margin: 0 0.5 * $base__size;
+
+    button {
+      font-family: $font-family;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      margin-right: $base__size;
+
+      .icon {
+        height: 3 * $base__size;
+        width: 3 * $base__size;
+        background-color: $color__white;
+        border-radius: 100%;
+        box-shadow: $shadow__favicon;
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin-right: $base__size;
+        overflow: hidden;
+        padding: 1px;
+      }
+    }
+  }
+
+  &__header {
+    margin-right: 0.5 * $base__size;
+  }
+}
+
+// NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>
+// doesn't expose any props for adding classes to it's dialog component 🤢
+div[evergreen-portal-container] div[role='dialog'] {
+  z-index: $z-index__menu-select !important;
 }

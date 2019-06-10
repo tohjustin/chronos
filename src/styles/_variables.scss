@@ -25,8 +25,10 @@ $color__white: #fff;
 
 $shadow__color: #{$color__black}6d;
 $shadow__card: 0 0 2px $shadow__color;
+$shadow__favicon: 0 0 2px $shadow__color;
 $shadow__header: 0 0 1px $shadow__color;
 $shadow__input: 0 0 1px $shadow__color;
 
 $z-index__navbar: 1000;
+$z-index__menu-select: 100;
 $z-index__view-header: 100;

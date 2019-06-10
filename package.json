@@ -46,6 +46,7 @@
     "connected-react-router": "6.4.0",
     "d3": "5.9.2",
     "dexie": "2.0.4",
+    "evergreen-ui": "4.17.0",
     "file-saver": "2.0.2",
     "lodash": "4.17.11",
     "moment": "2.24.0",
