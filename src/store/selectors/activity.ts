@@ -143,6 +143,21 @@ export const getAverageDurationByHourOfWeek = createSelector(
 );
 
 /**
+ * Retrieves average duration of all activity records of a selected domain that
+ * falls within the selected time range, grouped by the hour-of-day &
+ * day-of-week of the activity's timestamp
+ */
+export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    return computeAverageDurationByHourOfWeek(
+      selectedDomainRecords,
+      effectiveTimeRange
+    );
+  }
+);
+
+/**
  * Retrieves the set of domains & the domain's favion URL from all activity
  * records
  * @remarks We return a hashmap to enable faster lookups for `favIconUrl`
