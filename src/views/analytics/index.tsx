@@ -1,3 +1,4 @@
+import { Icon } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -6,6 +7,7 @@ import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
+import DomainPicker from "./DomainPicker";
 import TimeRangePicker from "./TimeRangePicker";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
@@ -36,7 +38,11 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 
   return (
     <View.Container>
-      <View.Header>Usage Analytics</View.Header>
+      <View.Header>
+        <span className="analytics-view__header">Usage Analytics</span>
+        <Icon icon="slash" size={20} />
+        <DomainPicker />
+      </View.Header>
       <View.Body>{viewContent}</View.Body>
     </View.Container>
   );

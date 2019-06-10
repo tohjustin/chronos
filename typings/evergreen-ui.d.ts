@@ -17,6 +17,14 @@ declare module "evergreen-ui" {
   }
   export class Button extends React.PureComponent<ButtonProps> {}
 
+  export interface IconProps {
+    icon: string;
+    color?: string;
+    size?: number;
+    title?: string;
+  }
+  export class Icon extends React.PureComponent<IconProps> {}
+
   export interface IconButtonProps {
     icon: string;
     appearance?: "default" | "minimal" | "primary";
