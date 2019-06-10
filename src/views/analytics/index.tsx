@@ -7,6 +7,7 @@ import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
+import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
 import TimeRangePicker from "./TimeRangePicker";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
@@ -16,6 +17,7 @@ import "./styles.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
+  selectedDomain: string | null;
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
@@ -26,13 +28,23 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
       <div className="analytics-view__control-panel">
         <TimeRangePicker />
       </div>
-      <div className="analytics-view__cards-container">
-        <TotalUsagePerDayCard />
-        <TotalUsageRankingCard />
-      </div>
-      <div className="analytics-view__cards-container">
-        <AverageUsageByHourOfWeekCard />
-      </div>
+      {props.selectedDomain === null ? (
+        <>
+          <div className="analytics-view__cards-container">
+            <TotalUsagePerDayCard />
+            <TotalUsageRankingCard />
+          </div>
+          <div className="analytics-view__cards-container">
+            <AverageUsageByHourOfWeekCard />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="analytics-view__cards-container">
+            <DomainAverageUsageByHourOfWeekCard />
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -49,7 +61,8 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  isLoadingRecords: selector.getIsLoadingRecords(state)
+  isLoadingRecords: selector.getIsLoadingRecords(state),
+  selectedDomain: selector.getSelectedDomain(state)
 });
 
 export default connect(mapStateToProps)(AnalyticsView);
