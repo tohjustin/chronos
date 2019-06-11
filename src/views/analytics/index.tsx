@@ -9,6 +9,7 @@ import { RootState } from "../../store/types";
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
+import DomainTotalUsagePerDayCard from "./DomainTotalUsagePerDayCard";
 import TimeRangePicker from "./TimeRangePicker";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
@@ -41,6 +42,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
       ) : (
         <>
           <div className="analytics-view__cards-container">
+            <DomainTotalUsagePerDayCard />
             <DomainAverageUsageByHourOfWeekCard />
           </div>
         </>
