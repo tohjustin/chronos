@@ -170,3 +170,68 @@ export function computeAverageDurationByHourOfWeek(
       return a.day * 24 + a.hour < b.day * 24 + b.hour ? -1 : 1;
     });
 }
+
+export function computeTotalDurationByDate(
+  records: ActivityRecord[],
+  effectiveTimeRange: DefiniteTimeRange
+) {
+  const totalDurationByDate: { [timestamp: string]: number } = {};
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+
+  records.forEach(record => {
+    let { startTime, endTime } = record;
+    let [startDate, endDate] = [
+      getStartOfDay(startTime),
+      getStartOfDay(endTime)
+    ];
+
+    // Handle records spanning over different dates
+    while (startDate !== endDate) {
+      const newEndTime = getStartOfDay(endTime) - 1;
+      const newEndDate = getStartOfDay(newEndTime);
+
+      if (endDate >= minDate && endDate <= maxDate) {
+        const duration = endTime - newEndTime;
+        const prevTotalDuration = totalDurationByDate[endDate] || 0;
+        totalDurationByDate[endDate] = prevTotalDuration + duration;
+      }
+
+      [endTime, endDate] = [newEndTime, newEndDate];
+    }
+
+    if (endDate >= minDate && endDate <= maxDate) {
+      const duration = endTime - startTime;
+      const prevTotalDuration = totalDurationByDate[endDate] || 0;
+      totalDurationByDate[endDate] = prevTotalDuration + duration;
+    }
+  });
+
+  let currentDate = minDate;
+  while (currentDate < maxDate) {
+    // Manually zero out days with no activity
+    if (totalDurationByDate[currentDate] === undefined) {
+      totalDurationByDate[currentDate] = 0;
+    }
+
+    // Limit usage time up to maximum value of 24 hours
+    if (totalDurationByDate[currentDate] > 0) {
+      totalDurationByDate[currentDate] = Math.min(
+        1000 * 60 * 60 * 24,
+        totalDurationByDate[currentDate]
+      );
+    }
+
+    currentDate += 1000 * 60 * 60 * 24;
+  }
+
+  // Sort results by chronological order
+  return Object.entries(totalDurationByDate)
+    .map(([key, value]) => ({
+      timestamp: Number(key),
+      totalDuration: value
+    }))
+    .sort((a, b) => {
+      return a.timestamp < b.timestamp ? -1 : 1;
+    });
+}

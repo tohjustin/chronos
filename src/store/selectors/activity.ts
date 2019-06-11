@@ -2,7 +2,10 @@ import { createSelector } from "reselect";
 
 import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
-import { computeAverageDurationByHourOfWeek } from "../../utils/activityUtils";
+import {
+  computeAverageDurationByHourOfWeek,
+  computeTotalDurationByDate
+} from "../../utils/activityUtils";
 import { getStartOfDay } from "../../utils/dateUtils";
 
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
@@ -199,65 +202,7 @@ export const getAllDomains = createSelector(
 export const getTotalDurationByDate = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
-    const totalDurationByDate: { [timestamp: string]: number } = {};
-    const minDate = getStartOfDay(effectiveTimeRange.start);
-    const maxDate = getStartOfDay(effectiveTimeRange.end);
-
-    records.forEach(record => {
-      let { startTime, endTime } = record;
-      let [startDate, endDate] = [
-        getStartOfDay(startTime),
-        getStartOfDay(endTime)
-      ];
-
-      // Handle records spanning over different dates
-      while (startDate !== endDate) {
-        const newEndTime = getStartOfDay(endTime) - 1;
-        const newEndDate = getStartOfDay(newEndTime);
-
-        if (endDate >= minDate && endDate <= maxDate) {
-          const duration = endTime - newEndTime;
-          const prevTotalDuration = totalDurationByDate[endDate] || 0;
-          totalDurationByDate[endDate] = prevTotalDuration + duration;
-        }
-
-        [endTime, endDate] = [newEndTime, newEndDate];
-      }
-
-      if (endDate >= minDate && endDate <= maxDate) {
-        const duration = endTime - startTime;
-        const prevTotalDuration = totalDurationByDate[endDate] || 0;
-        totalDurationByDate[endDate] = prevTotalDuration + duration;
-      }
-    });
-
-    let currentDate = minDate;
-    while (currentDate < maxDate) {
-      // Manually zero out days with no activity
-      if (totalDurationByDate[currentDate] === undefined) {
-        totalDurationByDate[currentDate] = 0;
-      }
-
-      // Limit usage time up to maximum value of 24 hours
-      if (totalDurationByDate[currentDate] > 0) {
-        totalDurationByDate[currentDate] = Math.min(
-          1000 * 60 * 60 * 24,
-          totalDurationByDate[currentDate]
-        );
-      }
-
-      currentDate += 1000 * 60 * 60 * 24;
-    }
-
-    // Sort results by chronological order
-    return Object.entries(totalDurationByDate)
-      .map(([key, value]) => ({
-        timestamp: Number(key),
-        totalDuration: value
-      }))
-      .sort((a, b) => {
-        return a.timestamp < b.timestamp ? -1 : 1;
-      });
+    return computeTotalDurationByDate(records, effectiveTimeRange);
   }
 );
 
