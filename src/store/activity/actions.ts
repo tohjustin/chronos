@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { createAction, createAsyncAction } from "typesafe-actions";
 
 import { InitDatabase } from "../../db";
-import { ActivityRecord } from "../../db/types";
+import { ActivityRecord } from "../../models/activity";
 import { TimeRange } from "../../models/time";
 
 export const loadActivityAsync = createAsyncAction(

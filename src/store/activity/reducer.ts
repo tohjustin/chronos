@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 import { createReducer, getType } from "typesafe-actions";
 import { DeepReadonly } from "utility-types";
 
-import { ActivityRecord } from "../../db/types";
+import { ActivityRecord } from "../../models/activity";
 import { TimeRange } from "../../models/time";
 
 import {

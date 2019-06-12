@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { ActivityRecord } from "../db/types";
+import { ActivityRecord } from "../models/activity";
 import { DefiniteTimeRange } from "../models/time";
 
 import { getDayOfWeekCount, getHourOfWeek, getStartOfDay } from "./dateUtils";

@@ -1,7 +1,8 @@
 import Dexie from "dexie";
 
+import { ActivityRecord } from "../models/activity";
+
 import {
-  ActivityRecord,
   ActivityService,
   DatabaseRecords,
   DataMigrationService
