@@ -14,9 +14,9 @@
     "lint:ts": "eslint --fix -- ./src/**/*.{ts,tsx}",
     "lint:scss": "stylelint --fix -- ./src/**/*.scss",
     "prettier": "prettier --write -- ./src/**/*.{ts,tsx}",
-    "test": "react-app-rewired test --watchAll=false",
-    "test:debug": "react-app-rewired --inspect test --no-cache --runInBand --watchAll=false",
-    "test:watch": "react-app-rewired test",
+    "test": "TZ=America/Vancouver react-app-rewired test --watchAll=false",
+    "test:debug": "TZ=America/Vancouver react-app-rewired --inspect test --no-cache --runInBand --watchAll=false",
+    "test:watch": "TZ=America/Vancouver react-app-rewired test",
     "react-devtools": "react-devtools",
     "redux-devtools": "redux-devtools --hostname=localhost --port=8098"
   },
