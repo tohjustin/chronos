@@ -161,7 +161,7 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
 );
 
 /**
- * Retrieves the set of domains & the domain's favion URL from all activity
+ * Retrieves the set of domains & the domain's favicon URL from all activity
  * records
  * @remarks We return a hashmap to enable faster lookups for `favIconUrl`
  */
