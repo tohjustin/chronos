@@ -3,6 +3,7 @@
 $dot__radius: 3;
 $dot__stroke-width: 2px;
 $line__stroke-width: 2px;
+$label__max-width: 40%;
 $hover__transition--opacity: opacity 0.25s;
 
 .bar-chart {
@@ -57,7 +58,7 @@ $hover__transition--opacity: opacity 0.25s;
   .vertical-axis__container {
     position: relative;
     margin-right: $base__size;
-    max-width: 35%;
+    max-width: $label__max-width;
 
     .labels {
       &--dummy {
