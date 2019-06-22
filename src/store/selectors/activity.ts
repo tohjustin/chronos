@@ -256,3 +256,39 @@ export const getTotalDurationByDomain = createSelector(
       .slice(0, 10);
   }
 );
+
+/**
+ * Retrieves total duration of all activity records of a selected domain that
+ * falls within the selected time range, grouped by pathname of the activity's
+ * URL
+ */
+export const getSelectedDomainTotalDurationByPath = createSelector(
+  getSelectedDomainRecords,
+  selectedDomainRecords => {
+    const totalDurationByPathname: {
+      [path: string]: { totalDuration: number; title: string; path: string };
+    } = {};
+
+    selectedDomainRecords.forEach(record => {
+      let { pathname, startTime, endTime } = record;
+      if (pathname !== undefined) {
+        const duration = endTime - startTime;
+        const prevTotalDuration =
+          totalDurationByPathname[pathname].totalDuration || 0;
+        totalDurationByPathname[pathname] = {
+          path: pathname,
+          title: record.title,
+          totalDuration: prevTotalDuration + duration
+        };
+      }
+    });
+
+    // Sort results by paths with highest duration
+    return Object.entries(totalDurationByPathname)
+      .map(([, value]) => value)
+      .sort((a, b) => {
+        return a.totalDuration > b.totalDuration ? -1 : 1;
+      })
+      .slice(0, 10);
+  }
+);
