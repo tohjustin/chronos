@@ -10,6 +10,7 @@ import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
 import DomainTotalUsagePerDayCard from "./DomainTotalUsagePerDayCard";
+import DomainTotalUsageRankingCard from "./DomainTotalUsageRankingCard";
 import TimeRangePicker from "./TimeRangePicker";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
@@ -43,6 +44,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
         <>
           <div className="analytics-view__cards-container">
             <DomainTotalUsagePerDayCard />
+            <DomainTotalUsageRankingCard />
+          </div>
+          <div className="analytics-view__cards-container">
             <DomainAverageUsageByHourOfWeekCard />
           </div>
         </>
