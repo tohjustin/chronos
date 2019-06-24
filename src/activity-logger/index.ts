@@ -90,7 +90,7 @@ export class ActivityLogger {
     this.tabsService = dependencies.tabsService;
     this.windowsService = dependencies.windowsService;
 
-    this.currentActivity = EMPTY_ACTIVITY;
+    this.currentActivity = { ...EMPTY_ACTIVITY };
   }
 
   private hasActiveActivity(activity: Activity): boolean {
@@ -170,8 +170,7 @@ export class ActivityLogger {
     // When browser window is being unfocused
     if (windowId === this.windowsService.WINDOW_ID_NONE) {
       const activity = { ...this.currentActivity, endTime: Date.now() };
-      this.currentActivity = EMPTY_ACTIVITY;
-
+      this.currentActivity = { ...EMPTY_ACTIVITY };
       await this.log(activity);
       return;
     }
