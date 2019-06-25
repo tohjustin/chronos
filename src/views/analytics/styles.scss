@@ -108,6 +108,15 @@ $card__margin-y: 2 * $base__size;
   &__header {
     margin-right: 0.5 * $base__size;
   }
+
+  &__link {
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: $color__primary;
+    }
+  }
 }
 
 // NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>

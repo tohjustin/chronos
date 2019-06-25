@@ -1,10 +1,13 @@
+import classNames from "classnames";
 import { Icon } from "evergreen-ui";
 import React from "react";
+import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
 import View from "../../components/View";
+import actions from "../../store/root-action";
 import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootAction, RootState } from "../../store/types";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
@@ -20,6 +23,7 @@ import "./styles.scss";
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
   selectedDomain: string | null;
+  clearSelectedDomain: () => void;
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
@@ -57,7 +61,14 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
   return (
     <View.Container>
       <View.Header>
-        <span className="analytics-view__header">Usage Analytics</span>
+        <span
+          className={classNames("analytics-view__header", {
+            "analytics-view__link": props.selectedDomain !== null
+          })}
+          onClick={props.clearSelectedDomain}
+        >
+          Usage Analytics
+        </span>
         <Icon icon="slash" size={20} />
         <DomainPicker />
       </View.Header>
@@ -71,4 +82,15 @@ const mapStateToProps = (state: RootState) => ({
   selectedDomain: selector.getSelectedDomain(state)
 });
 
-export default connect(mapStateToProps)(AnalyticsView);
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators(
+    {
+      clearSelectedDomain: () => actions.activity.setSelectedDomain(null)
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnalyticsView);
