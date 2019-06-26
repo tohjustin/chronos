@@ -30,42 +30,39 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
   const startOfDay = moment().startOf("day");
   const endOfDay = moment().endOf("day");
   return (
-    <div>
-      <h3 className="label">Selected Time Range</h3>
-      <DateRangePicker
-        disabledDate={current => {
-          if (current && props.activityTimeRange) {
-            const { start, end } = props.activityTimeRange;
-            return (
-              current.isBefore(start || 0, "day") ||
-              current.isAfter(end || Date.now(), "day")
-            );
-          }
-          return true;
-        }}
-        format="MMM DD, YYYY"
-        onChange={handleTimeRangeChange}
-        ranges={{
-          "Last week": [moment(startOfDay).subtract(1, "week"), endOfDay],
-          "Last 2 weeks": [moment(startOfDay).subtract(2, "week"), endOfDay],
-          "Last 4 weeks": [moment(startOfDay).subtract(4, "week"), endOfDay],
-          All: props.activityTimeRange
-            ? [
-                moment(props.activityTimeRange.start || 0),
-                moment(props.activityTimeRange.end || undefined)
-              ]
-            : [moment(0), endOfDay]
-        }}
-        value={
-          props.selectedTimeRange
-            ? [
-                moment(props.selectedTimeRange.start || undefined),
-                moment(props.selectedTimeRange.end || undefined)
-              ]
-            : [moment(startOfDay), moment(endOfDay)]
+    <DateRangePicker
+      disabledDate={current => {
+        if (current && props.activityTimeRange) {
+          const { start, end } = props.activityTimeRange;
+          return (
+            current.isBefore(start || 0, "day") ||
+            current.isAfter(end || Date.now(), "day")
+          );
         }
-      />
-    </div>
+        return true;
+      }}
+      format="MMM DD, YYYY"
+      onChange={handleTimeRangeChange}
+      ranges={{
+        "Last week": [moment(startOfDay).subtract(1, "week"), endOfDay],
+        "Last 2 weeks": [moment(startOfDay).subtract(2, "week"), endOfDay],
+        "Last 4 weeks": [moment(startOfDay).subtract(4, "week"), endOfDay],
+        All: props.activityTimeRange
+          ? [
+              moment(props.activityTimeRange.start || 0),
+              moment(props.activityTimeRange.end || undefined)
+            ]
+          : [moment(0), endOfDay]
+      }}
+      value={
+        props.selectedTimeRange
+          ? [
+              moment(props.selectedTimeRange.start || undefined),
+              moment(props.selectedTimeRange.end || undefined)
+            ]
+          : [moment(startOfDay), moment(endOfDay)]
+      }
+    />
   );
 };
 

@@ -60,20 +60,6 @@ $card__margin-y: 2 * $base__size;
     }
   }
 
-  &__control-panel {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2 * $base__size;
-
-    .label {
-      color: $color__black;
-      font-size: 12px;
-      font-weight: 600;
-      margin: 0;
-      padding: 0.5 * $base__size;
-    }
-  }
-
   &__domain-picker {
     display: flex;
     align-items: center;
@@ -106,6 +92,8 @@ $card__margin-y: 2 * $base__size;
   }
 
   &__header {
+    display: flex;
+    align-items: center;
     margin-right: 0.5 * $base__size;
   }
 

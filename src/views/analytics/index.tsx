@@ -31,9 +31,6 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
     "Loading..."
   ) : (
     <div>
-      <div className="analytics-view__control-panel">
-        <TimeRangePicker />
-      </div>
       {props.selectedDomain === null ? (
         <>
           <div className="analytics-view__cards-container">
@@ -61,16 +58,21 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
   return (
     <View.Container>
       <View.Header>
-        <span
-          className={classNames("analytics-view__header", {
-            "analytics-view__link": props.selectedDomain !== null
-          })}
-          onClick={props.clearSelectedDomain}
-        >
-          Usage Analytics
+        <span className="analytics-view__header">
+          <span
+            className={classNames({
+              "analytics-view__link": props.selectedDomain !== null
+            })}
+            onClick={props.clearSelectedDomain}
+          >
+            Usage Analytics
+          </span>
+          <Icon icon="slash" size={20} />
+          <DomainPicker />
         </span>
-        <Icon icon="slash" size={20} />
-        <DomainPicker />
+        <span>
+          <TimeRangePicker />
+        </span>
       </View.Header>
       <View.Body>{viewContent}</View.Body>
     </View.Container>

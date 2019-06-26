@@ -13,7 +13,10 @@ $view-header__padding-x: 3 * $base__size;
 
 .view-header {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   box-shadow: $shadow__header;
   padding: $view-header__padding-y $view-header__padding-x;
   font-size: $font-size__lg;
@@ -23,7 +26,7 @@ $view-header__padding-x: 3 * $base__size;
 
 .view-body {
   overflow-y: scroll;
-  padding: $view-body__padding-y $view-body__padding-x;
+  padding: $view-body__padding-x;
   font-size: $font-size__base;
   font-weight: 400;
   background-color: $color__lighter-gray;

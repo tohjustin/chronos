@@ -54,9 +54,9 @@ const DomainPicker = (props: DomainPickerProps) => {
         width={320}
       >
         {props.selectedDomain ? (
-          <IconButton height={24} icon="caret-down" />
+          <IconButton height={28} icon="caret-down" />
         ) : (
-          <Button iconAfter="caret-down" height={24} marginRight={12}>
+          <Button iconAfter="caret-down" height={28} marginRight={12}>
             Select Domain
           </Button>
         )}
