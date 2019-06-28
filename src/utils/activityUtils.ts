@@ -235,3 +235,7 @@ export function computeTotalDurationByDate(
       return a.timestamp < b.timestamp ? -1 : 1;
     });
 }
+
+export function isValidActivityRecord(record: ActivityRecord) {
+  return record.startTime < record.endTime;
+}

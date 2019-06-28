@@ -4,7 +4,8 @@ import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
   computeAverageDurationByHourOfWeek,
-  computeTotalDurationByDate
+  computeTotalDurationByDate,
+  isValidActivityRecord
 } from "../../utils/activityUtils";
 import { getStartOfDay } from "../../utils/dateUtils";
 
@@ -17,7 +18,9 @@ const DEFAULT_TIME_RANGE = {
 /**
  * Retrieves all activity records
  */
-export const getAllRecords = (state: RootState) => state.activity.records;
+export const getAllRecords = (state: RootState) => {
+  return state.activity.records.filter(isValidActivityRecord);
+};
 
 /**
  * Retrieves the state loading activity records from IndexedDB into the redux
