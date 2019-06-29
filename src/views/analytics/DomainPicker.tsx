@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
+import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
 
 interface DomainPickerProps {
   allDomains: {
@@ -54,9 +55,13 @@ const DomainPicker = (props: DomainPickerProps) => {
         width={320}
       >
         {props.selectedDomain ? (
-          <IconButton height={28} icon="caret-down" />
+          <IconButton height={BUTTON_SIZE} icon="caret-down" />
         ) : (
-          <Button iconAfter="caret-down" height={28} marginRight={12}>
+          <Button
+            height={BUTTON_SIZE}
+            iconAfter="caret-down"
+            marginRight={BUTTON_MARGIN}
+          >
             Select Domain
           </Button>
         )}

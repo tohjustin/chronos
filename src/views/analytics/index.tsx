@@ -8,6 +8,7 @@ import View from "../../components/View";
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
+import { ICON_SIZE } from "../../styles/constants";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
@@ -67,7 +68,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
           >
             Usage Analytics
           </span>
-          <Icon icon="slash" size={20} />
+          <Icon icon="slash" size={ICON_SIZE} />
           <DomainPicker />
         </span>
         <span>
