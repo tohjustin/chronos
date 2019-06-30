@@ -2,8 +2,10 @@ declare module "evergreen-ui" {
   import * as React from "react";
 
   export interface ButtonProps {
+    onClick?: () => void;
     appearance?: "default" | "minimal" | "primary";
     children?: React.ReactNode;
+    className?: string;
     disabled?: boolean;
     height?: number;
     iconAfter?: string;
@@ -27,8 +29,10 @@ declare module "evergreen-ui" {
 
   export interface IconButtonProps {
     icon: string;
+    onClick?: () => void;
     appearance?: "default" | "minimal" | "primary";
     children?: React.ReactNode;
+    className?: string;
     disabled?: boolean;
     height?: number;
     iconSize?: number;

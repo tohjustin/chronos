@@ -77,3 +77,13 @@ $card__margin-y: 2 * $base__size;
     }
   }
 }
+
+// TODO: Remove this when theming support is available on evergreen-ui
+.primary-btn {
+  color: $color__white;
+  background-image: linear-gradient(to bottom, $color__primary, $color__primary-dark);
+
+  &:not([disabled]):not([data-disabled]):hover {
+    background-image: linear-gradient(to bottom, $color__primary-dark, $color__primary-darker);
+  }
+}

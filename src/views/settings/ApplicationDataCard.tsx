@@ -1,8 +1,8 @@
+import { Button } from "evergreen-ui";
 import React from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 
-import Button from "../../components/Button";
 import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
 import { List, ListItem } from "../../components/List";
@@ -11,6 +11,7 @@ import { TimeRange } from "../../models/time";
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
+import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
 
 import { formatBytes, formatDateDistance } from "./utils";
 
@@ -66,12 +67,19 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
         <div className="settings-view__button-panel">
           <FileUploadButton
             accept=".json"
-            buttonType="secondary"
+            height={BUTTON_SIZE}
+            marginRight={BUTTON_MARGIN}
             onChange={handleFileUploadChange}
           >
             Import Data
           </FileUploadButton>
-          <Button type="primary" onClick={props.exportDatabaseRecords}>
+          <Button
+            appearance="primary"
+            className="primary-btn"
+            height={BUTTON_SIZE}
+            iconBefore="export"
+            onClick={props.exportDatabaseRecords}
+          >
             Export Data
           </Button>
         </div>

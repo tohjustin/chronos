@@ -1,15 +1,16 @@
-import classNames from "classnames";
+import { Button } from "evergreen-ui";
 import React, { useRef } from "react";
-
-import Button from "../Button";
 
 import "./styles.scss";
 
 interface FileUploadButtonProps {
   accept: string;
-  buttonType: "primary" | "secondary";
+  appearance?: "default" | "minimal" | "primary";
   className?: string;
   children?: React.ReactNode;
+  height?: number;
+  marginLeft?: number;
+  marginRight?: number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -18,8 +19,12 @@ const FileUploadButton = (props: FileUploadButtonProps) => {
 
   return (
     <Button
-      className={classNames("file-upload-btn", props.className)}
-      type={props.buttonType}
+      appearance={props.appearance}
+      className="file-upload-btn"
+      height={props.height}
+      iconBefore="import"
+      marginLeft={props.marginLeft}
+      marginRight={props.marginRight}
       onClick={() => {
         if (ref !== null && ref.current !== null) {
           ref.current.click();
