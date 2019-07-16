@@ -87,10 +87,14 @@ export class Database extends Dexie
  */
 export function InitDatabase(): Database | undefined {
   switch (process.env.REACT_APP_BUILD_TARGET) {
-    case "chrome":
-    case "firefox":
+    case "CHROME":
+    case "FIREFOX":
       return new Database();
     default:
+      console.error(
+        "[db] Invalid build target specified",
+        process.env.REACT_APP_BUILD_TARGET
+      );
       return undefined;
   }
 }
