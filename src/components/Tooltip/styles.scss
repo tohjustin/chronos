@@ -1,0 +1,45 @@
+@import "../../styles/variables";
+
+$hover__transition--opacity: opacity 0.25s;
+
+.tooltip__container {
+  position: absolute;
+  padding: 0 0.5 * $base__size;
+  transition: $hover__transition--opacity;
+
+  .tooltip {
+    min-width: 80px;
+    max-width: 240px;
+    padding: $base__size;
+    border-radius: 2px;
+    background-color: $color__black;
+    color: $color__white;
+
+    &__header {
+      display: flex;
+      align-content: center;
+
+      strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &__favicon {
+      height: (12px * 1.5) - 2;
+      width: (12px * 1.5) - 2;
+      flex-grow: 0;
+      flex-shrink: 0;
+      background-color: $color__white;
+      border: 1px solid $color__white;
+      border-radius: 100%;
+      margin-right: $base__size;
+      overflow: hidden;
+    }
+
+    &__description {
+      text-align: right;
+    }
+  }
+}

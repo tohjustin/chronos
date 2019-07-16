@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import "../../styles/variables";
 
 $card__margin-x: 2 * $base__size;
 $card__margin-y: 2 * $base__size;
@@ -109,6 +109,6 @@ $card__margin-y: 2 * $base__size;
 
 // NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>
 // doesn't expose any props for adding classes to it's dialog component 🤢
-div[evergreen-portal-container] div[role='dialog'] {
+div[evergreen-portal-container] div[role="dialog"] {
   z-index: $z-index__menu-select !important;
 }
