@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+.heatmap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 300px;
+  width: 100%;
+
+  .heatmap__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-height: 100%;
+  }
+
+  .heatmap__chart {
+    .heatmap__chart-cell {
+      fill: $color__primary;
+    }
+  }
+
+  .heatmap__legend {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: $color__dark-gray;
+    font-weight: 600;
+    font-size: 12px;
+    font-family: $font-family;
+
+    .heatmap__legend-cells {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
