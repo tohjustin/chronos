@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.tooltip__container {
+  transition: opacity 0.25s;
+
+  .tooltip {
+    padding: $base__size;
+    border-radius: 2px;
+    background-color: $color__black;
+    color: $color__white;
+  }
+}
