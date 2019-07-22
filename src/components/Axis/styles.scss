@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+
+.axis__container {
+  .axis {
+    path {
+      display: none;
+    }
+
+    text {
+      color: $color__dark-gray;
+      font-weight: 600;
+      font-size: 12px;
+      font-family: $font-family;
+    }
+  }
+
+  .axis__left {
+    text {
+      text-align: right;
+    }
+  }
+
+  .axis__right {
+    text {
+      text-align: left;
+    }
+  }
+}
