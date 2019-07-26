@@ -284,5 +284,15 @@ export function InitActivityLogger(): void {
       windowsService
     });
     logger.run();
+  } else {
+    console.error(
+      "[activity-logger] InitActivityLogger: Unable to get dependent services up, abort initialization...",
+      {
+        activityServiceOnline: Boolean(activityService),
+        idleServiceOnline: Boolean(idleService),
+        tabsServiceOnline: Boolean(tabsService),
+        windowsServiceOnline: Boolean(windowsService)
+      }
+    );
   }
 }
