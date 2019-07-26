@@ -9,12 +9,17 @@ import { IdleService } from "./types";
  * interactions with browser idle state & events.
  */
 export function InitIdleService(): IdleService | undefined {
-  switch (process.env.REACT_APP_BUILD_TARGET) {
+  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
+  switch (buildTarget) {
     case "chrome":
       return new ChromeIdleService();
     case "firefox":
       return new FirefoxIdleService();
     default:
+      console.error(
+        "[idle-service] InitIdleService: Missing or unsupported build target",
+        buildTarget
+      );
       return undefined;
   }
 }

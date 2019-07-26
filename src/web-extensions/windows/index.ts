@@ -9,12 +9,17 @@ import { WindowsService } from "./types";
  * support interactions with browser windows.
  */
 export function InitWindowsService(): WindowsService | undefined {
-  switch (process.env.REACT_APP_BUILD_TARGET) {
+  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
+  switch (buildTarget) {
     case "chrome":
       return new ChromeWindowsService();
     case "firefox":
       return new FirefoxWindowsService();
     default:
+      console.error(
+        "[windows-service] InitWindowsService: Missing or unsupported build target",
+        buildTarget
+      );
       return undefined;
   }
 }
