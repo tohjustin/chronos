@@ -7,7 +7,9 @@ $hover__transition--opacity: opacity 0.25s;
 
 .heatmap-chart {
   display: flex;
-  height: 300px;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
   width: 100%;
 
   svg {
@@ -17,8 +19,9 @@ $hover__transition--opacity: opacity 0.25s;
   }
 
   .chart__container {
-    width: 100%;
     position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   .heatmap__container {

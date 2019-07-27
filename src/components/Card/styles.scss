@@ -7,7 +7,7 @@
   box-shadow: $shadow__card;
   border-radius: 4px;
 
-  &__header {
+  .card__header {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $color__light-gray;
@@ -29,14 +29,14 @@
     }
   }
 
-  &__body {
+  .card__body {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2 * $base__size;
   }
 
-  &__footer {
+  .card__footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;

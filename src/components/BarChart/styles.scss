@@ -8,7 +8,9 @@ $hover__transition--opacity: opacity 0.25s;
 
 .bar-chart {
   display: flex;
-  height: 300px;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
   width: 100%;
 
   svg {
@@ -18,8 +20,9 @@ $hover__transition--opacity: opacity 0.25s;
   }
 
   .chart__container {
-    width: 100%;
     position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   .bar__container {
@@ -58,6 +61,7 @@ $hover__transition--opacity: opacity 0.25s;
   .vertical-axis__container {
     position: relative;
     margin-right: $base__size;
+    height: 100%;
     max-width: $label__max-width;
 
     .labels {
