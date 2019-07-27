@@ -49,7 +49,7 @@ function TooltipRenderer<T>(props: TooltipRendererProps<T>) {
   return (
     <div
       ref={tooltipRef}
-      className="tooltip__container"
+      className="tooltip-renderer"
       style={{
         position: "absolute",
         left: `${tooltipX}px`,
@@ -59,7 +59,7 @@ function TooltipRenderer<T>(props: TooltipRendererProps<T>) {
         pointerEvents: "none"
       }}
     >
-      <Tooltip className="tooltip" data={props.data} />
+      <Tooltip className="tooltip-renderer__component" data={props.data} />
     </div>
   );
 }

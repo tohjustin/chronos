@@ -1,12 +1,7 @@
 @import "../../styles/variables";
 
-.tooltip__container {
-  transition: opacity 0.25s;
+$hover__transition--opacity: opacity 0.25s;
 
-  .tooltip {
-    padding: $base__size;
-    border-radius: 2px;
-    background-color: $color__black;
-    color: $color__white;
-  }
+.tooltip-renderer {
+  transition: $hover__transition--opacity;
 }
