@@ -2,6 +2,7 @@
 
 $card__margin-x: 2 * $base__size;
 $card__margin-y: 2 * $base__size;
+$chart__height: 300px;
 
 @mixin card__width--100 {
   margin-right: 0;
@@ -17,93 +18,95 @@ $card__margin-y: 2 * $base__size;
   width: calc(25% - #{0.75 * $card__margin-x});
 }
 
-.analytics-view {
-  &__cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: $card__margin-y;
-    margin-top: -1 * $card__margin-y;
+.analytics-view__cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $card__margin-y;
+  margin-top: -1 * $card__margin-y;
+}
+
+.analytics-view__card {
+  .card__body {
+    height: $chart__height;
   }
 
-  &__card {
-    margin-top: $card__margin-y;
+  margin-top: $card__margin-y;
 
-    &:not(:last-of-type) {
-      margin-right: $card__margin-x;
+  &:not(:last-of-type) {
+    margin-right: $card__margin-x;
+  }
+
+  @media screen and (min-width: 1201px) {
+    &#{&}--sm {
+      @include card__width--25;
     }
 
-    @media screen and (min-width: 1201px) {
-      &#{&}--sm {
-        @include card__width--25;
-      }
-
-      &#{&}--md {
-        @include card__width--50;
-      }
-    }
-
-    @media screen and (min-width: 601px) and (max-width: 1200px) {
-      &#{&}--sm {
-        @include card__width--50;
-      }
-
-      &#{&}--md {
-        @include card__width--100;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      &#{&}--sm,
-      &#{&}--md {
-        @include card__width--100;
-      }
+    &#{&}--md {
+      @include card__width--50;
     }
   }
 
-  &__domain-picker {
+  @media screen and (min-width: 601px) and (max-width: 1200px) {
+    &#{&}--sm {
+      @include card__width--50;
+    }
+
+    &#{&}--md {
+      @include card__width--100;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    &#{&}--sm,
+    &#{&}--md {
+      @include card__width--100;
+    }
+  }
+}
+
+.analytics-view__domain-picker {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5 * $base__size;
+
+  button {
+    font-family: $font-family;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .label {
     display: flex;
     align-items: center;
-    margin: 0 0.5 * $base__size;
+    margin-right: $base__size;
 
-    button {
-      font-family: $font-family;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .label {
-      display: flex;
-      align-items: center;
+    .icon {
+      height: 3 * $base__size;
+      width: 3 * $base__size;
+      background-color: $color__white;
+      border-radius: 100%;
+      box-shadow: $shadow__favicon;
+      flex-grow: 0;
+      flex-shrink: 0;
       margin-right: $base__size;
-
-      .icon {
-        height: 3 * $base__size;
-        width: 3 * $base__size;
-        background-color: $color__white;
-        border-radius: 100%;
-        box-shadow: $shadow__favicon;
-        flex-grow: 0;
-        flex-shrink: 0;
-        margin-right: $base__size;
-        overflow: hidden;
-        padding: 1px;
-      }
+      overflow: hidden;
+      padding: 1px;
     }
   }
+}
 
-  &__header {
-    display: flex;
-    align-items: center;
-    margin-right: 0.5 * $base__size;
-  }
+.analytics-view__header {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5 * $base__size;
+}
 
-  &__link {
-    cursor: pointer;
-    text-decoration: underline;
+.analytics-view__link {
+  cursor: pointer;
+  text-decoration: underline;
 
-    &:hover {
-      color: $color__primary;
-    }
+  &:hover {
+    color: $color__primary;
   }
 }
 
