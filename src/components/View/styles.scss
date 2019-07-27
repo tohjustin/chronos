@@ -6,12 +6,13 @@ $view-body__padding-x: 3 * $base__size;
 $view-header__padding-y: 2 * $base__size;
 $view-header__padding-x: 3 * $base__size;
 
-.view-container {
+.view__container {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
-.view-header {
+.view__header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -24,11 +25,11 @@ $view-header__padding-x: 3 * $base__size;
   z-index: $z-index__view-header;
 }
 
-.view-body {
+.view__body {
+  flex-grow: 1;
   overflow-y: scroll;
   padding: $view-body__padding-x;
   font-size: $font-size__base;
   font-weight: 400;
   background-color: $color__lighter-gray;
-  height: 100%;
 }
