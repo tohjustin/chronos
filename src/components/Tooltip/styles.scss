@@ -15,9 +15,21 @@ $hover__transition--opacity: opacity 0.25s;
     background-color: $color__black;
     color: $color__white;
 
-    &__header {
+    .tooltip__header {
       display: flex;
       align-content: center;
+
+      img {
+        height: (12px * 1.5) - 2;
+        width: (12px * 1.5) - 2;
+        flex-grow: 0;
+        flex-shrink: 0;
+        background-color: $color__white;
+        border: 1px solid $color__white;
+        border-radius: 100%;
+        margin-right: $base__size;
+        overflow: hidden;
+      }
 
       strong {
         overflow: hidden;
@@ -26,19 +38,7 @@ $hover__transition--opacity: opacity 0.25s;
       }
     }
 
-    &__favicon {
-      height: (12px * 1.5) - 2;
-      width: (12px * 1.5) - 2;
-      flex-grow: 0;
-      flex-shrink: 0;
-      background-color: $color__white;
-      border: 1px solid $color__white;
-      border-radius: 100%;
-      margin-right: $base__size;
-      overflow: hidden;
-    }
-
-    &__description {
+    .tooltip__body {
       text-align: right;
     }
   }
