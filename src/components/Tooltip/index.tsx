@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./styles.scss";
+
 interface TooltipProps {
   header: string;
   body: React.ReactNode;
