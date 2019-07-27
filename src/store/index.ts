@@ -1,7 +1,7 @@
 import { routerMiddleware } from "connected-react-router";
 import { createHashHistory } from "history";
 import _ from "lodash";
-import { createStore, applyMiddleware, Middleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "remote-redux-devtools";
 import thunk from "redux-thunk";
 
@@ -10,9 +10,13 @@ import { RootAction, RootState } from "./types";
 
 // configure middlewares
 export const history = createHashHistory();
-const middlewares: Middleware[] = [routerMiddleware(history), thunk];
-// compose enhancers
-const composeEnhancers = composeWithDevTools({
+const middlewares = [routerMiddleware(history), thunk];
+
+// compose enhancers (typed as `any` b/c `composeWithDevTools` doesn't work
+// nicely with Redux on Typescript 😭 This shouldn't affect the typechecking
+// for our redux state, action & reducers though...)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const composeEnhancers: any = composeWithDevTools({
   port: 8098,
   realtime: true,
   actionSanitizer: (action: RootAction) => {
