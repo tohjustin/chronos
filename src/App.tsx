@@ -26,8 +26,9 @@ const AppShell = (props: AppShellProps) => {
   }, [loadActivity]);
 
   return (
-    <div className="app-container">
+    <div className="app__container">
       <Navbar
+        className="app__navbar"
         primaryItems={[
           {
             featherIcon: BarChart2,
@@ -43,7 +44,7 @@ const AppShell = (props: AppShellProps) => {
           }
         ]}
       />
-      <div className="view-container">
+      <div className="app__view">
         <Switch>
           <Route path="/analytics" component={AnalyticsView} />
           <Route path="/settings" component={SettingsView} />
@@ -72,6 +73,4 @@ const App = () => (
   </Provider>
 );
 
-export default (process.env.NODE_ENV === "development"
-  ? hot(module)(App)
-  : App);
+export default process.env.NODE_ENV === "development" ? hot(module)(App) : App;
