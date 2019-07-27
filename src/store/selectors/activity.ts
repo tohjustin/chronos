@@ -99,6 +99,19 @@ export const getEffectiveTimeRange = createSelector(
 );
 
 /**
+ * Retrieves all activity records of a selected domain
+ */
+export const getAllSelectedDomainRecords = createSelector(
+  [getAllRecords, getSelectedDomain],
+  (records, selectedDomain) => {
+    return records.filter(
+      record =>
+        selectedDomain === record.origin.replace(/(https?:\/\/|www\.)/g, "")
+    );
+  }
+);
+
+/**
  * Retrieves all activity records that falls within the selected time range
  * @remarks
  * Includes records with time intervals that overlaps with the time range
@@ -124,12 +137,11 @@ export const getRecords = createSelector(
  * boundaries
  */
 export const getSelectedDomainRecords = createSelector(
-  [getAllRecords, getSelectedDomain, getSelectedTimeRange],
-  (records, selectedDomain, selectedTimeRange) => {
+  [getAllSelectedDomainRecords, getSelectedTimeRange],
+  (records, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
     return records.filter(
       record =>
-        selectedDomain === record.origin.replace(/(https?:\/\/|www\.)/g, "") &&
         (startTime === null || record.endTime >= startTime) &&
         (endTime === null || record.startTime <= endTime)
     );
@@ -166,7 +178,7 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
 /**
  * Retrieves the set of domains & the domain's favicon URL from all activity
  * records
- * @remarks We return a hashmap to enable faster lookups for `favIconUrl`
+ * @remarks We return a hash-map to enable faster lookups for `favIconUrl`
  */
 export const getAllDomains = createSelector(
   getAllRecords,
@@ -210,16 +222,15 @@ export const getTotalDurationByDate = createSelector(
 );
 
 /**
- * Retrieves total duration  of all activity records of a selected domain that
- * falls within the selected time range, grouped by the date of the activity's
- * timestamp
+ * Retrieves total duration of all activity records of a selected domain,
+ * grouped by the date of the activity's timestamp
  */
 export const getSelectedDomainTotalDurationByDate = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
-  (selectedDomainRecords, effectiveTimeRange) => {
+  [getAllSelectedDomainRecords, getActivityTimeRange],
+  (allSelectedDomainRecords, activityTimeRange) => {
     return computeTotalDurationByDate(
-      selectedDomainRecords,
-      effectiveTimeRange
+      allSelectedDomainRecords,
+      activityTimeRange || { start: 0, end: Date.now() }
     );
   }
 );
