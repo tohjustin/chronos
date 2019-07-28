@@ -44,12 +44,15 @@ const defaultProps = {
     radius: 0
   },
   legend: {
-    enable: true,
+    enable: false,
+    expandToChartWidth: true,
     includeEmptyColor: true,
-    margin: { left: 8, right: 8, top: 0, bottom: 0 }
+    margin: { left: 0, right: 0, top: 0, bottom: 0 },
+    formatLabels: null,
+    sideLabels: null
   },
   isInteractive: true,
-  margin: { left: 24, right: 8, top: 24, bottom: 32 }
+  margin: { left: 0, right: 0, top: 0, bottom: 0 }
 };
 
 const Heatmap = (props: HeatmapProps) => {
@@ -133,8 +136,10 @@ const Heatmap = (props: HeatmapProps) => {
               cellWidth={cellWidth}
               cellRadius={props.cell.radius}
               cellSpacing={cellSpacingX}
+              chartWidth={chartWidth}
               colors={colors}
               legend={props.legend}
+              thresholds={thresholds}
             />
           )}
           {props.isInteractive && (

@@ -129,6 +129,18 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
       formatTick: formatTickX
     }
   };
+  const heatmapLegend = {
+    enable: props.legend ? props.legend.enable : true,
+    expandToChartWidth: props.legend ? props.legend.expandToChartWidth : true,
+    formatLabels: props.legend ? props.legend.formatLabels : null,
+    includeEmptyColor: props.legend ? props.legend.includeEmptyColor : true,
+    margin: props.legend
+      ? props.legend.margin
+      : { left: 8, right: 8, top: 0, bottom: 0 },
+    sideLabels: props.legend
+      ? props.legend.sideLabels
+      : (["Less", "More"] as [string, string])
+  };
   const heatmapMargin = props.margin || MARGIN;
 
   return (
@@ -138,7 +150,7 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
       colorRange={props.colorRange}
       data={heatmapData}
       isInteractive={props.isInteractive}
-      legend={props.legend}
+      legend={heatmapLegend}
       margin={heatmapMargin}
       thresholds={props.thresholds}
       tooltipComponent={props => {
