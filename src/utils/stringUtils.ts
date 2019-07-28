@@ -1,4 +1,35 @@
 /**
+ * Converts number of days into human-readable format
+ * @param {number} day number of days elapsed since start of week
+ * @returns {string} `""` if `day` is out of bounds, otherwise day of week in
+ * human-readable format
+ */
+export function formatDayOfWeek(day: number): string {
+  if (day < 0 || day >= 7) {
+    return "";
+  }
+
+  return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][day];
+}
+
+/**
+ * Converts hours into human-readable format
+ * @param {number} hour number of hours elapsed since start of day
+ * @returns {string} `""` if `day` is out of bounds, otherwise hour of day in
+ * human-readable format
+ */
+export function formatHourOfDay(hour: number): string {
+  if (hour < 0 || hour > 24) {
+    return "";
+  }
+  if (hour === 0 || hour === 24) {
+    return "12 am";
+  }
+
+  return hour > 12 ? `${hour - 12} pm` : `${hour} am`;
+}
+
+/**
  * Converts a date object into human-readable format for tooltips
  * @param {number} date Date object
  * @returns {string} date in human-readable format
@@ -35,4 +66,17 @@ export function formatTooltipDurationLabel(duration: number): string {
     default:
       return "No activity";
   }
+}
+
+/**
+ * Converts hour-of-week into human-readable format for tooltips
+ * @param {number} day number of days elapsed since start of week
+ * @param {number} hour number of hours elapsed since start of day
+ * @returns {string} hour-of-week value in human-readable format
+ */
+export function formatTooltipHourOfWeekLabel(
+  dayOfWeek: number,
+  hourOfDay: number
+): string {
+  return `${formatDayOfWeek(dayOfWeek)}, ${formatHourOfDay(hourOfDay)}`;
 }
