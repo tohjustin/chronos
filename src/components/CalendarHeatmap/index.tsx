@@ -5,6 +5,7 @@ import {
   formatTooltipDateLabel,
   formatTooltipDurationLabel
 } from "../../utils/stringUtils";
+import { Opaque } from "../../utils/typeUtils";
 
 import Heatmap from "../Heatmap";
 import { Datum as HeatmapDatum } from "../Heatmap/types";
@@ -13,8 +14,10 @@ import { CellConfiguration } from "../Heatmap/types";
 import Tooltip from "../Tooltip";
 import { MarginConfiguration } from "../types";
 
+type DateString = Opaque<"DATE_STRING:YYYY-MM-DD", string>;
+
 type Datum = {
-  day: string; // YYYY-MM-DD,
+  day: DateString;
   value: number;
 };
 
@@ -23,8 +26,8 @@ interface CalendarHeatmapProps {
   colorRange: [string, string];
   thresholds: number[];
 
-  startDay?: string; // YYYY-MM-DD,
-  endDay?: string; // YYYY-MM-DD,
+  startDay?: DateString;
+  endDay?: DateString;
   axis?: {
     bottom: { enable: boolean };
     left: { enable: boolean };
@@ -38,13 +41,14 @@ interface CalendarHeatmapProps {
   tooltipComponent?: React.FC<{ data: HeatmapDatum | null }>;
 }
 
-export const formatDate = d3.timeFormat("%Y-%m-%d");
+const formatDateString = d3.timeFormat("%Y-%m-%d");
+export const formatDate = (date: Date) => formatDateString(date) as DateString;
 export const formatMonth = d3.timeFormat("%b");
 export const formatDayOfWeek = d3.timeFormat("%a");
 function computeHeatmapData(
   data: Datum[],
-  startDay: string = data[0].day, // YYYY-MM-DD,
-  endDay: string = data[data.length - 1].day // YYYY-MM-DD,
+  startDay: DateString = data[0].day,
+  endDay: DateString = data[data.length - 1].day
 ) {
   type ValueByDay = { [day: string]: number };
 
