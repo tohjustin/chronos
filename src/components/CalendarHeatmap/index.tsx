@@ -42,7 +42,7 @@ interface CalendarHeatmapProps {
 export const formatDate = d3.timeFormat("%Y-%m-%d");
 export const formatMonth = d3.timeFormat("%b");
 export const formatDayOfWeek = d3.timeFormat("%a");
-function formatHeatmapData(
+function computeHeatmapData(
   data: Datum[],
   startDay: string = data[0].day, // YYYY-MM-DD,
   endDay: string = data[data.length - 1].day // YYYY-MM-DD,
@@ -110,7 +110,7 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
     getDateFromDatum,
     formatTickX,
     formatTickY
-  } = formatHeatmapData(props.data, props.startDay, props.endDay);
+  } = computeHeatmapData(props.data, props.startDay, props.endDay);
   const heatmapAxis = {
     bottom: {
       enable: props.axis ? props.axis.bottom.enable : false,
