@@ -2,17 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
-import HeatmapChart from "../../components/HeatmapChart";
+import WeeklyHourHeatmap from "../../components/WeeklyHourHeatmap";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 
 interface AverageUsageByHourOfWeekCardProps {
-  getAverageDurationByHourOfWeek: {
+  data: {
     duration: number;
     hour: number;
     day: number;
   }[];
 }
+
+const MS_PER_MINUTE = 1000 * 60;
+const THRESHOLDS = [0, 1, 15, 30, 45, 60].map(hours => hours * MS_PER_MINUTE);
 
 const AverageUsageByHourOfWeekCard = (
   props: AverageUsageByHourOfWeekCardProps
@@ -22,19 +25,21 @@ const AverageUsageByHourOfWeekCard = (
     title="Usage by Time of Day"
     description="Average time spent on each hour"
     body={
-      <HeatmapChart
-        data={props.getAverageDurationByHourOfWeek.map(datum => ({
-          x: datum.day,
-          y: datum.hour,
-          z: datum.duration
+      <WeeklyHourHeatmap
+        colorRange={["#f6f6f6", "#3D9CF4"]}
+        data={props.data.map(d => ({
+          day: d.day,
+          hour: d.hour,
+          value: d.duration
         }))}
+        thresholds={THRESHOLDS}
       />
     }
   />
 );
 
 const mapStateToProps = (state: RootState) => ({
-  getAverageDurationByHourOfWeek: selector.getAverageDurationByHourOfWeek(state)
+  data: selector.getAverageDurationByHourOfWeek(state)
 });
 
 export default connect(mapStateToProps)(AverageUsageByHourOfWeekCard);
