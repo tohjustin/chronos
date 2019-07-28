@@ -25,7 +25,6 @@ interface WeeklyHourHeatmapProps {
   colorRange: [string, string];
   thresholds: number[];
 
-  // optional
   axis?: {
     bottom: { enable: boolean };
     left: { enable: boolean };

@@ -21,7 +21,6 @@ interface HeatmapProps {
   colorRange: [string, string];
   thresholds: number[];
 
-  // optional
   axis: AxisConfiguration<number, number>;
   cell: CellConfiguration;
   isInteractive: boolean;

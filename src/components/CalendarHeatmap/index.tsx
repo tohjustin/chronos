@@ -23,7 +23,6 @@ interface CalendarHeatmapProps {
   colorRange: [string, string];
   thresholds: number[];
 
-  // optional
   startDay?: string; // YYYY-MM-DD,
   endDay?: string; // YYYY-MM-DD,
   axis?: {
