@@ -6,6 +6,9 @@ import { DateString, Datum } from "./types";
 
 const formatDateString = d3.timeFormat("%Y-%m-%d");
 
+export const parseDateString = (s: DateString): Date =>
+  new Date(`${s} 00:00:00`);
+
 export const formatDate = (date: Date) => formatDateString(date) as DateString;
 
 const formatMonth = d3.timeFormat("%b");
@@ -19,8 +22,8 @@ export function computeHeatmapData(
 ) {
   type ValueByDay = { [day: string]: number | null };
 
-  const startDate = new Date(startDay);
-  const endDate = new Date(endDay);
+  const startDate = parseDateString(startDay);
+  const endDate = parseDateString(endDay);
   const dataValueByDay = data.reduce((acc: ValueByDay, datum: Datum) => {
     acc[datum.day] = datum.value;
     return acc;
