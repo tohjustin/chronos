@@ -2,11 +2,18 @@ import * as d3 from "d3";
 import React from "react";
 import { connect } from "react-redux";
 
-import CalendarHeatmap, { formatDate } from "../../components/CalendarHeatmap";
+import CalendarHeatmap from "../../components/CalendarHeatmap";
+import { Datum } from "../../components/CalendarHeatmap/types";
+import { formatDate } from "../../components/CalendarHeatmap/utils";
 import Card from "../../components/Card";
+import Tooltip from "../../components/Tooltip";
 import { TimeRange } from "../../models/time";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
+import {
+  formatTooltipDateLabel,
+  formatTooltipDurationLabel
+} from "../../utils/stringUtils";
 
 interface DomainTotalUsageByDayOfYearCardProps {
   selectedTimeRange: TimeRange;
@@ -45,6 +52,13 @@ const DomainTotalUsageByDayOfYearCard = (
           startDay={formatDate(startDate)}
           endDay={formatDate(endDate)}
           thresholds={THRESHOLDS}
+          tooltipComponent={(props: { data: Datum }) => {
+            const { day, value } = props.data;
+            const dateString = formatTooltipDateLabel(new Date(day));
+            const duration = formatTooltipDurationLabel(value || 0);
+
+            return <Tooltip header={dateString} body={duration} />;
+          }}
         />
       }
     />
