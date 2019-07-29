@@ -25,7 +25,7 @@ interface DomainTotalUsageByDayOfYearCardProps {
 
 const MONTH_TO_SHOW = 6;
 const MS_PER_HOUR = 1000 * 60 * 60;
-const THRESHOLDS = [0, 1 / MS_PER_HOUR, 0.5, 1, 2, 4, 8].map(
+const THRESHOLDS = [0, 1 / 3600, 0.5, 1, 2, 4, 8].map(
   hours => hours * MS_PER_HOUR
 );
 

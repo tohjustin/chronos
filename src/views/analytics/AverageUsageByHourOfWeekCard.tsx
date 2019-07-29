@@ -21,7 +21,7 @@ interface AverageUsageByHourOfWeekCardProps {
 }
 
 const MS_PER_MINUTE = 1000 * 60;
-const THRESHOLDS = [0, 1, 15, 30, 45, 60].map(
+const THRESHOLDS = [0, 1 / 60, 15, 30, 45, 60].map(
   minutes => minutes * MS_PER_MINUTE
 );
 
