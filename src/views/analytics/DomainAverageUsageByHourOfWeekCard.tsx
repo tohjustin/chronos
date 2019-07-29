@@ -21,7 +21,9 @@ interface DomainAverageUsageByHourOfWeekCardProps {
 }
 
 const MS_PER_MINUTE = 1000 * 60;
-const THRESHOLDS = [0, 1, 15, 30, 45, 60].map(hours => hours * MS_PER_MINUTE);
+const THRESHOLDS = [0, 1, 15, 30, 45, 60].map(
+  minutes => minutes * MS_PER_MINUTE
+);
 
 const DomainAverageUsageByHourOfWeekCard = (
   props: DomainAverageUsageByHourOfWeekCardProps
@@ -38,6 +40,17 @@ const DomainAverageUsageByHourOfWeekCard = (
           hour: d.hour,
           value: d.duration
         }))}
+        legend={{
+          enable: true,
+          expandToChartWidth: true,
+          formatLabels: (threshold: number) => {
+            const minutes = threshold / MS_PER_MINUTE;
+            return minutes >= 1 ? `${minutes}m` : `${minutes * 60}s`;
+          },
+          includeEmptyColor: false,
+          margin: { left: 0, right: 0, top: 0, bottom: 8 },
+          sideLabels: null
+        }}
         thresholds={THRESHOLDS}
         tooltipComponent={(props: { data: Datum }) => {
           const { day, hour, value } = props.data;

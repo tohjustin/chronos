@@ -61,7 +61,7 @@ const WeeklyHourHeatmap = (props: WeeklyHourHeatmapProps) => {
     expandToChartWidth: props.legend ? props.legend.expandToChartWidth : false,
     formatLabels: props.legend
       ? props.legend.formatLabels
-      : (threshold: number) => `${threshold / 1000 / 60}m`,
+      : (threshold: number) => `${threshold}`,
     includeEmptyColor: props.legend ? props.legend.includeEmptyColor : false,
     margin: props.legend
       ? props.legend.margin
