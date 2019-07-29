@@ -36,7 +36,7 @@ export function computeHeatmapData(
   const dayRange = d3.timeDay.count(trueStartDate, trueEndDate);
   const validDayRange = d3.timeDay.count(trueStartDate, new Date());
 
-  for (let i = 0; i < dayRange; i++) {
+  for (let i = 0; i <= dayRange; i++) {
     const currentDate = d3.timeDay.offset(trueStartDate, i);
     const currentDay = formatDate(currentDate);
 
