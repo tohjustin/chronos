@@ -58,7 +58,7 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
   };
   const heatmapLegend = {
     enable: props.legend ? props.legend.enable : true,
-    expandToChartWidth: props.legend ? props.legend.expandToChartWidth : true,
+    expandToChartWidth: props.legend ? props.legend.expandToChartWidth : false,
     formatLabels: props.legend ? props.legend.formatLabels : null,
     includeEmptyColor: props.legend ? props.legend.includeEmptyColor : true,
     margin: props.legend

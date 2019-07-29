@@ -36,15 +36,14 @@ function computeCellWidth({
   legend: LegendConfiguration;
 }) {
   if (legend.expandToChartWidth) {
-    return cellWidth;
+    const cellCount = legend.includeEmptyColor
+      ? colors.length
+      : colors.length - 1;
+    const width = (chartWidth - (cellCount - 1) * cellSpacing) / cellCount;
+    return width;
   }
 
-  const cellCount = legend.includeEmptyColor
-    ? colors.length
-    : colors.length - 1;
-  const width = (chartWidth - (cellCount - 1) * cellSpacing) / cellCount;
-
-  return width;
+  return cellWidth;
 }
 
 const Legend = (props: LegendProps) => {
