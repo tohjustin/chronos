@@ -1,24 +1,13 @@
 import React from "react";
 
-import {
-  formatDayOfWeek,
-  formatHourOfDay,
-  formatTooltipDurationLabel,
-  formatTooltipHourOfWeekLabel
-} from "../../utils/stringUtils";
-
 import Heatmap from "../Heatmap";
-import { Datum as HeatmapDatum } from "../Heatmap/types";
 import { LegendConfiguration } from "../Heatmap/Legend";
 import { CellConfiguration } from "../Heatmap/types";
-import Tooltip from "../Tooltip";
 import { MarginConfiguration } from "../types";
 
-type Datum = {
-  day: number;
-  hour: number;
-  value: number;
-};
+import WeeklyHourHeatmapTooltip from "./Tooltip";
+import { Datum } from "./types";
+import { computeHeatmapData } from "./utils";
 
 interface WeeklyHourHeatmapProps {
   data: Datum[];
@@ -35,29 +24,7 @@ interface WeeklyHourHeatmapProps {
   isInteractive?: boolean;
   legend?: LegendConfiguration;
   margin?: MarginConfiguration;
-  tooltipComponent?: React.FC<{ data: HeatmapDatum | null }>;
-}
-
-function computeHeatmapData(data: Datum[]) {
-  const heatmapData = data.map(datum => ({
-    x: datum.day,
-    y: datum.hour,
-    z: datum.value
-  }));
-
-  // Compute axis tick formatters
-  const formatTickX = (x: number) => {
-    return formatDayOfWeek(x)[0].toUpperCase();
-  };
-  const formatTickY = (y: number) => {
-    return [0, 3, 6, 9, 12, 15, 18, 21].includes(y) ? formatHourOfDay(y) : "";
-  };
-
-  return {
-    heatmapData,
-    formatTickX,
-    formatTickY
-  };
+  tooltipComponent?: React.FC<{ data: Datum }>;
 }
 
 const MARGIN = { left: 48, right: 4, top: 4, bottom: 52 };
@@ -102,6 +69,8 @@ const WeeklyHourHeatmap = (props: WeeklyHourHeatmapProps) => {
     sideLabels: props.legend ? props.legend.sideLabels : null
   };
   const heatmapMargin = props.margin || MARGIN;
+  const HeatmapTooltipComponent =
+    props.tooltipComponent || WeeklyHourHeatmapTooltip;
 
   return (
     <Heatmap
@@ -114,12 +83,15 @@ const WeeklyHourHeatmap = (props: WeeklyHourHeatmapProps) => {
       margin={heatmapMargin}
       thresholds={props.thresholds}
       tooltipComponent={props => {
-        const datum = props.data || { x: 0, y: 0, z: 0 };
-        const { x: day, y: hour, z: time } = datum;
-        const dateString = formatTooltipHourOfWeekLabel(day, hour);
-        const duration = formatTooltipDurationLabel(time || 0);
-
-        return <Tooltip header={dateString} body={duration} />;
+        return props.data ? (
+          <HeatmapTooltipComponent
+            data={{
+              day: props.data.x,
+              hour: props.data.y,
+              value: props.data.z
+            }}
+          />
+        ) : null;
       }}
     />
   );

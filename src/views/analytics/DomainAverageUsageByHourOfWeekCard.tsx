@@ -2,9 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
+import Tooltip from "../../components/Tooltip";
 import WeeklyHourHeatmap from "../../components/WeeklyHourHeatmap";
+import { Datum } from "../../components/WeeklyHourHeatmap/types";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
+import {
+  formatTooltipHourOfWeekLabel,
+  formatTooltipDurationLabel
+} from "../../utils/stringUtils";
 
 interface DomainAverageUsageByHourOfWeekCardProps {
   data: {
@@ -33,6 +39,13 @@ const DomainAverageUsageByHourOfWeekCard = (
           value: d.duration
         }))}
         thresholds={THRESHOLDS}
+        tooltipComponent={(props: { data: Datum }) => {
+          const { day, hour, value } = props.data;
+          const dateString = formatTooltipHourOfWeekLabel(day, hour);
+          const duration = formatTooltipDurationLabel(value || 0);
+
+          return <Tooltip header={dateString} body={duration} />;
+        }}
       />
     }
   />
