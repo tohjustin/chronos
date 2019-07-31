@@ -29,13 +29,12 @@ interface HeatmapProps {
   tooltipComponent?: React.FC<{ data: Datum | null }>;
 }
 
-const formatTick = (value: number) => `${value}`;
 const defaultProps = {
   axis: {
-    bottom: { enable: false, formatTick },
-    left: { enable: true, formatTick },
-    right: { enable: false, formatTick },
-    top: { enable: true, formatTick }
+    bottom: { enable: false },
+    left: { enable: true },
+    right: { enable: false },
+    top: { enable: true }
   },
   cell: {
     forceSquare: true,
