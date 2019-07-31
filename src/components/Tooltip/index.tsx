@@ -1,17 +1,19 @@
+import classNames from "classnames";
 import React from "react";
 
 import "./styles.scss";
 
 interface TooltipProps {
-  header: string;
   body: React.ReactNode;
+  className?: string;
+  header?: string;
   headerImageAltText?: string;
   headerImageUrl?: string;
 }
 
 const Tooltip = (props: TooltipProps) => {
   return (
-    <div className="tooltip">
+    <div className={classNames("tooltip", props.className)}>
       <div className="tooltip__header">
         {props.headerImageUrl && (
           <img alt={props.headerImageAltText} src={props.headerImageUrl} />
