@@ -1,5 +1,5 @@
 /**
- * Converts number of days into human-readable format
+ * Converts day of week into human-readable format
  * @param {number} day number of days elapsed since start of week
  * @returns {string} `""` if `day` is out of bounds, otherwise day of week in
  * human-readable format
@@ -43,6 +43,16 @@ export function formatTooltipDateLabel(date: Date): string {
 }
 
 /**
+ * Converts day of week into human-readable format for tooltips
+ * @param {number} day number of days elapsed since start of week
+ * @returns {string} `""` if `day` is out of bounds, otherwise day of week in
+ * human-readable format
+ */
+export function formatTooltipDayOfWeekLabel(day: number): string {
+  return formatDayOfWeek(day);
+}
+
+/**
  * Converts a duration into human-readable format for tooltips
  * @param {number} duration duration in milliseconds
  * @returns {string} duration in human-readable format
@@ -53,19 +63,20 @@ export function formatTooltipDurationLabel(duration: number): string {
   const hours = Math.floor(durationInMins / 60);
 
   let result = "";
-  switch (true) {
-    case hours > 0:
-      result += `${hours} ${hours > 1 ? "hours" : "hour"} `;
-    case minutes > 0:
-      result += `${minutes} ${minutes > 1 ? "minutes" : "minute"}`;
-      return result;
-    case duration > 0: {
-      const seconds = Math.round(duration / 1000);
-      return `${seconds} ${seconds > 1 ? "seconds" : "second"}`;
-    }
-    default:
-      return "No activity";
+  if (hours > 0) {
+    result += `${hours} ${hours > 1 ? "hours" : "hour"}`;
   }
+  if (minutes > 0) {
+    result += ` ${minutes} ${minutes > 1 ? "minutes" : "minute"}`;
+  }
+  if (result !== "") {
+    return result.trim();
+  }
+
+  const durationInSecs = Math.floor(duration / 1000);
+  return durationInSecs > 0
+    ? `${durationInSecs} ${durationInSecs > 1 ? "seconds" : "second"}`
+    : "No activity";
 }
 
 /**
