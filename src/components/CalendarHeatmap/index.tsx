@@ -45,11 +45,13 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
     },
     left: {
       enable: props.axis ? props.axis.left.enable : true,
-      formatTick: formatTickY
+      formatTick: formatTickY,
+      tickValues: [1, 3, 5]
     },
     right: {
       enable: props.axis ? props.axis.right.enable : false,
-      formatTick: formatTickY
+      formatTick: formatTickY,
+      tickValues: [1, 3, 5]
     },
     top: {
       enable: props.axis ? props.axis.top.enable : true,

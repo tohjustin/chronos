@@ -62,9 +62,7 @@ export function computeHeatmapData(
     return isFirstDayOfMonth || hasMonthChange ? monthOfLastDayOfWeek : "";
   };
   const formatTickY = (y: number) => {
-    return [1, 3, 5].includes(y)
-      ? formatDayOfWeek(getDateFromDatum({ x: 0, y, z: null }))
-      : "";
+    return formatDayOfWeek(getDateFromDatum({ x: 0, y, z: null }));
   };
 
   return {
