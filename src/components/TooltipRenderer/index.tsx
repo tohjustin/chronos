@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useClientDimensions } from "../../hooks";
+import Tooltip from "../Tooltip";
 
 import "./styles.scss";
 
@@ -25,7 +26,8 @@ interface TooltipRendererProps<T> {
 }
 
 function DefaultTooltip<T>(props: TooltipProps<T>) {
-  return <div className={props.className}>{JSON.stringify(props.data)}</div>;
+  const body = JSON.stringify(props.data);
+  return <Tooltip className={props.className} body={body} />;
 }
 
 function TooltipRenderer<T>(props: TooltipRendererProps<T>) {
