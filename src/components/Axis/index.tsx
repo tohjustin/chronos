@@ -6,6 +6,7 @@ import "./styles.scss";
 type AxisSubConfiguration<T> = {
   enable: boolean;
   formatTick?: (data: T, index: number) => string;
+  tickValues?: T[];
 };
 
 export type AxisConfiguration<X, Y> = {
@@ -42,6 +43,9 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (top.formatTick) {
         topAxis.tickFormat(top.formatTick);
       }
+      if (top.tickValues && top.tickValues.length > 0) {
+        topAxis.tickValues(top.tickValues);
+      }
       svg
         .append("g")
         .attr("class", "axis axis__top")
@@ -55,6 +59,9 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
         .tickSize(0);
       if (bottom.formatTick) {
         bottomAxis.tickFormat(bottom.formatTick);
+      }
+      if (bottom.tickValues && bottom.tickValues.length > 0) {
+        bottomAxis.tickValues(bottom.tickValues);
       }
       svg
         .append("g")
@@ -72,6 +79,9 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (left.formatTick) {
         leftAxis.tickFormat(left.formatTick);
       }
+      if (left.tickValues && left.tickValues.length > 0) {
+        leftAxis.tickValues(left.tickValues);
+      }
       svg
         .append("g")
         .attr("class", "axis axis__left")
@@ -86,6 +96,9 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
         .tickSizeOuter(0);
       if (right.formatTick) {
         rightAxis.tickFormat(right.formatTick);
+      }
+      if (right.tickValues && right.tickValues.length > 0) {
+        rightAxis.tickValues(right.tickValues);
       }
       svg
         .append("g")
