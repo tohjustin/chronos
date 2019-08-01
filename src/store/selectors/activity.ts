@@ -237,6 +237,20 @@ export const getSelectedDomainTotalDurationByDate = createSelector(
 );
 
 /**
+ * Retrieves total duration of all activity records of a selected domain,
+ * grouped by the date of the activity's timestamp
+ */
+export const getAllSelectedDomainTotalDurationByDate = createSelector(
+  [getAllSelectedDomainRecords, getActivityTimeRange],
+  (allSelectedDomainRecords, activityTimeRange) => {
+    return computeTotalDurationByDate(
+      allSelectedDomainRecords,
+      activityTimeRange || { start: 0, end: Date.now() }
+    );
+  }
+);
+
+/**
  * Retrieves total duration of all activity records that falls within the
  * selected time range, grouped by domain of the activity's URL
  */

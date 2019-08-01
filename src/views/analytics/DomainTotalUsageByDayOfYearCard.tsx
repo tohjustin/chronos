@@ -69,7 +69,7 @@ const DomainTotalUsageByDayOfYearCard = (
 };
 
 const mapStateToProps = (state: RootState) => ({
-  totalDurationByDate: selector.getSelectedDomainTotalDurationByDate(state),
+  totalDurationByDate: selector.getAllSelectedDomainTotalDurationByDate(state),
   selectedTimeRange: selector.getSelectedTimeRange(state)
 });
 
