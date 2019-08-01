@@ -222,15 +222,16 @@ export const getTotalDurationByDate = createSelector(
 );
 
 /**
- * Retrieves total duration of all activity records of a selected domain,
- * grouped by the date of the activity's timestamp
+ * Retrieves total duration of all activity records of a selected domain that
+ * falls within the selected time range, grouped by the date of the activity's
+ * timestamp
  */
 export const getSelectedDomainTotalDurationByDate = createSelector(
-  [getAllSelectedDomainRecords, getActivityTimeRange],
-  (allSelectedDomainRecords, activityTimeRange) => {
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
     return computeTotalDurationByDate(
-      allSelectedDomainRecords,
-      activityTimeRange || { start: 0, end: Date.now() }
+      selectedDomainRecords,
+      effectiveTimeRange || { start: 0, end: Date.now() }
     );
   }
 );
