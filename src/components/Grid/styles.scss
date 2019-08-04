@@ -1,0 +1,9 @@
+@import "../../styles/variables";
+
+.grid__container {
+  .grid {
+    color: $color__light-gray;
+    stroke-width: 1px;
+    stroke-dasharray: 2, 2;
+  }
+}
