@@ -41,7 +41,7 @@
     "last 1 firefox version"
   ],
   "dependencies": {
-    "antd": "3.20.7",
+    "antd": "3.21.1",
     "classnames": "2.2.6",
     "connected-react-router": "6.5.2",
     "d3": "5.9.7",
@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@hot-loader/react-dom": "16.8.6",
-    "@types/chrome": "0.0.86",
+    "@types/chrome": "0.0.87",
     "@types/classnames": "2.2.9",
     "@types/d3": "5.7.2",
     "@types/file-saver": "2.0.1",
@@ -75,8 +75,8 @@
     "@types/history": "4.7.2",
     "@types/jest": "23.3.14",
     "@types/lodash": "4.14.136",
-    "@types/node": "12.6.8",
-    "@types/react": "16.8.23",
+    "@types/node": "12.6.9",
+    "@types/react": "16.8.24",
     "@types/react-dom": "16.8.5",
     "@types/react-redux": "7.1.1",
     "@types/react-router": "5.0.3",
@@ -90,7 +90,7 @@
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "1.6.1",
-    "husky": "3.0.1",
+    "husky": "3.0.2",
     "jest": "23.6.0",
     "lint-staged": "9.2.1",
     "prettier": "1.18.2",
@@ -103,9 +103,9 @@
     "remote-redux-devtools": "0.5.16",
     "stylelint": "10.1.0",
     "stylelint-config-standard": "18.3.0",
-    "stylelint-scss": "3.9.2",
+    "stylelint-scss": "3.9.3",
     "ts-jest": "23.10.5",
     "typescript": "3.5.3",
-    "write-file-webpack-plugin": "4.5.0"
+    "write-file-webpack-plugin": "4.5.1"
   }
 }
