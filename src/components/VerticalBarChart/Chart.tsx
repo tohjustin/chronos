@@ -1,6 +1,8 @@
 import * as d3 from "d3";
 import React, { useEffect, useRef } from "react";
 
+import { usePrevious } from "../../hooks";
+
 import { Datum } from "./types";
 
 interface ChartProps {
@@ -14,6 +16,7 @@ interface ChartProps {
   isInteractive: boolean;
   scaleX: d3.ScaleBand<number>;
   scaleY: d3.ScaleLinear<number, number>;
+  transitionDelay: number;
 }
 
 const Chart = (props: ChartProps) => {
@@ -26,18 +29,21 @@ const Chart = (props: ChartProps) => {
     onMouseEnter,
     onMouseLeave,
     scaleX,
-    scaleY
+    scaleY,
+    transitionDelay
   } = props;
   const chartRef = useRef<SVGGElement | null>(null);
+  const prevData = usePrevious(data);
+  const prevScaleY = usePrevious(scaleY);
   useEffect(() => {
     const svg = d3.select(chartRef.current);
 
     // Remove existing SVG elements when re-rendering a new one
-    svg.selectAll("rect").remove();
+    svg.selectAll("g").remove();
 
     // Draw bars
     const bars = svg
-      .selectAll("rect")
+      .selectAll("g")
       .data(data)
       .enter()
       .append("g")
@@ -65,8 +71,16 @@ const Chart = (props: ChartProps) => {
       .attr("class", "vertical-bar-chart__bar")
       .attr("x", d => scaleX(d.x) || 0)
       .attr("width", () => scaleX.bandwidth())
+      .attr("y", (d, i) =>
+        prevData && prevScaleY ? prevScaleY(prevData[i].y) || 0 : height
+      )
+      .attr("height", (d, i) =>
+        prevData && prevScaleY ? height - (prevScaleY(prevData[i].y) || 0) : 0
+      )
+      .transition()
       .attr("y", d => scaleY(d.y) || 0)
-      .attr("height", d => height - (scaleY(d.y) || 0));
+      .attr("height", d => height - (scaleY(d.y) || 0))
+      .duration(transitionDelay);
   }, [
     data,
     height,
@@ -76,7 +90,10 @@ const Chart = (props: ChartProps) => {
     onMouseLeave,
     onMouseOver,
     scaleX,
-    scaleY
+    scaleY,
+    prevData,
+    prevScaleY,
+    transitionDelay
   ]);
 
   return <g ref={chartRef} className="vertical-bar-chart__chart" />;

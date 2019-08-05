@@ -22,6 +22,7 @@ interface VerticalBarChartProps {
   grid: GridConfiguration<number, number>;
   isInteractive: boolean;
   margin: MarginConfiguration;
+  transitionDelay: number;
   /**
    * NOTE: component does not support negative values
    */
@@ -45,7 +46,8 @@ const defaultProps = {
     vertical: { enable: true }
   },
   isInteractive: true,
-  margin: { left: 36, right: 0, top: 0, bottom: 24 }
+  margin: { left: 36, right: 0, top: 0, bottom: 24 },
+  transitionDelay: 500
 };
 
 const TOOLTIP_MARGIN = 4;
@@ -55,7 +57,7 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
   const [hoveredDatum, setHoveredDatum] = useState<Datum | null>(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  const { data, margin, maxValue, minValue } = props;
+  const { data, margin, maxValue, minValue, transitionDelay } = props;
   const {
     chartHeight,
     chartWidth,
@@ -129,6 +131,7 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
                 onMouseLeave={handleMouseLeave}
                 scaleX={scaleX}
                 scaleY={scaleY}
+                transitionDelay={transitionDelay}
               />
             </g>
           </svg>
