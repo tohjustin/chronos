@@ -1,4 +1,9 @@
-import { getStartOfDay, getDayOfWeekCount, getHourOfWeek } from "../dateUtils";
+import {
+  getDayOfWeek,
+  getDayOfWeekCount,
+  getHourOfWeek,
+  getStartOfDay
+} from "../dateUtils";
 
 describe("getStartOfDay", () => {
   const START_OF_DAY = 1556434800000; // Apr 28, 2019 00:00:00.000 (Sun)
@@ -57,6 +62,32 @@ describe("getDayOfWeekCount", () => {
       [6, START_DATE, END_DATE_FAR, 5]
     ])("getDayOfWeekCount(%i, %i, %i) returns %i", (a, b, c, expected) => {
       expect(getDayOfWeekCount(a, b, c)).toBe(expected);
+    });
+  });
+});
+
+describe("getDayOfWeek", () => {
+  const TIMESTAMP = 1556436600000; // Apr 28, 2019 0030H (Sun)
+
+  describe("changing day-of-week", () => {
+    const TEST_CASES = [...Array(7)].map((val, index) => [
+      TIMESTAMP + index * 24 * 60 * 60 * 1000,
+      index
+    ]);
+
+    test.each(TEST_CASES)("getDayOfWeek(%i) returns %o", (a, expected) => {
+      expect(getDayOfWeek(a)).toEqual(expected);
+    });
+  });
+
+  describe("changing time-of-day", () => {
+    const TEST_CASES = [...Array(24)].map((val, index) => [
+      TIMESTAMP + index * 60 * 60 * 1000,
+      0
+    ]);
+
+    test.each(TEST_CASES)("getDayOfWeek(%i) returns %o", (a, expected) => {
+      expect(getDayOfWeek(a)).toEqual(expected);
     });
   });
 });

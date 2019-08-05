@@ -4,6 +4,7 @@ import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
   computeAverageDurationByHourOfWeek,
+  computeTotalDurationByDayOfWeek,
   computeTotalDurationByDate,
   isValidActivityRecord
 } from "../../utils/activityUtils";
@@ -157,6 +158,17 @@ export const getAverageDurationByHourOfWeek = createSelector(
   [getRecords, getEffectiveTimeRange],
   (records, effectiveTimeRange) => {
     return computeAverageDurationByHourOfWeek(records, effectiveTimeRange);
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records that falls within the
+ * selected time range, grouped by the day-of-week of the activity's timestamp
+ */
+export const getTotalDurationByDayOfWeek = createSelector(
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
+    return computeTotalDurationByDayOfWeek(records, effectiveTimeRange);
   }
 );
 

@@ -24,7 +24,17 @@ export function getDayOfWeekCount(
 }
 
 /**
- * Returns the hour-of-day & day-of-week value a timestamp
+ * Returns the day-of-week value of a timestamp
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @returns day-of-week value
+ */
+export function getDayOfWeek(timestamp: number): number {
+  return new Date(timestamp).getDay();
+}
+
+/**
+ * Returns the hour-of-day & day-of-week value of a timestamp
  *
  * @param timestamp - timestamp in milliseconds
  * @returns hour-of-day & day-of-week values
