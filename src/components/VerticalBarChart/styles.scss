@@ -1,0 +1,38 @@
+@import "../../styles/variables";
+
+.vertical-bar-chart {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+
+  .vertical-bar-chart__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-height: 100%;
+  }
+
+  .vertical-bar-chart__chart {
+    .vertical-bar-chart__bar {
+      fill: $color__primary;
+    }
+
+    .vertical-bar-chart__bar--background {
+      fill: none;
+      pointer-events: all;
+    }
+
+    .vertical-bar-chart__bar-container:hover {
+      .vertical-bar-chart__bar {
+        fill: $color__primary-dark;
+      }
+
+      .vertical-bar-chart__bar--background {
+        fill: #f1f2f480;
+      }
+    }
+  }
+}
