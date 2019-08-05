@@ -3,8 +3,10 @@ import React, { useRef, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
 
+import { Datum } from "./types";
+
 interface TooltipProps {
-  data: { x: number; y: string; favIconUrl: string }[];
+  data: Datum[];
   chartHeight: number;
   chartWidth: number;
   containerHeight: number;

@@ -6,15 +6,12 @@ import Axis from "./Axis";
 import Chart from "./Chart";
 import Tooltip from "./Tooltip";
 import VerticalAxis from "./VerticalAxis";
+import { Datum } from "./types";
 
 import "./styles.scss";
 
 interface BarChartProps {
-  data: {
-    x: number;
-    y: string;
-    favIconUrl: string;
-  }[];
+  data: Datum[];
 }
 
 const CHART_MARGIN = { top: 0, left: 8, bottom: 24, right: 24 };

@@ -1,12 +1,10 @@
 import * as d3 from "d3";
 import React from "react";
 
+import { Datum } from "./types";
+
 interface AxisProps {
-  data: {
-    x: number;
-    y: string;
-    favIconUrl: string;
-  }[];
+  data: Datum[];
   offsetX: number;
   offsetY: number;
   scaleY: d3.ScaleBand<string>;

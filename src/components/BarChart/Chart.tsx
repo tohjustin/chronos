@@ -1,8 +1,10 @@
 import * as d3 from "d3";
 import React, { useEffect, useRef } from "react";
 
+import { Datum } from "./types";
+
 interface ChartProps {
-  data: { x: number; y: string }[];
+  data: Datum[];
   scaleX: d3.ScaleLinear<number, number>;
   scaleY: d3.ScaleBand<string>;
 }

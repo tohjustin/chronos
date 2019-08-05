@@ -26,7 +26,7 @@ const DomainTotalUsageRankingCard = (
         data={props.data.map(datum => ({
           x: datum.totalDuration,
           y: datum.path,
-          favIconUrl: datum.title
+          favIconUrl: undefined
         }))}
       />
     }
