@@ -188,6 +188,21 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
 );
 
 /**
+ * Retrieves total duration of all activity records of a selected domain that
+ * falls within the selected time range, grouped by the day-of-week of the
+ * activity's timestamp
+ */
+export const getSelectedDomainTotalDurationByDayOfWeek = createSelector(
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    return computeTotalDurationByDayOfWeek(
+      selectedDomainRecords,
+      effectiveTimeRange
+    );
+  }
+);
+
+/**
  * Retrieves the set of domains & the domain's favicon URL from all activity
  * records
  * @remarks We return a hash-map to enable faster lookups for `favIconUrl`

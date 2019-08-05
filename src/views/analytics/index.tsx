@@ -13,6 +13,7 @@ import { ICON_SIZE } from "../../styles/constants";
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
+import DomainTotalUsageByDayOfWeekCard from "./DomainTotalUsageByDayOfWeekCard";
 import DomainTotalUsageByDayOfYearCard from "./DomainTotalUsageByDayOfYearCard";
 import DomainTotalUsagePerDayCard from "./DomainTotalUsagePerDayCard";
 import DomainTotalUsageRankingCard from "./DomainTotalUsageRankingCard";
@@ -52,8 +53,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
             <DomainTotalUsageRankingCard />
           </div>
           <div className="analytics-view__cards-container">
-            <DomainTotalUsageByDayOfYearCard />
             <DomainAverageUsageByHourOfWeekCard />
+            <DomainTotalUsageByDayOfWeekCard />
+            <DomainTotalUsageByDayOfYearCard />
           </div>
         </>
       )}
