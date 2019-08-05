@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
+    "start:debug": "REACT_APP_BUILD_TARGET=chrome REACT_APP_DEBUG_MODE=true react-app-rewired start",
     "start:chrome": "REACT_APP_BUILD_TARGET=chrome react-app-rewired start",
     "start:firefox": "REACT_APP_BUILD_TARGET=firefox react-app-rewired start",
     "build": "react-app-rewired build",
