@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
-import BarChart from "../../components/BarChart";
+import BarChartTable from "../../components/BarChartTable";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
+import { formatTableDurationLabel } from "../../utils/stringUtils";
 
 interface TotalUsageRankingCardProps {
   getTotalDurationByDomain: {
@@ -20,12 +21,14 @@ const TotalUsageRankingCard = (props: TotalUsageRankingCardProps) => (
     title="Usage Ranking"
     description="Top sites based on total time spent"
     body={
-      <BarChart
+      <BarChartTable
         data={props.getTotalDurationByDomain.map(datum => ({
-          x: datum.totalDuration,
-          y: datum.domain,
-          favIconUrl: datum.favIconUrl
+          label: datum.domain,
+          labelSrc: `https://${datum.domain}`,
+          value: datum.totalDuration,
+          iconSrc: datum.favIconUrl
         }))}
+        formatValue={formatTableDurationLabel}
       />
     }
   />

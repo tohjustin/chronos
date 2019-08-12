@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
-import BarChart from "../../components/BarChart";
+import BarChartTable from "../../components/BarChartTable";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
+import { formatTableDurationLabel } from "../../utils/stringUtils";
 
 interface DomainTotalUsageRankingCardProps {
   data: {
@@ -12,6 +13,7 @@ interface DomainTotalUsageRankingCardProps {
     title: string;
     path: string;
   }[];
+  selectedDomain: string | null;
 }
 
 const DomainTotalUsageRankingCard = (
@@ -22,18 +24,23 @@ const DomainTotalUsageRankingCard = (
     title="Usage Ranking"
     description="Top sites based on total time spent"
     body={
-      <BarChart
+      <BarChartTable
         data={props.data.map(datum => ({
-          x: datum.totalDuration,
-          y: datum.path,
-          favIconUrl: undefined
+          label: datum.path,
+          labelSrc: props.selectedDomain
+            ? `https://${props.selectedDomain}${datum.path}`
+            : undefined,
+          value: datum.totalDuration
         }))}
+        formatValue={formatTableDurationLabel}
+        showIcons={false}
       />
     }
   />
 );
 
 const mapStateToProps = (state: RootState) => ({
+  selectedDomain: selector.getSelectedDomain(state),
   data: selector.getSelectedDomainTotalDurationByPath(state)
 });
 

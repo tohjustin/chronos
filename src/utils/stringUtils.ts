@@ -30,6 +30,33 @@ export function formatHourOfDay(hour: number): string {
 }
 
 /**
+ * Converts a duration into human-readable format
+ * @param {number} duration duration in milliseconds
+ * @returns {string} duration in human-readable format
+ */
+export function formatTableDurationLabel(duration: number): string {
+  const durationInMins = Math.round(duration / 1000 / 60);
+  const minutes = Math.floor(durationInMins) % 60;
+  const hours = Math.floor(durationInMins / 60);
+
+  let result = "";
+  if (hours > 0) {
+    result += `${hours} h`;
+  }
+  if (minutes > 0) {
+    result += ` ${
+      hours > 0 ? minutes.toString().padStart(2, "0") : minutes
+    } min`;
+  }
+  if (result !== "") {
+    return result.trim();
+  }
+
+  const durationInSecs = Math.floor(duration / 1000);
+  return durationInSecs > 0 ? `${durationInSecs} s` : "< 1 s";
+}
+
+/**
  * Converts a date object into human-readable format for tooltips
  * @param {number} date Date object
  * @returns {string} date in human-readable format
