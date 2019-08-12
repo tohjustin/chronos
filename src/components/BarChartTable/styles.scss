@@ -1,0 +1,89 @@
+@import "../../styles/variables";
+
+.bar-chart-table {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  .bar-chart-table__col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .bar-chart-table__cell {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      padding: 0 $base__size;
+    }
+  }
+
+  .bar-chart-table__col-index {
+    font-weight: 600;
+    padding: 0;
+
+    .bar-chart-table__cell {
+      justify-content: flex-end;
+    }
+  }
+
+  .bar-chart-table__col-label {
+    flex-grow: 1;
+    overflow: hidden;
+
+    .bar-chart-table__cell {
+      overflow: hidden;
+      padding: 0 $base__size / 2;
+    }
+  }
+
+  .bar-chart-table__col-value {
+    color: $color__dark-gray;
+    font-weight: 600;
+    white-space: nowrap;
+
+    .bar-chart-table__cell {
+      justify-content: flex-end;
+      width: 100%;
+    }
+  }
+
+  .bar-chart-table__label-content {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .bar-chart-table__label-bar {
+      border-bottom: 2px solid;
+      box-sizing: border-box;
+    }
+  }
+
+  .bar-chart-table__label-icon {
+    border: 1px solid $color__white;
+    border-radius: 100%;
+    box-shadow: $shadow__favicon;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: $base__size;
+    overflow: hidden;
+
+    &--white-background {
+      background: $color__white;
+    }
+
+    span {
+      margin-top: -1px;
+      font-weight: 600;
+    }
+  }
+}
