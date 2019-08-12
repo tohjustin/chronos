@@ -25,6 +25,9 @@ export function formatHourOfDay(hour: number): string {
   if (hour === 0 || hour === 24) {
     return "12 am";
   }
+  if (hour === 12) {
+    return "12 pm";
+  }
 
   return hour > 12 ? `${hour - 12} pm` : `${hour} am`;
 }
