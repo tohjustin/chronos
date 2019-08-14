@@ -4,6 +4,7 @@ import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
   computeAverageDurationByHourOfWeek,
+  computeTotalDuration,
   computeTotalDurationByDayOfWeek,
   computeTotalDurationByDate,
   isValidActivityRecord
@@ -166,6 +167,17 @@ export const getAverageDurationByHourOfWeek = createSelector(
 
 /**
  * Retrieves total duration of all activity records that falls within the
+ * selected time range
+ */
+export const getTotalDuration = createSelector(
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
+    return computeTotalDuration(records, effectiveTimeRange);
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records that falls within the
  * selected time range, grouped by the date of the activity's timestamp
  */
 export const getTotalDurationByDate = createSelector(
@@ -280,6 +292,17 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
       selectedDomainRecords,
       effectiveTimeRange
     );
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records of a selected domain that
+ * falls within the selected time range.
+ */
+export const getSelectedDomainTotalDuration = createSelector(
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    return computeTotalDuration(selectedDomainRecords, effectiveTimeRange);
   }
 );
 

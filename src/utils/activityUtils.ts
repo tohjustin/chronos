@@ -78,6 +78,42 @@ export function createActivitySplittingReducer(unitOfTime: "hour" | "day") {
   };
 }
 
+export function computeTotalDuration(
+  records: ActivityRecord[],
+  effectiveTimeRange: DefiniteTimeRange
+) {
+  let totalDuration = 0;
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+
+  records.forEach(record => {
+    let { startTime, endTime } = record;
+    let startDayOfWeek = getDayOfWeek(startTime);
+    let endDayOfWeek = getDayOfWeek(endTime);
+
+    // Handle records spanning over different days
+    while (startDayOfWeek !== endDayOfWeek) {
+      const endDate = getStartOfDay(endTime);
+      const newEndTime = endDate - 1;
+      const newEndDayOfWeek = getDayOfWeek(newEndTime);
+
+      if (endDate >= minDate && endDate <= maxDate) {
+        totalDuration += endTime - newEndTime;
+      }
+
+      [endTime, endDayOfWeek] = [newEndTime, newEndDayOfWeek];
+    }
+
+    // Compute total duration
+    const startDate = getStartOfDay(startTime);
+    if (startDate >= minDate && startDate <= maxDate) {
+      totalDuration += endTime - startTime;
+    }
+  });
+
+  return totalDuration;
+}
+
 export function computeTotalDurationByDate(
   records: ActivityRecord[],
   effectiveTimeRange: DefiniteTimeRange
