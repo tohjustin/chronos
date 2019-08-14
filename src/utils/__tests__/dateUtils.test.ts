@@ -1,4 +1,5 @@
 import {
+  getDayCount,
   getDayOfWeek,
   getDayOfWeekCount,
   getHourOfWeek,
@@ -15,6 +16,39 @@ describe("getStartOfDay", () => {
 
   test.each(TEST_CASES)("getStartOfDay(%i) returns %i", (a, expected) => {
     expect(getStartOfDay(a)).toEqual(expected);
+  });
+});
+
+describe("getDayCount", () => {
+  const START_DATE = 1556694000000; // May 1, 2019 00:00:00.000 (Wed)
+  const END_DATE_NEAR = 1556866800000; // May 3, 2019 00:00:00.000 (Fri)
+  const END_DATE_FAR = 1559890800000; // June 7, 2019 00:00:00.000 (Fri)
+
+  describe("time interval = 1", () => {
+    test.each([[0, 0, 1]])(
+      "getDayCount(%i, %i) returns %i",
+      (a, b, expected) => {
+        expect(getDayCount(a, b)).toBe(expected);
+      }
+    );
+  });
+
+  describe("time interval < 1 week", () => {
+    test.each([[START_DATE, END_DATE_NEAR, 3]])(
+      "getDayCount(%i, %i) returns %i",
+      (a, b, expected) => {
+        expect(getDayCount(a, b)).toBe(expected);
+      }
+    );
+  });
+
+  describe("time interval > 1 month", () => {
+    test.each([[START_DATE, END_DATE_FAR, 38]])(
+      "getDayCount(%i, %i) returns %i",
+      (a, b, expected) => {
+        expect(getDayCount(a, b)).toBe(expected);
+      }
+    );
   });
 });
 

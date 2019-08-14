@@ -1,4 +1,15 @@
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
+import * as d3 from "d3";
+
+/**
+ * Returns the number of days that are in the time interval
+ *
+ * @param startTime - start of time interval in milliseconds
+ * @param endTime - end of time interval in milliseconds
+ * @returns number of days (includes the days of `startTime` & `endTime`)
+ */
+export function getDayCount(startTime: number, endTime: number): number {
+  return d3.timeDay.count(new Date(startTime), new Date(endTime)) + 1;
+}
 
 /**
  * Returns the number of day-of-week that are in the time interval
@@ -15,7 +26,7 @@ export function getDayOfWeekCount(
 ): number {
   const startTimeDayOfWeek = new Date(startTime).getDay();
   const dayOfWeekOffset = (dayOfWeek - startTimeDayOfWeek + 7) % 7;
-  const dayRange = Math.floor((endTime - startTime) / MS_PER_DAY);
+  const dayRange = getDayCount(startTime, endTime) - 1;
 
   if (dayRange <= dayOfWeekOffset) {
     return 0;
