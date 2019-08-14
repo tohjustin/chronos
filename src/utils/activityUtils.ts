@@ -4,6 +4,7 @@ import { ActivityRecord } from "../models/activity";
 import { DefiniteTimeRange } from "../models/time";
 
 import {
+  getDayCount,
   getDayOfWeek,
   getDayOfWeekCount,
   getHourOfWeek,
@@ -221,6 +222,17 @@ export function computeTotalDurationByDayOfWeek(
   return Object.entries(totalDurationByDayOfWeek)
     .map(([day, duration]) => ({ day: Number(day), duration }))
     .sort((a, b) => (a.day < b.day ? -1 : 1));
+}
+
+export function computeAverageDuration(
+  records: ActivityRecord[],
+  effectiveTimeRange: DefiniteTimeRange
+) {
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+  const dayCount = getDayCount(minDate, maxDate);
+
+  return computeTotalDuration(records, effectiveTimeRange) / dayCount;
 }
 
 export function computeAverageDurationByHourOfWeek(

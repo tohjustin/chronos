@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store/types";
 import {
+  computeAverageDuration,
   computeAverageDurationByHourOfWeek,
   computeTotalDuration,
   computeTotalDurationByDayOfWeek,
@@ -155,6 +156,17 @@ export const getAllDomains = createSelector(
 
 /**
  * Retrieves average duration of all activity records that falls within the
+ * selected time range
+ */
+export const getAverageDuration = createSelector(
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
+    return computeAverageDuration(records, effectiveTimeRange);
+  }
+);
+
+/**
+ * Retrieves average duration of all activity records that falls within the
  * selected time range, grouped by the hour-of-day & day-of-week of the
  * activity's timestamp
  */
@@ -277,6 +289,17 @@ export const getSelectedDomainRecords = createSelector(
         (startTime === null || record.endTime >= startTime) &&
         (endTime === null || record.startTime <= endTime)
     );
+  }
+);
+
+/**
+ * Retrieves average duration of all activity records of a selected domain that
+ * falls within the selected time range
+ */
+export const getSelectedDomainAverageDuration = createSelector(
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    return computeAverageDuration(selectedDomainRecords, effectiveTimeRange);
   }
 );
 
