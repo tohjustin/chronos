@@ -10,9 +10,10 @@ import {
   computeTotalDurationByDate,
   isValidActivityRecord
 } from "../../utils/activityUtils";
-import { getStartOfDay } from "../../utils/dateUtils";
+import { getDayCount, getStartOfDay } from "../../utils/dateUtils";
 
-const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+const MS_PER_WEEK = MS_PER_DAY * 7;
 const DEFAULT_TIME_RANGE = {
   start: getStartOfDay(Date.now() - 4 * MS_PER_WEEK),
   end: null
@@ -247,6 +248,25 @@ export const getTotalDurationByDomain = createSelector(
 );
 
 /**
+ * Retrieves total duration of all activity records as a ratio to total time
+ * that falls within the selected time range.
+ */
+export const getRatioToTotalDuration = createSelector(
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
+    const dayCount = getDayCount(
+      effectiveTimeRange.start,
+      effectiveTimeRange.end
+    );
+
+    return (
+      computeTotalDuration(records, effectiveTimeRange) /
+      (dayCount * MS_PER_DAY)
+    );
+  }
+);
+
+/**
  * Retrieves all activity records of a selected domain
  */
 export const getAllSelectedDomainRecords = createSelector(
@@ -393,5 +413,20 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
         return a.totalDuration > b.totalDuration ? -1 : 1;
       })
       .slice(0, 10);
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records of a selected domain as a
+ * ratio to total duration of all activity records that falls within the
+ * selected time range.
+ */
+export const getSelectedDomainRatioToTotalDuration = createSelector(
+  [getRecords, getSelectedDomainRecords, getEffectiveTimeRange],
+  (records, selectedDomainRecords, effectiveTimeRange) => {
+    return (
+      computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
+      computeTotalDuration(records, effectiveTimeRange)
+    );
   }
 );
