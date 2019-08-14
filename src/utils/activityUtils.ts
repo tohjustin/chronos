@@ -78,6 +78,115 @@ export function createActivitySplittingReducer(unitOfTime: "hour" | "day") {
   };
 }
 
+export function computeTotalDurationByDate(
+  records: ActivityRecord[],
+  effectiveTimeRange: DefiniteTimeRange
+) {
+  const totalDurationByDate: { [timestamp: string]: number } = {};
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+
+  records.forEach(record => {
+    let { startTime, endTime } = record;
+    let [startDate, endDate] = [
+      getStartOfDay(startTime),
+      getStartOfDay(endTime)
+    ];
+
+    // Handle records spanning over different dates
+    while (startDate !== endDate) {
+      const newEndTime = getStartOfDay(endTime) - 1;
+      const newEndDate = getStartOfDay(newEndTime);
+
+      if (endDate >= minDate && endDate <= maxDate) {
+        const duration = endTime - newEndTime;
+        const prevTotalDuration = totalDurationByDate[endDate] || 0;
+        totalDurationByDate[endDate] = prevTotalDuration + duration;
+      }
+
+      [endTime, endDate] = [newEndTime, newEndDate];
+    }
+
+    if (endDate >= minDate && endDate <= maxDate) {
+      const duration = endTime - startTime;
+      const prevTotalDuration = totalDurationByDate[endDate] || 0;
+      totalDurationByDate[endDate] = prevTotalDuration + duration;
+    }
+  });
+
+  let currentDate = minDate;
+  while (currentDate < maxDate) {
+    // Manually zero out days with no activity
+    if (totalDurationByDate[currentDate] === undefined) {
+      totalDurationByDate[currentDate] = 0;
+    }
+
+    // Limit usage time up to maximum value of 24 hours
+    if (totalDurationByDate[currentDate] > 0) {
+      totalDurationByDate[currentDate] = Math.min(
+        1000 * 60 * 60 * 24,
+        totalDurationByDate[currentDate]
+      );
+    }
+
+    currentDate += 1000 * 60 * 60 * 24;
+  }
+
+  // Sort results by chronological order
+  return Object.entries(totalDurationByDate)
+    .map(([key, value]) => ({
+      timestamp: Number(key),
+      totalDuration: value
+    }))
+    .sort((a, b) => {
+      return a.timestamp < b.timestamp ? -1 : 1;
+    });
+}
+
+export function computeTotalDurationByDayOfWeek(
+  records: ActivityRecord[],
+  effectiveTimeRange: DefiniteTimeRange
+) {
+  const totalDurationByDayOfWeek: { [dayOfWeek: string]: number } = {};
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+
+  // zero out entries
+  for (let day = 0; day < 7; day++) {
+    totalDurationByDayOfWeek[day] = 0;
+  }
+
+  records.forEach(record => {
+    let { startTime, endTime } = record;
+    let startDayOfWeek = getDayOfWeek(startTime);
+    let endDayOfWeek = getDayOfWeek(endTime);
+
+    // Handle records spanning over different day of the week
+    while (startDayOfWeek !== endDayOfWeek) {
+      const endDate = getStartOfDay(endTime);
+      const newEndTime = endDate - 1;
+      const newEndDayOfWeek = getDayOfWeek(newEndTime);
+
+      if (endDate >= minDate && endDate <= maxDate) {
+        totalDurationByDayOfWeek[newEndDayOfWeek] += endTime - newEndTime;
+      }
+
+      [endTime, endDayOfWeek] = [newEndTime, newEndDayOfWeek];
+    }
+
+    // Compute total duration
+    const startDate = getStartOfDay(startTime);
+    if (startDate >= minDate && startDate <= maxDate) {
+      totalDurationByDayOfWeek[endDayOfWeek] += endTime - startTime;
+    }
+  });
+
+  // Sort results by chronological order
+  return Object.entries(totalDurationByDayOfWeek)
+    .map(([day, duration]) => ({ day: Number(day), duration }))
+    .sort((a, b) => (a.day < b.day ? -1 : 1));
+}
+
 export function computeAverageDurationByHourOfWeek(
   records: ActivityRecord[],
   effectiveTimeRange: DefiniteTimeRange
@@ -173,115 +282,6 @@ export function computeAverageDurationByHourOfWeek(
     })
     .sort((a, b) => {
       return a.day * 24 + a.hour < b.day * 24 + b.hour ? -1 : 1;
-    });
-}
-
-export function computeTotalDurationByDayOfWeek(
-  records: ActivityRecord[],
-  effectiveTimeRange: DefiniteTimeRange
-) {
-  const totalDurationByDayOfWeek: { [dayOfWeek: string]: number } = {};
-  const minDate = getStartOfDay(effectiveTimeRange.start);
-  const maxDate = getStartOfDay(effectiveTimeRange.end);
-
-  // zero out entries
-  for (let day = 0; day < 7; day++) {
-    totalDurationByDayOfWeek[day] = 0;
-  }
-
-  records.forEach(record => {
-    let { startTime, endTime } = record;
-    let startDayOfWeek = getDayOfWeek(startTime);
-    let endDayOfWeek = getDayOfWeek(endTime);
-
-    // Handle records spanning over different day of the week
-    while (startDayOfWeek !== endDayOfWeek) {
-      const endDate = getStartOfDay(endTime);
-      const newEndTime = endDate - 1;
-      const newEndDayOfWeek = getDayOfWeek(newEndTime);
-
-      if (endDate >= minDate && endDate <= maxDate) {
-        totalDurationByDayOfWeek[newEndDayOfWeek] += endTime - newEndTime;
-      }
-
-      [endTime, endDayOfWeek] = [newEndTime, newEndDayOfWeek];
-    }
-
-    // Compute total duration
-    const startDate = getStartOfDay(startTime);
-    if (startDate >= minDate && startDate <= maxDate) {
-      totalDurationByDayOfWeek[endDayOfWeek] += endTime - startTime;
-    }
-  });
-
-  // Sort results by chronological order
-  return Object.entries(totalDurationByDayOfWeek)
-    .map(([day, duration]) => ({ day: Number(day), duration }))
-    .sort((a, b) => (a.day < b.day ? -1 : 1));
-}
-
-export function computeTotalDurationByDate(
-  records: ActivityRecord[],
-  effectiveTimeRange: DefiniteTimeRange
-) {
-  const totalDurationByDate: { [timestamp: string]: number } = {};
-  const minDate = getStartOfDay(effectiveTimeRange.start);
-  const maxDate = getStartOfDay(effectiveTimeRange.end);
-
-  records.forEach(record => {
-    let { startTime, endTime } = record;
-    let [startDate, endDate] = [
-      getStartOfDay(startTime),
-      getStartOfDay(endTime)
-    ];
-
-    // Handle records spanning over different dates
-    while (startDate !== endDate) {
-      const newEndTime = getStartOfDay(endTime) - 1;
-      const newEndDate = getStartOfDay(newEndTime);
-
-      if (endDate >= minDate && endDate <= maxDate) {
-        const duration = endTime - newEndTime;
-        const prevTotalDuration = totalDurationByDate[endDate] || 0;
-        totalDurationByDate[endDate] = prevTotalDuration + duration;
-      }
-
-      [endTime, endDate] = [newEndTime, newEndDate];
-    }
-
-    if (endDate >= minDate && endDate <= maxDate) {
-      const duration = endTime - startTime;
-      const prevTotalDuration = totalDurationByDate[endDate] || 0;
-      totalDurationByDate[endDate] = prevTotalDuration + duration;
-    }
-  });
-
-  let currentDate = minDate;
-  while (currentDate < maxDate) {
-    // Manually zero out days with no activity
-    if (totalDurationByDate[currentDate] === undefined) {
-      totalDurationByDate[currentDate] = 0;
-    }
-
-    // Limit usage time up to maximum value of 24 hours
-    if (totalDurationByDate[currentDate] > 0) {
-      totalDurationByDate[currentDate] = Math.min(
-        1000 * 60 * 60 * 24,
-        totalDurationByDate[currentDate]
-      );
-    }
-
-    currentDate += 1000 * 60 * 60 * 24;
-  }
-
-  // Sort results by chronological order
-  return Object.entries(totalDurationByDate)
-    .map(([key, value]) => ({
-      timestamp: Number(key),
-      totalDuration: value
-    }))
-    .sort((a, b) => {
-      return a.timestamp < b.timestamp ? -1 : 1;
     });
 }
 
