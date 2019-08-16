@@ -2,10 +2,14 @@
 
 .count-up__unit {
   color: $color__darker-gray;
-  font-size: $font-size__lg;
+  font-size: $font-size__xl;
   font-weight: 600;
   margin: 0 $base__size / 2;
   text-transform: uppercase;
+
+  &:empty {
+    display: none;
+  }
 
   &:last-of-type {
     margin-right: 0;
@@ -14,6 +18,10 @@
 
 .count-up__value {
   color: $color__black;
-  font-size: $font-size__xl;
+  font-size: $font-size__xxl;
   font-weight: 600;
+
+  &:empty {
+    display: none;
+  }
 }
