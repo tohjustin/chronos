@@ -54,5 +54,15 @@ declare module "react-countup" {
     style?: React.CSSProperties;
     children?(data: CountUpRenderProps): React.ReactElement;
   }
+  export function useCountUp(
+    props: CountUpProps
+  ): {
+    countUp: string;
+    start: number;
+    pauseResume: () => void;
+    reset: () => void;
+    update: (newValue: number) => void;
+  };
+
   export default class CountUp extends React.PureComponent<CountUpProps> {}
 }
