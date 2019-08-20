@@ -13,6 +13,7 @@ interface DurationCountUpProps {
   duration?: number;
   preserveValue?: boolean;
   redraw?: boolean;
+  separator?: string;
 }
 
 interface CountUpProps {
@@ -25,6 +26,7 @@ interface CountUpProps {
   preserveValue?: boolean;
   redraw?: boolean;
   unit?: string;
+  separator?: string;
   formattingFn?(value: number): string;
 }
 
@@ -33,7 +35,9 @@ const MS_PER_MINUTE = 60 * 1000;
 const MS_PER_HOUR = 60 * 60 * 1000;
 
 const formatHour = (value: number) => {
-  return value < MS_PER_HOUR ? "" : `${Math.floor(value / MS_PER_HOUR)}`;
+  return value < MS_PER_HOUR
+    ? ""
+    : Math.floor(value / MS_PER_HOUR).toLocaleString("en-US");
 };
 const formatMinutes = (value: number) => {
   if (value < MS_PER_MINUTE) {
