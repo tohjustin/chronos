@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import * as d3 from "d3";
-// @ts-ignore
 import { Avatar } from "evergreen-ui";
 import React from "react";
 

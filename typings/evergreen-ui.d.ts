@@ -1,6 +1,20 @@
 declare module "evergreen-ui" {
   import * as React from "react";
 
+  export interface AvatarProps {
+    forceShowInitials?: () => boolean;
+    getInitials?: () => string;
+    className?: string;
+    color?: string;
+    hashValue?: string;
+    isSolid?: boolean;
+    name?: string;
+    size?: number;
+    sizeLimitOneCharacter?: number;
+    src?: string;
+  }
+  export class Avatar extends React.PureComponent<AvatarProps> {}
+
   export interface ButtonProps {
     onClick?: () => void;
     appearance?: "default" | "minimal" | "primary";
