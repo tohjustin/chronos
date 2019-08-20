@@ -61,10 +61,7 @@ const BarChartTable = (props: BarChartTableProps) => {
           >
             {props.showIcons && (
               <Avatar
-                className={classNames("bar-chart-table__label-icon", {
-                  "bar-chart-table__label-icon--white-background":
-                    datum.iconSrc !== undefined
-                })}
+                className="bar-chart-table__label-icon"
                 src={datum.iconSrc}
                 hashValue={datum.label}
                 name={datum.label}
