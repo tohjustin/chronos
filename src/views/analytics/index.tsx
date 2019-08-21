@@ -15,10 +15,12 @@ import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeek
 import DomainPicker from "./DomainPicker";
 import DomainTotalUsageByDayOfWeekCard from "./DomainTotalUsageByDayOfWeekCard";
 import DomainTotalUsageByDayOfYearCard from "./DomainTotalUsageByDayOfYearCard";
+import DomainTotalUsageCard from "./DomainTotalUsageCard";
 import DomainTotalUsagePerDayCard from "./DomainTotalUsagePerDayCard";
 import DomainTotalUsageRankingCard from "./DomainTotalUsageRankingCard";
 import TimeRangePicker from "./TimeRangePicker";
 import TotalUsageByDayOfWeekCard from "./TotalUsageByDayOfWeekCard";
+import TotalUsageCard from "./TotalUsageCard";
 import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
 import TotalUsageRankingCard from "./TotalUsageRankingCard";
 
@@ -38,6 +40,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
       {props.selectedDomain === null ? (
         <>
           <div className="analytics-view__cards-container">
+            <TotalUsageCard />
+          </div>
+          <div className="analytics-view__cards-container">
             <TotalUsagePerDayCard />
             <TotalUsageRankingCard />
           </div>
@@ -48,6 +53,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
         </>
       ) : (
         <>
+          <div className="analytics-view__cards-container">
+            <DomainTotalUsageCard />
+          </div>
           <div className="analytics-view__cards-container">
             <DomainTotalUsagePerDayCard />
             <DomainTotalUsageRankingCard />

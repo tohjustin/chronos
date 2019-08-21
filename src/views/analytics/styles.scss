@@ -26,14 +26,20 @@ $chart__height: 280px;
 }
 
 .analytics-view__card {
-  .card__body {
-    height: $chart__height;
-  }
-
   margin-top: $card__margin-y;
+
+  .card__body {
+    height: 100%;
+  }
 
   &:not(:last-of-type) {
     margin-right: $card__margin-x;
+  }
+
+  &:not(.analytics-view__card--responsive) {
+    .card__body {
+      height: $chart__height;
+    }
   }
 
   @media screen and (min-width: 1201px) {
