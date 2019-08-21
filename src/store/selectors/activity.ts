@@ -180,7 +180,7 @@ export const getRatioToTotalDuration = createSelector(
 
     return (
       computeTotalDuration(records, effectiveTimeRange) /
-      (dayCount * MS_PER_DAY)
+      Math.max(dayCount * MS_PER_DAY, 1)
     );
   }
 );
@@ -324,7 +324,7 @@ export const getSelectedDomainRatioToTotalDuration = createSelector(
   (records, selectedDomainRecords, effectiveTimeRange) => {
     return (
       computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
-      computeTotalDuration(records, effectiveTimeRange)
+      Math.max(computeTotalDuration(records, effectiveTimeRange), 1)
     );
   }
 );
