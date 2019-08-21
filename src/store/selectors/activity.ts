@@ -254,6 +254,21 @@ export const getTotalDurationByDomain = createSelector(
 );
 
 /**
+ * Retrieves total number of unique page visits (by origin + pathname + search)
+ * that falls within the selected time range.
+ */
+export const getTotalPageVisitCount = createSelector(
+  getRecords,
+  records => {
+    return _.chain(records)
+      .uniqBy(
+        records => `${records.origin}${records.pathname}${records.search}`
+      )
+      .value().length;
+  }
+);
+
+/**
  * Retrieves all activity records of a selected domain
  */
 export const getAllSelectedDomainRecords = createSelector(
@@ -404,5 +419,18 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
       });
+  }
+);
+
+/**
+ * Retrieves total number of unique page visits (by pathname + search) to a
+ * selected domain that falls within the selected time range.
+ */
+export const getSelectedDomainTotalPageVisitCount = createSelector(
+  getSelectedDomainRecords,
+  selectedDomainRecords => {
+    return _.chain(selectedDomainRecords)
+      .uniqBy(records => `${records.pathname}${records.search}`)
+      .value().length;
   }
 );
