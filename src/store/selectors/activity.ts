@@ -167,6 +167,25 @@ export const getAverageDurationByHourOfWeek = createSelector(
 );
 
 /**
+ * Retrieves total duration of all activity records as a ratio to the total
+ * time duration that falls within the selected time range.
+ */
+export const getRatioToTotalDuration = createSelector(
+  [getRecords, getEffectiveTimeRange],
+  (records, effectiveTimeRange) => {
+    const dayCount = getDayCount(
+      effectiveTimeRange.start,
+      effectiveTimeRange.end
+    );
+
+    return (
+      computeTotalDuration(records, effectiveTimeRange) /
+      (dayCount * MS_PER_DAY)
+    );
+  }
+);
+
+/**
  * Retrieves total duration of all activity records that falls within the
  * selected time range
  */
@@ -235,25 +254,6 @@ export const getTotalDurationByDomain = createSelector(
 );
 
 /**
- * Retrieves total duration of all activity records as a ratio to total time
- * that falls within the selected time range.
- */
-export const getRatioToTotalDuration = createSelector(
-  [getRecords, getEffectiveTimeRange],
-  (records, effectiveTimeRange) => {
-    const dayCount = getDayCount(
-      effectiveTimeRange.start,
-      effectiveTimeRange.end
-    );
-
-    return (
-      computeTotalDuration(records, effectiveTimeRange) /
-      (dayCount * MS_PER_DAY)
-    );
-  }
-);
-
-/**
  * Retrieves all activity records of a selected domain
  */
 export const getAllSelectedDomainRecords = createSelector(
@@ -289,9 +289,9 @@ export const getAllSelectedDomainTotalDurationByDate = createSelector(
  */
 export const getSelectedDomainRecords = createSelector(
   [getAllSelectedDomainRecords, getSelectedTimeRange],
-  (records, selectedTimeRange) => {
+  (allSelectedDomainRecords, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
-    return records.filter(
+    return allSelectedDomainRecords.filter(
       record =>
         (startTime === null || record.endTime >= startTime) &&
         (endTime === null || record.startTime <= endTime)
@@ -310,6 +310,21 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
     return computeAverageDurationByHourOfWeek(
       selectedDomainRecords,
       effectiveTimeRange
+    );
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records of a selected domain as a
+ * ratio to total duration of all activity records that falls within the
+ * selected time range.
+ */
+export const getSelectedDomainRatioToTotalDuration = createSelector(
+  [getRecords, getSelectedDomainRecords, getEffectiveTimeRange],
+  (records, selectedDomainRecords, effectiveTimeRange) => {
+    return (
+      computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
+      computeTotalDuration(records, effectiveTimeRange)
     );
   }
 );
@@ -388,20 +403,5 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
       });
-  }
-);
-
-/**
- * Retrieves total duration of all activity records of a selected domain as a
- * ratio to total duration of all activity records that falls within the
- * selected time range.
- */
-export const getSelectedDomainRatioToTotalDuration = createSelector(
-  [getRecords, getSelectedDomainRecords, getEffectiveTimeRange],
-  (records, selectedDomainRecords, effectiveTimeRange) => {
-    return (
-      computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
-      computeTotalDuration(records, effectiveTimeRange)
-    );
   }
 );
