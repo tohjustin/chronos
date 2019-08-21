@@ -8,26 +8,30 @@ import { RootState } from "../../store/types";
 import { formatTableDurationLabel } from "../../utils/stringUtils";
 
 interface TotalUsageRankingCardProps {
-  getTotalDurationByDomain: {
+  totalDurationByDomain: {
     totalDuration: number;
     favIconUrl: string;
     domain: string;
   }[];
 }
 
+const TABLE_ROW_COUNT = 10;
+
 const TotalUsageRankingCard = (props: TotalUsageRankingCardProps) => (
   <Card
     className="analytics-view__card analytics-view__card--md"
     title="Usage Ranking"
-    description="Top sites based on total time spent"
+    description={`Top ${TABLE_ROW_COUNT} websites based on total time spent`}
     body={
       <BarChartTable
-        data={props.getTotalDurationByDomain.map(datum => ({
-          label: datum.domain,
-          labelSrc: `https://${datum.domain}`,
-          value: datum.totalDuration,
-          iconSrc: datum.favIconUrl
-        }))}
+        data={props.totalDurationByDomain
+          .slice(0, TABLE_ROW_COUNT)
+          .map(datum => ({
+            label: datum.domain,
+            labelSrc: `https://${datum.domain}`,
+            value: datum.totalDuration,
+            iconSrc: datum.favIconUrl
+          }))}
         formatValue={formatTableDurationLabel}
       />
     }
@@ -35,7 +39,7 @@ const TotalUsageRankingCard = (props: TotalUsageRankingCardProps) => (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  getTotalDurationByDomain: selector.getTotalDurationByDomain(state)
+  totalDurationByDomain: selector.getTotalDurationByDomain(state)
 });
 
 export default connect(mapStateToProps)(TotalUsageRankingCard);

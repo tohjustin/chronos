@@ -242,8 +242,7 @@ export const getTotalDurationByDomain = createSelector(
       }))
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
-      })
-      .slice(0, 10);
+      });
   }
 );
 
@@ -411,8 +410,7 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
       .map(([, value]) => value)
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
-      })
-      .slice(0, 10);
+      });
   }
 );
 
