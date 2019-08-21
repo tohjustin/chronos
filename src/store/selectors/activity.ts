@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createSelector } from "reselect";
 
 import { DefiniteTimeRange } from "../../models/time";
@@ -250,6 +251,19 @@ export const getTotalDurationByDomain = createSelector(
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
       });
+  }
+);
+
+/**
+ * Retrieves total number of unique domain visits that falls within the
+ * selected time range.
+ */
+export const getTotalDomainVisitCount = createSelector(
+  getRecords,
+  records => {
+    return _.chain(records)
+      .uniqBy(record => record.origin)
+      .value().length;
   }
 );
 
