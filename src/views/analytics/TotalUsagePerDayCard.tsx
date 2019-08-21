@@ -16,8 +16,8 @@ interface TotalUsagePerDayCardProps {
 const TotalUsagePerDayCard = (props: TotalUsagePerDayCardProps) => (
   <Card
     className="analytics-view__card analytics-view__card--md"
-    title="Usage per Day"
-    description="Amount of time spent on the internet each day"
+    title="Usage Trend"
+    description="Total time spent on each day"
     body={
       <LineChart
         data={props.totalDurationByDate.map(datum => ({

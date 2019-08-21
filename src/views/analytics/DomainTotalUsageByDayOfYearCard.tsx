@@ -44,7 +44,7 @@ const DomainTotalUsageByDayOfYearCard = (
     <Card
       className="analytics-view__card analytics-view__card--md"
       title="Historical Usage"
-      description="Total time spent over the last six months"
+      description={`Total time spent over the past ${MONTH_TO_SHOW} months`}
       body={
         <CalendarHeatmap
           colorRange={["#f6f6f6", "#3D9CF4"]}
