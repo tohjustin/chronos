@@ -30,7 +30,7 @@ const Tooltip = (props: TooltipProps) => {
   const tooltipY = y < tooltipHeight ? y : y - tooltipHeight;
 
   // Compute tooltip display values
-  const date = new Date(hoveredDatum.x).toLocaleDateString(undefined, {
+  const date = new Date(hoveredDatum.x).toLocaleDateString("en-US", {
     weekday: "short",
     month: "long",
     day: "numeric"

@@ -65,7 +65,7 @@ export function formatTableDurationLabel(duration: number): string {
  * @returns {string} date in human-readable format
  */
 export function formatTooltipDateLabel(date: Date): string {
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString("en-US", {
     weekday: "short",
     month: "long",
     day: "numeric"
