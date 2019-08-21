@@ -11,6 +11,7 @@ import { RootAction, RootState } from "../../store/types";
 import { ICON_SIZE } from "../../styles/constants";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
+import DomainAveragePageVisitDurationCard from "./DomainAveragePageVisitDurationCard";
 import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
 import DomainRatioToTotalDurationCard from "./DomainRatioToTotalDurationCard";
@@ -65,6 +66,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
             <DomainTotalUsageCard />
             <DomainRatioToTotalDurationCard />
             <DomainTotalPageVisitCountCard />
+            <DomainAveragePageVisitDurationCard />
           </div>
           <div className="analytics-view__cards-container">
             <DomainTotalUsagePerDayCard />

@@ -448,3 +448,26 @@ export const getSelectedDomainTotalPageVisitCount = createSelector(
       .value().length;
   }
 );
+
+/**
+ * Retrieves average page visit duration on a selected domain that
+ * falls within the selected time range
+ */
+export const getSelectedDomainAveragePageVisitDuration = createSelector(
+  [
+    getSelectedDomainRecords,
+    getSelectedDomainTotalPageVisitCount,
+    getEffectiveTimeRange
+  ],
+  (
+    selectedDomainRecords,
+    selectedDomainTotalPageVisitCount,
+    effectiveTimeRange
+  ) => {
+    // (total duration on website) divide by (# of unique page visited)
+    return (
+      computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
+      Math.max(selectedDomainTotalPageVisitCount, 1)
+    );
+  }
+);
