@@ -18,7 +18,7 @@ const DomainTotalPageVisitCountCard = (
   <Card
     className="analytics-view__card analytics-view__card--responsive analytics-view__card--sm"
     title="Page Visits"
-    description="Total amount of unique pages visited"
+    description="Total unique pages visited"
     body={
       <div>
         <CountUp

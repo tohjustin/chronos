@@ -16,7 +16,7 @@ const TotalDomainVisitCountCard = (props: TotalDomainVisitCountCardProps) => (
   <Card
     className="analytics-view__card analytics-view__card--responsive analytics-view__card--sm"
     title="Domain Visits"
-    description="Total amount of unique domains visited"
+    description="Total unique domains visited"
     body={
       <div>
         <CountUp
