@@ -24,9 +24,9 @@ const TotalDomainVisitCountCard = (props: TotalDomainVisitCountCardProps) => (
           end={props.visitCount}
           duration={TRANSITION_DELAY}
           formattingFn={d => d.toLocaleString("en-US")}
+          formattingUnitFn={d => (d > 1 ? "domains" : "domain")}
           preserveValue={true}
           redraw={true}
-          unit="domains"
         />
       </div>
     }

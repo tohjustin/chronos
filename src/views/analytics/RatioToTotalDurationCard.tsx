@@ -25,9 +25,9 @@ const RatioToTotalDurationCard = (props: RatioToTotalDurationCardProps) => (
           decimals={2}
           duration={TRANSITION_DELAY}
           formattingFn={d => `${d.toFixed(2)}`}
+          formattingUnitFn={() => "%"}
           preserveValue={true}
           redraw={true}
-          unit="%"
         />
       </div>
     }

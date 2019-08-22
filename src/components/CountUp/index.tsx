@@ -25,9 +25,9 @@ interface CountUpProps {
   duration?: number;
   preserveValue?: boolean;
   redraw?: boolean;
-  unit?: string;
   separator?: string;
   formattingFn?(value: number): string;
+  formattingUnitFn?(value: number): string;
 }
 
 const MS_PER_SECOND = 1000;
@@ -55,36 +55,18 @@ const formatSeconds = (value: number) => {
 const formatMilliseconds = (value: number) => {
   return value > MS_PER_SECOND ? "" : `${value}`;
 };
-const formatUnits = (
-  value: number,
-  unit?: string,
-  formattingFn?: (value: number) => string
-): string => {
-  if (
-    formattingFn === undefined ||
-    unit === undefined ||
-    formattingFn(value) === ""
-  ) {
-    return "";
-  }
 
-  return unit;
-};
-
-export const CountUp = ({ unit, ...props }: CountUpProps) => {
-  const { formattingFn } = props;
-  const formattingUnitFn = React.useMemo(() => {
-    return (value: number) => formatUnits(value, unit, formattingFn);
-  }, [formattingFn, unit]);
-
+export const CountUp = ({ formattingUnitFn, ...props }: CountUpProps) => {
   return (
     <>
       <ReactCountUp className="count-up__value" {...props} />
-      <ReactCountUp
-        className="count-up__unit"
-        {...props}
-        formattingFn={formattingUnitFn}
-      />
+      {formattingUnitFn && (
+        <ReactCountUp
+          className="count-up__unit"
+          {...props}
+          formattingFn={formattingUnitFn}
+        />
+      )}
     </>
   );
 };
@@ -92,10 +74,26 @@ export const CountUp = ({ unit, ...props }: CountUpProps) => {
 export const DurationCountUp = (props: DurationCountUpProps) => {
   return (
     <div className="duration-count-up">
-      <CountUp {...props} formattingFn={formatHour} unit="h" />
-      <CountUp {...props} formattingFn={formatMinutes} unit="min" />
-      <CountUp {...props} formattingFn={formatSeconds} unit="s" />
-      <CountUp {...props} formattingFn={formatMilliseconds} unit="ms" />
+      <CountUp
+        {...props}
+        formattingFn={formatHour}
+        formattingUnitFn={value => (formatHour(value) ? "h" : "")}
+      />
+      <CountUp
+        {...props}
+        formattingFn={formatMinutes}
+        formattingUnitFn={value => (formatMinutes(value) ? "min" : "")}
+      />
+      <CountUp
+        {...props}
+        formattingFn={formatSeconds}
+        formattingUnitFn={value => (formatSeconds(value) ? "s" : "")}
+      />
+      <CountUp
+        {...props}
+        formattingFn={formatMilliseconds}
+        formattingUnitFn={value => (formatMilliseconds(value) ? "ms" : "")}
+      />
     </div>
   );
 };

@@ -24,9 +24,9 @@ const TotalPageVisitCountCard = (props: TotalPageVisitCountCardProps) => (
           end={props.visitCount}
           duration={TRANSITION_DELAY}
           formattingFn={d => d.toLocaleString("en-US")}
+          formattingUnitFn={d => (d > 1 ? "pages" : "page")}
           preserveValue={true}
           redraw={true}
-          unit="pages"
         />
       </div>
     }
