@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
-import WeeklyHourHeatmap from "../../components/WeeklyHourHeatmap";
+import WeeklyHourHeatmap, {
+  defaultProps as WeeklyHourHeatmapDefaultProps
+} from "../../components/WeeklyHourHeatmap";
 import { Datum } from "../../components/WeeklyHourHeatmap/types";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
@@ -41,15 +43,11 @@ const AverageUsageByHourOfWeekCard = (
           value: d.duration
         }))}
         legend={{
-          enable: true,
-          expandToChartWidth: true,
+          ...WeeklyHourHeatmapDefaultProps.legend,
           formatLabels: (threshold: number) => {
             const minutes = threshold / MS_PER_MINUTE;
             return minutes >= 1 ? `${minutes}m` : `${minutes * 60}s`;
-          },
-          includeEmptyColor: false,
-          margin: { left: 0, right: 0, top: 0, bottom: 8 },
-          sideLabels: null
+          }
         }}
         thresholds={THRESHOLDS}
         tooltipComponent={(props: { data: Datum }) => {
