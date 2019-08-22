@@ -43,8 +43,10 @@ const formatMinutes = (value: number) => {
   if (value < MS_PER_MINUTE) {
     return "";
   }
+  // Round up to nearest minutes (to be consistent with
+  // `formatTooltipDurationLabel`)
   const hours = Math.floor(value / MS_PER_HOUR);
-  const minutes = Math.floor((value % MS_PER_HOUR) / MS_PER_MINUTE);
+  const minutes = Math.round((value % MS_PER_HOUR) / MS_PER_MINUTE);
   return hours === 0 ? `${minutes}` : `${minutes}`.padStart(2, "0");
 };
 const formatSeconds = (value: number) => {

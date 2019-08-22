@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import React, { useRef, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
+import { formatTooltipDurationLabel } from "../../utils/stringUtils";
 
 interface TooltipProps {
   data: { x: number; y: number }[];
@@ -35,9 +36,7 @@ const Tooltip = (props: TooltipProps) => {
     month: "long",
     day: "numeric"
   });
-  const durationInMins = hoveredDatum.y / 60000;
-  const hours = Math.floor(durationInMins / 60);
-  const minutes = Math.floor(durationInMins) % 60;
+  const duration = hoveredDatum.y;
 
   return (
     <>
@@ -54,13 +53,7 @@ const Tooltip = (props: TooltipProps) => {
         <div className="tooltip">
           <strong className="tooltip__header">{date}</strong>
           <div className="tooltip__description">
-            {hours > 0 && `${hours} ${hours > 1 ? "hours" : "hour"} `}
-            {minutes > 0 && `${minutes} ${minutes > 1 ? "minutes" : "minute"}`}
-            {durationInMins !== 0 &&
-              hours === 0 &&
-              minutes === 0 &&
-              "Less than 1 minute"}
-            {durationInMins === 0 && "No activity"}
+            {formatTooltipDurationLabel(duration)}
           </div>
         </div>
       </div>

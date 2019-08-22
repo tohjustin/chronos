@@ -88,6 +88,7 @@ export function formatTooltipDayOfWeekLabel(day: number): string {
  * @returns {string} duration in human-readable format
  */
 export function formatTooltipDurationLabel(duration: number): string {
+  // Round up to nearest minutes
   const durationInMins = Math.round(duration / 1000 / 60);
   const minutes = Math.floor(durationInMins) % 60;
   const hours = Math.floor(durationInMins / 60);
