@@ -29,7 +29,7 @@ interface HeatmapProps {
   tooltipComponent?: React.FC<{ data: Datum | null }>;
 }
 
-const defaultProps = {
+export const defaultProps = {
   axis: {
     bottom: { enable: false },
     left: { enable: true },
@@ -53,12 +53,21 @@ const defaultProps = {
   margin: { left: 0, right: 0, top: 0, bottom: 0 }
 };
 
-const Heatmap = (props: HeatmapProps) => {
+const Heatmap = ({
+  axis = defaultProps.axis,
+  cell = defaultProps.cell,
+  colorRange,
+  data,
+  isInteractive = defaultProps.isInteractive,
+  legend = defaultProps.legend,
+  margin = defaultProps.margin,
+  thresholds,
+  tooltipComponent
+}: HeatmapProps) => {
   const [containerRef, containerHeight, containerWidth] = useClientDimensions();
   const [hoveredDatum, setHoveredDatum] = useState<Datum | null>(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  const { data, cell, colorRange, margin, thresholds } = props;
   const {
     cellHeight,
     cellSpacingX,
@@ -89,13 +98,13 @@ const Heatmap = (props: HeatmapProps) => {
   let marginY = 0;
   let hoverX = null;
   let hoverY = null;
-  if (props.isInteractive && hoveredDatum) {
+  if (isInteractive && hoveredDatum) {
     const cellOffsetX = cellWidth / 2;
     const cellOffsetY = cellHeight / 2;
 
     // (hoverX, hoverY) === center of heatmap cell
-    hoverX = (scaleX(hoveredDatum.x) || 0) + cellOffsetX + props.margin.left;
-    hoverY = (scaleY(hoveredDatum.y) || 0) + cellOffsetY + props.margin.top;
+    hoverX = (scaleX(hoveredDatum.x) || 0) + cellOffsetX + margin.left;
+    hoverY = (scaleY(hoveredDatum.y) || 0) + cellOffsetY + margin.top;
     marginX = cellOffsetX + cellSpacingX / 2;
     marginY = cellOffsetY + cellSpacingY / 2;
   }
@@ -105,13 +114,11 @@ const Heatmap = (props: HeatmapProps) => {
       {chartHeight !== 0 && chartWidth !== 0 && (
         <div className="heatmap__container">
           <svg height={svgHeight} width={svgWidth}>
-            <g
-              transform={`translate(${props.margin.left}, ${props.margin.top})`}
-            >
+            <g transform={`translate(${margin.left}, ${margin.top})`}>
               <MemoizedChart
-                cell={props.cell}
-                data={props.data}
-                isInteractive={props.isInteractive}
+                cell={cell}
+                data={data}
+                isInteractive={isInteractive}
                 onMouseOver={handleMouseOver}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -120,7 +127,7 @@ const Heatmap = (props: HeatmapProps) => {
                 scaleZ={scaleZ}
               />
               <MemoizedAxis
-                {...props.axis}
+                {...axis}
                 height={chartHeight}
                 width={chartWidth}
                 scaleX={scaleX}
@@ -128,22 +135,22 @@ const Heatmap = (props: HeatmapProps) => {
               />
             </g>
           </svg>
-          {props.legend.enable && (
+          {legend.enable && (
             <MemoizedLegend
               cellHeight={cellHeight}
               cellWidth={cellWidth}
-              cellRadius={props.cell.radius}
+              cellRadius={cell.radius}
               cellSpacing={cellSpacingX}
               chartWidth={chartWidth}
               colors={colors}
-              legend={props.legend}
+              legend={legend}
               thresholds={thresholds}
             />
           )}
-          {props.isInteractive && (
+          {isInteractive && (
             <TooltipRenderer
               data={hoveredDatum}
-              component={props.tooltipComponent}
+              component={tooltipComponent}
               height={containerHeight}
               width={containerWidth}
               isHovering={isHovering}
@@ -160,7 +167,5 @@ const Heatmap = (props: HeatmapProps) => {
     </div>
   );
 };
-
-Heatmap.defaultProps = defaultProps;
 
 export default Heatmap;

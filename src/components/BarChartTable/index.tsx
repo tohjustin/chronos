@@ -24,10 +24,21 @@ const THEME_BASE_SIZE = 16;
 const THEME_COLOR = "#3D9CF4";
 const TRANSITION_DELAY = 1000; // ms
 
-const BarChartTable = (props: BarChartTableProps) => {
-  const rowData = [...new Array(props.rowCount)].map((_, index) => {
+export const defaultProps = {
+  rowCount: 10,
+  showIcons: true
+};
+
+const BarChartTable = ({
+  className,
+  data,
+  formatValue,
+  rowCount = defaultProps.rowCount,
+  showIcons = defaultProps.showIcons
+}: BarChartTableProps) => {
+  const rowData = [...new Array(rowCount)].map((_, index) => {
     return (
-      (props.data && props.data[index]) || {
+      (data && data[index]) || {
         label: NO_DATA_LABEL,
         value: 0
       }
@@ -36,7 +47,7 @@ const BarChartTable = (props: BarChartTableProps) => {
   const maxValue = d3.max(rowData.map(d => d.value)) || 1;
 
   return (
-    <div className={classNames("bar-chart-table", props.className)}>
+    <div className={classNames("bar-chart-table", className)}>
       <div className="bar-chart-table__col bar-chart-table__col-index">
         {rowData.map((datum, index) => (
           <div
@@ -59,7 +70,7 @@ const BarChartTable = (props: BarChartTableProps) => {
               visibility: datum.label === NO_DATA_LABEL ? "hidden" : undefined
             }}
           >
-            {props.showIcons && (
+            {showIcons && (
               <Avatar
                 className="bar-chart-table__label-icon"
                 src={datum.iconSrc}
@@ -99,17 +110,12 @@ const BarChartTable = (props: BarChartTableProps) => {
               visibility: datum.label === NO_DATA_LABEL ? "hidden" : undefined
             }}
           >
-            {props.formatValue ? props.formatValue(datum.value) : datum.value}
+            {formatValue ? formatValue(datum.value) : datum.value}
           </div>
         ))}
       </div>
     </div>
   );
-};
-
-BarChartTable.defaultProps = {
-  rowCount: 10,
-  showIcons: true
 };
 
 export default BarChartTable;

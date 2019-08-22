@@ -18,11 +18,11 @@ interface VerticalBarChartProps {
    */
   data: Datum[];
 
-  axis: AxisConfiguration<number, number>;
-  grid: GridConfiguration<number, number>;
-  isInteractive: boolean;
-  margin: MarginConfiguration;
-  transitionDelay: number;
+  axis?: AxisConfiguration<number, number>;
+  grid?: GridConfiguration<number, number>;
+  isInteractive?: boolean;
+  margin?: MarginConfiguration;
+  transitionDelay?: number;
   /**
    * NOTE: component does not support negative values
    */
@@ -34,7 +34,9 @@ interface VerticalBarChartProps {
   tooltipComponent?: React.FC<{ data: Datum | null }>;
 }
 
-const defaultProps = {
+const TOOLTIP_MARGIN = 4;
+
+export const defaultProps = {
   axis: {
     bottom: { enable: true },
     left: { enable: true },
@@ -50,14 +52,21 @@ const defaultProps = {
   transitionDelay: 500
 };
 
-const TOOLTIP_MARGIN = 4;
-
-const VerticalBarChart = (props: VerticalBarChartProps) => {
+const VerticalBarChart = ({
+  axis = defaultProps.axis,
+  data,
+  grid = defaultProps.grid,
+  isInteractive = defaultProps.isInteractive,
+  margin = defaultProps.margin,
+  maxValue,
+  minValue,
+  tooltipComponent,
+  transitionDelay = defaultProps.transitionDelay
+}: VerticalBarChartProps) => {
   const [containerRef, containerHeight, containerWidth] = useClientDimensions();
   const [hoveredDatum, setHoveredDatum] = useState<Datum | null>(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  const { data, margin, maxValue, minValue, transitionDelay } = props;
   const {
     chartHeight,
     chartWidth,
@@ -88,13 +97,11 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
   let marginY = 0;
   let hoverX = null;
   let hoverY = null;
-  if (props.isInteractive && hoveredDatum) {
+  if (isInteractive && hoveredDatum) {
     // (hoverX, hoverY) === top + middle point of bar
     hoverX =
-      (scaleX(hoveredDatum.x) || 0) +
-      props.margin.left +
-      scaleX.bandwidth() / 2;
-    hoverY = (scaleY(hoveredDatum.y) || 0) + props.margin.top;
+      (scaleX(hoveredDatum.x) || 0) + margin.left + scaleX.bandwidth() / 2;
+    hoverY = (scaleY(hoveredDatum.y) || 0) + margin.top;
     marginX = TOOLTIP_MARGIN + scaleX.bandwidth() / 2;
     marginY = TOOLTIP_MARGIN;
   }
@@ -104,28 +111,26 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
       {chartHeight !== 0 && chartWidth !== 0 && (
         <div className="vertical-bar-chart__container">
           <svg height={svgHeight} width={svgWidth}>
-            <g
-              transform={`translate(${props.margin.left}, ${props.margin.top})`}
-            >
+            <g transform={`translate(${margin.left}, ${margin.top})`}>
               <Grid
-                {...props.grid}
+                {...grid}
                 height={chartHeight}
                 width={chartWidth}
                 scaleX={scaleX}
                 scaleY={scaleY}
               />
               <Axis
-                {...props.axis}
+                {...axis}
                 height={chartHeight}
                 width={chartWidth}
                 scaleX={scaleX}
                 scaleY={scaleY}
               />
               <Chart
-                data={props.data}
+                data={data}
                 height={chartHeight}
                 width={chartWidth}
-                isInteractive={props.isInteractive}
+                isInteractive={isInteractive}
                 onMouseOver={handleMouseOver}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -135,10 +140,10 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
               />
             </g>
           </svg>
-          {props.isInteractive && (
+          {isInteractive && (
             <TooltipRenderer
               data={hoveredDatum}
-              component={props.tooltipComponent}
+              component={tooltipComponent}
               height={containerHeight}
               width={containerWidth}
               isHovering={isHovering}
@@ -155,7 +160,5 @@ const VerticalBarChart = (props: VerticalBarChartProps) => {
     </div>
   );
 };
-
-VerticalBarChart.defaultProps = defaultProps;
 
 export default VerticalBarChart;

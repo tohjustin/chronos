@@ -29,71 +29,85 @@ interface CalendarHeatmapProps {
   tooltipComponent?: React.FC<{ data: Datum }>;
 }
 
-const MARGIN = { left: 40, right: 8, top: 24, bottom: 32 };
+export const defaultProps = {
+  cell: {
+    forceSquare: true,
+    marginRatio: 0.2,
+    radius: 0
+  },
+  isInteractive: true,
+  legend: {
+    enable: true,
+    expandToChartWidth: false,
+    formatLabels: null,
+    includeEmptyColor: true,
+    margin: { left: 8, right: 8, top: 0, bottom: 0 },
+    sideLabels: ["Less", "More"] as [string, string]
+  },
+  margin: { left: 40, right: 8, top: 24, bottom: 32 },
+  tooltipComponent: CalendarHeatmapTooltip
+};
 
-const CalendarHeatmap = (props: CalendarHeatmapProps) => {
+const CalendarHeatmap = ({
+  axis,
+  cell = defaultProps.cell,
+  colorRange,
+  data,
+  endDay,
+  isInteractive = defaultProps.isInteractive,
+  legend = defaultProps.legend,
+  margin = defaultProps.margin,
+  startDay,
+  thresholds,
+  tooltipComponent: HeatmapTooltipComponent = defaultProps.tooltipComponent
+}: CalendarHeatmapProps) => {
   const {
     heatmapData,
     getDateFromDatum,
     formatTickX,
     formatTickY
-  } = computeHeatmapData(props.data, props.startDay, props.endDay);
+  } = computeHeatmapData(data, startDay, endDay);
   const heatmapAxis = {
     bottom: {
-      enable: props.axis ? props.axis.bottom.enable : false,
+      enable: axis ? axis.bottom.enable : false,
       formatTick: formatTickX
     },
     left: {
-      enable: props.axis ? props.axis.left.enable : true,
+      enable: axis ? axis.left.enable : true,
       formatTick: formatTickY,
       tickValues: [1, 3, 5]
     },
     right: {
-      enable: props.axis ? props.axis.right.enable : false,
+      enable: axis ? axis.right.enable : false,
       formatTick: formatTickY,
       tickValues: [1, 3, 5]
     },
     top: {
-      enable: props.axis ? props.axis.top.enable : true,
+      enable: axis ? axis.top.enable : true,
       formatTick: formatTickX
     }
   };
-  const heatmapLegend = {
-    enable: props.legend ? props.legend.enable : true,
-    expandToChartWidth: props.legend ? props.legend.expandToChartWidth : false,
-    formatLabels: props.legend ? props.legend.formatLabels : null,
-    includeEmptyColor: props.legend ? props.legend.includeEmptyColor : true,
-    margin: props.legend
-      ? props.legend.margin
-      : { left: 8, right: 8, top: 0, bottom: 0 },
-    sideLabels: props.legend
-      ? props.legend.sideLabels
-      : (["Less", "More"] as [string, string])
-  };
-  const heatmapMargin = props.margin || MARGIN;
-  const HeatmapTooltipComponent =
-    props.tooltipComponent || CalendarHeatmapTooltip;
 
   return (
     <Heatmap
       axis={heatmapAxis}
-      cell={props.cell}
-      colorRange={props.colorRange}
+      cell={cell}
+      colorRange={colorRange}
       data={heatmapData}
-      isInteractive={props.isInteractive}
-      legend={heatmapLegend}
-      margin={heatmapMargin}
-      thresholds={props.thresholds}
-      tooltipComponent={props => {
-        return props.data ? (
+      isInteractive={isInteractive}
+      legend={legend}
+      margin={margin}
+      thresholds={thresholds}
+      tooltipComponent={props =>
+        props.data && (
           <HeatmapTooltipComponent
             data={{
               day: formatDate(getDateFromDatum(props.data)),
               value: props.data.z || 0
             }}
           />
-        ) : null;
-      }}
+        )
+      }
     />
   );
 };

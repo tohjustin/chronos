@@ -27,63 +27,68 @@ interface WeeklyHourHeatmapProps {
   tooltipComponent?: React.FC<{ data: Datum }>;
 }
 
-const MARGIN = { left: 48, right: 4, top: 4, bottom: 52 };
+export const defaultProps = {
+  cell: {
+    forceSquare: false,
+    marginRatio: 0.35,
+    radius: 0
+  },
+  isInteractive: true,
+  legend: {
+    enable: true,
+    expandToChartWidth: true,
+    formatLabels: (threshold: number) => `${threshold}`,
+    includeEmptyColor: false,
+    margin: { left: 0, right: 4, top: 0, bottom: 8 },
+    sideLabels: null
+  },
+  margin: { left: 48, right: 4, top: 4, bottom: 52 },
+  tooltipComponent: WeeklyHourHeatmapTooltip
+};
 
-const WeeklyHourHeatmap = (props: WeeklyHourHeatmapProps) => {
-  const { heatmapData, formatTickX, formatTickY } = computeHeatmapData(
-    props.data
-  );
+const WeeklyHourHeatmap = ({
+  axis,
+  cell = defaultProps.cell,
+  colorRange,
+  data,
+  isInteractive = defaultProps.isInteractive,
+  legend = defaultProps.legend,
+  margin = defaultProps.margin,
+  thresholds,
+  tooltipComponent: HeatmapTooltipComponent = defaultProps.tooltipComponent
+}: WeeklyHourHeatmapProps) => {
+  const { heatmapData, formatTickX, formatTickY } = computeHeatmapData(data);
   const heatmapAxis = {
     bottom: {
-      enable: props.axis ? props.axis.bottom.enable : true,
+      enable: axis ? axis.bottom.enable : true,
       formatTick: formatTickX
     },
     left: {
-      enable: props.axis ? props.axis.left.enable : true,
+      enable: axis ? axis.left.enable : true,
       formatTick: formatTickY
     },
     right: {
-      enable: props.axis ? props.axis.right.enable : false,
+      enable: axis ? axis.right.enable : false,
       formatTick: formatTickY
     },
     top: {
-      enable: props.axis ? props.axis.top.enable : false,
+      enable: axis ? axis.top.enable : false,
       formatTick: formatTickX
     }
   };
-  const heatmapCell = {
-    forceSquare: props.cell ? props.cell.forceSquare : false,
-    marginRatio: props.cell ? props.cell.marginRatio : 0.35,
-    radius: props.cell ? props.cell.radius : 0
-  };
-  const heatmapLegend = {
-    enable: props.legend ? props.legend.enable : true,
-    expandToChartWidth: props.legend ? props.legend.expandToChartWidth : false,
-    formatLabels: props.legend
-      ? props.legend.formatLabels
-      : (threshold: number) => `${threshold}`,
-    includeEmptyColor: props.legend ? props.legend.includeEmptyColor : false,
-    margin: props.legend
-      ? props.legend.margin
-      : { left: 0, right: 0, top: 0, bottom: 8 },
-    sideLabels: props.legend ? props.legend.sideLabels : null
-  };
-  const heatmapMargin = props.margin || MARGIN;
-  const HeatmapTooltipComponent =
-    props.tooltipComponent || WeeklyHourHeatmapTooltip;
 
   return (
     <Heatmap
       axis={heatmapAxis}
-      cell={heatmapCell}
-      colorRange={props.colorRange}
+      cell={cell}
+      colorRange={colorRange}
       data={heatmapData}
-      isInteractive={props.isInteractive}
-      legend={heatmapLegend}
-      margin={heatmapMargin}
-      thresholds={props.thresholds}
-      tooltipComponent={props => {
-        return props.data ? (
+      isInteractive={isInteractive}
+      legend={legend}
+      margin={margin}
+      thresholds={thresholds}
+      tooltipComponent={props =>
+        props.data && (
           <HeatmapTooltipComponent
             data={{
               day: props.data.x,
@@ -91,8 +96,8 @@ const WeeklyHourHeatmap = (props: WeeklyHourHeatmapProps) => {
               value: props.data.z
             }}
           />
-        ) : null;
-      }}
+        )
+      }
     />
   );
 };
