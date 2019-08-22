@@ -70,10 +70,14 @@ const Legend = (props: LegendProps) => {
       )}
       <div
         className="heatmap__legend-cells"
-        style={{
-          marginLeft: `${props.cellSpacing}px`,
-          marginRight: `${props.cellSpacing}px`
-        }}
+        style={
+          props.legend.sideLabels
+            ? {
+                marginLeft: `${props.cellSpacing}px`,
+                marginRight: `${props.cellSpacing}px`
+              }
+            : {}
+        }
       >
         {colors.map((color, index) => {
           const isLastCell = index === colors.length - 1;
