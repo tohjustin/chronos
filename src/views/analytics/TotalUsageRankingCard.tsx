@@ -33,6 +33,7 @@ const TotalUsageRankingCard = (props: TotalUsageRankingCardProps) => (
             iconSrc: datum.favIconUrl
           }))}
         formatValue={formatTableDurationLabel}
+        rowCount={TABLE_ROW_COUNT}
       />
     }
   />

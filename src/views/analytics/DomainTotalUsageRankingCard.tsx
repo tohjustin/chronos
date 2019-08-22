@@ -37,6 +37,7 @@ const DomainTotalUsageRankingCard = (
             value: datum.totalDuration
           }))}
         formatValue={formatTableDurationLabel}
+        rowCount={TABLE_ROW_COUNT}
         showIcons={false}
       />
     }
