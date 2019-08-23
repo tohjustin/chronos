@@ -14,39 +14,53 @@ interface TooltipRendererProps<T> {
   data: T | null;
   height: number;
   width: number;
-  isHovering: boolean;
-  marginX: number;
-  marginY: number;
-  offsetX: number;
-  offsetY: number;
   x: number | null;
   y: number | null;
 
+  isHovering?: boolean;
+  marginX?: number;
+  marginY?: number;
+  offsetX?: number;
+  offsetY?: number;
   component?: React.FC<TooltipProps<T>>;
 }
 
 function DefaultTooltip<T>(props: TooltipProps<T>) {
-  const body = JSON.stringify(props.data);
-  return <Tooltip className={props.className} body={body} />;
+  return (
+    <Tooltip className={props.className} body={JSON.stringify(props.data)} />
+  );
 }
 
-function TooltipRenderer<T>(props: TooltipRendererProps<T>) {
+export const defaultProps = {
+  isHovering: false,
+  marginX: 0,
+  marginY: 0,
+  offsetX: 0,
+  offsetY: 0,
+  component: DefaultTooltip
+};
+
+function TooltipRenderer<T>({
+  data,
+  width,
+  x,
+  y,
+  isHovering = defaultProps.isHovering,
+  marginX = defaultProps.marginX,
+  marginY = defaultProps.marginY,
+  offsetX = defaultProps.offsetX,
+  offsetY = defaultProps.offsetY,
+  component: TooltipComponent = defaultProps.component
+}: TooltipRendererProps<T>) {
   const [tooltipRef, tooltipHeight, tooltipWidth] = useClientDimensions();
 
   // Compute tooltip positions
   let tooltipX = 0;
   let tooltipY = 0;
-  if (props.x && props.y) {
-    tooltipX =
-      props.offsetX + props.x + tooltipWidth < props.width
-        ? props.x
-        : props.x - tooltipWidth;
-    tooltipY =
-      props.offsetY + props.y - tooltipHeight > 0
-        ? props.y - tooltipHeight
-        : props.y;
+  if (x && y) {
+    tooltipX = offsetX + x + tooltipWidth < width ? x : x - tooltipWidth;
+    tooltipY = offsetY + y - tooltipHeight > 0 ? y - tooltipHeight : y;
   }
-  const Tooltip = props.component || DefaultTooltip;
 
   return (
     <div
@@ -56,12 +70,12 @@ function TooltipRenderer<T>(props: TooltipRendererProps<T>) {
         position: "absolute",
         left: `${tooltipX}px`,
         top: `${tooltipY}px`,
-        padding: `${props.marginY}px ${props.marginX}px`,
-        opacity: props.isHovering ? 1 : 0,
+        padding: `${marginY}px ${marginX}px`,
+        opacity: isHovering ? 1 : 0,
         pointerEvents: "none"
       }}
     >
-      <Tooltip className="tooltip-renderer__component" data={props.data} />
+      <TooltipComponent className="tooltip-renderer__component" data={data} />
     </div>
   );
 }
