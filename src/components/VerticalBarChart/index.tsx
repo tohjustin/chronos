@@ -38,10 +38,10 @@ const TOOLTIP_MARGIN = 4;
 
 export const defaultProps = {
   axis: {
-    bottom: { enable: true },
-    left: { enable: true },
-    right: { enable: true },
-    top: { enable: true }
+    bottom: { enable: true, showDomain: true },
+    left: { enable: true, showDomain: true },
+    right: { enable: true, showDomain: true },
+    top: { enable: true, showDomain: true }
   },
   grid: {
     horizontal: { enable: true },

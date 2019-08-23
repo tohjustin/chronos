@@ -70,20 +70,24 @@ const CalendarHeatmap = ({
   const heatmapAxis = {
     bottom: {
       enable: axis ? axis.bottom.enable : false,
+      showDomain: false,
       formatTick: formatTickX
     },
     left: {
       enable: axis ? axis.left.enable : true,
+      showDomain: false,
       formatTick: formatTickY,
       tickValues: [1, 3, 5]
     },
     right: {
       enable: axis ? axis.right.enable : false,
+      showDomain: false,
       formatTick: formatTickY,
       tickValues: [1, 3, 5]
     },
     top: {
       enable: axis ? axis.top.enable : true,
+      showDomain: false,
       formatTick: formatTickX
     }
   };

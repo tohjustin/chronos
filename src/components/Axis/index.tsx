@@ -5,6 +5,7 @@ import "./styles.scss";
 
 type AxisSubConfiguration<T> = {
   enable: boolean;
+  showDomain: boolean;
   formatTick?: (data: T, index: number) => string;
   tickValues?: T[];
 };
@@ -23,11 +24,16 @@ export interface AxisProps<X, Y> extends AxisConfiguration<X, Y> {
   scaleY: d3.AxisScale<Y>;
 }
 
-function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
-  props: AxisProps<X, Y>
-) {
-  const { height, width, scaleX, scaleY, top, bottom, left, right } = props;
-
+function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
+  height,
+  width,
+  scaleX,
+  scaleY,
+  top,
+  bottom,
+  left,
+  right
+}: AxisProps<X, Y>) {
   const axisRef = useRef<SVGGElement | null>(null);
   useEffect(() => {
     const svg = d3.select(axisRef.current);
@@ -46,10 +52,13 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (top.tickValues && top.tickValues.length > 0) {
         topAxis.tickValues(top.tickValues);
       }
-      svg
+      const axis = svg
         .append("g")
         .attr("class", "axis axis__top")
         .call(topAxis);
+      if (!top.showDomain) {
+        axis.call(g => g.select(".domain").remove());
+      }
     }
 
     if (bottom.enable) {
@@ -63,11 +72,14 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (bottom.tickValues && bottom.tickValues.length > 0) {
         bottomAxis.tickValues(bottom.tickValues);
       }
-      svg
+      const axis = svg
         .append("g")
         .attr("class", "axis axis__bottom")
         .attr("transform", `translate(0,${height})`)
         .call(bottomAxis);
+      if (!bottom.showDomain) {
+        axis.call(g => g.select(".domain").remove());
+      }
     }
 
     if (left.enable) {
@@ -82,10 +94,13 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (left.tickValues && left.tickValues.length > 0) {
         leftAxis.tickValues(left.tickValues);
       }
-      svg
+      const axis = svg
         .append("g")
         .attr("class", "axis axis__left")
         .call(leftAxis);
+      if (!left.showDomain) {
+        axis.call(g => g.select(".domain").remove());
+      }
     }
 
     if (right.enable) {
@@ -100,11 +115,14 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
       if (right.tickValues && right.tickValues.length > 0) {
         rightAxis.tickValues(right.tickValues);
       }
-      svg
+      const axis = svg
         .append("g")
         .attr("class", "axis axis__right")
         .attr("transform", `translate(${width},0)`)
         .call(rightAxis);
+      if (!right.showDomain) {
+        axis.call(g => g.select(".domain").remove());
+      }
     }
   }, [height, width, scaleX, scaleY, top, bottom, left, right]);
 

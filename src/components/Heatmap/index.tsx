@@ -31,10 +31,10 @@ interface HeatmapProps {
 
 export const defaultProps = {
   axis: {
-    bottom: { enable: false },
-    left: { enable: true },
-    right: { enable: false },
-    top: { enable: true }
+    bottom: { enable: false, showDomain: false },
+    left: { enable: true, showDomain: false },
+    right: { enable: false, showDomain: false },
+    top: { enable: true, showDomain: false }
   },
   cell: {
     forceSquare: true,

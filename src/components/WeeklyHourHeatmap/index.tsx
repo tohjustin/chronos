@@ -61,18 +61,22 @@ const WeeklyHourHeatmap = ({
   const heatmapAxis = {
     bottom: {
       enable: axis ? axis.bottom.enable : true,
+      showDomain: false,
       formatTick: formatTickX
     },
     left: {
       enable: axis ? axis.left.enable : true,
+      showDomain: false,
       formatTick: formatTickY
     },
     right: {
       enable: axis ? axis.right.enable : false,
+      showDomain: false,
       formatTick: formatTickY
     },
     top: {
       enable: axis ? axis.top.enable : false,
+      showDomain: false,
       formatTick: formatTickX
     }
   };

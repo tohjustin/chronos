@@ -1,9 +1,10 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
 .axis__container {
   .axis {
     path {
-      display: none;
+      @include grid-lines;
     }
 
     text {

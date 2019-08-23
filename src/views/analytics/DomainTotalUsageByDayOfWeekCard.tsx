@@ -62,15 +62,17 @@ const DomainTotalUsageByDayOfWeekCard = (
           axis={{
             bottom: {
               enable: true,
+              showDomain: true,
               formatTick: formatTickX
             },
             left: {
               enable: true,
+              showDomain: true,
               formatTick: formatTickY,
               tickValues: tickValuesY
             },
-            right: { enable: false },
-            top: { enable: false }
+            right: { enable: false, showDomain: false },
+            top: { enable: false, showDomain: false }
           }}
           grid={{
             horizontal: {
