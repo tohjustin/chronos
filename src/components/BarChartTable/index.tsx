@@ -1,17 +1,14 @@
 import classNames from "classnames";
 import * as d3 from "d3";
-import { Avatar } from "evergreen-ui";
 import React from "react";
+
+import LabelCell from "./LabelCell";
+import { Datum } from "./types";
 
 import "./styles.scss";
 
 interface BarChartTableProps {
-  data: {
-    label: string;
-    value: number;
-    labelSrc?: string;
-    iconSrc?: string;
-  }[];
+  data: Datum[];
 
   className?: string;
   formatValue?: (value: number) => string;
@@ -19,10 +16,7 @@ interface BarChartTableProps {
   showIcons?: boolean;
 }
 
-const NO_DATA_LABEL = "_NIL_";
-const THEME_BASE_SIZE = 16;
-const THEME_COLOR = "#3D9CF4";
-const TRANSITION_DELAY = 1000; // ms
+export const NO_DATA_LABEL = "_NIL_";
 
 export const defaultProps = {
   rowCount: 10,
@@ -63,42 +57,13 @@ const BarChartTable = ({
       </div>
       <div className="bar-chart-table__col bar-chart-table__col-label">
         {rowData.map((datum, index) => (
-          <div
+          <LabelCell
             key={index}
-            className="bar-chart-table__cell"
-            style={{
-              visibility: datum.label === NO_DATA_LABEL ? "hidden" : undefined
-            }}
-          >
-            {showIcons && (
-              <Avatar
-                className="bar-chart-table__label-icon"
-                src={datum.iconSrc}
-                hashValue={datum.label}
-                name={datum.label}
-                size={THEME_BASE_SIZE}
-              />
-            )}
-            <div className="bar-chart-table__label-content">
-              {datum.labelSrc ? (
-                <span>
-                  <a href={datum.labelSrc} target="none">
-                    {datum.label}
-                  </a>
-                </span>
-              ) : (
-                <span>{datum.label}</span>
-              )}
-              <div
-                className="bar-chart-table__label-bar"
-                style={{
-                  transition: `width ${TRANSITION_DELAY}ms`,
-                  borderBottomColor: THEME_COLOR,
-                  width: `${(datum.value / maxValue) * 100}%`
-                }}
-              ></div>
-            </div>
-          </div>
+            {...datum}
+            hide={datum.label === NO_DATA_LABEL}
+            maxValue={maxValue}
+            showIcons={showIcons}
+          />
         ))}
       </div>
       <div className="bar-chart-table__col bar-chart-table__col-value">
