@@ -70,8 +70,6 @@ const VerticalBarChart = ({
   const {
     chartHeight,
     chartWidth,
-    offsetX,
-    offsetY,
     scaleX,
     scaleY,
     svgHeight,
@@ -149,8 +147,6 @@ const VerticalBarChart = ({
               isHovering={isHovering}
               marginX={marginX}
               marginY={marginY}
-              offsetX={offsetX}
-              offsetY={offsetY}
               x={hoverX ? hoverX : null}
               y={hoverY ? hoverY : null}
             />

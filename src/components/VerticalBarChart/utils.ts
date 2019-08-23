@@ -24,14 +24,8 @@ export function computeSizes({
   minValue?: number;
 }) {
   // compute chart dimensions
-  const availableWidth = Math.max(width - margin.left - margin.right, 0);
-  const availableHeight = Math.max(height - margin.top - margin.bottom, 0);
-  let chartWidth = availableWidth;
-  let chartHeight = availableHeight;
-  const svgWidth = chartWidth + margin.left + margin.right;
-  const svgHeight = chartHeight + margin.bottom + margin.top;
-  const offsetX = (width - svgWidth) / 2;
-  const offsetY = (height - svgHeight) / 2;
+  const chartWidth = Math.max(width - margin.left - margin.right, 0);
+  const chartHeight = Math.max(height - margin.top - margin.bottom, 0);
 
   // compute scales
   const scaleX: d3.ScaleBand<number> = d3
@@ -52,11 +46,9 @@ export function computeSizes({
   return {
     chartHeight,
     chartWidth,
-    offsetX,
-    offsetY,
     scaleX,
     scaleY,
-    svgHeight,
-    svgWidth
+    svgHeight: height,
+    svgWidth: width
   };
 }
