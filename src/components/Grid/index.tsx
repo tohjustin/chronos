@@ -20,11 +20,14 @@ export interface GridProps<X, Y> extends GridConfiguration<X, Y> {
   scaleY: d3.AxisScale<Y>;
 }
 
-function Grid<X extends d3.AxisDomain, Y extends d3.AxisDomain>(
-  props: GridProps<X, Y>
-) {
-  const { height, width, scaleX, scaleY, horizontal, vertical } = props;
-
+function Grid<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
+  height,
+  width,
+  scaleX,
+  scaleY,
+  horizontal,
+  vertical
+}: GridProps<X, Y>) {
   const gridRef = useRef<SVGGElement | null>(null);
   useEffect(() => {
     const svg = d3.select(gridRef.current);
