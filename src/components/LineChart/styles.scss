@@ -6,20 +6,26 @@ $line__stroke-width: 2px;
 $hover__transition--opacity: opacity 0.25s;
 
 .line-chart {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-around;
   height: 100%;
   width: 100%;
 
-  svg {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .line-chart__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-height: 100%;
   }
 
-  .dot {
+  .line-chart__cursor-container {
+    overflow: visible;
+    transition: $hover__transition--opacity;
+  }
+
+  .line-chart__dot {
     fill: $color__white;
     stroke: $color__primary;
     stroke-width: $dot__stroke-width;
@@ -46,85 +52,18 @@ $hover__transition--opacity: opacity 0.25s;
     }
   }
 
-  .line__container {
-    .line {
-      fill: none;
-      stroke: $color__primary;
-      stroke-width: $line__stroke-width;
-    }
+  .line-chart__hover-region {
+    opacity: 0;
   }
 
-  .axis__container {
-    .axis {
-      path,
-      line {
-        color: $color__light-gray;
-      }
-
-      text {
-        color: $color__dark-gray;
-        font-weight: 600;
-        font-size: 12px;
-        font-family: $font-family;
-      }
-    }
-
-    // Hide 1st tick on y-axis
-    .y.axis .tick:first-of-type {
-      display: none;
-    }
-
-    .grid {
-      color: $color__light-gray;
-      stroke-width: 1px;
-      stroke-dasharray: 2, 2;
-    }
+  .line-chart__line {
+    fill: none;
+    stroke: $color__primary;
+    stroke-width: $line__stroke-width;
   }
 
-  .overlay__container {
-    .overlay {
-      cursor: crosshair;
-      opacity: 0;
-    }
-  }
-
-  .ruler__container {
-    overflow: visible;
-    transition: $hover__transition--opacity;
-
-    .ruler {
-      stroke-width: 1px;
-      stroke: $color__gray;
-    }
-  }
-
-  .tooltip__container {
-    position: absolute;
-    padding: $base__size;
-    transition: $hover__transition--opacity;
-
-    .tooltip {
-      min-width: 80px;
-      max-width: 240px;
-      padding: $base__size;
-      border-radius: 2px;
-      background-color: $color__black;
-      color: $color__white;
-
-      &__header {
-        display: flex;
-        align-content: center;
-
-        strong {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-      }
-
-      &__description {
-        text-align: right;
-      }
-    }
+  .line-chart__ruler {
+    stroke-width: 1px;
+    stroke: $color__gray;
   }
 }
