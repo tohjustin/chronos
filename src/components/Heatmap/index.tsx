@@ -158,8 +158,8 @@ const Heatmap = ({
               marginY={marginY}
               offsetX={offsetX}
               offsetY={offsetY}
-              x={hoverX ? hoverX : null}
-              y={hoverY ? hoverY : null}
+              x={hoverX}
+              y={hoverY}
             />
           )}
         </div>

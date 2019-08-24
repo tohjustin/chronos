@@ -147,8 +147,8 @@ const VerticalBarChart = ({
               isHovering={isHovering}
               marginX={marginX}
               marginY={marginY}
-              x={hoverX ? hoverX : null}
-              y={hoverY ? hoverY : null}
+              x={hoverX}
+              y={hoverY}
             />
           )}
         </div>
