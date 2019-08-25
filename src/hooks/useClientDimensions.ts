@@ -3,11 +3,19 @@ import ResizeObserver from "resize-observer-polyfill";
 
 function useClientDimensions(): [
   (node: Element | null) => void,
-  number,
-  number
+  {
+    top: number;
+    left: number;
+    height: number;
+    width: number;
+  }
 ] {
-  const [containerHeight, setContainerHeight] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
+  const [dimensions, setDimensions] = useState({
+    top: 0,
+    left: 0,
+    height: 0,
+    width: 0
+  });
   const [refElement, setRefElement] = useState<React.RefObject<Element> | null>(
     null
   );
@@ -16,9 +24,14 @@ function useClientDimensions(): [
   }, []);
   useEffect(() => {
     if (refElement && refElement.current) {
+      const { top, left } = refElement.current.getBoundingClientRect();
       const resizeObserver = new ResizeObserver(entries => {
-        setContainerHeight(entries[0].target.clientHeight);
-        setContainerWidth(entries[0].target.clientWidth);
+        setDimensions({
+          top,
+          left,
+          height: entries[0].target.clientHeight,
+          width: entries[0].target.clientWidth
+        });
       });
       resizeObserver.observe(refElement.current);
 
@@ -28,7 +41,7 @@ function useClientDimensions(): [
     }
   }, [refElement]);
 
-  return [callbackRef, containerHeight, containerWidth];
+  return [callbackRef, dimensions];
 }
 
 export default useClientDimensions;

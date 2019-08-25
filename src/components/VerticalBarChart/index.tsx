@@ -63,7 +63,10 @@ const VerticalBarChart = ({
   tooltipComponent,
   transitionDelay = defaultProps.transitionDelay
 }: VerticalBarChartProps) => {
-  const [containerRef, containerHeight, containerWidth] = useClientDimensions();
+  const [
+    containerRef,
+    { height: containerHeight, width: containerWidth }
+  ] = useClientDimensions();
   const [hoveredDatum, setHoveredDatum] = useState<Datum | null>(null);
   const [isHovering, setIsHovering] = useState(false);
 

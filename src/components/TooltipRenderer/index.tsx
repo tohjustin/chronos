@@ -52,7 +52,10 @@ function TooltipRenderer<T>({
   offsetY = defaultProps.offsetY,
   component: TooltipComponent = defaultProps.component
 }: TooltipRendererProps<T>) {
-  const [tooltipRef, tooltipHeight, tooltipWidth] = useClientDimensions();
+  const [
+    tooltipRef,
+    { height: tooltipHeight, width: tooltipWidth }
+  ] = useClientDimensions();
 
   // Compute tooltip positions
   let tooltipX = 0;
