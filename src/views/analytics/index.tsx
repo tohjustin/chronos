@@ -42,41 +42,29 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
   const viewContent = props.isLoadingRecords ? (
     "Loading..."
   ) : (
-    <div>
+    <div className="analytics-view__cards-container">
       {props.selectedDomain === null ? (
         <>
-          <div className="analytics-view__cards-container">
-            <TotalUsageCard />
-            <RatioToTotalDurationCard />
-            <TotalPageVisitCountCard />
-            <TotalDomainVisitCountCard />
-          </div>
-          <div className="analytics-view__cards-container">
-            <TotalUsagePerDayCard />
-            <TotalUsageRankingCard />
-          </div>
-          <div className="analytics-view__cards-container">
-            <AverageUsageByHourOfWeekCard />
-            <TotalUsageByDayOfWeekCard />
-          </div>
+          <TotalUsageCard />
+          <RatioToTotalDurationCard />
+          <TotalPageVisitCountCard />
+          <TotalDomainVisitCountCard />
+          <TotalUsagePerDayCard />
+          <TotalUsageRankingCard />
+          <AverageUsageByHourOfWeekCard />
+          <TotalUsageByDayOfWeekCard />
         </>
       ) : (
         <>
-          <div className="analytics-view__cards-container">
-            <DomainTotalUsageCard />
-            <DomainRatioToTotalDurationCard />
-            <DomainTotalPageVisitCountCard />
-            <DomainAveragePageVisitDurationCard />
-          </div>
-          <div className="analytics-view__cards-container">
-            <DomainTotalUsagePerDayCard />
-            <DomainTotalUsageRankingCard />
-          </div>
-          <div className="analytics-view__cards-container">
-            <DomainAverageUsageByHourOfWeekCard />
-            <DomainTotalUsageByDayOfWeekCard />
-            <DomainTotalUsageByDayOfYearCard />
-          </div>
+          <DomainTotalUsageCard />
+          <DomainRatioToTotalDurationCard />
+          <DomainTotalPageVisitCountCard />
+          <DomainAveragePageVisitDurationCard />
+          <DomainTotalUsagePerDayCard />
+          <DomainTotalUsageRankingCard />
+          <DomainAverageUsageByHourOfWeekCard />
+          <DomainTotalUsageByDayOfWeekCard />
+          <DomainTotalUsageByDayOfYearCard />
         </>
       )}
     </div>
