@@ -8,6 +8,7 @@ import { MarginConfiguration } from "../types";
 
 import Chart from "./Chart";
 import Cursor from "./Cursor";
+import HoverOverlay from "./HoverOverlay";
 import { Datum } from "./types";
 import { computeSizes } from "./utils";
 
@@ -64,7 +65,10 @@ const LineChart = ({
   tooltipComponent,
   transitionDelay = defaultProps.transitionDelay
 }: LineChartProps) => {
-  const [containerRef, containerHeight, containerWidth] = useClientDimensions();
+  const [
+    containerRef,
+    { height: containerHeight, width: containerWidth }
+  ] = useClientDimensions();
   const [hoveredDatum, setHoveredDatum] = useState<Datum | null>(null);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -89,7 +93,10 @@ const LineChart = ({
   );
 
   const handleMouseEnter = React.useCallback(() => setIsHovering(true), []);
-  const handleMouseOver = React.useCallback(setHoveredDatum, []);
+  const handleMouseOver = React.useCallback((datum: Datum | null) => {
+    setIsHovering(true);
+    setHoveredDatum(datum);
+  }, []);
   const handleMouseLeave = React.useCallback(() => setIsHovering(false), []);
 
   let marginX = 0;
@@ -127,10 +134,6 @@ const LineChart = ({
                 data={data}
                 height={chartHeight}
                 width={chartWidth}
-                isInteractive={isInteractive}
-                onMouseOver={handleMouseOver}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
                 scaleX={scaleX}
                 scaleY={scaleY}
                 transitionDelay={transitionDelay}
@@ -146,6 +149,20 @@ const LineChart = ({
               />
             )}
           </svg>
+          {isInteractive && (
+            <HoverOverlay
+              data={data}
+              height={chartHeight}
+              width={chartWidth}
+              onMouseOver={handleMouseOver}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              marginX={margin.left}
+              marginY={margin.top}
+              scaleX={scaleX}
+              scaleY={scaleY}
+            />
+          )}
           {isInteractive && (
             <TooltipRenderer
               data={hoveredDatum}

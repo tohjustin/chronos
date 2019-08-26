@@ -7,14 +7,9 @@ import { usePrevious } from "../../hooks";
 import { Datum } from "./types";
 
 interface ChartProps {
-  onMouseOver: (datum: Datum) => void;
-  onMouseEnter: (datum: Datum) => void;
-  onMouseLeave: (datum: Datum) => void;
-
   data: Datum[];
   height: number;
   width: number;
-  isInteractive: boolean;
   scaleX: d3.ScaleLinear<number, number>;
   scaleY: d3.ScaleLinear<number, number>;
   transitionDelay: number;
@@ -28,10 +23,6 @@ const Chart = ({
   data,
   height,
   width,
-  isInteractive,
-  onMouseOver,
-  onMouseEnter,
-  onMouseLeave,
   scaleX,
   scaleY,
   transitionDelay
@@ -47,24 +38,6 @@ const Chart = ({
     svg.selectAll("path").remove();
     svg.selectAll("circle").remove();
     svg.selectAll("rect").remove();
-
-    if (isInteractive) {
-      const regionWidth = width / data.length;
-
-      svg
-        .selectAll("rect")
-        .data(data)
-        .enter()
-        .append("rect")
-        .on("mouseover", d => onMouseOver(d))
-        .on("mouseenter", d => onMouseEnter(d))
-        .on("mouseleave", d => onMouseLeave(d))
-        .attr("class", "line-chart__hover-region")
-        .attr("x", d => scaleX(d.x) - regionWidth / 2)
-        .attr("width", () => regionWidth)
-        .attr("y", () => 0)
-        .attr("height", () => height);
-    }
 
     // Draw line
     const lineGenerator = d3
@@ -119,10 +92,6 @@ const Chart = ({
   }, [
     data,
     height,
-    isInteractive,
-    onMouseEnter,
-    onMouseLeave,
-    onMouseOver,
     prevData,
     prevScaleX,
     prevScaleY,
