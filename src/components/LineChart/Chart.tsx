@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { interpolatePath } from "d3-interpolate-path";
+import _ from "lodash";
 import React, { useEffect, useRef } from "react";
 
 import { usePrevious } from "../../hooks";
@@ -33,6 +34,7 @@ const Chart = ({
   const prevScaleY = usePrevious(scaleY) || scaleY;
   useEffect(() => {
     const svg = d3.select(chartRef.current);
+    const isSameData = _.isEqual(data, prevData);
 
     // Remove existing SVG elements when re-rendering a new one
     svg.selectAll("path").remove();
@@ -67,7 +69,7 @@ const Chart = ({
         return interpolatePath(current || "", next || "");
       })
       .style("opacity", data.length > 1 ? 1 : 0)
-      .duration(transitionDelay);
+      .duration(isSameData ? 0 : transitionDelay);
 
     // Draw single dot if there's only a single datapoint
     const isTransitioningFromASingleDot = prevData && prevData.length === 1;
@@ -88,7 +90,7 @@ const Chart = ({
       .transition()
       .attr("cy", d => (isTransitioningIntoASingleDot ? scaleY(d.y) : height))
       .style("opacity", isTransitioningIntoASingleDot ? 1 : 0)
-      .duration(transitionDelay);
+      .duration(isSameData ? 0 : transitionDelay);
   }, [
     data,
     height,
