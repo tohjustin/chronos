@@ -17,9 +17,10 @@ interface DomainPickerProps {
 }
 
 const DomainPicker = (props: DomainPickerProps) => {
-  const favIconUrl = props.selectedDomain
-    ? props.allDomains[props.selectedDomain].favIconUrl
-    : undefined;
+  const favIconUrl =
+    props.selectedDomain && props.allDomains[props.selectedDomain]
+      ? props.allDomains[props.selectedDomain].favIconUrl
+      : undefined;
 
   return (
     <span className="analytics-view__domain-picker">
