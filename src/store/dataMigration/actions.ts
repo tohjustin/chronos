@@ -1,9 +1,8 @@
+import FileSaver from "file-saver";
 import { Dispatch } from "redux";
 import { createAsyncAction } from "typesafe-actions";
-import FileSaver from "file-saver";
 
 import packageInfo from "../../../package.json";
-
 import { InitDatabase } from "../../db";
 
 export const exportDatabaseRecordsAsync = createAsyncAction(

@@ -1,6 +1,9 @@
 {
   "extends": [
+    "plugin:import/errors",
+    "plugin:import/warnings",
     "plugin:react/recommended",
+    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
@@ -21,10 +24,27 @@
     "@typescript-eslint/explicit-function-return-type": false,
     "@typescript-eslint/explicit-member-accessibility": false,
     "@typescript-eslint/prefer-interface": false,
+    "import/default": false,
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always"
+      }
+    ],
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error"
   },
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "react": {
       "version": "detect"
     }

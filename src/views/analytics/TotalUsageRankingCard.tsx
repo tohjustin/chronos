@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import Card from "../../components/Card";
 import BarChartTable from "../../components/BarChartTable";
+import Card from "../../components/Card";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 import { formatTableDurationLabel } from "../../utils/stringUtils";

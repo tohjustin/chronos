@@ -2,10 +2,10 @@ import { ConnectedRouter } from "connected-react-router";
 import React, { useEffect } from "react";
 import { BarChart2, Settings } from "react-feather";
 import { hot } from "react-hot-loader";
-import { bindActionCreators, Dispatch } from "redux";
 import { connect, Provider } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
 import { HashRouter } from "react-router-dom";
+import { bindActionCreators, Dispatch } from "redux";
 
 import Navbar from "./components/Navbar";
 import store, { history } from "./store";

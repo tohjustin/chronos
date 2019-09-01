@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
 import VerticalBarChart from "../../components/VerticalBarChart";
 import { Datum } from "../../components/VerticalBarChart/types";
+import selector from "../../store/selectors";
+import { RootState } from "../../store/types";
 import {
   formatDayOfWeek,
   formatTooltipDayOfWeekLabel,

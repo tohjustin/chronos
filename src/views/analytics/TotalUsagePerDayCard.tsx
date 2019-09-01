@@ -3,9 +3,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
-import Tooltip from "../../components/Tooltip";
 import LineChart from "../../components/LineChart";
 import { Datum } from "../../components/LineChart/types";
+import Tooltip from "../../components/Tooltip";
 import selector from "../../store/selectors";
 import { RootState } from "../../store/types";
 import {

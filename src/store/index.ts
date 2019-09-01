@@ -2,8 +2,8 @@ import { routerMiddleware } from "connected-react-router";
 import { createHashHistory } from "history";
 import _ from "lodash";
 import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "remote-redux-devtools";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "remote-redux-devtools";
 
 import createRootReducer from "./root-reducer";
 import { RootAction, RootState } from "./types";

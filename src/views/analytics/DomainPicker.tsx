@@ -1,7 +1,7 @@
 import { Button, IconButton, SelectMenu } from "evergreen-ui";
 import React from "react";
-import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";

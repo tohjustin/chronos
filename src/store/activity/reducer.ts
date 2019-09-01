@@ -5,7 +5,6 @@ import { createReducer, getType } from "typesafe-actions";
 import { DeepReadonly } from "utility-types";
 
 import { ActivityRecord } from "../../models/activity";
-import { TimeRange } from "../../models/time";
 
 import { loadActivityAsync, setSelectedDomain } from "./actions";
 

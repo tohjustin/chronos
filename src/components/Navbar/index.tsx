@@ -2,9 +2,9 @@ import classNames from "classnames";
 import React from "react";
 
 import { NavbarItem, NavbarItemProps } from "./NavbarItem";
+import logo from "./logo.svg";
 
 import "./styles.scss";
-import logo from "./logo.svg";
 
 interface NavbarProps {
   primaryItems: NavbarItemProps[];

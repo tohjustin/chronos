@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { Icon, Spinner } from "evergreen-ui";
 import React from "react";
-import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 
 import View from "../../components/View";
 import actions from "../../store/root-action";

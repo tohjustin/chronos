@@ -1,7 +1,7 @@
 import { Button } from "evergreen-ui";
 import React from "react";
-import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 
 import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
