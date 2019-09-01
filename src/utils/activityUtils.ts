@@ -48,7 +48,7 @@ import {
 export function createActivitySplittingReducer(unitOfTime: "hour" | "day") {
   return (acc: ActivityRecord[], e: ActivityRecord) => {
     const splittedRecords = [];
-    let startTimeObj = moment(e.startTime);
+    const startTimeObj = moment(e.startTime);
     let endTimeObj = moment(e.endTime);
 
     while (
@@ -87,8 +87,9 @@ export function computeTotalDuration(
   const maxDate = getStartOfDay(effectiveTimeRange.end);
 
   records.forEach(record => {
-    let { startTime, endTime } = record;
-    let startDayOfWeek = getDayOfWeek(startTime);
+    const { startTime } = record;
+    const startDayOfWeek = getDayOfWeek(startTime);
+    let { endTime } = record;
     let endDayOfWeek = getDayOfWeek(endTime);
 
     // Handle records spanning over different days
@@ -123,11 +124,10 @@ export function computeTotalDurationByDate(
   const maxDate = getStartOfDay(effectiveTimeRange.end);
 
   records.forEach(record => {
-    let { startTime, endTime } = record;
-    let [startDate, endDate] = [
-      getStartOfDay(startTime),
-      getStartOfDay(endTime)
-    ];
+    const { startTime } = record;
+    const startDate = getStartOfDay(startTime);
+    let { endTime } = record;
+    let endDate = getStartOfDay(endTime);
 
     // Handle records spanning over different dates
     while (startDate !== endDate) {
@@ -193,8 +193,9 @@ export function computeTotalDurationByDayOfWeek(
   }
 
   records.forEach(record => {
-    let { startTime, endTime } = record;
-    let startDayOfWeek = getDayOfWeek(startTime);
+    const { startTime } = record;
+    const startDayOfWeek = getDayOfWeek(startTime);
+    let { endTime } = record;
     let endDayOfWeek = getDayOfWeek(endTime);
 
     // Handle records spanning over different day of the week
@@ -235,8 +236,9 @@ export function computeAverageDurationByHourOfWeek(
   const maxDate = getStartOfDay(effectiveTimeRange.end);
 
   records.forEach(record => {
-    let { startTime, endTime } = record;
-    let startHourOfWeek = getHourOfWeek(startTime);
+    const { startTime } = record;
+    const startHourOfWeek = getHourOfWeek(startTime);
+    let { endTime } = record;
     let endHourOfWeek = getHourOfWeek(endTime);
 
     // Handle records spanning over different hour of the week
