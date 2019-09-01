@@ -1,9 +1,12 @@
 import {
+  formatDateString,
   getDayCount,
   getDayOfWeek,
   getDayOfWeekCount,
   getHourOfWeek,
-  getStartOfDay
+  getStartOfDay,
+  getTimestampFromDateString,
+  isValidDateString
 } from "../dateUtils";
 
 describe("getStartOfDay", () => {
@@ -22,7 +25,7 @@ describe("getStartOfDay", () => {
 describe("getDayCount", () => {
   const START_DATE = 1556694000000; // May 1, 2019 00:00:00.000 (Wed)
   const END_DATE_NEAR = 1556866800000; // May 3, 2019 00:00:00.000 (Fri)
-  const END_DATE_FAR = 1559890800000; // June 7, 2019 00:00:00.000 (Fri)
+  const END_DATE_FAR = 1559890800000; // Jun 7, 2019 00:00:00.000 (Fri)
 
   describe("time interval = 1", () => {
     test.each([[0, 0, 1]])(
@@ -55,7 +58,7 @@ describe("getDayCount", () => {
 describe("getDayOfWeekCount", () => {
   const START_DATE = 1556694000000; // May 1, 2019 00:00:00.000 (Wed)
   const END_DATE_NEAR = 1556866800000; // May 3, 2019 00:00:00.000 (Fri)
-  const END_DATE_FAR = 1559890800000; // June 7, 2019 00:00:00.000 (Fri)
+  const END_DATE_FAR = 1559890800000; // Jun 7, 2019 00:00:00.000 (Fri)
 
   describe("time interval = 0", () => {
     test.each([
@@ -149,5 +152,73 @@ describe("getHourOfWeek", () => {
     test.each(TEST_CASES)("getHourOfWeek(%i) returns %o", (a, expected) => {
       expect(getHourOfWeek(a)).toEqual(expected);
     });
+  });
+});
+
+describe("formatDateString", () => {
+  const TEST_CASES = [
+    [1546329600000, "2019-01-01"], // Jan 1, 2019 00:00:00.000 (Tue)
+    [1546372800000, "2019-01-01"], // Jan 1, 2019 12:00:00.000 (Tue)
+    [1548921600000, "2019-01-31"], // Jan 31, 2019 00:00:00.000 (Thu)
+    [1548964800000, "2019-01-31"], // Jan 31, 2019 12:00:00.000 (Thu)
+    [1569913200000, "2019-10-01"], // Oct 1, 2019 00:00:00.000 (Tue)
+    [1569956400000, "2019-10-01"], // Oct 1, 2019 12:00:00.000 (Tue)
+    [1572505200000, "2019-10-31"], // Oct 31, 2019 00:00:00.000 (Thu)
+    [1572548400000, "2019-10-31"] // Oct 31, 2019 12:00:00.000 (Thu)
+  ];
+
+  test.each(TEST_CASES)("formatDateString(%i) returns %s", (a, expected) => {
+    expect(formatDateString(a)).toEqual(expected);
+  });
+});
+
+describe("getTimestampFromDateString", () => {
+  const TEST_CASES = [
+    ["2019-01-01", 1546329600000], // Jan 1, 2019 00:00:00.000 (Tue)
+    ["2019-01-31", 1548921600000], // Jan 31, 2019 00:00:00.000 (Thu)
+    ["2019-10-01", 1569913200000], // Oct 1, 2019 00:00:00.000 (Tue)
+    ["2019-10-31", 1572505200000] // Oct 31, 2019 00:00:00.000 (Thu)
+  ];
+
+  test.each(TEST_CASES)(
+    'getTimestampFromDateString("%s") returns %i',
+    (a, expected) => {
+      expect(getTimestampFromDateString(a)).toEqual(expected);
+    }
+  );
+});
+
+describe("isValidDateString", () => {
+  const TEST_CASES = [
+    // valid cases
+    ["2019-01-01", true],
+    ["2019-01-31", true],
+    ["2019-10-01", true],
+    ["2019-10-31", true],
+    // missing padding with '0'
+    ["2019-1-1", false],
+    ["2019-1-31", false],
+    // incorrect delimiter
+    ["2019.01.01", false],
+    ["2019.01.31", false],
+    ["2019:01:01", false],
+    ["2019:01;31", false],
+    // ISO string
+    ["2019-01-01T00:00:00.000Z", false],
+    // days that a month doesn't have
+    ["2019-01-32", false],
+    ["2019-02-30", false],
+    ["2019-02-31", false],
+    ["2019-04-31", false],
+    ["2019-04-32", false],
+    // leap year
+    ["2020-02-29", true],
+    ["2019-02-29", false],
+    ["2018-02-29", false],
+    ["2017-02-29", false]
+  ];
+
+  test.each(TEST_CASES)('isValidDateString("%s") returns %s', (a, expected) => {
+    expect(isValidDateString(a)).toEqual(expected);
   });
 });

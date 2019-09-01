@@ -10,7 +10,12 @@ import {
   computeTotalDurationByDayOfWeek,
   isValidActivityRecord
 } from "../../utils/activityUtils";
-import { getDayCount, getStartOfDay } from "../../utils/dateUtils";
+import {
+  getDayCount,
+  getStartOfDay,
+  getTimestampFromDateString,
+  isValidDateString
+} from "../../utils/dateUtils";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const MS_PER_WEEK = MS_PER_DAY * 7;
@@ -43,8 +48,45 @@ export const getSelectedDomain = (state: RootState) =>
  * Retrieves the user selected time range
  */
 export const getSelectedTimeRange = (state: RootState) => {
-  const selectedTimeRange = state.activity.selectedTimeRange;
-  return selectedTimeRange === null ? DEFAULT_TIME_RANGE : selectedTimeRange;
+  const params = new URLSearchParams(state.router.location.search);
+  const startDateParam = params.get("startDate") || "";
+  const endDateParam = params.get("endDate") || "";
+
+  if (!isValidDateString(startDateParam) || !isValidDateString(endDateParam)) {
+    return DEFAULT_TIME_RANGE;
+  }
+  const start = getTimestampFromDateString(startDateParam);
+  const end = getTimestampFromDateString(endDateParam);
+
+  return {
+    start,
+    end: end === start ? end + (MS_PER_DAY - 1) : end
+  };
+};
+
+/**
+ * Retrieves validation status of user selected time range
+ */
+export const getIsSelectedTimeRangeValid = (state: RootState) => {
+  const params = new URLSearchParams(state.router.location.search);
+  const startDateParam = params.get("startDate") || "";
+  const endDateParam = params.get("endDate") || "";
+
+  if (startDateParam === "" && endDateParam === "") {
+    return true;
+  }
+
+  if (!isValidDateString(startDateParam) || !isValidDateString(endDateParam)) {
+    return false;
+  }
+
+  const startTime = getTimestampFromDateString(startDateParam);
+  const endTime = getTimestampFromDateString(endDateParam);
+  if (startTime > endTime) {
+    return false;
+  }
+
+  return true;
 };
 
 /**

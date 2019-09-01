@@ -34,27 +34,22 @@ import "./styles.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
+  isSelectedTimeRangeValid: boolean;
   selectedDomain: string | null;
   clearSelectedDomain: () => void;
 }
 
 const AnalyticsView = (props: AnalyticsViewProps) => {
-  const viewContent = props.isLoadingRecords ? (
-    "Loading..."
-  ) : (
-    <div className="analytics-view__cards-container">
-      {props.selectedDomain === null ? (
-        <>
-          <TotalUsageCard />
-          <RatioToTotalDurationCard />
-          <TotalPageVisitCountCard />
-          <TotalDomainVisitCountCard />
-          <TotalUsagePerDayCard />
-          <TotalUsageRankingCard />
-          <AverageUsageByHourOfWeekCard />
-          <TotalUsageByDayOfWeekCard />
-        </>
-      ) : (
+  let viewContent;
+  switch (true) {
+    case props.isLoadingRecords:
+      viewContent = "Loading...";
+      break;
+    case props.isSelectedTimeRangeValid === false:
+      viewContent = "Invalid Time Range Selected";
+      break;
+    case props.selectedDomain !== null:
+      viewContent = (
         <>
           <DomainTotalUsageCard />
           <DomainRatioToTotalDurationCard />
@@ -66,9 +61,23 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
           <DomainTotalUsageByDayOfWeekCard />
           <DomainTotalUsageByDayOfYearCard />
         </>
-      )}
-    </div>
-  );
+      );
+      break;
+    default:
+      viewContent = (
+        <>
+          <TotalUsageCard />
+          <RatioToTotalDurationCard />
+          <TotalPageVisitCountCard />
+          <TotalDomainVisitCountCard />
+          <TotalUsagePerDayCard />
+          <TotalUsageRankingCard />
+          <AverageUsageByHourOfWeekCard />
+          <TotalUsageByDayOfWeekCard />
+        </>
+      );
+      break;
+  }
 
   return (
     <View.Container>
@@ -96,6 +105,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 
 const mapStateToProps = (state: RootState) => ({
   isLoadingRecords: selector.getIsLoadingRecords(state),
+  isSelectedTimeRangeValid: selector.getIsSelectedTimeRangeValid(state),
   selectedDomain: selector.getSelectedDomain(state)
 });
 

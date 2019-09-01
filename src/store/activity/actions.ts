@@ -1,9 +1,11 @@
+import { push } from "connected-react-router";
 import { Dispatch } from "redux";
 import { createAction, createAsyncAction } from "typesafe-actions";
 
 import { InitDatabase } from "../../db";
 import { ActivityRecord } from "../../models/activity";
 import { TimeRange } from "../../models/time";
+import { formatDateString } from "../../utils/dateUtils";
 
 export const loadActivityAsync = createAsyncAction(
   "LOAD_ACTIVITY_REQUEST",
@@ -26,12 +28,21 @@ export const loadActivity = () => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
-export const setSelectedTimeRange = createAction(
-  "SET_SELECTED_TIME_RANGE",
-  action => {
-    return (range: TimeRange | null) => action(range);
+export const setSelectedTimeRange = (range: TimeRange | null) => async (
+  dispatch: Dispatch
+): Promise<void> => {
+  let queryString = "";
+  if (range && range.start) {
+    queryString += queryString === "" ? "?" : "&";
+    queryString += `startDate=${formatDateString(range.start)}`;
   }
-);
+  if (range && range.end) {
+    queryString += queryString === "" ? "?" : "&";
+    queryString += `endDate=${formatDateString(range.end)}`;
+  }
+
+  dispatch(push(queryString));
+};
 
 export const setSelectedDomain = createAction("SET_SELECTED_DOMAIN", action => {
   return (domain: string | null) => action(domain);

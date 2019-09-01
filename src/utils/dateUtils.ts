@@ -69,3 +69,55 @@ export function getHourOfWeek(
 export function getStartOfDay(timestamp: number): number {
   return new Date(timestamp).setHours(0, 0, 0, 0);
 }
+
+/**
+ * Formats a timestamp to a date string that conforms to `YYYY-MM-DD` format
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @returns formatted date string
+ */
+export function formatDateString(timestamp: number) {
+  return d3.timeFormat("%Y-%m-%d")(new Date(timestamp));
+}
+
+/**
+ * Get timestamp of a date string that conforms to `YYYY-MM-DD` format.
+ * Timestamp will have the same date & adjusted to the local start of day time.
+ *
+ * @param dateString - valid date string
+ * @returns timestamp in milliseconds, converted from date string
+ */
+export function getTimestampFromDateString(dateString: string) {
+  const date = new Date(dateString);
+  const offsetInMs = date.getTimezoneOffset() * 60 * 1000;
+
+  return date.getTime() + offsetInMs;
+}
+
+/**
+ * Check if a string is a valid date string that conforms to `YYYY-MM-DD` format
+ *
+ * @param s - input string
+ * @returns `true` if input string is a valid date string, `false` otherwise
+ */
+export function isValidDateString(s: string) {
+  if (s === null) {
+    return false;
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    return false;
+  }
+
+  const date = new Date(s);
+  if (Number.isNaN(date.valueOf())) {
+    return false;
+  }
+
+  const [, , day] = s.split("-");
+  if (date.getUTCDate() !== Number.parseInt(day)) {
+    return false;
+  }
+
+  return true;
+}
