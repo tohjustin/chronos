@@ -50,7 +50,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
       break;
     case props.selectedDomain !== null:
       viewContent = (
-        <>
+        <div className="analytics-view__cards-container">
           <DomainTotalUsageCard />
           <DomainRatioToTotalDurationCard />
           <DomainTotalPageVisitCountCard />
@@ -60,12 +60,12 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
           <DomainAverageUsageByHourOfWeekCard />
           <DomainTotalUsageByDayOfWeekCard />
           <DomainTotalUsageByDayOfYearCard />
-        </>
+        </div>
       );
       break;
     default:
       viewContent = (
-        <>
+        <div className="analytics-view__cards-container">
           <TotalUsageCard />
           <RatioToTotalDurationCard />
           <TotalPageVisitCountCard />
@@ -74,7 +74,7 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
           <TotalUsageRankingCard />
           <AverageUsageByHourOfWeekCard />
           <TotalUsageByDayOfWeekCard />
-        </>
+        </div>
       );
       break;
   }

@@ -34,10 +34,6 @@ $chart__height: 280px;
     height: 100%;
   }
 
-  &:not(:last-of-type) {
-    margin-right: $card__margin-x;
-  }
-
   &:not(.analytics-view__card--responsive) {
     .card__body {
       height: $chart__height;
