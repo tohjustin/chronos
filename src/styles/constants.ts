@@ -1,4 +1,8 @@
-export const BUTTON_SIZE = 32;
-export const BUTTON_MARGIN = 12;
+const BASE_SIZE = 8;
 
-export const ICON_SIZE = 20;
+export const BUTTON_SIZE = BASE_SIZE * 4;
+export const BUTTON_MARGIN = BASE_SIZE * 1.5;
+
+export const ICON_SIZE = BASE_SIZE * 2.5;
+
+export const SPINNER_SIZE = BASE_SIZE * 4;

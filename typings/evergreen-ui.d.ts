@@ -59,9 +59,9 @@ declare module "evergreen-ui" {
   export class IconButton extends React.PureComponent<IconButtonProps> {}
 
   export interface SelectMenuProps {
-    className: string;
     title: string;
     options: { label: string; value: string }[];
+    className?: string;
     children?: React.ReactNode;
     isMultiSelect?: boolean;
     selected?: string | string[];
@@ -71,4 +71,10 @@ declare module "evergreen-ui" {
     onDeselect?: (item: { label: string; value: string }) => void;
   }
   export class SelectMenu extends React.PureComponent<SelectMenuProps> {}
+
+  export interface SpinnerProps {
+    className?: string;
+    size?: number;
+  }
+  export class Spinner extends React.PureComponent<SpinnerProps> {}
 }

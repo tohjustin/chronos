@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Icon } from "evergreen-ui";
+import { Icon, Spinner } from "evergreen-ui";
 import React from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
@@ -8,7 +8,7 @@ import View from "../../components/View";
 import actions from "../../store/root-action";
 import selector from "../../store/selectors";
 import { RootAction, RootState } from "../../store/types";
-import { ICON_SIZE } from "../../styles/constants";
+import { ICON_SIZE, SPINNER_SIZE } from "../../styles/constants";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
 import DomainAveragePageVisitDurationCard from "./DomainAveragePageVisitDurationCard";
@@ -43,7 +43,11 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
   let viewContent;
   switch (true) {
     case props.isLoadingRecords:
-      viewContent = "Loading...";
+      viewContent = (
+        <div className="analytics-view__loading-container">
+          <Spinner size={SPINNER_SIZE} />
+        </div>
+      );
       break;
     case props.isSelectedTimeRangeValid === false:
       viewContent = "Invalid Time Range Selected";
