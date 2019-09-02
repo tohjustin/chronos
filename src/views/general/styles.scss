@@ -1,3 +1,26 @@
+@import "../../styles/variables";
+
+.error-view__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .error-view__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color__dark-gray;
+    font-size: $font-size__lg;
+    font-weight: 600;
+
+    span {
+      margin-left: $base__size;
+    }
+  }
+}
+
 .loading-view__container {
   display: flex;
   flex-direction: column;
