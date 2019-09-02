@@ -59,39 +59,9 @@ const loadRecords = (): ThunkAction<
   }
 };
 
-const setSelectedTimeRange = (
-  range: TimeRange | null
-): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
-  let queryString = "";
-  if (range && range.start) {
-    queryString += queryString === "" ? "?" : "&";
-    queryString += `startDate=${formatDateString(range.start)}`;
-  }
-  if (range && range.end) {
-    queryString += queryString === "" ? "?" : "&";
-    queryString += `endDate=${formatDateString(range.end)}`;
-  }
-
-  dispatch(push(queryString));
-};
-
-const setSelectedDomain = (
-  domain: string | null
-): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
-  let queryString = "";
-  if (domain) {
-    queryString += queryString === "" ? "?" : "&";
-    queryString += `domain=${domain}`;
-  }
-
-  dispatch(push(queryString));
-};
-
 export const actions = {
   ...activity.actions,
-  loadRecords,
-  setSelectedDomain,
-  setSelectedTimeRange
+  loadRecords
 };
 
 export const reducer = activity.reducer;

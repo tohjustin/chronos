@@ -12,17 +12,12 @@ import {
 } from "../../utils/activityUtils";
 import {
   getDayCount,
-  getStartOfDay,
   getTimestampFromDateString,
   isValidDateString
 } from "../../utils/dateUtils";
+import { selectors as routerSelectors } from "../router";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
-const MS_PER_WEEK = MS_PER_DAY * 7;
-const DEFAULT_TIME_RANGE = {
-  start: getStartOfDay(Date.now() - 4 * MS_PER_WEEK),
-  end: null
-};
 
 /**
  * Retrieves all activity records
@@ -36,35 +31,6 @@ export const getAllRecords = (state: RootState) => {
  */
 export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoading;
-
-/**
- * Retrieves the user selected domain
- */
-export const getSelectedDomain = (state: RootState) => {
-  const params = new URLSearchParams(state.router.location.search);
-
-  return params.get("domain");
-};
-
-/**
- * Retrieves the user selected time range
- */
-export const getSelectedTimeRange = (state: RootState) => {
-  const params = new URLSearchParams(state.router.location.search);
-  const startDateParam = params.get("startDate") || "";
-  const endDateParam = params.get("endDate") || "";
-
-  if (!isValidDateString(startDateParam) || !isValidDateString(endDateParam)) {
-    return DEFAULT_TIME_RANGE;
-  }
-  const start = getTimestampFromDateString(startDateParam);
-  const end = getTimestampFromDateString(endDateParam);
-
-  return {
-    start,
-    end: end + (MS_PER_DAY - 1)
-  };
-};
 
 /**
  * Retrieves validation status of user selected time range
@@ -124,7 +90,7 @@ export const getActivityTimeRange = createSelector(
  * range & the time range of all recorded activity
  */
 export const getEffectiveTimeRange = createSelector(
-  [getActivityTimeRange, getSelectedTimeRange],
+  [getActivityTimeRange, routerSelectors.getSelectedTimeRange],
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
     if (activityTimeRange === null) {
       return {
@@ -153,7 +119,7 @@ export const getEffectiveTimeRange = createSelector(
  * boundaries
  */
 export const getRecords = createSelector(
-  [getAllRecords, getSelectedTimeRange],
+  [getAllRecords, routerSelectors.getSelectedTimeRange],
   (records, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
     return records.filter(
@@ -330,7 +296,7 @@ export const getTotalPageVisitCount = createSelector(
  * Retrieves all activity records of a selected domain
  */
 export const getAllSelectedDomainRecords = createSelector(
-  [getAllRecords, getSelectedDomain],
+  [getAllRecords, routerSelectors.getSelectedDomain],
   (records, selectedDomain) => {
     return records.filter(
       record =>
@@ -361,7 +327,7 @@ export const getAllSelectedDomainTotalDurationByDate = createSelector(
  * boundaries
  */
 export const getSelectedDomainRecords = createSelector(
-  [getAllSelectedDomainRecords, getSelectedTimeRange],
+  [getAllSelectedDomainRecords, routerSelectors.getSelectedTimeRange],
   (allSelectedDomainRecords, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
     return allSelectedDomainRecords.filter(

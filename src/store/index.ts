@@ -21,10 +21,22 @@ import {
   reducer as dataMigrationReducer,
   selectors as dataMigrationSelectors
 } from "./dataMigration";
+import {
+  actions as routerActions,
+  selectors as routerSelectors
+} from "./router";
 import composeWithDevTools from "./reduxDevTools";
 
-export const actions = { ...activityActions, ...dataMigrationActions };
-export const selectors = { ...activitySelectors, ...dataMigrationSelectors };
+export const actions = {
+  ...activityActions,
+  ...dataMigrationActions,
+  ...routerActions
+};
+export const selectors = {
+  ...activitySelectors,
+  ...dataMigrationSelectors,
+  ...routerSelectors
+};
 
 // Setup store enhancers
 const finalCompose = process.env.REACT_APP_DEBUG_MODE
