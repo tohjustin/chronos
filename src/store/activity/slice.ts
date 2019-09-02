@@ -10,14 +10,12 @@ import { RootState } from "../index";
 
 export interface ActivityState {
   records: ActivityRecord[];
-  selectedDomain: string | null;
   isLoading: boolean;
   error: Error | null;
 }
 
 const INITIAL_STATE: ActivityState = {
   records: [],
-  selectedDomain: null,
   isLoading: false,
   error: null
 };
@@ -37,12 +35,6 @@ const activity = createSlice({
       state.records = payload;
       state.isLoading = false;
       state.error = null;
-    },
-    setSelectedDomain(
-      state: ActivityState,
-      action: PayloadAction<string | null>
-    ) {
-      state.selectedDomain = action.payload;
     }
   }
 });
@@ -83,9 +75,22 @@ const setSelectedTimeRange = (
   dispatch(push(queryString));
 };
 
+const setSelectedDomain = (
+  domain: string | null
+): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
+  let queryString = "";
+  if (domain) {
+    queryString += queryString === "" ? "?" : "&";
+    queryString += `domain=${domain}`;
+  }
+
+  dispatch(push(queryString));
+};
+
 export const actions = {
   ...activity.actions,
   loadRecords,
+  setSelectedDomain,
   setSelectedTimeRange
 };
 

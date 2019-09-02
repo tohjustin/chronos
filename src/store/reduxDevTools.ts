@@ -6,6 +6,11 @@ import { ActivityRecord } from "../models/activity";
 import { ActivityState } from "./activity/slice";
 import { RootAction, RootState } from "./index";
 
+type SanitizedActivityAction = {
+  type: string;
+  payload: ActivityRecord[] | string;
+};
+type RootSanitizedActions = RootAction | SanitizedActivityAction;
 interface SanitizedActivityState extends Omit<ActivityState, "records"> {
   records: ActivityRecord[] | string;
 }
@@ -17,7 +22,7 @@ export const composeEnhancers = composeWithDevTools({
   port: 8098,
   realtime: true,
   actionSanitizer: (action: RootAction) => {
-    const sanitizedAction = _.cloneDeep(action);
+    const sanitizedAction: RootSanitizedActions = _.cloneDeep(action);
     if (
       typeof sanitizedAction !== "function" &&
       sanitizedAction.type === "getRecordsSuccess" &&

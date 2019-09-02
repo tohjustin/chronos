@@ -40,8 +40,11 @@ export const getIsLoadingRecords = (state: RootState) =>
 /**
  * Retrieves the user selected domain
  */
-export const getSelectedDomain = (state: RootState) =>
-  state.activity.selectedDomain;
+export const getSelectedDomain = (state: RootState) => {
+  const params = new URLSearchParams(state.router.location.search);
+
+  return params.get("domain");
+};
 
 /**
  * Retrieves the user selected time range
