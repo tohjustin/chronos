@@ -5,25 +5,23 @@ import { hot } from "react-hot-loader";
 import { connect, Provider } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
 import { HashRouter } from "react-router-dom";
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 
 import Navbar from "./components/Navbar";
-import store, { history } from "./store";
-import { loadActivity } from "./store/activity/actions";
-import { RootAction } from "./store/types";
+import { Dispatch, actions, history, store } from "./store";
 import AnalyticsView from "./views/analytics";
 import SettingsView from "./views/settings";
 
 interface AppShellProps {
-  loadActivity: () => void;
+  loadRecords: () => void;
 }
 
 const AppShell = (props: AppShellProps) => {
-  const { loadActivity } = props;
+  const { loadRecords } = props;
 
   useEffect(() => {
-    loadActivity();
-  }, [loadActivity]);
+    loadRecords();
+  }, [loadRecords]);
 
   return (
     <div className="app__container">
@@ -55,8 +53,8 @@ const AppShell = (props: AppShellProps) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
-  bindActionCreators({ loadActivity }, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ loadRecords: actions.loadRecords }, dispatch);
 
 const ConnectedAppShell = connect(
   null,

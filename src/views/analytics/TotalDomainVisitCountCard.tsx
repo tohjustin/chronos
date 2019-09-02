@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import { CountUp } from "../../components/CountUp";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 
 interface TotalDomainVisitCountCardProps {
   visitCount: number;
@@ -34,7 +33,7 @@ const TotalDomainVisitCountCard = (props: TotalDomainVisitCountCardProps) => (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  visitCount: selector.getTotalDomainVisitCount(state)
+  visitCount: selectors.getTotalDomainVisitCount(state)
 });
 
 export default connect(mapStateToProps)(TotalDomainVisitCountCard);

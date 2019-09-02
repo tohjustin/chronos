@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import { CountUp } from "../../components/CountUp";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 
 interface DomainRatioToTotalDurationCardProps {
   ratioToTotalDuration: number;
@@ -37,7 +36,7 @@ const DomainRatioToTotalDurationCard = (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  ratioToTotalDuration: selector.getSelectedDomainRatioToTotalDuration(state)
+  ratioToTotalDuration: selectors.getSelectedDomainRatioToTotalDuration(state)
 });
 
 export default connect(mapStateToProps)(DomainRatioToTotalDurationCard);

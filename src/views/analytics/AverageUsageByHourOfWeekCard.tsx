@@ -7,8 +7,7 @@ import WeeklyHourHeatmap, {
   defaultProps as WeeklyHourHeatmapDefaultProps
 } from "../../components/WeeklyHourHeatmap";
 import { Datum } from "../../components/WeeklyHourHeatmap/types";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 import {
   formatTooltipHourOfWeekLabel,
   formatTooltipDurationLabel
@@ -63,7 +62,7 @@ const AverageUsageByHourOfWeekCard = (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  data: selector.getAverageDurationByHourOfWeek(state)
+  data: selectors.getAverageDurationByHourOfWeek(state)
 });
 
 export default connect(mapStateToProps)(AverageUsageByHourOfWeekCard);

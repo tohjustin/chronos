@@ -1,11 +1,9 @@
 import { Button, IconButton, SelectMenu } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 
-import actions from "../../store/root-action";
-import selector from "../../store/selectors";
-import { RootAction, RootState } from "../../store/types";
+import { Dispatch, RootState, actions, selectors } from "../../store";
 import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
 
 interface DomainPickerProps {
@@ -72,14 +70,14 @@ const DomainPicker = (props: DomainPickerProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  allDomains: selector.getAllDomains(state),
-  selectedDomain: selector.getSelectedDomain(state)
+  allDomains: selectors.getAllDomains(state),
+  selectedDomain: selectors.getSelectedDomain(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      setSelectedDomain: actions.activity.setSelectedDomain
+      setSelectedDomain: actions.setSelectedDomain
     },
     dispatch
   );

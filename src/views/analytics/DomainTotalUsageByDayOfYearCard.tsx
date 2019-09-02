@@ -11,8 +11,7 @@ import {
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
 import { TimeRange } from "../../models/time";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 import {
   formatTooltipDateLabel,
   formatTooltipDurationLabel
@@ -69,8 +68,8 @@ const DomainTotalUsageByDayOfYearCard = (
 };
 
 const mapStateToProps = (state: RootState) => ({
-  totalDurationByDate: selector.getAllSelectedDomainTotalDurationByDate(state),
-  selectedTimeRange: selector.getSelectedTimeRange(state)
+  totalDurationByDate: selectors.getAllSelectedDomainTotalDurationByDate(state),
+  selectedTimeRange: selectors.getSelectedTimeRange(state)
 });
 
 export default connect(mapStateToProps)(DomainTotalUsageByDayOfYearCard);

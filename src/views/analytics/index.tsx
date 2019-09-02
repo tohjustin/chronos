@@ -2,12 +2,10 @@ import classNames from "classnames";
 import { Icon, Spinner } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 
 import View from "../../components/View";
-import actions from "../../store/root-action";
-import selector from "../../store/selectors";
-import { RootAction, RootState } from "../../store/types";
+import { Dispatch, RootState, actions, selectors } from "../../store";
 import { ICON_SIZE, SPINNER_SIZE } from "../../styles/constants";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
@@ -108,15 +106,15 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  isLoadingRecords: selector.getIsLoadingRecords(state),
-  isSelectedTimeRangeValid: selector.getIsSelectedTimeRangeValid(state),
-  selectedDomain: selector.getSelectedDomain(state)
+  isLoadingRecords: selectors.getIsLoadingRecords(state),
+  isSelectedTimeRangeValid: selectors.getIsSelectedTimeRangeValid(state),
+  selectedDomain: selectors.getSelectedDomain(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      clearSelectedDomain: () => actions.activity.setSelectedDomain(null)
+      clearSelectedDomain: () => actions.setSelectedDomain(null)
     },
     dispatch
   );

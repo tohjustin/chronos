@@ -1,4 +1,3 @@
-import { actions } from "./actions";
-import { reducer } from "./reducer";
+import { actions, reducer } from "./slice";
 
 export { actions, reducer };

@@ -1,15 +1,13 @@
 import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 
 import DateRangePicker, {
   DateRangePickerValue
 } from "../../components/DateRangePicker";
 import { TimeRange } from "../../models/time";
-import actions from "../../store/root-action";
-import selector from "../../store/selectors";
-import { RootAction, RootState } from "../../store/types";
+import { Dispatch, RootState, actions, selectors } from "../../store";
 
 interface TimeRangePickerProps {
   activityTimeRange: TimeRange | null;
@@ -67,14 +65,14 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  activityTimeRange: selector.getActivityTimeRange(state),
-  selectedTimeRange: selector.getSelectedTimeRange(state)
+  activityTimeRange: selectors.getActivityTimeRange(state),
+  selectedTimeRange: selectors.getSelectedTimeRange(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      setSelectedTimeRange: actions.activity.setSelectedTimeRange
+      setSelectedTimeRange: actions.setSelectedTimeRange
     },
     dispatch
   );

@@ -3,8 +3,7 @@ import React from "react";
 
 import Card from "../../components/Card";
 import { DurationCountUp } from "../../components/CountUp";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 
 interface DomainTotalUsageCardProps {
   totalDuration: number;
@@ -30,7 +29,7 @@ const DomainTotalUsageCard = (props: DomainTotalUsageCardProps) => (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  totalDuration: selector.getSelectedDomainTotalDuration(state)
+  totalDuration: selectors.getSelectedDomainTotalDuration(state)
 });
 
 export default connect(mapStateToProps)(DomainTotalUsageCard);

@@ -6,8 +6,7 @@ import Card from "../../components/Card";
 import LineChart from "../../components/LineChart";
 import { Datum } from "../../components/LineChart/types";
 import Tooltip from "../../components/Tooltip";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 import {
   formatTooltipDateLabel,
   formatTooltipDurationLabel
@@ -112,7 +111,7 @@ const TotalUsagePerDayCard = (props: TotalUsagePerDayCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  data: selector.getTotalDurationByDate(state)
+  data: selectors.getTotalDurationByDate(state)
 });
 
 export default connect(mapStateToProps)(TotalUsagePerDayCard);

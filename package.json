@@ -63,11 +63,10 @@
     "react-router-dom": "5.0.1",
     "react-transition-group": "4.2.2",
     "redux": "4.0.4",
+    "redux-starter-kit": "^0.6.3",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
-    "resize-observer-polyfill": "1.5.1",
-    "typesafe-actions": "4.4.2",
-    "utility-types": "3.7.0"
+    "resize-observer-polyfill": "1.5.1"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "16.9.0",

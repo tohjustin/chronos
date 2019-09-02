@@ -6,8 +6,7 @@ import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
 import VerticalBarChart from "../../components/VerticalBarChart";
 import { Datum } from "../../components/VerticalBarChart/types";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 import {
   formatDayOfWeek,
   formatTooltipDayOfWeekLabel,
@@ -96,7 +95,7 @@ const TotalUsageByDayOfWeekCard = (props: TotalUsageByDayOfWeekCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  data: selector.getTotalDurationByDayOfWeek(state)
+  data: selectors.getTotalDurationByDayOfWeek(state)
 });
 
 export default connect(mapStateToProps)(TotalUsageByDayOfWeekCard);

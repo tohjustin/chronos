@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import { DurationCountUp } from "../../components/CountUp";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 
 interface DomainAveragePageVisitDurationCardProps {
   averageDuration: number;
@@ -32,7 +31,7 @@ const DomainAveragePageVisitDurationCard = (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  averageDuration: selector.getSelectedDomainAveragePageVisitDuration(state)
+  averageDuration: selectors.getSelectedDomainAveragePageVisitDuration(state)
 });
 
 export default connect(mapStateToProps)(DomainAveragePageVisitDurationCard);

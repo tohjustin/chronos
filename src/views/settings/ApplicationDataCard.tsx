@@ -1,16 +1,14 @@
 import { Button } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
+import { bindActionCreators } from "redux";
 
 import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
 import { List, ListItem } from "../../components/List";
 import { useStorageEstimate } from "../../hooks";
 import { TimeRange } from "../../models/time";
-import actions from "../../store/root-action";
-import selector from "../../store/selectors";
-import { RootAction, RootState } from "../../store/types";
+import { Dispatch, RootState, actions, selectors } from "../../store";
 import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
 
 import { formatBytes, formatDateDistance } from "./utils";
@@ -89,14 +87,14 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  activityTimeRange: selector.getActivityTimeRange(state)
+  activityTimeRange: selectors.getActivityTimeRange(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      exportDatabaseRecords: actions.dataMigration.exportDatabaseRecords,
-      importDatabaseRecords: actions.dataMigration.importDatabaseRecords
+      exportDatabaseRecords: actions.exportDatabaseRecords,
+      importDatabaseRecords: actions.importDatabaseRecords
     },
     dispatch
   );

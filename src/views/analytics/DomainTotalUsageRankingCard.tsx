@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import BarChartTable from "../../components/BarChartTable";
 import Card from "../../components/Card";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 import { formatTableDurationLabel } from "../../utils/stringUtils";
 
 interface DomainTotalUsageRankingCardProps {
@@ -45,8 +44,8 @@ const DomainTotalUsageRankingCard = (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  selectedDomain: selector.getSelectedDomain(state),
-  totalDurationByPath: selector.getSelectedDomainTotalDurationByPath(state)
+  selectedDomain: selectors.getSelectedDomain(state),
+  totalDurationByPath: selectors.getSelectedDomainTotalDurationByPath(state)
 });
 
 export default connect(mapStateToProps)(DomainTotalUsageRankingCard);

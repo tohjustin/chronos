@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import { DurationCountUp } from "../../components/CountUp";
-import selector from "../../store/selectors";
-import { RootState } from "../../store/types";
+import { RootState, selectors } from "../../store";
 
 interface TotalUsageCardProps {
   totalDuration: number;
@@ -30,7 +29,7 @@ const TotalUsageCard = (props: TotalUsageCardProps) => (
 );
 
 const mapStateToProps = (state: RootState) => ({
-  totalDuration: selector.getTotalDuration(state)
+  totalDuration: selectors.getTotalDuration(state)
 });
 
 export default connect(mapStateToProps)(TotalUsageCard);

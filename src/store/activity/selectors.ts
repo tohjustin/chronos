@@ -2,7 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 
 import { DefiniteTimeRange } from "../../models/time";
-import { RootState } from "../../store/types";
+import { RootState } from "../../store";
 import {
   computeAverageDurationByHourOfWeek,
   computeTotalDuration,
@@ -32,11 +32,10 @@ export const getAllRecords = (state: RootState) => {
 };
 
 /**
- * Retrieves the state loading activity records from IndexedDB into the redux
- * store
+ * Retrieves the status of loading activity records into the redux store
  */
 export const getIsLoadingRecords = (state: RootState) =>
-  state.activity.isLoadingRecords;
+  state.activity.isLoading;
 
 /**
  * Retrieves the user selected domain
@@ -174,7 +173,7 @@ export const getAllDomains = createSelector(
     const favIconUrlByDomain = new Map<string, string>();
 
     records.forEach(record => {
-      let { origin, favIconUrl } = record;
+      const { origin, favIconUrl } = record;
       const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
       if (!allDomains.has(domain)) {
         allDomains.add(domain);
@@ -272,7 +271,7 @@ export const getTotalDurationByDomain = createSelector(
     const favIconUrlByDomain: { [domain: string]: string } = {};
 
     records.forEach(record => {
-      let { origin, startTime, endTime } = record;
+      const { origin, startTime, endTime } = record;
       const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
 
       if (domain !== undefined) {
@@ -454,7 +453,7 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
     } = {};
 
     selectedDomainRecords.forEach(record => {
-      let { pathname, search, startTime, endTime } = record;
+      const { pathname, search, startTime, endTime } = record;
       const path = `${pathname}${search}`;
       if (path !== "") {
         const duration = endTime - startTime;

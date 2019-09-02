@@ -32,8 +32,7 @@
           ["builtin", "external"],
           "internal",
           "parent",
-          "sibling",
-          "index"
+          ["sibling", "index"]
         ],
         "newlines-between": "always"
       }
