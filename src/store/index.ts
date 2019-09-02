@@ -1,7 +1,12 @@
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { createHashHistory } from "history";
-import { applyMiddleware, combineReducers } from "redux";
-import { configureStore } from "redux-starter-kit";
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+  StoreEnhancer
+} from "redux";
 import thunk from "redux-thunk";
 
 import { ValueOf } from "../utils/typeUtils";
@@ -16,32 +21,31 @@ import {
   reducer as dataMigrationReducer,
   selectors as dataMigrationSelectors
 } from "./dataMigration";
-import { composeEnhancers } from "./reduxDevTools";
+import composeWithDevTools from "./reduxDevTools";
 
 export const actions = { ...activityActions, ...dataMigrationActions };
 export const selectors = { ...activitySelectors, ...dataMigrationSelectors };
 
+// Setup store enhancers
+const finalCompose = process.env.REACT_APP_DEBUG_MODE
+  ? composeWithDevTools
+  : compose;
 export const history = createHashHistory();
 const middleware = [thunk, routerMiddleware(history)];
+const storeEnhancers = [applyMiddleware(...middleware)];
+const composedEnhancer = finalCompose(...storeEnhancers) as StoreEnhancer;
 
-// Couldn't seem to get enhancers to be typed correctly... 😢
-// Not a big deal at the moment as using `any` here doesn't affect the
-// type-checking for our redux state, action, reducers & selectors
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-let enhancer: any = applyMiddleware(...middleware);
-if (process.env.REACT_APP_DEBUG_MODE) {
-  enhancer = composeEnhancers(enhancer);
-}
-
-export const store = configureStore({
-  devTools: false,
-  enhancers: [enhancer],
-  reducer: combineReducers({
+// Using `createStore` directly instead of RSK's `configureStore` b/e we need to
+// compose with `remote-redux-devtools`.
+export const store = createStore(
+  combineReducers({
     activity: activityReducer,
     dataMigration: dataMigrationReducer,
     router: connectRouter(history)
-  })
-});
+  }),
+  {}, // empty preloaded state
+  composedEnhancer
+);
 
 export type Dispatch = typeof store.dispatch;
 export type RootAction = ReturnType<ValueOf<typeof actions>>;

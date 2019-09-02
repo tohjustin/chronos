@@ -18,7 +18,7 @@ interface RootSanitizedState extends Omit<RootState, "activity"> {
   activity: SanitizedActivityState;
 }
 
-export const composeEnhancers = composeWithDevTools({
+export default composeWithDevTools({
   port: 8098,
   realtime: true,
   actionSanitizer: (action: RootAction) => {
