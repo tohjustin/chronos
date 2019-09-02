@@ -13,12 +13,13 @@ import {
 } from "./activity";
 import {
   actions as dataMigrationActions,
-  reducer as dataMigrationReducer
+  reducer as dataMigrationReducer,
+  selectors as dataMigrationSelectors
 } from "./dataMigration";
 import { composeEnhancers } from "./reduxDevTools";
 
 export const actions = { ...activityActions, ...dataMigrationActions };
-export const selectors = { ...activitySelectors };
+export const selectors = { ...activitySelectors, ...dataMigrationSelectors };
 
 export const history = createHashHistory();
 const middleware = [thunk, routerMiddleware(history)];
