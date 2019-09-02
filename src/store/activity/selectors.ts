@@ -108,7 +108,7 @@ export const getRecords = createSelector(
  */
 export const getAllDomains = createSelector(
   getAllRecords,
-  records => {
+  (records): { [domain: string]: { favIconUrl?: string } } => {
     const allDomains = new Set<string>();
     const favIconUrlByDomain = new Map<string, string>();
 
@@ -123,7 +123,6 @@ export const getAllDomains = createSelector(
       }
     });
 
-    // Sort results by domains with highest duration
     return [...allDomains].reduce(
       (acc: { [domain: string]: { favIconUrl?: string } }, domain) => {
         acc[domain] = {

@@ -36,6 +36,7 @@ import "./styles.scss";
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
   selectedDomain: string | null;
+  selectedDomainValidationStatus: ValidationStatus;
   selectedTimeRangeValidationStatus: ValidationStatus;
   clearSelectedDomain: () => void;
 }
@@ -44,12 +45,18 @@ const AnalyticsView = ({
   clearSelectedDomain,
   isLoadingRecords,
   selectedDomain,
+  selectedDomainValidationStatus,
   selectedTimeRangeValidationStatus
 }: AnalyticsViewProps) => {
   let viewContent;
   switch (true) {
     case isLoadingRecords:
       viewContent = <LoadingView />;
+      break;
+    case selectedDomainValidationStatus.isValid === false:
+      viewContent = (
+        <ErrorView message={selectedDomainValidationStatus.description} />
+      );
       break;
     case selectedTimeRangeValidationStatus.isValid === false:
       viewContent = (
@@ -113,6 +120,9 @@ const AnalyticsView = ({
 
 const mapStateToProps = (state: RootState) => ({
   isLoadingRecords: selectors.getIsLoadingRecords(state),
+  selectedDomainValidationStatus: selectors.getSelectedDomainValidationStatus(
+    state
+  ),
   selectedTimeRangeValidationStatus: selectors.getSelectedTimeRangeValidationStatus(
     state
   ),

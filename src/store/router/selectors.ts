@@ -6,6 +6,7 @@ import {
   getTimestampFromDateString,
   isValidDateString
 } from "../../utils/dateUtils";
+import { getAllDomains } from "../activity/selectors";
 
 import {
   DEFAULT_TIME_RANGE,
@@ -34,6 +35,31 @@ export const getSelectedDomain = createSelector(
     return params.get(SEARCH_PARAM_DOMAIN);
   }
 );
+
+/**
+ * Retrieves validation status of the selected domain extracted from browser's
+ * URL search parameters
+ */
+export const getSelectedDomainValidationStatus = (
+  state: RootState
+): ValidationStatus => {
+  const params = new URLSearchParams(state.router.location.search);
+  const domainParam = params.get(SEARCH_PARAM_DOMAIN) || "";
+
+  if (domainParam === "") {
+    return { isValid: true, description: "" };
+  }
+
+  const allDomains = getAllDomains(state);
+  if (allDomains[domainParam]) {
+    return { isValid: true, description: "" };
+  }
+
+  return {
+    isValid: false,
+    description: `No records for "${domainParam}" found`
+  };
+};
 
 /**
  * Retrieves selected time range extracted from browser's URL search parameters
