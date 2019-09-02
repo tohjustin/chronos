@@ -5,8 +5,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import View from "../../components/View";
+import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { ICON_SIZE } from "../../styles/constants";
+import ErrorView from "../general/ErrorView";
 import LoadingView from "../general/LoadingView";
 
 import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
@@ -33,21 +35,28 @@ import "./styles.scss";
 
 interface AnalyticsViewProps {
   isLoadingRecords: boolean;
-  isSelectedTimeRangeValid: boolean;
   selectedDomain: string | null;
+  selectedTimeRangeValidationStatus: ValidationStatus;
   clearSelectedDomain: () => void;
 }
 
-const AnalyticsView = (props: AnalyticsViewProps) => {
+const AnalyticsView = ({
+  clearSelectedDomain,
+  isLoadingRecords,
+  selectedDomain,
+  selectedTimeRangeValidationStatus
+}: AnalyticsViewProps) => {
   let viewContent;
   switch (true) {
-    case props.isLoadingRecords:
+    case isLoadingRecords:
       viewContent = <LoadingView />;
       break;
-    case props.isSelectedTimeRangeValid === false:
-      viewContent = "Invalid Time Range Selected";
+    case selectedTimeRangeValidationStatus.isValid === false:
+      viewContent = (
+        <ErrorView message={selectedTimeRangeValidationStatus.description} />
+      );
       break;
-    case props.selectedDomain !== null:
+    case selectedDomain !== null:
       viewContent = (
         <div className="analytics-view__cards-container">
           <DomainTotalUsageCard />
@@ -84,9 +93,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
         <span className="analytics-view__header">
           <span
             className={classNames({
-              "analytics-view__link": props.selectedDomain !== null
+              "analytics-view__link": selectedDomain !== null
             })}
-            onClick={props.clearSelectedDomain}
+            onClick={clearSelectedDomain}
           >
             Usage Analytics
           </span>
@@ -104,7 +113,9 @@ const AnalyticsView = (props: AnalyticsViewProps) => {
 
 const mapStateToProps = (state: RootState) => ({
   isLoadingRecords: selectors.getIsLoadingRecords(state),
-  isSelectedTimeRangeValid: selectors.getIsSelectedTimeRangeValid(state),
+  selectedTimeRangeValidationStatus: selectors.getSelectedTimeRangeValidationStatus(
+    state
+  ),
   selectedDomain: selectors.getSelectedDomain(state)
 });
 

@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 
+import { ValidationStatus } from "../../models/validate";
 import { RootState } from "../../store";
 import {
   getTimestampFromDateString,
@@ -59,3 +60,37 @@ export const getSelectedTimeRange = createSelector(
     };
   }
 );
+
+/**
+ * Retrieves validation status of the selected time range extracted from
+ * browser's URL search parameters
+ */
+export const getSelectedTimeRangeValidationStatus = (
+  state: RootState
+): ValidationStatus => {
+  const params = new URLSearchParams(state.router.location.search);
+  const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
+  const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
+
+  if (startDateParam === "" && endDateParam === "") {
+    return { isValid: true, description: "" };
+  }
+
+  if (!isValidDateString(startDateParam) || !isValidDateString(endDateParam)) {
+    return {
+      isValid: false,
+      description: "Selected date range is malformed"
+    };
+  }
+
+  const startTime = getTimestampFromDateString(startDateParam);
+  const endTime = getTimestampFromDateString(endDateParam);
+  if (startTime > endTime) {
+    return {
+      isValid: false,
+      description: "Selected date range is invalid"
+    };
+  }
+
+  return { isValid: true, description: "" };
+};
