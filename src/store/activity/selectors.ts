@@ -62,7 +62,7 @@ export const getSelectedTimeRange = (state: RootState) => {
 
   return {
     start,
-    end: end === start ? end + (MS_PER_DAY - 1) : end
+    end: end + (MS_PER_DAY - 1)
   };
 };
 
