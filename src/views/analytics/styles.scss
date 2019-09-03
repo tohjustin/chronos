@@ -121,6 +121,13 @@ $chart__height: 280px;
   height: 100%;
 }
 
+.analytics-view__placeholder {
+  color: $color__dark-gray;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: $font-family;
+}
+
 // NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>
 // doesn't expose any props for adding classes to it's dialog component 🤢
 div[evergreen-portal-container] div[role="dialog"] {

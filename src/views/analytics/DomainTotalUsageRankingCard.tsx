@@ -25,20 +25,24 @@ const DomainTotalUsageRankingCard = (
     title="Usage Ranking"
     description={`Top ${TABLE_ROW_COUNT} pages based on total time spent`}
     body={
-      <BarChartTable
-        data={props.totalDurationByPath
-          .slice(0, TABLE_ROW_COUNT)
-          .map(datum => ({
-            label: datum.path,
-            labelSrc: props.selectedDomain
-              ? `https://${props.selectedDomain}${datum.path}`
-              : undefined,
-            value: datum.totalDuration
-          }))}
-        formatValue={formatTableDurationLabel}
-        rowCount={TABLE_ROW_COUNT}
-        showIcons={false}
-      />
+      props.totalDurationByPath.length === 0 ? (
+        <div className="analytics-view__placeholder">No activity</div>
+      ) : (
+        <BarChartTable
+          data={props.totalDurationByPath
+            .slice(0, TABLE_ROW_COUNT)
+            .map(datum => ({
+              label: datum.path,
+              labelSrc: props.selectedDomain
+                ? `https://${props.selectedDomain}${datum.path}`
+                : undefined,
+              value: datum.totalDuration
+            }))}
+          formatValue={formatTableDurationLabel}
+          rowCount={TABLE_ROW_COUNT}
+          showIcons={false}
+        />
+      )
     }
   />
 );

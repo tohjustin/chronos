@@ -22,18 +22,22 @@ const TotalUsageRankingCard = (props: TotalUsageRankingCardProps) => (
     title="Usage Ranking"
     description={`Top ${TABLE_ROW_COUNT} websites based on total time spent`}
     body={
-      <BarChartTable
-        data={props.totalDurationByDomain
-          .slice(0, TABLE_ROW_COUNT)
-          .map(datum => ({
-            label: datum.domain,
-            labelSrc: `https://${datum.domain}`,
-            value: datum.totalDuration,
-            iconSrc: datum.favIconUrl
-          }))}
-        formatValue={formatTableDurationLabel}
-        rowCount={TABLE_ROW_COUNT}
-      />
+      props.totalDurationByDomain.length === 0 ? (
+        <div className="analytics-view__placeholder">No activity</div>
+      ) : (
+        <BarChartTable
+          data={props.totalDurationByDomain
+            .slice(0, TABLE_ROW_COUNT)
+            .map(datum => ({
+              label: datum.domain,
+              labelSrc: `https://${datum.domain}`,
+              value: datum.totalDuration,
+              iconSrc: datum.favIconUrl
+            }))}
+          formatValue={formatTableDurationLabel}
+          rowCount={TABLE_ROW_COUNT}
+        />
+      )
     }
   />
 );
