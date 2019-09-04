@@ -33,30 +33,28 @@ export function formatHourOfDay(hour: number): string {
 }
 
 /**
- * Converts a duration into human-readable format
+ * Converts a duration into human-readable format for Tables
  * @param {number} duration duration in milliseconds
  * @returns {string} duration in human-readable format
  */
 export function formatTableDurationLabel(duration: number): string {
-  const durationInMins = Math.round(duration / 1000 / 60);
-  const minutes = Math.floor(durationInMins) % 60;
-  const hours = Math.floor(durationInMins / 60);
-
-  let result = "";
-  if (hours > 0) {
-    result += `${hours} h`;
-  }
-  if (minutes > 0) {
-    result += ` ${
-      hours > 0 ? minutes.toString().padStart(2, "0") : minutes
-    } min`;
-  }
-  if (result !== "") {
-    return result.trim();
+  if (duration < 1000) {
+    return `${duration} ms`;
   }
 
-  const durationInSecs = Math.floor(duration / 1000);
-  return durationInSecs > 0 ? `${durationInSecs} s` : "< 1 s";
+  if (duration < 60000) {
+    return `${(duration / 1000).toFixed(1)} s`;
+  }
+
+  if (duration < 3600000) {
+    const minutes = Math.floor(duration / 60000);
+    const seconds = Math.round((duration / 1000) % 60);
+    return `${minutes} min ${seconds.toString().padStart(2, "0")} s`;
+  }
+
+  const hours = Math.floor(duration / 3600000);
+  const minutes = Math.round((duration / 60000) % 60);
+  return `${hours} h ${minutes.toString().padStart(2, "0")} min`;
 }
 
 /**
