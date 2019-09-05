@@ -32,7 +32,11 @@ const renderRow = ({ activity }: { activity: ActivityRecord }) => {
     activity.endTime - activity.startTime
   );
   return (
-    <Table.Row key={activity.id} height={ROW_HEIGHT}>
+    <Table.Row
+      key={activity.id}
+      data-activity-id={activity.id}
+      height={ROW_HEIGHT}
+    >
       <Table.Cell display="flex" alignItems="center" flexGrow={80}>
         <Avatar
           className="history-table__label-icon"
