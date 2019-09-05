@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
 import Axis, { AxisConfiguration } from "../Axis";
@@ -77,7 +77,7 @@ const VerticalBarChart = ({
     scaleY,
     svgHeight,
     svgWidth
-  } = React.useMemo(
+  } = useMemo(
     () =>
       computeSizes({
         containerHeight,
@@ -90,9 +90,9 @@ const VerticalBarChart = ({
     [containerHeight, containerWidth, data, margin, maxValue, minValue]
   );
 
-  const handleMouseEnter = React.useCallback(() => setIsHovering(true), []);
-  const handleMouseOver = React.useCallback(setHoveredDatum, []);
-  const handleMouseLeave = React.useCallback(() => setIsHovering(false), []);
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseOver = useCallback(setHoveredDatum, []);
+  const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
   let marginX = 0;
   let marginY = 0;

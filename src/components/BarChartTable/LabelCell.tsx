@@ -1,5 +1,5 @@
 import { Avatar } from "evergreen-ui";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
@@ -24,7 +24,7 @@ const LabelCell = ({
   showIcons,
   value
 }: LabelCellProps) => {
-  const [inProp, setInProp] = React.useState(false);
+  const [inProp, setInProp] = useState(false);
   useEffect(() => {
     setInProp(true);
   }, []);

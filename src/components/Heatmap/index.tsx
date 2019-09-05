@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
 import Axis, { AxisConfiguration, AxisProps } from "../Axis";
@@ -12,9 +12,9 @@ import { computeColors, computeSizes } from "./utils";
 
 import "./styles.scss";
 
-const MemoizedAxis = React.memo<AxisProps<number, number>>(Axis);
-const MemoizedChart = React.memo(Chart);
-const MemoizedLegend = React.memo(Legend);
+const MemoizedAxis = memo<AxisProps<number, number>>(Axis);
+const MemoizedChart = memo(Chart);
+const MemoizedLegend = memo(Legend);
 
 interface HeatmapProps {
   data: Datum[];
@@ -84,18 +84,18 @@ const Heatmap = ({
     scaleY,
     svgHeight,
     svgWidth
-  } = React.useMemo(
+  } = useMemo(
     () => computeSizes({ cell, containerHeight, containerWidth, data, margin }),
     [data, containerHeight, containerWidth, cell, margin]
   );
-  const { colors, scaleZ } = React.useMemo(
+  const { colors, scaleZ } = useMemo(
     () => computeColors(colorRange, thresholds),
     [colorRange, thresholds]
   );
 
-  const handleMouseEnter = React.useCallback(() => setIsHovering(true), []);
-  const handleMouseOver = React.useCallback(setHoveredDatum, []);
-  const handleMouseLeave = React.useCallback(() => setIsHovering(false), []);
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseOver = useCallback(setHoveredDatum, []);
+  const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
   let marginX = 0;
   let marginY = 0;

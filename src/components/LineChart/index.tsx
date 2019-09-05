@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
 import Axis, { AxisConfiguration } from "../Axis";
@@ -79,7 +79,7 @@ const LineChart = ({
     scaleY,
     svgHeight,
     svgWidth
-  } = React.useMemo(
+  } = useMemo(
     () =>
       computeSizes({
         containerHeight,
@@ -92,12 +92,12 @@ const LineChart = ({
     [containerHeight, containerWidth, data, margin, maxValue, minValue]
   );
 
-  const handleMouseEnter = React.useCallback(() => setIsHovering(true), []);
-  const handleMouseOver = React.useCallback((datum: Datum | null) => {
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseOver = useCallback((datum: Datum | null) => {
     setIsHovering(true);
     setHoveredDatum(datum);
   }, []);
-  const handleMouseLeave = React.useCallback(() => setIsHovering(false), []);
+  const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
   let marginX = 0;
   let marginY = 0;
