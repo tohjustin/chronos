@@ -33,6 +33,20 @@ export function formatHourOfDay(hour: number): string {
 }
 
 /**
+ * Converts a date object into human-readable format for Tables
+ * @param {number} date Date object
+ * @returns {string} date in human-readable format
+ */
+export function formatTableDateTimeLabel(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "short",
+    day: "numeric"
+  });
+}
+
+/**
  * Converts a duration into human-readable format for Tables
  * @param {number} duration duration in milliseconds
  * @returns {string} duration in human-readable format

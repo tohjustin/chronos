@@ -28,6 +28,7 @@ $color__white: #fff;
 $shadow__color: #{$color__black}6d;
 $shadow__card: 0 0 2px $shadow__color;
 $shadow__favicon: 0 0 2px $shadow__color;
+$shadow__table: 0 0 2px $shadow__color;
 $shadow__header: 0 0 1px $shadow__color;
 $shadow__input: 0 0 1px $shadow__color;
 
@@ -37,4 +38,5 @@ $z-index__view-header: 100;
 
 $border-radius__button: 3px;
 $border-radius__card: 4px;
+$border-radius__table: 4px;
 $border-radius__tooltip: 2px;

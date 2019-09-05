@@ -77,4 +77,60 @@ declare module "evergreen-ui" {
     size?: number;
   }
   export class Spinner extends React.PureComponent<SpinnerProps> {}
+
+  interface TableCellProps {
+    children?: React.ReactNode;
+    className?: string;
+    display?: string;
+    alignItems?: string;
+    flexBasis?: number;
+    flexGrow?: number;
+    flexShrink?: number;
+  }
+  interface TableHeadProps {
+    children?: React.ReactNode;
+    className?: string;
+    height?: number;
+    width?: number;
+  }
+  interface TableRowProps {
+    children?: React.ReactNode;
+    className?: string;
+    display?: string;
+    alignItems?: string;
+    flexBasis?: number;
+    flexGrow?: number;
+    flexShrink?: number;
+  }
+  interface TableSearchHeaderCellProps {
+    className?: string;
+    display?: string;
+    alignItems?: string;
+    flexBasis?: number;
+    flexGrow?: number;
+    flexShrink?: number;
+  }
+  interface TableVirtualBodyProps {
+    children?: React.ReactNode;
+    className?: string;
+    estimatedItemSize?: number;
+    height?: number;
+    width?: number;
+    onScroll?: (
+      scrollTop: number,
+      event: React.UIEvent<HTMLDivElement>
+    ) => void;
+    overscanCount?: number;
+    useAverageAutoHeightEstimation?: boolean;
+  }
+  export interface TableProps {
+    className?: string;
+  }
+  export class Table extends React.PureComponent<TableProps> {
+    static Cell: (props: TableCell) => JSX.Element;
+    static Head: (props: TableHead) => JSX.Element;
+    static SearchHeaderCell: (props: TableSearchHeaderCell) => JSX.Element;
+    static Row: (props: TableRow) => JSX.Element;
+    static VirtualBody: (props: TableVirtualBodyProps) => JSX.Element;
+  }
 }

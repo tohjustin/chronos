@@ -1,6 +1,6 @@
 import { ConnectedRouter } from "connected-react-router";
 import React, { useEffect } from "react";
-import { BarChart2, Settings } from "react-feather";
+import { BarChart2, Clock, Settings, Tag } from "react-feather";
 import { hot } from "react-hot-loader";
 import { connect, Provider } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
@@ -10,15 +10,14 @@ import { bindActionCreators } from "redux";
 import Navbar from "./components/Navbar";
 import { Dispatch, actions, history, store } from "./store";
 import AnalyticsView from "./views/analytics";
+import HistoryView from "./views/history";
 import SettingsView from "./views/settings";
 
 interface AppShellProps {
   loadRecords: () => void;
 }
 
-const AppShell = (props: AppShellProps) => {
-  const { loadRecords } = props;
-
+const AppShell = ({ loadRecords }: AppShellProps) => {
   useEffect(() => {
     loadRecords();
   }, [loadRecords]);
@@ -32,6 +31,11 @@ const AppShell = (props: AppShellProps) => {
             featherIcon: BarChart2,
             text: "Analytics",
             to: "/analytics"
+          },
+          {
+            featherIcon: Clock,
+            text: "History",
+            to: "/history"
           }
         ]}
         secondaryItems={[
@@ -45,6 +49,7 @@ const AppShell = (props: AppShellProps) => {
       <div className="app__view">
         <Switch>
           <Route path="/analytics" component={AnalyticsView} />
+          <Route path="/history" component={HistoryView} />
           <Route path="/settings" component={SettingsView} />
           <Redirect exact to="/analytics" />
         </Switch>
