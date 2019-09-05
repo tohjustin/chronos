@@ -392,8 +392,8 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
     } = {};
 
     selectedDomainRecords.forEach(record => {
-      const { pathname, search, startTime, endTime } = record;
-      const path = `${pathname}${search}`;
+      const { hash, pathname, search, startTime, endTime } = record;
+      const path = `${pathname}${hash}${search}`;
       if (path !== "") {
         const duration = endTime - startTime;
         const prevTotalDuration = totalDurationByPathname[path]
