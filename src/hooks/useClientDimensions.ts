@@ -23,7 +23,11 @@ function useClientDimensions(): [
     setRefElement(node !== null ? { current: node } : null);
   }, []);
   useEffect(() => {
-    if (refElement && refElement.current) {
+    if (
+      refElement &&
+      refElement.current &&
+      refElement.current.getBoundingClientRect
+    ) {
       const { top, left } = refElement.current.getBoundingClientRect();
       const resizeObserver = new ResizeObserver(entries => {
         setDimensions({
