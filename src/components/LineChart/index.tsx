@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
+import { BASE_SIZE } from "../../styles/constants";
 import Axis, { AxisConfiguration } from "../Axis";
 import Grid, { GridConfiguration } from "../Grid";
 import TooltipRenderer from "../TooltipRenderer";
@@ -36,7 +37,7 @@ interface LineChartProps {
   tooltipComponent?: React.FC<{ data: Datum | null }>;
 }
 
-const TOOLTIP_MARGIN = 8;
+const TOOLTIP_MARGIN = BASE_SIZE;
 
 export const defaultProps = {
   axis: {
@@ -50,7 +51,12 @@ export const defaultProps = {
     vertical: { enable: true }
   },
   isInteractive: true,
-  margin: { top: 0, left: 40, bottom: 24, right: 8 },
+  margin: {
+    top: 0,
+    left: BASE_SIZE * 5,
+    bottom: BASE_SIZE * 3,
+    right: BASE_SIZE
+  },
   transitionDelay: 500
 };
 

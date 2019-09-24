@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce";
 import { useClientDimensions } from "../../hooks";
 import { ActivityRecord } from "../../models/activity";
 import { RootState, selectors } from "../../store";
-import { SPINNER_SIZE } from "../../styles/constants";
+import { BASE_SIZE, SPINNER_SIZE } from "../../styles/constants";
 import {
   formatTableDurationLabel,
   formatTableDateTimeLabel
@@ -18,11 +18,11 @@ interface HistoryTableProps {
   data: ActivityRecord[];
 }
 
-const HEADER_HEIGHT = 32;
+const HEADER_HEIGHT = BASE_SIZE * 4;
 const INITIAL_ROW_COUNT = 150;
 const ROWS_TO_LOAD_PER_BATCH = 300;
-const ROW_HEIGHT = 48;
-const THEME_BASE_SIZE = 16;
+const ROW_HEIGHT = BASE_SIZE * 6;
+const AVATAR_SIZE = BASE_SIZE * 2.5;
 
 const renderRow = ({ activity }: { activity: ActivityRecord }) => {
   const activityDateTime = formatTableDateTimeLabel(
@@ -43,7 +43,7 @@ const renderRow = ({ activity }: { activity: ActivityRecord }) => {
           hashValue={activity.origin}
           name={activity.origin}
           src={activity.favIconUrl}
-          size={THEME_BASE_SIZE * 1.25}
+          size={AVATAR_SIZE}
         />
         <div className="history-table__label">
           <strong>{`${activity.title}`}</strong>

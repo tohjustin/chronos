@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
+import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
 import Axis, { AxisConfiguration } from "../Axis";
 import Grid, { GridConfiguration } from "../Grid";
 import TooltipRenderer from "../TooltipRenderer";
@@ -34,7 +35,7 @@ interface VerticalBarChartProps {
   tooltipComponent?: React.FC<{ data: Datum | null }>;
 }
 
-const TOOLTIP_MARGIN = 4;
+const TOOLTIP_MARGIN = BASE_SIZE * 0.5;
 
 export const defaultProps = {
   axis: {
@@ -48,7 +49,7 @@ export const defaultProps = {
     vertical: { enable: true }
   },
   isInteractive: true,
-  margin: { left: 36, right: 0, top: 0, bottom: 24 },
+  margin: { left: BASE_SIZE * 4.5, right: 0, top: 0, bottom: BASE_SIZE * 3 },
   transitionDelay: 500
 };
 

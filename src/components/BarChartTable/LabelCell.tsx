@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
+import { BASE_SIZE } from "../../styles/constants";
+
 import { Datum } from "./types";
 
 interface LabelCellProps extends Datum {
@@ -11,7 +13,7 @@ interface LabelCellProps extends Datum {
   showIcons: boolean;
 }
 
-const THEME_BASE_SIZE = 16;
+const AVATAR_SIZE = BASE_SIZE * 2;
 const THEME_COLOR = "#3D9CF4";
 const TRANSITION_DELAY = 1000; // ms
 
@@ -55,7 +57,7 @@ const LabelCell = ({
               src={iconSrc}
               hashValue={label}
               name={label}
-              size={THEME_BASE_SIZE}
+              size={AVATAR_SIZE}
             />
           )}
           <div className="bar-chart-table__label-content">

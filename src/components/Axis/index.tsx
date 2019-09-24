@@ -1,6 +1,8 @@
 import * as d3 from "d3";
 import React, { useEffect, useRef } from "react";
 
+import { BASE_SIZE } from "../../styles/constants";
+
 import "./styles.scss";
 
 type AxisSubConfiguration<T> = {
@@ -44,7 +46,7 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
     if (top.enable) {
       const topAxis = d3
         .axisTop<X>(scaleX)
-        .tickPadding(8)
+        .tickPadding(BASE_SIZE)
         .tickSize(0);
       if (top.formatTick) {
         topAxis.tickFormat(top.formatTick);
@@ -64,7 +66,7 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
     if (bottom.enable) {
       const bottomAxis = d3
         .axisBottom<X>(scaleX)
-        .tickPadding(8)
+        .tickPadding(BASE_SIZE)
         .tickSize(0);
       if (bottom.formatTick) {
         bottomAxis.tickFormat(bottom.formatTick);
@@ -85,7 +87,7 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
     if (left.enable) {
       const leftAxis = d3
         .axisLeft<Y>(scaleY)
-        .tickPadding(8)
+        .tickPadding(BASE_SIZE)
         .tickSize(0)
         .tickSizeOuter(0);
       if (left.formatTick) {
@@ -106,7 +108,7 @@ function Axis<X extends d3.AxisDomain, Y extends d3.AxisDomain>({
     if (right.enable) {
       const rightAxis = d3
         .axisRight<Y>(scaleY)
-        .tickPadding(8)
+        .tickPadding(BASE_SIZE)
         .tickSize(0)
         .tickSizeOuter(0);
       if (right.formatTick) {

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { BASE_SIZE } from "../../styles/constants";
 import Heatmap from "../Heatmap";
 import { LegendConfiguration } from "../Heatmap/Legend";
 import { CellConfiguration } from "../Heatmap/types";
@@ -41,10 +42,15 @@ export const defaultProps = {
     expandToChartWidth: false,
     formatLabels: null,
     includeEmptyColor: true,
-    margin: { left: 8, right: 8, top: 0, bottom: 0 },
+    margin: { left: BASE_SIZE, right: BASE_SIZE, top: 0, bottom: 0 },
     sideLabels: ["Less", "More"] as [string, string]
   },
-  margin: { left: 40, right: 8, top: 24, bottom: 32 },
+  margin: {
+    left: BASE_SIZE * 5,
+    right: BASE_SIZE,
+    top: BASE_SIZE * 3,
+    bottom: BASE_SIZE * 4
+  },
   tooltipComponent: CalendarHeatmapTooltip
 };
 

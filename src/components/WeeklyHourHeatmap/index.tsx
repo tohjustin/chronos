@@ -1,5 +1,6 @@
 import React from "react";
 
+import { BASE_SIZE } from "../../styles/constants";
 import Heatmap from "../Heatmap";
 import { LegendConfiguration } from "../Heatmap/Legend";
 import { CellConfiguration } from "../Heatmap/types";
@@ -39,10 +40,15 @@ export const defaultProps = {
     expandToChartWidth: true,
     formatLabels: (threshold: number) => `${threshold}`,
     includeEmptyColor: false,
-    margin: { left: 0, right: 4, top: 0, bottom: 8 },
+    margin: { left: 0, right: BASE_SIZE * 0.5, top: 0, bottom: BASE_SIZE },
     sideLabels: null
   },
-  margin: { left: 48, right: 4, top: 4, bottom: 52 },
+  margin: {
+    left: BASE_SIZE * 6,
+    right: BASE_SIZE * 0.5,
+    top: BASE_SIZE * 0.5,
+    bottom: BASE_SIZE * 6.5
+  },
   tooltipComponent: WeeklyHourHeatmapTooltip
 };
 
