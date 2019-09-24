@@ -7,7 +7,7 @@ export const SEARCH_PARAM_DOMAIN = "domain";
 
 // Time Range
 export const DEFAULT_TIME_RANGE = {
-  start: getStartOfDay(Date.now() - 4 * MS_PER_WEEK),
+  start: getStartOfDay(Date.now() - (4 * MS_PER_WEEK - 1)),
   end: null
 };
 export const SEARCH_PARAM_START_DATE = "startDate";

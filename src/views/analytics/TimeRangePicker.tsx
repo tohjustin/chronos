@@ -42,9 +42,9 @@ const TimeRangePicker = (props: TimeRangePickerProps) => {
       format="MMM DD, YYYY"
       onChange={handleTimeRangeChange}
       ranges={{
-        "Last week": [moment(startOfDay).subtract(1, "week"), endOfDay],
-        "Last 2 weeks": [moment(startOfDay).subtract(2, "week"), endOfDay],
-        "Last 4 weeks": [moment(startOfDay).subtract(4, "week"), endOfDay],
+        "Last week": [moment(startOfDay).subtract(6, "day"), endOfDay],
+        "Last 2 weeks": [moment(startOfDay).subtract(13, "day"), endOfDay],
+        "Last 4 weeks": [moment(startOfDay).subtract(27, "day"), endOfDay],
         All: props.activityTimeRange
           ? [
               moment(props.activityTimeRange.start || 0),
