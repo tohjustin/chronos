@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 import { CountUp } from "../../components/CountUp";
 import { RootState, selectors } from "../../store";
+import { TRANSITION_DELAY } from "../../styles/constants";
 
 interface DomainRatioToTotalDurationCardProps {
   ratioToTotalDuration: number;
 }
-
-const TRANSITION_DELAY = 1; // 1000 ms
 
 const DomainRatioToTotalDurationCard = (
   props: DomainRatioToTotalDurationCardProps
@@ -24,7 +23,7 @@ const DomainRatioToTotalDurationCard = (
           start={0}
           end={props.ratioToTotalDuration * 100}
           decimals={2}
-          duration={TRANSITION_DELAY}
+          duration={TRANSITION_DELAY / 1000}
           formattingFn={d => `${d.toFixed(2)}`}
           formattingUnitFn={() => "%"}
           preserveValue={true}

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
-import { BASE_SIZE } from "../../styles/constants";
+import { BASE_SIZE, CHART_TRANSITION_DELAY } from "../../styles/constants";
 import Axis, { AxisConfiguration } from "../Axis";
 import Grid, { GridConfiguration } from "../Grid";
 import TooltipRenderer from "../TooltipRenderer";
@@ -57,7 +57,7 @@ export const defaultProps = {
     bottom: BASE_SIZE * 3,
     right: BASE_SIZE
   },
-  transitionDelay: 500
+  transitionDelay: CHART_TRANSITION_DELAY
 };
 
 const LineChart = ({

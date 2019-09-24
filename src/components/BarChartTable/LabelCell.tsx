@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
-import { BASE_SIZE } from "../../styles/constants";
+import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
 
 import { Datum } from "./types";
 
@@ -15,7 +15,6 @@ interface LabelCellProps extends Datum {
 
 const AVATAR_SIZE = BASE_SIZE * 2;
 const THEME_COLOR = "#3D9CF4";
-const TRANSITION_DELAY = 1000; // ms
 
 const LabelCell = ({
   hide,

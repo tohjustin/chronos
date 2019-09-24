@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 import { CountUp } from "../../components/CountUp";
 import { RootState, selectors } from "../../store";
+import { TRANSITION_DELAY } from "../../styles/constants";
 
 interface TotalDomainVisitCountCardProps {
   visitCount: number;
 }
-
-const TRANSITION_DELAY = 1; // 1000 ms
 
 const TotalDomainVisitCountCard = (props: TotalDomainVisitCountCardProps) => (
   <Card
@@ -21,7 +20,7 @@ const TotalDomainVisitCountCard = (props: TotalDomainVisitCountCardProps) => (
         <CountUp
           start={0}
           end={props.visitCount}
-          duration={TRANSITION_DELAY}
+          duration={TRANSITION_DELAY / 1000}
           formattingFn={d => d.toLocaleString("en-US")}
           formattingUnitFn={d => (d > 1 ? "domains" : "domain")}
           preserveValue={true}

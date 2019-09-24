@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { useClientDimensions } from "../../hooks";
-import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
+import { BASE_SIZE, CHART_TRANSITION_DELAY } from "../../styles/constants";
 import Axis, { AxisConfiguration } from "../Axis";
 import Grid, { GridConfiguration } from "../Grid";
 import TooltipRenderer from "../TooltipRenderer";
@@ -50,7 +50,7 @@ export const defaultProps = {
   },
   isInteractive: true,
   margin: { left: BASE_SIZE * 4.5, right: 0, top: 0, bottom: BASE_SIZE * 3 },
-  transitionDelay: 500
+  transitionDelay: CHART_TRANSITION_DELAY
 };
 
 const VerticalBarChart = ({

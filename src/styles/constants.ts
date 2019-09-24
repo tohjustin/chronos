@@ -1,4 +1,6 @@
 export const BASE_SIZE = 8;
+export const CHART_TRANSITION_DELAY = 500; // ms
+export const TRANSITION_DELAY = 1000; // ms
 
 export const BUTTON_SIZE = BASE_SIZE * 4;
 export const BUTTON_MARGIN = BASE_SIZE * 1.5;

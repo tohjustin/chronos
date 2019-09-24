@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 import { DurationCountUp } from "../../components/CountUp";
 import { RootState, selectors } from "../../store";
+import { TRANSITION_DELAY } from "../../styles/constants";
 
 interface TotalUsageCardProps {
   totalDuration: number;
 }
-
-const TRANSITION_DELAY = 1; // 1000 ms
 
 const TotalUsageCard = (props: TotalUsageCardProps) => (
   <Card
@@ -20,7 +19,7 @@ const TotalUsageCard = (props: TotalUsageCardProps) => (
       <DurationCountUp
         start={0}
         end={props.totalDuration}
-        duration={TRANSITION_DELAY}
+        duration={TRANSITION_DELAY / 1000}
         preserveValue={true}
         redraw={true}
       />

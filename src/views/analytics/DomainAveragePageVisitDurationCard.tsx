@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 import { DurationCountUp } from "../../components/CountUp";
 import { RootState, selectors } from "../../store";
+import { TRANSITION_DELAY } from "../../styles/constants";
 
 interface DomainAveragePageVisitDurationCardProps {
   averageDuration: number;
 }
-
-const TRANSITION_DELAY = 1; // 1000 ms
 
 const DomainAveragePageVisitDurationCard = (
   props: DomainAveragePageVisitDurationCardProps
@@ -22,7 +21,7 @@ const DomainAveragePageVisitDurationCard = (
       <DurationCountUp
         start={0}
         end={props.averageDuration}
-        duration={TRANSITION_DELAY}
+        duration={TRANSITION_DELAY / 1000}
         preserveValue={true}
         redraw={true}
       />
