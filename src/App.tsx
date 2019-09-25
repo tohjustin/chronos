@@ -1,6 +1,6 @@
 import { ConnectedRouter } from "connected-react-router";
 import React, { useEffect } from "react";
-import { BarChart2, Clock, Settings, Tag } from "react-feather";
+import { BarChart2, Clock, Settings } from "react-feather";
 import { hot } from "react-hot-loader";
 import { connect, Provider } from "react-redux";
 import { Switch, Route, Redirect } from "react-router";
