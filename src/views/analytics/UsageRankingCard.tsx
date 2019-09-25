@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import BarChartTable from "../../components/BarChartTable";
 import Card from "../../components/Card";
@@ -74,6 +75,9 @@ export const TotalUsageRankingCard = connect((state: RootState) => {
       .slice(0, rowCount)
       .map(datum => ({
         label: datum.domain,
+        labelComponent: (
+          <Link to={{ search: `?domain=${datum.domain}` }}>{datum.domain}</Link>
+        ),
         labelSrc: `https://${datum.domain}`,
         value: datum.totalDuration,
         iconSrc: datum.favIconUrl

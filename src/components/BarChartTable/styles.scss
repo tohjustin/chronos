@@ -58,13 +58,21 @@
       color: inherit;
 
       &:hover {
-        text-decoration: underline;
+        color: $color__primary;
       }
     }
 
     .bar-chart-table__label-bar {
       border-bottom: 2px solid;
       box-sizing: border-box;
+    }
+  }
+
+  .bar-chart-table__label-external-link {
+    margin-left: $base__size / 2;
+
+    svg {
+      vertical-align: middle;
     }
   }
 

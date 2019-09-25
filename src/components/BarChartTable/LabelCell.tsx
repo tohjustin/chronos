@@ -1,5 +1,6 @@
 import { Avatar } from "evergreen-ui";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { ExternalLink } from "react-feather";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
@@ -11,6 +12,7 @@ interface LabelCellProps extends Datum {
   hide: boolean;
   maxValue: number;
   showIcons: boolean;
+  labelComponent?: React.ReactNode;
 }
 
 const AVATAR_SIZE = BASE_SIZE * 2;
@@ -20,15 +22,19 @@ const LabelCell = ({
   hide,
   iconSrc,
   label,
+  labelComponent,
   labelSrc,
   maxValue,
   showIcons,
   value
 }: LabelCellProps) => {
+  const [isHovered, setIsHovered] = useState(false);
   const [inProp, setInProp] = useState(false);
   useEffect(() => {
     setInProp(true);
   }, []);
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
   const defaultStyles = {
     borderBottomColor: THEME_COLOR,
@@ -59,16 +65,24 @@ const LabelCell = ({
               size={AVATAR_SIZE}
             />
           )}
-          <div className="bar-chart-table__label-content">
-            {labelSrc ? (
-              <span>
-                <a href={labelSrc} target="none">
-                  {label}
+          <div
+            className="bar-chart-table__label-content"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <span>
+              {labelComponent ? labelComponent : <span>{label}</span>}
+              {labelSrc && (
+                <a
+                  className="bar-chart-table__label-external-link"
+                  href={labelSrc}
+                  target="none"
+                  style={{ visibility: isHovered ? "unset" : "hidden" }}
+                >
+                  <ExternalLink size={BASE_SIZE * 1.25} />
                 </a>
-              </span>
-            ) : (
-              <span>{label}</span>
-            )}
+              )}
+            </span>
             <div
               className="bar-chart-table__label-bar"
               style={{
