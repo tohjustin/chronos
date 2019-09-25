@@ -17,12 +17,17 @@ import {
   formatTooltipDurationLabel
 } from "../../utils/stringUtils";
 
-interface DomainTotalUsageByDayOfYearCardProps {
-  selectedTimeRange: TimeRange;
-  totalDurationByDate: {
+interface UsageByDayOfYearCardProps {
+  title: string;
+  description: string;
+  data: {
     timestamp: number;
     totalDuration: number;
   }[];
+  colorRange: [string, string];
+  monthsToShow: number;
+  selectedTimeRange: TimeRange;
+  thresholds: number[];
 }
 
 const MONTH_TO_SHOW = 6;
@@ -31,29 +36,27 @@ const THRESHOLDS = [0, 1 / 3600, 0.5, 1, 2, 4, 8].map(
   hours => hours * MS_PER_HOUR
 );
 
-const DomainTotalUsageByDayOfYearCard = (
-  props: DomainTotalUsageByDayOfYearCardProps // eslint-disable-line
-) => {
+const UsageByDayOfYearCard = (props: UsageByDayOfYearCardProps) => {
   const endDate = props.selectedTimeRange.end
     ? new Date(props.selectedTimeRange.end)
     : new Date();
-  const startDate = d3.timeMonth.offset(endDate, -1 * MONTH_TO_SHOW);
+  const startDate = d3.timeMonth.offset(endDate, -1 * props.monthsToShow);
 
   return (
     <Card
       className="analytics-view__card analytics-view__card--md"
-      title="Historical Usage"
-      description={`Total time spent over the past ${MONTH_TO_SHOW} months`}
+      title={props.title}
+      description={props.description}
       body={
         <CalendarHeatmap
-          colorRange={["#f6f6f6", "#3D9CF4"]}
-          data={props.totalDurationByDate.map(d => ({
+          colorRange={props.colorRange}
+          data={props.data.map(d => ({
             day: formatDate(new Date(d.timestamp)),
             value: d.totalDuration
           }))}
           startDay={formatDate(startDate)}
           endDay={formatDate(endDate)}
-          thresholds={THRESHOLDS}
+          thresholds={props.thresholds}
           tooltipComponent={(props: { data: Datum }) => {
             const { day, value } = props.data;
             const dateString = formatTooltipDateLabel(parseDateString(day));
@@ -67,9 +70,18 @@ const DomainTotalUsageByDayOfYearCard = (
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  totalDurationByDate: selectors.getAllSelectedDomainTotalDurationByDate(state),
-  selectedTimeRange: selectors.getSelectedTimeRange(state)
-});
+export const DomainTotalUsageByDayOfYearCard = connect((state: RootState) => {
+  const monthsToShow = MONTH_TO_SHOW;
 
-export default connect(mapStateToProps)(DomainTotalUsageByDayOfYearCard);
+  return {
+    title: "Historical Usage",
+    description: `Total time spent over the past ${MONTH_TO_SHOW} months`,
+    data: selectors.getAllSelectedDomainTotalDurationByDate(state),
+    colorRange: ["#f6f6f6", "#3D9CF4"] as [string, string],
+    monthsToShow,
+    selectedTimeRange: selectors.getSelectedTimeRange(state),
+    thresholds: THRESHOLDS
+  };
+})(UsageByDayOfYearCard);
+
+export default UsageByDayOfYearCard;

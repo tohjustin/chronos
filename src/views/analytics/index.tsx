@@ -11,25 +11,35 @@ import { ICON_SIZE } from "../../styles/constants";
 import ErrorView from "../general/ErrorView";
 import LoadingView from "../general/LoadingView";
 
-import AverageUsageByHourOfWeekCard from "./AverageUsageByHourOfWeekCard";
-import DomainAveragePageVisitDurationCard from "./DomainAveragePageVisitDurationCard";
-import DomainAverageUsageByHourOfWeekCard from "./DomainAverageUsageByHourOfWeekCard";
 import DomainPicker from "./DomainPicker";
-import DomainRatioToTotalDurationCard from "./DomainRatioToTotalDurationCard";
-import DomainTotalPageVisitCountCard from "./DomainTotalPageVisitCountCard";
-import DomainTotalUsageByDayOfWeekCard from "./DomainTotalUsageByDayOfWeekCard";
-import DomainTotalUsageByDayOfYearCard from "./DomainTotalUsageByDayOfYearCard";
-import DomainTotalUsageCard from "./DomainTotalUsageCard";
-import DomainTotalUsagePerDayCard from "./DomainTotalUsagePerDayCard";
-import DomainTotalUsageRankingCard from "./DomainTotalUsageRankingCard";
-import RatioToTotalDurationCard from "./RatioToTotalDurationCard";
+import {
+  DomainAveragePageVisitDurationCard,
+  DomainTotalPageVisitCountCard,
+  DomainRatioToTotalDurationCard,
+  DomainTotalUsageCard,
+  RatioToTotalDurationCard,
+  TotalDomainVisitCountCard,
+  TotalPageVisitCountCard,
+  TotalUsageCard
+} from "./SingleValueMetricCard";
 import TimeRangePicker from "./TimeRangePicker";
-import TotalDomainVisitCountCard from "./TotalDomainVisitCountCard";
-import TotalPageVisitCountCard from "./TotalPageVisitCountCard";
-import TotalUsageByDayOfWeekCard from "./TotalUsageByDayOfWeekCard";
-import TotalUsageCard from "./TotalUsageCard";
-import TotalUsagePerDayCard from "./TotalUsagePerDayCard";
-import TotalUsageRankingCard from "./TotalUsageRankingCard";
+import {
+  DomainTotalUsageByDayOfWeekCard,
+  TotalUsageByDayOfWeekCard
+} from "./UsageByDayOfWeekCard";
+import { DomainTotalUsageByDayOfYearCard } from "./UsageByDayOfYearCard";
+import {
+  AverageUsageByHourOfWeekCard,
+  DomainAverageUsageByHourOfWeekCard
+} from "./UsageByHourOfWeekCard";
+import {
+  DomainTotalUsagePerDayCard,
+  TotalUsagePerDayCard
+} from "./UsagePerDayCard";
+import {
+  DomainTotalUsageRankingCard,
+  TotalUsageRankingCard
+} from "./UsageRankingCard";
 
 import "./styles.scss";
 

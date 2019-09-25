@@ -3,20 +3,21 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
+import LineChart from "../../components/LineChart";
+import { Datum } from "../../components/LineChart/types";
 import Tooltip from "../../components/Tooltip";
-import VerticalBarChart from "../../components/VerticalBarChart";
-import { Datum } from "../../components/VerticalBarChart/types";
 import { RootState, selectors } from "../../store";
 import {
-  formatDayOfWeek,
-  formatTooltipDayOfWeekLabel,
+  formatTooltipDateLabel,
   formatTooltipDurationLabel
 } from "../../utils/stringUtils";
 
-interface TotalUsageByDayOfWeekCardProps {
+interface UsagePerDayCardProps {
+  title: string;
+  description: string;
   data: {
-    day: number;
-    duration: number;
+    timestamp: number;
+    totalDuration: number;
   }[];
 }
 
@@ -25,11 +26,25 @@ const MAX_TICK_COUNT = 5;
 const MIN_STEP = MS_PER_HOUR;
 
 const formatTickX = (x: number) => {
-  return formatDayOfWeek(x)[0].toUpperCase();
+  const date = new Date(x);
+  switch (true) {
+    case date.getDate() === 1:
+      return d3.timeFormat("%B")(date);
+    default:
+      return d3.timeFormat("%a %d")(date);
+  }
 };
 const formatTickY = (y: number) => {
   const hours = Number(y) / MS_PER_HOUR;
   return `${hours}h`;
+};
+const computeTickValuesX = (data: Datum[]) => {
+  const startOfTheDayInMs = new Date().setHours(0, 0, 0, 0);
+  const startDate = new Date(d3.min(data.map(d => d.x)) || startOfTheDayInMs);
+  const endDate = new Date(d3.max(data.map(d => d.x)) || startOfTheDayInMs);
+  const dayRange = d3.timeDay.count(startDate, endDate);
+  const step = Math.ceil(dayRange / 5);
+  return [...d3.timeDay.range(startDate, endDate, step)].map(d => d.valueOf());
 };
 const computeTickValuesY = (data: Datum[]) => {
   const [, max = 0] = d3.extent(data.map(d => d.y));
@@ -43,16 +58,17 @@ const computeTickValuesY = (data: Datum[]) => {
   return d3.range(step, maxTickValue, step);
 };
 
-const TotalUsageByDayOfWeekCard = (props: TotalUsageByDayOfWeekCardProps) => {
-  const data = props.data.map(d => ({ x: d.day, y: d.duration }));
+const UsagePerDayCard = (props: UsagePerDayCardProps) => {
+  const data = props.data.map(d => ({ x: d.timestamp, y: d.totalDuration }));
+  const tickValuesX = computeTickValuesX(data);
   const tickValuesY = computeTickValuesY(data);
   return (
     <Card
-      className="analytics-view__card analytics-view__card--sm"
-      title="Usage by Day of Week"
-      description="Total time spent on each day of week"
+      className="analytics-view__card analytics-view__card--md"
+      title={props.title}
+      description={props.description}
       body={
-        <VerticalBarChart
+        <LineChart
           data={data}
           minValue={0}
           maxValue={tickValuesY[tickValuesY.length - 1]}
@@ -60,7 +76,8 @@ const TotalUsageByDayOfWeekCard = (props: TotalUsageByDayOfWeekCardProps) => {
             bottom: {
               enable: true,
               showDomain: true,
-              formatTick: formatTickX
+              formatTick: formatTickX,
+              tickValues: tickValuesX
             },
             left: {
               enable: true,
@@ -77,14 +94,15 @@ const TotalUsageByDayOfWeekCard = (props: TotalUsageByDayOfWeekCardProps) => {
               tickValues: tickValuesY
             },
             vertical: {
-              enable: true
+              enable: true,
+              tickValues: tickValuesX
             }
           }}
           tooltipComponent={props => {
             if (props.data === null) {
               return null;
             }
-            const dayOfWeek = formatTooltipDayOfWeekLabel(props.data.x);
+            const dayOfWeek = formatTooltipDateLabel(new Date(props.data.x));
             const duration = formatTooltipDurationLabel(props.data.y);
             return <Tooltip header={dayOfWeek} body={duration} />;
           }}
@@ -94,8 +112,16 @@ const TotalUsageByDayOfWeekCard = (props: TotalUsageByDayOfWeekCardProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  data: selectors.getTotalDurationByDayOfWeek(state)
-});
+export const DomainTotalUsagePerDayCard = connect((state: RootState) => ({
+  title: "Usage Trend",
+  description: "Total time spent on each day",
+  data: selectors.getSelectedDomainTotalDurationByDate(state)
+}))(UsagePerDayCard);
 
-export default connect(mapStateToProps)(TotalUsageByDayOfWeekCard);
+export const TotalUsagePerDayCard = connect((state: RootState) => ({
+  title: "Usage Trend",
+  description: "Total time spent on each day",
+  data: selectors.getTotalDurationByDate(state)
+}))(UsagePerDayCard);
+
+export default UsagePerDayCard;
