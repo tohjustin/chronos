@@ -12,6 +12,7 @@ import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
 import { TimeRange } from "../../models/time";
 import { RootState, selectors } from "../../store";
+import { CHART_COLOR_RANGE } from "../../styles/constants";
 import {
   formatTooltipDateLabel,
   formatTooltipDurationLabel
@@ -77,7 +78,7 @@ export const DomainTotalUsageByDayOfYearCard = connect((state: RootState) => {
     title: "Historical Usage",
     description: `Total time spent over the past ${MONTH_TO_SHOW} months`,
     data: selectors.getAllSelectedDomainTotalDurationByDate(state),
-    colorRange: ["#f6f6f6", "#3D9CF4"] as [string, string],
+    colorRange: CHART_COLOR_RANGE,
     monthsToShow,
     selectedTimeRange: selectors.getSelectedTimeRange(state),
     thresholds: THRESHOLDS

@@ -8,6 +8,7 @@ import WeeklyHourHeatmap, {
 } from "../../components/WeeklyHourHeatmap";
 import { Datum } from "../../components/WeeklyHourHeatmap/types";
 import { RootState, selectors } from "../../store";
+import { CHART_COLOR_RANGE } from "../../styles/constants";
 import {
   formatTooltipHourOfWeekLabel,
   formatTooltipDurationLabel
@@ -67,7 +68,7 @@ export const AverageUsageByHourOfWeekCard = connect((state: RootState) => ({
   title: "Usage by Time of Day",
   description: "Average time spent on each hour",
   data: selectors.getAverageDurationByHourOfWeek(state),
-  colorRange: ["#f6f6f6", "#3D9CF4"] as [string, string],
+  colorRange: CHART_COLOR_RANGE,
   thresholds: THRESHOLDS
 }))(UsageByHourOfWeekCard);
 
@@ -76,7 +77,7 @@ export const DomainAverageUsageByHourOfWeekCard = connect(
     title: "Usage by Time of Day",
     description: "Average time spent on each hour",
     data: selectors.getSelectedDomainAverageDurationByHourOfWeek(state),
-    colorRange: ["#f6f6f6", "#3D9CF4"] as [string, string],
+    colorRange: CHART_COLOR_RANGE,
     thresholds: THRESHOLDS
   })
 )(UsageByHourOfWeekCard);

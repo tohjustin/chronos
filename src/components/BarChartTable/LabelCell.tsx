@@ -4,7 +4,11 @@ import { ExternalLink } from "react-feather";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
-import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
+import {
+  BASE_SIZE,
+  COLOR_PRIMARY,
+  TRANSITION_DELAY
+} from "../../styles/constants";
 
 import { Datum } from "./types";
 
@@ -16,7 +20,6 @@ interface LabelCellProps extends Datum {
 }
 
 const AVATAR_SIZE = BASE_SIZE * 2;
-const THEME_COLOR = "#3D9CF4";
 
 const LabelCell = ({
   hide,
@@ -37,7 +40,7 @@ const LabelCell = ({
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
   const defaultStyles = {
-    borderBottomColor: THEME_COLOR,
+    borderBottomColor: COLOR_PRIMARY,
     transition: `width ${TRANSITION_DELAY}ms`,
     width: 0
   };
