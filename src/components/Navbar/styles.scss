@@ -1,12 +1,12 @@
 @import "../../styles/variables";
 
 $navbar__height: 100vh;
-$navbar__width: 10 * $base__size;
+$navbar__width: $base__size * 10;
 
-$navbar__logoSize: 4 * $base__size;
+$navbar__logoSize: $base__size * 4;
 
-$navbar-item__iconSize: 3 * $base__size;
-$navbar-item__height: 9 * $base__size;
+$navbar-item__iconSize: $base__size * 3;
+$navbar-item__height: $base__size * 9;
 $navbar-item__width: $navbar__width;
 
 .navbar {
@@ -60,7 +60,7 @@ $navbar-item__width: $navbar__width;
   svg {
     height: $navbar-item__iconSize;
     width: $navbar-item__iconSize;
-    margin: 0.5 * $base__size;
+    margin: $base__size * 0.5;
   }
 
   &__description {

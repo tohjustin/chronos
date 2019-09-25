@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
-$card__margin-x: 2 * $base__size;
-$card__margin-y: 2 * $base__size;
+$card__margin-x: $base__size * 2;
+$card__margin-y: $base__size * 2;
 $chart__height: 280px;
 
 @mixin card__width--100 {
@@ -71,7 +71,7 @@ $chart__height: 280px;
 .analytics-view__domain-picker {
   display: flex;
   align-items: center;
-  margin: 0 0.5 * $base__size;
+  margin: 0 $base__size * 0.5;
 
   button {
     font-family: $font-family;
@@ -85,8 +85,8 @@ $chart__height: 280px;
     margin-right: $base__size;
 
     .icon {
-      height: 3 * $base__size;
-      width: 3 * $base__size;
+      height: $base__size * 3;
+      width: $base__size * 3;
       background-color: $color__white;
       border-radius: 100%;
       box-shadow: $shadow__favicon;
@@ -102,7 +102,7 @@ $chart__height: 280px;
 .analytics-view__header {
   display: flex;
   align-items: center;
-  margin-right: 0.5 * $base__size;
+  margin-right: $base__size * 0.5;
 }
 
 .analytics-view__link {

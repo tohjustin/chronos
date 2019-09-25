@@ -4,7 +4,7 @@
   color: $color__darker-gray;
   font-size: $font-size__xl;
   font-weight: 600;
-  margin: 0 $base__size / 2;
+  margin: 0 $base__size * 0.5;
   text-transform: lowercase;
 
   &:empty {

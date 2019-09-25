@@ -9,7 +9,7 @@ $border__width: 2px;
   font-size: $font-size__base;
   font-family: $font-family;
   font-weight: 600;
-  padding: ($base__size / 2) - $border__width $base__size;
+  padding: ($base__size * 0.5) - $border__width $base__size;
   cursor: pointer;
   text-decoration: none;
 
@@ -61,7 +61,7 @@ $border__width: 2px;
   .ant-calendar-picker-input {
     display: flex;
     align-items: center;
-    padding: 0.5 * $base__size;
+    padding: $base__size * 0.5;
   }
 
   &:focus {
@@ -79,7 +79,7 @@ $border__width: 2px;
 
   .ant-calendar-range-picker-input {
     height: unset;
-    width: 12 * $base__size;
+    width: $base__size * 12;
     color: $color__black;
     font-size: $font-size__base;
     font-weight: 600;

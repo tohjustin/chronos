@@ -4,7 +4,7 @@
 .history-view__header {
   display: flex;
   align-items: center;
-  margin-right: 0.5 * $base__size;
+  margin-right: $base__size * 0.5;
 }
 
 .history-view__loading-container {
@@ -52,7 +52,7 @@
 
   div {
     text-align: right;
-    padding: 0 1.5 * $base__size;
+    padding: 0 $base__size * 1.5;
   }
 }
 

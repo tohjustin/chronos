@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
-$card__margin-x: 2 * $base__size;
-$card__margin-y: 2 * $base__size;
+$card__margin-x: $base__size * 2;
+$card__margin-y: $base__size * 2;
 
 @mixin card__width--100 {
   margin-right: 0;

@@ -33,7 +33,7 @@
 
     .bar-chart-table__cell {
       overflow: hidden;
-      padding: 0 $base__size / 2;
+      padding: 0 $base__size * 0.5;
     }
   }
 
@@ -69,7 +69,7 @@
   }
 
   .bar-chart-table__label-external-link {
-    margin-left: $base__size / 2;
+    margin-left: $base__size * 0.5;
 
     svg {
       vertical-align: middle;
