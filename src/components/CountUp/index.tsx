@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import ReactCountUp from "react-countup";
 
@@ -20,6 +21,7 @@ interface CountUpProps {
   end: number;
   start: number;
 
+  className?: string;
   delay?: number;
   decimals?: number;
   duration?: number;
@@ -60,7 +62,7 @@ const formatMilliseconds = (value: number) => {
 
 export const CountUp = ({ formattingUnitFn, ...props }: CountUpProps) => {
   return (
-    <>
+    <span className={classNames("count-up", props.className)}>
       <ReactCountUp className="count-up__value" {...props} />
       {formattingUnitFn && (
         <ReactCountUp
@@ -69,13 +71,13 @@ export const CountUp = ({ formattingUnitFn, ...props }: CountUpProps) => {
           formattingFn={formattingUnitFn}
         />
       )}
-    </>
+    </span>
   );
 };
 
 export const DurationCountUp = (props: DurationCountUpProps) => {
   return (
-    <div className="duration-count-up">
+    <span className={classNames("duration-count-up", props.className)}>
       <CountUp
         {...props}
         formattingFn={formatHour}
@@ -96,6 +98,6 @@ export const DurationCountUp = (props: DurationCountUpProps) => {
         formattingFn={formatMilliseconds}
         formattingUnitFn={value => (formatMilliseconds(value) ? "ms" : "")}
       />
-    </div>
+    </span>
   );
 };
