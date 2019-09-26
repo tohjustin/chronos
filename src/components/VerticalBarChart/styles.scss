@@ -31,7 +31,8 @@
       }
 
       .vertical-bar-chart__bar--background {
-        fill: #f1f2f480;
+        fill: $color__light-gray;
+        opacity: 0.5;
       }
     }
   }
