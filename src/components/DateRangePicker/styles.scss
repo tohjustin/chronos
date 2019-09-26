@@ -144,6 +144,17 @@ $border__width: 2px;
     font-size: $font-size__base;
     font-weight: 600;
   }
+
+  .ant-calendar-selected-start-date .ant-calendar-date,
+  .ant-calendar-selected-end-date .ant-calendar-date {
+    color: $color__white;
+    background: $color__primary;
+
+    &:hover {
+      color: $color__white;
+      background: $color__primary;
+    }
+  }
 }
 
 .ant-calendar-range-middle {
