@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import BarChartTable from "../../components/BarChartTable";
 import Card from "../../components/Card";
-import { RootState, selectors } from "../../store";
+import { RootState, constants, selectors } from "../../store";
 import { formatTableDurationLabel } from "../../utils/stringUtils";
+import { computeSearchParams } from "../../utils/urlUtils";
 
 interface UsageRankingCardProps {
   title: string;
@@ -66,6 +67,7 @@ export const DomainTotalUsageRankingCard = connect((state: RootState) => {
 
 export const TotalUsageRankingCard = connect((state: RootState) => {
   const rowCount = TABLE_ROW_COUNT;
+  const searchParams = selectors.getSearchParams(state);
 
   return {
     title: "Usage Ranking",
@@ -76,7 +78,15 @@ export const TotalUsageRankingCard = connect((state: RootState) => {
       .map(datum => ({
         label: datum.domain,
         labelComponent: (
-          <Link to={{ search: `?domain=${datum.domain}` }}>{datum.domain}</Link>
+          <Link
+            to={{
+              search: computeSearchParams(searchParams, {
+                [constants.SEARCH_PARAM_DOMAIN]: datum.domain
+              }).toString()
+            }}
+          >
+            {datum.domain}
+          </Link>
         ),
         labelSrc: `https://${datum.domain}`,
         value: datum.totalDuration,

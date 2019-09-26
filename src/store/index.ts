@@ -23,6 +23,7 @@ import {
 } from "./dataMigration";
 import {
   actions as routerActions,
+  constants as routerConstants,
   selectors as routerSelectors
 } from "./router";
 import composeWithDevTools from "./reduxDevTools";
@@ -31,6 +32,9 @@ export const actions = {
   ...activityActions,
   ...dataMigrationActions,
   ...routerActions
+};
+export const constants = {
+  ...routerConstants
 };
 export const selectors = {
   ...activitySelectors,
