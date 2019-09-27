@@ -44,7 +44,6 @@
 
     .bar-chart-table__cell {
       justify-content: flex-end;
-      width: 100%;
     }
   }
 
@@ -56,6 +55,7 @@
 
     a {
       color: inherit;
+      text-decoration: none;
 
       &:hover {
         color: $color__primary;
