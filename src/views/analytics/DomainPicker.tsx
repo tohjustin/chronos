@@ -1,15 +1,10 @@
-import { Button, Heading, IconButton, Pane, SelectMenu } from "evergreen-ui";
+import { Button, IconButton, SelectMenu } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import {
-  BASE_SIZE,
-  BUTTON_MARGIN,
-  BUTTON_SIZE,
-  ICON_BUTTON_SIZE
-} from "../../styles/constants";
+import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
 
 interface DomainPickerProps {
   allDomains: {
@@ -51,35 +46,7 @@ const DomainPicker = (props: DomainPickerProps) => {
         selected={
           props.selectedDomain === null ? undefined : [props.selectedDomain]
         }
-        title="Select Domain"
-        titleView={({ close, title, headerHeight }) => {
-          return (
-            <Pane
-              display="flex"
-              alignItems="center"
-              borderBottom="default"
-              padding={BASE_SIZE}
-              height={headerHeight}
-              boxSizing="border-box"
-            >
-              <Pane flex="1" display="flex" alignItems="center">
-                <Heading
-                  fontSize={BASE_SIZE * 1.75}
-                  fontWeight={600}
-                  paddingLeft={BASE_SIZE}
-                >
-                  {title}
-                </Heading>
-              </Pane>
-              <IconButton
-                icon="cross"
-                appearance="minimal"
-                height={ICON_BUTTON_SIZE}
-                onClick={close}
-              />
-            </Pane>
-          );
-        }}
+        hasTitle={false}
         onSelect={item => props.setSelectedDomain(item.value)}
         onDeselect={() => props.setSelectedDomain(null)}
         height={400}
