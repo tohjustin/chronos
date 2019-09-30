@@ -22,7 +22,6 @@ import {
   TotalPageVisitCountCard,
   TotalUsageCard
 } from "./SingleValueMetricCard";
-import TimeRangePicker from "./TimeRangePicker";
 import {
   DomainTotalUsageByDayOfWeekCard,
   TotalUsageByDayOfWeekCard
@@ -118,9 +117,6 @@ const AnalyticsView = ({
           </span>
           <Icon icon="slash" size={ICON_SIZE} />
           <DomainPicker />
-        </span>
-        <span>
-          <TimeRangePicker />
         </span>
       </View.Header>
       <View.Body>{viewContent}</View.Body>
