@@ -844,6 +844,7 @@ declare module "evergreen-ui" {
     iconAfter?: IconNameTypes;
     disabled?: boolean;
     className?: string;
+    children?: React.ReactNode;
     onClick?: (e: React.ChangeEvent<any>) => void | false | undefined;
   }
 
@@ -1266,4 +1267,7 @@ declare module "evergreen-ui" {
     static Row: (props: TableRow) => JSX.Element;
     static VirtualBody: (props: TableVirtualBodyProps) => JSX.Element;
   }
+
+  export const defaultTheme: any;
+  export const ThemeProvider: React.Provider<typeof defaultTheme>;
 }

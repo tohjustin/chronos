@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.button {
+  &--appearance-primary {
+    background-image: linear-gradient(to bottom, $color__primary, $color__primary-dark);
+    color: $color__white;
+
+    &:not([disabled]):not([data-disabled]):hover {
+      background-image: linear-gradient(to bottom, $color__primary-dark, $color__primary-darker);
+    }
+  }
+
+  &--appearance-minimal {
+    color: $color__black;
+
+    &:not([disabled]):not([data-disabled])[data-active] {
+      background-color: $color__primary;
+      color: $color__white;
+
+      &:hover {
+        background-color: $color__primary-dark;
+      }
+    }
+  }
+}

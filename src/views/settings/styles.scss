@@ -62,17 +62,7 @@ $card__margin-y: $base__size * 2;
 }
 
 .settings-view__button-panel {
-  .btn:not(:first-child) {
-    margin-left: $base__size;
-  }
-}
-
-// TODO: Remove this when theming support is available on evergreen-ui
-.primary-btn {
-  color: $color__white;
-  background-image: linear-gradient(to bottom, $color__primary, $color__primary-dark);
-
-  &:not([disabled]):not([data-disabled]):hover {
-    background-image: linear-gradient(to bottom, $color__primary-dark, $color__primary-darker);
+  button:not(:first-of-type) {
+    margin-left: $base__size * 1.5;
   }
 }

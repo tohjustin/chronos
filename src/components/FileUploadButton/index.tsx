@@ -1,5 +1,6 @@
-import { Button } from "evergreen-ui";
 import React, { useRef } from "react";
+
+import Button from "../Button";
 
 import "./styles.scss";
 
@@ -20,7 +21,7 @@ const FileUploadButton = (props: FileUploadButtonProps) => {
   return (
     <Button
       appearance={props.appearance}
-      className="file-upload-btn"
+      className="file-upload-button"
       height={props.height}
       iconBefore="import"
       marginLeft={props.marginLeft}

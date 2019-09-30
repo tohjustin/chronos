@@ -1,10 +1,11 @@
-import { Button, IconButton, SelectMenu } from "evergreen-ui";
+import { IconButton, SelectMenu } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import Button from "../../components/Button";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import { BUTTON_MARGIN, BUTTON_SIZE } from "../../styles/constants";
+import { BUTTON_MARGIN } from "../../styles/constants";
 
 interface DomainPickerProps {
   allDomains: {
@@ -53,13 +54,9 @@ const DomainPicker = (props: DomainPickerProps) => {
         width={320}
       >
         {props.selectedDomain ? (
-          <IconButton height={BUTTON_SIZE} icon="caret-down" />
+          <IconButton icon="caret-down" />
         ) : (
-          <Button
-            height={BUTTON_SIZE}
-            iconAfter="caret-down"
-            marginRight={BUTTON_MARGIN}
-          >
+          <Button iconAfter="caret-down" marginRight={BUTTON_MARGIN}>
             Select Domain
           </Button>
         )}
