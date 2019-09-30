@@ -1,0 +1,118 @@
+@import "../../styles/variables";
+
+$table-cell__padding: $base__size * 0.5 $base__size * 0.75;
+$table-cell__size: $base__size * 2.5;
+
+.DayPicker {
+  font-size: $font-size__base;
+  font-weight: 600;
+
+  :focus {
+    outline: none;
+  }
+}
+
+.DayPicker-Day {
+  border-radius: 0;
+  padding: $table-cell__padding;
+  height: $table-cell__size;
+  width: $table-cell__size;
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  &--today {
+    color: $color__primary;
+    font-weight: inherit;
+  }
+
+  &--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    background-color: $color__primary;
+    color: $color__primary-lightest;
+
+    &:hover {
+      background-color: $color__primary-dark;
+    }
+  }
+
+  &--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: $color__primary-lightest;
+    color: $color__primary;
+
+    &:hover {
+      background-color: $color__primary;
+      color: $color__primary-lightest;
+    }
+  }
+
+  &--start:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    position: relative;
+    background-color: $color__primary;
+    border-radius: 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: $color__primary-lightest;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      height: 100%;
+      width: 100%;
+      z-index: -10;
+    }
+  }
+
+  &--end:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    position: relative;
+    background-color: $color__primary;
+    border-radius: 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: $color__primary-lightest;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      height: 100%;
+      width: 100%;
+      z-index: -10;
+    }
+  }
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled) {
+  .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+    background-color: $color__primary;
+    border-radius: 4px;
+    color: $color__primary-lightest;
+  }
+}
+
+.DayPicker-Caption > div {
+  font-size: $font-size__md;
+  font-weight: 600;
+  line-height: $base__size * 3;
+}
+
+.DayPicker-Month {
+  border-collapse: separate;
+  border-spacing: 0 $base__size * 0.5;
+  margin: $base__size * 1.5;
+}
+
+.DayPicker-wrapper {
+  padding: 0;
+}
+
+.DayPicker-Weekday {
+  color: $color__darker-gray;
+  font-size: $font-size__base;
+  padding: $table-cell__padding;
+  height: $table-cell__size;
+  width: $table-cell__size;
+}

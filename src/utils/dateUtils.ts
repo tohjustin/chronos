@@ -61,6 +61,16 @@ export function getHourOfWeek(
 }
 
 /**
+ * Returns the end of day based on the given timestamp
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @returns end of day in milliseconds (unix time)
+ */
+export function getEndOfDay(timestamp: number): number {
+  return new Date(timestamp).setHours(23, 59, 59, 999);
+}
+
+/**
  * Returns the start of day based on the given timestamp
  *
  * @param timestamp - timestamp in milliseconds

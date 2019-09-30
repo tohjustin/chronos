@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.date-range-picker__container {
+  display: flex;
+}
+
+.date-range-picker__ranges {
+  display: flex;
+  flex-direction: column;
+  padding: $base__size * 1.5;
+  border-right: 1px solid #e4e7eb;
+
+  button {
+    &:not(:last-of-type) {
+      margin-bottom: $base__size;
+    }
+  }
+}
+
+.date-range-picker__nav-bar {
+  position: absolute;
+  top: $base__size * 1.5;
+  right: $base__size * 1.5;
+  display: flex;
+}

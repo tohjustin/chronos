@@ -11,6 +11,7 @@ import { ICON_SIZE } from "../../styles/constants";
 import ErrorView from "../general/ErrorView";
 import LoadingView from "../general/LoadingView";
 
+import ActivityDateRangePicker from "./ActivityDateRangePicker";
 import DomainPicker from "./DomainPicker";
 import {
   DomainAveragePageVisitDurationCard,
@@ -117,6 +118,9 @@ const AnalyticsView = ({
           </span>
           <Icon icon="slash" size={ICON_SIZE} />
           <DomainPicker />
+        </span>
+        <span>
+          <ActivityDateRangePicker />
         </span>
       </View.Header>
       <View.Body>{viewContent}</View.Body>
