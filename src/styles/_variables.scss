@@ -13,10 +13,12 @@ $font-size__xl: 20px;
 $font-size__xxl: 28px;
 
 $color__primary: #379af7;
-$color__primary-dark: darken($color__primary, 10%);
-$color__primary-darker: darken($color__primary, 20%);
-$color__primary-light: lighten($color__primary, 10%);
-$color__primary-lighter: lighten($color__primary, 20%);
+$color__primary-dark: darken($color__primary, 12%);
+$color__primary-darker: darken($color__primary, 24%);
+$color__primary-darkest: darken($color__primary, 36%);
+$color__primary-light: lighten($color__primary, 12%);
+$color__primary-lighter: lighten($color__primary, 24%);
+$color__primary-lightest: lighten($color__primary, 36%);
 $color__black: #244360;
 $color__darker-gray: #62778c;
 $color__dark-gray: #8da2b5;
