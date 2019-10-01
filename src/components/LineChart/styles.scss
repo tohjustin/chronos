@@ -29,24 +29,34 @@ $hover__transition--opacity: opacity 0.25s;
     fill: $color__white;
     stroke: $color__primary;
     stroke-width: $dot__stroke-width;
-    r: $dot__radius;
+  }
 
-    &--pulsing {
-      animation-name: pulse;
-      animation-duration: 1.5s;
-      animation-iteration-count: infinite;
-      fill: none;
-      stroke-width: $dot__stroke-width - 1;
+  // Support pulsing animation only on Chrome since FF doesn't allow SVGCircle
+  // attributes to be defined via stylesheets 🤦
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .line-chart__dot {
+      fill: $color__white;
+      stroke: $color__primary;
+      stroke-width: $dot__stroke-width;
+      r: $dot__radius;
 
-      @keyframes pulse {
-        from {
-          r: $dot__radius;
-          stroke-opacity: 1;
-        }
+      &--pulsing {
+        animation-name: pulse;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        fill: none;
+        stroke-width: $dot__stroke-width - 1;
 
-        to {
-          r: 3 * $dot__radius;
-          stroke-opacity: 0;
+        @keyframes pulse {
+          from {
+            r: $dot__radius;
+            stroke-opacity: 1;
+          }
+
+          to {
+            r: 3 * $dot__radius;
+            stroke-opacity: 0;
+          }
         }
       }
     }

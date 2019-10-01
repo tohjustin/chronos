@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .button {
-  &--appearance-primary {
+  &#{&}--appearance-primary {
     background-image: linear-gradient(to bottom, $color__primary, $color__primary-dark);
     color: $color__white;
 
@@ -10,7 +10,7 @@
     }
   }
 
-  &--appearance-minimal {
+  &#{&}--appearance-minimal {
     color: $color__black;
 
     &:not([disabled]):not([data-disabled])[data-active] {
