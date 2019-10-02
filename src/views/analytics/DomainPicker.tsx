@@ -37,6 +37,9 @@ const DomainPicker = (props: DomainPickerProps) => {
         </span>
       )}
       <SelectMenu
+        statelessProps={{
+          className: "analytics-view__domain-picker-popover"
+        }}
         isMultiSelect
         options={Object.keys(props.allDomains)
           .sort()

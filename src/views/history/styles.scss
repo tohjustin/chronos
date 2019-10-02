@@ -19,83 +19,83 @@
   height: 100%;
   box-shadow: $shadow__table;
   border-radius: $border-radius__table;
-}
 
-.history-table__body-placeholder {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: $color__dark-gray;
-  font-weight: 600;
-  font-size: $font-size__base;
-  font-family: $font-family;
-}
-
-.history-table__header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: $color__white;
-  border-top-left-radius: $border-radius__table;
-  border-top-right-radius: $border-radius__table;
-  padding: 0;
-
-  input,
-  div {
+  .history-table__body-placeholder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: $color__dark-gray;
+    font-weight: 600;
+    font-size: $font-size__base;
     font-family: $font-family;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  div {
-    text-align: right;
-    padding: 0 $base__size * 1.5;
-  }
-}
-
-.history-table__label {
-  display: flex;
-  flex-direction: column;
-  margin-left: 0;
-  min-width: 0;
-
-  strong {
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &--duration {
-    margin-left: auto;
-    text-align: right;
-  }
-}
-
-.history-table__label-icon {
-  border: 1px solid $color__white;
-  border-radius: 100%;
-  box-shadow: $shadow__favicon;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin-right: $base__size * 1.5;
-  overflow: hidden;
-
-  img {
+  .history-table__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background: $color__white;
+    border-top-left-radius: $border-radius__table;
+    border-top-right-radius: $border-radius__table;
+    padding: 0;
+
+    input,
+    div {
+      font-family: $font-family;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    div {
+      text-align: right;
+      padding: 0 $base__size * 1.5;
+    }
   }
 
-  span {
-    margin-top: -1px;
-    font-weight: 600;
+  .history-table__label {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    min-width: 0;
+
+    strong {
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &--duration {
+      margin-left: auto;
+      text-align: right;
+    }
+  }
+
+  .history-table__label-icon {
+    border: 1px solid $color__white;
+    border-radius: 100%;
+    box-shadow: $shadow__favicon;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: $base__size * 1.5;
+    overflow: hidden;
+
+    img {
+      background: $color__white;
+    }
+
+    span {
+      margin-top: -1px;
+      font-weight: 600;
+    }
   }
 }

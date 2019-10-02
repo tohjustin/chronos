@@ -741,6 +741,7 @@ declare module "evergreen-ui" {
       BoxTransition {
     is?: React.ReactNode;
     to?: string;
+    className?: string;
     css?: object;
     style?: object;
     innerRef?: (ref: HTMLElement) => void;
@@ -958,6 +959,10 @@ declare module "evergreen-ui" {
 
   export class Pane extends React.PureComponent<PaneProps> {}
 
+  interface PopoverStatelessProps extends PaneProps {
+    children?: React.ReactNode;
+  }
+
   export interface PopoverProps {
     position?: PositionTypes;
     isShown?: boolean;
@@ -983,6 +988,7 @@ declare module "evergreen-ui" {
     onBodyClick?: () => void;
     bringFocusInside?: boolean;
     shouldCloseOnExternalClick?: boolean;
+    statelessProps?: PopoverStatelessProps;
   }
 
   export class Popover extends React.PureComponent<PopoverProps> {}
@@ -1091,6 +1097,7 @@ declare module "evergreen-ui" {
   > {}
 
   export interface SelectMenuProps {
+    className?: string;
     title?: string;
     width?: string | number;
     height?: string | number;
@@ -1115,6 +1122,7 @@ declare module "evergreen-ui" {
         }) => React.ReactNode);
     emptyView?: React.ReactNode | (() => React.ReactNode);
     closeOnSelect?: boolean;
+    statelessProps?: PopoverStatelessProps;
   }
 
   export class SelectMenu extends React.PureComponent<SelectMenuProps> {}
