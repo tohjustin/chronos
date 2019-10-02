@@ -12,8 +12,6 @@ import {
   formatTableDateTimeLabel
 } from "../../utils/stringUtils";
 
-import "./styles.scss";
-
 interface HistoryTableProps {
   data: ActivityRecord[];
 }
