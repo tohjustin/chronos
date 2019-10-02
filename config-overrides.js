@@ -5,11 +5,15 @@ const path = require("path");
 const RewireReactHotLoader = require("react-app-rewire-hot-loader");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 
-const WEBPACK_DEV_SERVER_URL = `http://localhost:${process.env.PORT || 3000}`;
+const ASSET_DIR = "./public";
 const WEBPACK_BUILD_DIR = "./build";
-const WEBPACK_OUTPUT_DIR = "./public";
+const WEBPACK_DEV_SERVER_URL = `http://localhost:${process.env.PORT || 3000}`;
 
 module.exports = function override(config, env) {
+  if (process.env.NODE_ENV !== "development") {
+    return config;
+  }
+
   config = RewireReactHotLoader(config, env);
 
   // Replace `react-dev-utils/webpackHotDevClient` with stock client due to an
@@ -38,7 +42,19 @@ module.exports = function override(config, env) {
   config.output.path = path.join(__dirname, WEBPACK_BUILD_DIR);
   config.plugins.push(new WriteFilePlugin());
   fs.removeSync(WEBPACK_BUILD_DIR);
-  fs.copySync(`${WEBPACK_OUTPUT_DIR}/`, WEBPACK_BUILD_DIR);
+  fs.copySync(`${ASSET_DIR}/`, WEBPACK_BUILD_DIR, {
+    filter: src => {
+      const filename = path.basename(src);
+      if (filename.match(/manifest(\.[a-z]+)?.json/)) {
+        return filename === "manifest.development.json";
+      }
+      return true;
+    }
+  });
+  fs.renameSync(
+    `${WEBPACK_BUILD_DIR}/manifest.development.json`,
+    `${WEBPACK_BUILD_DIR}/manifest.json`
+  );
 
   return config;
 };
