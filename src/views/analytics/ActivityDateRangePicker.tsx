@@ -29,42 +29,44 @@ const ActivityDateRangePicker = ({
 
   // Computed values
   const now = new Date().valueOf();
-  const startOfDay = getStartOfDay(now);
-  const endOfDay = getEndOfDay(now);
+  const startOfToday = getStartOfDay(now);
+  const endOfToday = getEndOfDay(now);
   const activityStartTime = activityTimeRange
-    ? getStartOfDay(activityTimeRange.start)
-    : 0;
-  const activityEndTime = activityTimeRange
-    ? getEndOfDay(activityTimeRange.end)
-    : endOfDay;
+    ? activityTimeRange.start
+    : startOfToday;
   const disabledDays = {
     before: new Date(activityStartTime),
-    after: new Date(activityEndTime)
+    after: new Date(endOfToday)
   };
+  // When the user has only one day of activity recorded, do not show the
+  // "All activity" option
   const ranges = [
     {
       label: "Today",
-      value: { start: startOfDay, end: endOfDay }
+      value: { start: startOfToday, end: endOfToday }
     },
     {
       label: "Last week",
-      value: { start: startOfDay - MS_PER_DAY * 6, end: endOfDay }
+      value: { start: startOfToday - MS_PER_DAY * 6, end: endOfToday }
     },
     {
       label: "Last 2 weeks",
-      value: { start: startOfDay - MS_PER_DAY * 13, end: endOfDay }
+      value: { start: startOfToday - MS_PER_DAY * 13, end: endOfToday }
     },
     {
       label: "Last 4 weeks",
-      value: { start: startOfDay - MS_PER_DAY * 27, end: endOfDay }
+      value: { start: startOfToday - MS_PER_DAY * 27, end: endOfToday }
     },
     {
       label: "All activity",
-      value: { start: activityStartTime, end: activityEndTime }
+      value: {
+        start: activityStartTime === startOfToday ? 0 : activityStartTime,
+        end: endOfToday
+      }
     }
-  ];
+  ].filter(range => range.value.start >= activityStartTime);
   const selectedStartTime = _.get(selectedTimeRange, "start", null);
-  const selectedEndTime = _.get(selectedTimeRange, "end", null) || endOfDay;
+  const selectedEndTime = _.get(selectedTimeRange, "end", null) || endOfToday;
   let month: Date | undefined;
   let selectedValue: { start: number; end: number } | undefined;
   if (selectedTimeRange && selectedStartTime && selectedEndTime) {
