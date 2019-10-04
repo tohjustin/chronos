@@ -47,11 +47,19 @@
     }
   }
 
-  .bar-chart-table__label-content {
-    width: 100%;
+  .bar-chart-table__label-bar {
+    border-bottom: 2px solid $color__primary;
+    box-sizing: border-box;
+  }
+
+  .bar-chart-table__label-container {
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  }
+
+  .bar-chart-table__label-content {
+    display: flex;
 
     a {
       color: inherit;
@@ -62,9 +70,11 @@
       }
     }
 
-    .bar-chart-table__label-bar {
-      border-bottom: 2px solid $color__primary;
-      box-sizing: border-box;
+    // label-component
+    > *:not(.bar-chart-table__label-external-link) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 

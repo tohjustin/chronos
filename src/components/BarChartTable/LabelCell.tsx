@@ -64,12 +64,16 @@ const LabelCell = ({
             />
           )}
           <div
-            className="bar-chart-table__label-content"
+            className="bar-chart-table__label-container"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <span>
-              {labelComponent ? labelComponent : <span>{label}</span>}
+            <span className="bar-chart-table__label-content">
+              {labelComponent ? (
+                labelComponent
+              ) : (
+                <span title={label}>{label}</span>
+              )}
               {labelSrc && (
                 <a
                   className="bar-chart-table__label-external-link"
@@ -77,7 +81,7 @@ const LabelCell = ({
                   target="none"
                   style={{ visibility: isHovered ? "unset" : "hidden" }}
                 >
-                  <ExternalLink size={BASE_SIZE * 1.25} />
+                  <ExternalLink size={BASE_SIZE * 1.5} />
                 </a>
               )}
             </span>
