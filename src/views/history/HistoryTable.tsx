@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { useDebounce } from "use-debounce";
 
+import ExternalLink from "../../components/ExternalLink";
 import { useClientDimensions } from "../../hooks";
 import { ActivityRecord } from "../../models/activity";
 import { RootState, selectors } from "../../store";
@@ -45,9 +46,7 @@ const renderRow = ({ activity }: { activity: ActivityRecord }) => {
         />
         <div className="history-table__label">
           <strong>{`${activity.title}`}</strong>
-          <span>
-            <a href={activity.url}>{activity.url}</a>
-          </span>
+          <ExternalLink url={activity.url} />
         </div>
       </Table.Cell>
       <Table.Cell display="flex" alignItems="center" flexGrow={20}>

@@ -1,9 +1,10 @@
 import { Avatar } from "evergreen-ui";
 import React, { useCallback, useEffect, useState } from "react";
-import { ExternalLink } from "react-feather";
+import { ExternalLink as ExternalLinkIcon } from "react-feather";
 import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
+import ExternalLink from "../../components/ExternalLink";
 import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
 
 import { Datum } from "./types";
@@ -75,14 +76,13 @@ const LabelCell = ({
                 <span title={label}>{label}</span>
               )}
               {labelSrc && (
-                <a
+                <ExternalLink
                   className="bar-chart-table__label-external-link"
-                  href={labelSrc}
-                  target="none"
                   style={{ visibility: isHovered ? "unset" : "hidden" }}
+                  url={labelSrc}
                 >
-                  <ExternalLink size={BASE_SIZE * 1.5} />
-                </a>
+                  <ExternalLinkIcon size={BASE_SIZE * 1.5} />
+                </ExternalLink>
               )}
             </span>
             <div

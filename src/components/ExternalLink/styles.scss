@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.external-link {
+  display: flex;
+  align-content: center;
+
+  a {
+    color: $color__black;
+    overflow: hidden;
+    text-decoration: underline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color__primary;
+    }
+  }
+
+  .external-link__icon {
+    height: $base__size * 2;
+    width: $base__size * 2;
+    background-color: $color__white;
+    border-radius: 100%;
+    box-shadow: $shadow__favicon;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: $base__size;
+    overflow: hidden;
+    padding: 1px;
+  }
+}
