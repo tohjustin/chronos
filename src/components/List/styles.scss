@@ -21,8 +21,14 @@
     }
 
     &__value {
+      display: flex;
+      align-items: center;
       font-size: $font-size__base;
       font-weight: 400;
+
+      &--unknown {
+        color: $color__danger;
+      }
     }
   }
 }

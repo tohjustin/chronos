@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.loading-placeholder {
+  height: 1em;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: $color__gray-light;
+  }
+
+  50% {
+    background-color: $color__gray-lighter;
+  }
+
+  100% {
+    background-color: $color__gray-light;
+  }
+}
