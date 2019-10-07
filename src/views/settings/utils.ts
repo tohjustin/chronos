@@ -4,12 +4,12 @@ import GitlabIcon from "../../assets/gitlab-icon.png";
 
 /**
  * Converts number of bytes into human-readable format (up to GB)
- * @param {number} bytes Number of bytes to convert
- * @param {number} [fractionDigits=2] Number of digits after the decimal point.
+ * @param bytes Number of bytes to convert
+ * @param fractionDigits Number of digits after the decimal point.
  * Must be in the range 0 - 20, inclusive.
- * @returns {string} number of bytes in human-readable format
+ * @returns number of bytes in human-readable format
  */
-export function formatBytes(bytes: number, fractionDigits: number = 2) {
+export function formatBytes(bytes: number, fractionDigits = 2) {
   switch (true) {
     case bytes < 1024:
       return bytes + " Bytes";
@@ -24,9 +24,9 @@ export function formatBytes(bytes: number, fractionDigits: number = 2) {
 
 /**
  * Converts distance between two dates into human-readable format
- * @param {number} startDate start date in milliseconds
- * @param {number} endDate end date in milliseconds
- * @returns {string} distance between two dates in human-readable format
+ * @param startDate start date in milliseconds
+ * @param endDate end date in milliseconds
+ * @returns distance between two dates in human-readable format
  */
 export function formatDateDistance(startDate: number, endDate: number): string {
   let result = "";

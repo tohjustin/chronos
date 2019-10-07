@@ -1,7 +1,7 @@
 /**
  * Converts day of week into human-readable format
- * @param {number} day number of days elapsed since start of week
- * @returns {string} `""` if `day` is out of bounds, otherwise day of week in
+ * @param day number of days elapsed since start of week
+ * @returns `""` if `day` is out of bounds, otherwise day of week in
  * human-readable format
  */
 export function formatDayOfWeek(day: number): string {
@@ -14,8 +14,8 @@ export function formatDayOfWeek(day: number): string {
 
 /**
  * Converts hours into human-readable format
- * @param {number} hour number of hours elapsed since start of day
- * @returns {string} `""` if `day` is out of bounds, otherwise hour of day in
+ * @param hour number of hours elapsed since start of day
+ * @returns `""` if `day` is out of bounds, otherwise hour of day in
  * human-readable format
  */
 export function formatHourOfDay(hour: number): string {
@@ -34,8 +34,8 @@ export function formatHourOfDay(hour: number): string {
 
 /**
  * Converts a date object into human-readable format for Tables
- * @param {number} date Date object
- * @returns {string} date in human-readable format
+ * @param date Date object
+ * @returns date in human-readable format
  */
 export function formatTableDateTimeLabel(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -48,8 +48,8 @@ export function formatTableDateTimeLabel(date: Date): string {
 
 /**
  * Converts a duration into human-readable format for Tables
- * @param {number} duration duration in milliseconds
- * @returns {string} duration in human-readable format
+ * @param duration duration in milliseconds
+ * @returns duration in human-readable format
  */
 export function formatTableDurationLabel(duration: number): string {
   if (duration < 1000) {
@@ -73,8 +73,8 @@ export function formatTableDurationLabel(duration: number): string {
 
 /**
  * Converts a date object into human-readable format for tooltips
- * @param {number} date Date object
- * @returns {string} date in human-readable format
+ * @param date Date object
+ * @returns date in human-readable format
  */
 export function formatTooltipDateLabel(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -86,8 +86,8 @@ export function formatTooltipDateLabel(date: Date): string {
 
 /**
  * Converts day of week into human-readable format for tooltips
- * @param {number} day number of days elapsed since start of week
- * @returns {string} `""` if `day` is out of bounds, otherwise day of week in
+ * @param day number of days elapsed since start of week
+ * @returns `""` if `day` is out of bounds, otherwise day of week in
  * human-readable format
  */
 export function formatTooltipDayOfWeekLabel(day: number): string {
@@ -96,8 +96,8 @@ export function formatTooltipDayOfWeekLabel(day: number): string {
 
 /**
  * Converts a duration into human-readable format for tooltips
- * @param {number} duration duration in milliseconds
- * @returns {string} duration in human-readable format
+ * @param duration duration in milliseconds
+ * @returns duration in human-readable format
  */
 export function formatTooltipDurationLabel(duration: number): string {
   // Round up to nearest minutes
@@ -124,9 +124,9 @@ export function formatTooltipDurationLabel(duration: number): string {
 
 /**
  * Converts hour-of-week into human-readable format for tooltips
- * @param {number} day number of days elapsed since start of week
- * @param {number} hour number of hours elapsed since start of day
- * @returns {string} hour-of-week value in human-readable format
+ * @param day number of days elapsed since start of week
+ * @param hour number of hours elapsed since start of day
+ * @returns hour-of-week value in human-readable format
  */
 export function formatTooltipHourOfWeekLabel(
   dayOfWeek: number,

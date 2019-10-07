@@ -4,8 +4,8 @@ import Dexie from "dexie";
  * Exports all records `T` in the given Dexie table into an array & strip off
  * the `id` value in each record if present.
  *
- * @param {Dexie.Table<T, number>} table Dexie table to export data from
- * @returns {Promise<T[]>} extracted array of records
+ * @param table Dexie table to export data from
+ * @returns extracted array of records
  */
 export async function exportTableRecords<T extends { id?: number }>(
   table: Dexie.Table<T, number>
