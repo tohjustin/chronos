@@ -9,13 +9,13 @@ import { List, ListItem } from "../../components/List";
 import { useStorageEstimate } from "../../hooks";
 import { TimeRange } from "../../models/time";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import { BUTTON_MARGIN } from "../../styles/constants";
 
 import { formatBytes, formatDateDistance } from "./utils";
 
 interface ApplicationDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
+  isLoadingRecords: boolean;
   activityTimeRange: TimeRange | null;
 }
 
@@ -47,12 +47,14 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
         <List className="settings-view__list">
           <ListItem
             label="Storage data used"
+            isLoading={props.isLoadingRecords}
             value={`${formatBytes(storageUsage)} / ${formatBytes(
               storageQuota
             )}`}
           />
           <ListItem
             label="Total data collected"
+            isLoading={props.isLoadingRecords}
             value={
               props.activityTimeRange && props.activityTimeRange.start
                 ? formatDateDistance(props.activityTimeRange.start, Date.now())
@@ -80,7 +82,8 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  activityTimeRange: selectors.getActivityTimeRange(state)
+  activityTimeRange: selectors.getActivityTimeRange(state),
+  isLoadingRecords: selectors.getIsLoadingRecords(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
