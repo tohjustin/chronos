@@ -108,13 +108,13 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
         </div>
       );
       break;
-    case activities.length === 0 && searchQuery !== "":
+    case activities.length === 0:
       tableContent = (
         <div
           className="history-table__body-placeholder"
           style={{ height: tableBodyHeight }}
         >
-          No matches found
+          {searchQuery === "" ? "No activity" : "No matches found"}
         </div>
       );
       break;
