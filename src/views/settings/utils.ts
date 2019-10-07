@@ -1,3 +1,7 @@
+import BitbucketIcon from "../../assets/bitbucket-icon.png";
+import GithubIcon from "../../assets/github-icon.png";
+import GitlabIcon from "../../assets/gitlab-icon.png";
+
 /**
  * Converts number of bytes into human-readable format (up to GB)
  * @param {number} bytes Number of bytes to convert
@@ -52,4 +56,64 @@ export function formatDateDistance(startDate: number, endDate: number): string {
   }
 
   return result;
+}
+
+/**
+ * Parse the `repository` field data in `package.json` & returns relevant
+ * information about the repository & the inferred VCS provider.
+ *
+ * Current supported VCS:
+ * - [Bitbucket](https://bitbucket.org)
+ * - [GitHub](https://github.com)
+ * - [GitLab](https://gitlab.com)
+ *
+ * @param repositoryInfo `package.json`'s `repository` field
+ * @returns repository & VCS provider information
+ */
+export function parseRepositoryInfo(repositoryInfo: {
+  type: string;
+  url: string;
+}): {
+  url: string;
+  vcsIconSrc?: string;
+  label?: string;
+} {
+  if (repositoryInfo.type === "git") {
+    let result;
+    result = repositoryInfo.url.match(
+      /https:\/\/github\.com\/([^/]+)\/([^/]+)\.git/
+    );
+    if (result) {
+      const [, owner, repository] = result;
+      return {
+        label: `${owner}/${repository}`,
+        url: `https://github.com/${owner}/${repository}`,
+        vcsIconSrc: GithubIcon
+      };
+    }
+    result = repositoryInfo.url.match(
+      /https:\/\/gitlab\.com\/([^/]+)\/([^/]+)\.git/
+    );
+    if (result) {
+      const [, namespace, projectName] = result;
+      return {
+        label: `${namespace}/${projectName}`,
+        url: `https://gitlab.com/${namespace}/${projectName}`,
+        vcsIconSrc: GitlabIcon
+      };
+    }
+    result = repositoryInfo.url.match(
+      /https:\/\/.*bitbucket\.org\/([^/]+)\/([^/]+)\.git/
+    );
+    if (result) {
+      const [, username, repoSlug] = result;
+      return {
+        label: `${username}/${repoSlug}`,
+        url: `https://bitbucket.org/${username}/${repoSlug}`,
+        vcsIconSrc: BitbucketIcon
+      };
+    }
+  }
+
+  return { url: repositoryInfo.url };
 }

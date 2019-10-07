@@ -2,6 +2,11 @@
   "name": "chronos",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/tohjustin/chronos#readme",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/tohjustin/chronos.git"
+  },
   "scripts": {
     "start": "REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) react-app-rewired start",
     "start:chrome-debug": "REACT_APP_BUILD_TARGET=chrome REACT_APP_DEBUG_MODE=true npm run start",
