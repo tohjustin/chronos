@@ -41,13 +41,13 @@ $hover__transition--opacity: opacity 0.25s;
       r: $dot__radius;
 
       &--pulsing {
-        animation-name: pulse;
+        animation-name: line-chart-dot-pulse;
         animation-duration: 1.5s;
         animation-iteration-count: infinite;
         fill: none;
         stroke-width: $dot__stroke-width - 1;
 
-        @keyframes pulse {
+        @keyframes line-chart-dot-pulse {
           from {
             r: $dot__radius;
             stroke-opacity: 1;

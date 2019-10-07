@@ -2,10 +2,10 @@
 
 .loading-placeholder {
   height: 1em;
-  animation: pulse 1.5s infinite;
+  animation: loading-placeholder-pulse 1.5s infinite;
 }
 
-@keyframes pulse {
+@keyframes loading-placeholder-pulse {
   0% {
     background-color: $color__gray-light;
   }
