@@ -12,14 +12,14 @@ import { Dispatch, RootState, actions, selectors } from "../../store";
 
 import { formatBytes, formatDateDistance } from "./utils";
 
-interface ApplicationDataCardProps {
+interface ExtensionDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
   isLoadingRecords: boolean;
   activityTimeRange: TimeRange | null;
 }
 
-const ApplicationDataCard = (props: ApplicationDataCardProps) => {
+const ExtensionDataCard = (props: ExtensionDataCardProps) => {
   const [storageUsage, storageQuota] = useStorageEstimate();
 
   function handleFileUploadChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,7 +41,7 @@ const ApplicationDataCard = (props: ApplicationDataCardProps) => {
   return (
     <Card
       className="settings-view__card settings-view__card--md"
-      title="Application Data"
+      title="Extension Data"
       description="Manage data collected & stored by the extension"
       body={
         <List className="settings-view__list">
@@ -98,4 +98,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ApplicationDataCard);
+)(ExtensionDataCard);
