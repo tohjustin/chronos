@@ -1,11 +1,8 @@
-import { push } from "connected-react-router";
 import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
 import { InitDatabase } from "../../db";
 import { ActivityRecord } from "../../models/activity";
-import { TimeRange } from "../../models/time";
-import { formatDateString } from "../../utils/dateUtils";
 import { RootState } from "../index";
 
 export interface ActivityState {
