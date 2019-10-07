@@ -19,13 +19,18 @@ $color__primary-darkest: darken($color__primary, 36%);
 $color__primary-light: lighten($color__primary, 12%);
 $color__primary-lighter: lighten($color__primary, 24%);
 $color__primary-lightest: lighten($color__primary, 36%);
+
 $color__black: #244360;
-$color__darker-gray: #62778c;
-$color__dark-gray: #8da2b5;
+$color__gray-darker: #62778c;
+$color__gray-dark: #8da2b5;
 $color__gray: #c0c9d1;
-$color__light-gray: #f1f2f4;
-$color__lighter-gray: #f6f6f6;
+$color__gray-light: #f1f2f4;
+$color__gray-lighter: #f6f6f6;
 $color__white: #fff;
+
+$color__danger: #ec4c47;
+$color__success: #47b881;
+$color__warning: #d9822b;
 
 $shadow__color: #{$color__black}6d;
 $shadow__card: 0 0 2px $shadow__color;

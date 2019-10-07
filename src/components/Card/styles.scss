@@ -10,7 +10,7 @@
   .card__header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid $color__light-gray;
+    border-bottom: 1px solid $color__gray-light;
     padding: $base__size * 2;
     word-break: break-word;
 
@@ -22,7 +22,7 @@
     }
 
     p {
-      color: $color__darker-gray;
+      color: $color__gray-darker;
       font-size: $font-size__base;
       font-weight: 400;
       margin: 0;
@@ -40,7 +40,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border-top: 1px solid $color__light-gray;
+    border-top: 1px solid $color__gray-light;
     padding: $base__size * 2;
   }
 }

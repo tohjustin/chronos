@@ -1,7 +1,7 @@
 @import "variables";
 
 @mixin grid-lines {
-  color: $color__light-gray;
+  color: $color__gray-light;
   stroke-width: 1px;
   stroke-dasharray: 2, 2;
 }
