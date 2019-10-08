@@ -116,11 +116,15 @@ const AnalyticsView = ({
           <span className={headerTextClass} onClick={clearSelectedDomain}>
             Usage Analytics
           </span>
-          {hasRecords && <Icon icon="slash" size={ICON_SIZE} />}
-          {hasRecords && <DomainPicker />}
+          {!isLoadingRecords && hasRecords && (
+            <>
+              <Icon icon="slash" size={ICON_SIZE} />
+              <DomainPicker />
+            </>
+          )}
         </span>
         <span className="analytics-view__header">
-          <ActivityDateRangePicker />
+          {!isLoadingRecords && <ActivityDateRangePicker />}
         </span>
       </View.Header>
       <View.Body>{viewContent}</View.Body>
