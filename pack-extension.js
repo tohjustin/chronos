@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const AdmZip = require("adm-zip");
+const fs = require("fs-extra");
 const path = require("path");
 
 const BUILD_TARGET = process.env.REACT_APP_BUILD_TARGET;
 const GIT_COMMIT_SHA = process.env.REACT_APP_GIT_COMMIT_SHA;
-const INPUT_DIR = "./build";
+const WEBPACK_BUILD_DIR = "./build";
 
-let outputFilename = path.basename(INPUT_DIR);
+fs.removeSync(`${WEBPACK_BUILD_DIR}/manifest.development.json`);
+fs.renameSync(
+  `${WEBPACK_BUILD_DIR}/manifest.production.json`,
+  `${WEBPACK_BUILD_DIR}/manifest.json`
+);
+
+let outputFilename = path.basename(WEBPACK_BUILD_DIR);
 if (GIT_COMMIT_SHA) {
   outputFilename += `-${GIT_COMMIT_SHA}`;
 }
@@ -16,5 +23,5 @@ if (BUILD_TARGET) {
 }
 
 const zip = new AdmZip();
-zip.addLocalFolder(INPUT_DIR);
+zip.addLocalFolder(WEBPACK_BUILD_DIR);
 zip.writeZip(`${outputFilename}.zip`);
