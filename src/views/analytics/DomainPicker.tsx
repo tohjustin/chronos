@@ -37,24 +37,21 @@ const DomainPicker = (props: DomainPickerProps) => {
         </span>
       )}
       <SelectMenu
-        statelessProps={{
-          className: "analytics-view__domain-picker-popover"
-        }}
+        height={400}
+        width={320}
+        hasTitle={false}
         isMultiSelect
+        onDeselect={() => props.setSelectedDomain(null)}
+        onSelect={item => props.setSelectedDomain(item.value)}
         options={Object.keys(props.allDomains)
           .sort()
-          .map(domain => ({
-            label: domain,
-            value: domain
-          }))}
+          .map(domain => ({ label: domain, value: domain }))}
         selected={
           props.selectedDomain === null ? undefined : [props.selectedDomain]
         }
-        hasTitle={false}
-        onSelect={item => props.setSelectedDomain(item.value)}
-        onDeselect={() => props.setSelectedDomain(null)}
-        height={400}
-        width={320}
+        statelessProps={{
+          className: "analytics-view__domain-picker-popover"
+        }}
       >
         {props.selectedDomain ? (
           <IconButton icon="caret-down" />

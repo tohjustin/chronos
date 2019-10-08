@@ -44,6 +44,7 @@ import {
 import "./styles.scss";
 
 interface AnalyticsViewProps {
+  hasRecords: boolean;
   isLoadingRecords: boolean;
   selectedDomain: string | null;
   selectedDomainValidationStatus: ValidationStatus;
@@ -53,6 +54,7 @@ interface AnalyticsViewProps {
 
 const AnalyticsView = ({
   clearSelectedDomain,
+  hasRecords,
   isLoadingRecords,
   selectedDomain,
   selectedDomainValidationStatus,
@@ -103,23 +105,21 @@ const AnalyticsView = ({
       );
       break;
   }
+  const headerTextClass = classNames({
+    "analytics-view__link": selectedDomain !== null
+  });
 
   return (
     <View.Container>
       <View.Header>
         <span className="analytics-view__header">
-          <span
-            className={classNames({
-              "analytics-view__link": selectedDomain !== null
-            })}
-            onClick={clearSelectedDomain}
-          >
+          <span className={headerTextClass} onClick={clearSelectedDomain}>
             Usage Analytics
           </span>
-          <Icon icon="slash" size={ICON_SIZE} />
-          <DomainPicker />
+          {hasRecords && <Icon icon="slash" size={ICON_SIZE} />}
+          {hasRecords && <DomainPicker />}
         </span>
-        <span>
+        <span className="analytics-view__header">
           <ActivityDateRangePicker />
         </span>
       </View.Header>
@@ -129,6 +129,7 @@ const AnalyticsView = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
+  hasRecords: selectors.getHasRecords(state),
   isLoadingRecords: selectors.getIsLoadingRecords(state),
   selectedDomainValidationStatus: selectors.getSelectedDomainValidationStatus(
     state

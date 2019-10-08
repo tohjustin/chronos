@@ -29,6 +29,14 @@ export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoading;
 
 /**
+ * Retrieves the state of whether there are activity records in the store
+ */
+export const getHasRecords = createSelector(
+  getAllRecords,
+  records => records.length > 0
+);
+
+/**
  * Retrieves the time range of all recorded activity (oldest & most recently
  * recorded activity in IndexedDB)
  */
