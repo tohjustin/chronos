@@ -31,6 +31,7 @@ interface DateRangePickerProps
   > {
   onChange: (range: DefiniteTimeRange | null) => void;
 
+  disabled?: boolean;
   position?: PositionTypes;
   ranges?: { label: string; value: DefiniteTimeRange }[];
   value?: DefiniteTimeRange;
@@ -47,6 +48,7 @@ function formatDateString(date: Date) {
 }
 
 const DateRangePicker = ({
+  disabled,
   onChange,
   position,
   ranges,
@@ -153,7 +155,11 @@ const DateRangePicker = ({
         </div>
       )}
     >
-      <Button height={BUTTON_SIZE} iconBefore="timeline-events">
+      <Button
+        disabled={disabled}
+        height={BUTTON_SIZE}
+        iconBefore="timeline-events"
+      >
         {initialFrom && initialTo ? (
           <>
             {formatDateString(initialFrom)}
