@@ -3,6 +3,7 @@
 $view-body__padding-y: $base__size * 3;
 $view-body__padding-x: $base__size * 3;
 
+$view-header__min-height: $base__size * 4;
 $view-header__padding-y: $base__size * 2;
 $view-header__padding-x: $base__size * 3;
 
@@ -19,6 +20,7 @@ $view-header__padding-x: $base__size * 3;
   align-items: center;
   justify-content: space-between;
   box-shadow: $shadow__header;
+  min-height: $view-header__min-height;
   padding: $view-header__padding-y $view-header__padding-x;
   font-size: $font-size__lg;
   font-weight: 600;
