@@ -88,11 +88,11 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
               (activity.url && activity.url.toLowerCase().includes(query)) ||
               (activity.title && activity.title.toLowerCase().includes(query))
           );
-
-    return matchedResults
-      .sort((a, b) => (a.startTime > b.startTime ? -1 : 1))
-      .slice(0, rowCount);
-  }, [data, debouncedSearchQuery, rowCount]);
+    return matchedResults.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
+  }, [data, debouncedSearchQuery]);
+  const visibleActivities = useMemo(() => {
+    return activities.slice(0, rowCount);
+  }, [activities, rowCount]);
   const isDebounceActive = debouncedSearchQuery !== searchQuery;
 
   let tableContent;
@@ -108,7 +108,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
         </div>
       );
       break;
-    case activities.length === 0:
+    case visibleActivities.length === 0:
       tableContent = (
         <div
           className="history-table__body-placeholder"
@@ -127,7 +127,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           overscanCount={Math.round(containerHeight / ROW_HEIGHT) * 2}
           useAverageAutoHeightEstimation={false}
         >
-          {activities.map(activity => renderRow({ activity }))}
+          {visibleActivities.map(activity => renderRow({ activity }))}
         </Table.VirtualBody>
       );
   }
@@ -149,7 +149,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  data: selectors.getAllRecords(state)
+  data: selectors.getRecords(state)
 });
 
 export default connect(mapStateToProps)(HistoryTable);

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import View from "../../components/View";
 import { RootState, selectors } from "../../store";
+import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
 import LoadingView from "../general/LoadingView";
 
 import HistoryTable from "./HistoryTable";
@@ -29,6 +30,9 @@ const HistoryView = ({ isLoadingRecords }: HistoryViewProps) => {
       <View.Header>
         <span className="history-view__header">
           <span>Usage History</span>
+        </span>
+        <span className="history-view__header">
+          {!isLoadingRecords && <ActivityDateRangePicker />}
         </span>
       </View.Header>
       <View.Body>{viewContent}</View.Body>

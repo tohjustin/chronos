@@ -8,10 +8,10 @@ import View from "../../components/View";
 import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { ICON_SIZE } from "../../styles/constants";
+import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
 import ErrorView from "../general/ErrorView";
 import LoadingView from "../general/LoadingView";
 
-import ActivityDateRangePicker from "./ActivityDateRangePicker";
 import DomainPicker from "./DomainPicker";
 import {
   DomainAveragePageVisitDurationCard,
