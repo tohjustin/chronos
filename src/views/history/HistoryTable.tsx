@@ -1,4 +1,5 @@
 import { Avatar, Spinner, Table } from "evergreen-ui";
+import pluralize from "pluralize";
 import React, { useCallback, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { useDebounce } from "use-debounce";
@@ -17,6 +18,7 @@ interface HistoryTableProps {
   data: ActivityRecord[];
 }
 
+const FOOTER_HEIGHT = BASE_SIZE * 4;
 const HEADER_HEIGHT = BASE_SIZE * 4;
 const INITIAL_ROW_COUNT = 150;
 const ROWS_TO_LOAD_PER_BATCH = 300;
@@ -96,7 +98,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
   const isDebounceActive = debouncedSearchQuery !== searchQuery;
 
   let tableContent;
-  const tableBodyHeight = containerHeight - HEADER_HEIGHT;
+  const tableBodyHeight = containerHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
   switch (true) {
     case isDebounceActive:
       tableContent = (
@@ -132,6 +134,20 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
       );
   }
 
+  let footerText;
+  const recordString = pluralize("record", data.length, true);
+  switch (true) {
+    case isDebounceActive:
+      footerText = `Sifting through ${recordString}...`;
+      break;
+    case searchQuery !== "":
+      const matchedRecordString = pluralize("match", activities.length, true);
+      footerText = `Found ${matchedRecordString} out of ${recordString}`;
+      break;
+    default:
+      footerText = `Found ${recordString}`;
+  }
+
   return (
     <div ref={containerRef} className="history-table__container">
       <Table>
@@ -143,6 +159,9 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           />
         </Table.Head>
         {tableContent}
+        <Table.Cell height={FOOTER_HEIGHT} className="history-table__footer">
+          <div>{footerText}</div>
+        </Table.Cell>
       </Table>
     </div>
   );
