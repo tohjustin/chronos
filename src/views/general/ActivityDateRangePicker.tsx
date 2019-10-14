@@ -32,7 +32,7 @@ const ActivityDateRangePicker = ({
   const startOfToday = getStartOfDay(now);
   const endOfToday = getEndOfDay(now);
   const activityStartTime = activityTimeRange
-    ? activityTimeRange.start
+    ? getStartOfDay(activityTimeRange.start)
     : startOfToday;
   const disabledDays = {
     before: new Date(activityStartTime),
