@@ -21,7 +21,7 @@ $chart__height: 240px;
 }
 
 .analytics-view__cards-container {
-  margin-bottom: $card__margin-y;
+  display: inline-block;
   margin-top: -1 * $card__margin-y;
   margin-right: -1 * $card__margin-x;
 }
@@ -71,12 +71,17 @@ $chart__height: 240px;
 .analytics-view__domain-picker {
   display: flex;
   align-items: center;
-  margin: 0 $base__size * 0.5;
+  max-width: 100%;
+
+  button {
+    flex-shrink: 0;
+  }
 
   .label {
     display: flex;
     align-items: center;
     margin-right: $base__size;
+    overflow: hidden;
 
     .icon {
       height: $base__size * 3;
@@ -86,9 +91,16 @@ $chart__height: 240px;
       box-shadow: $shadow__favicon;
       flex-grow: 0;
       flex-shrink: 0;
-      margin-right: $base__size;
+      margin: $base__size * 0.5;
       overflow: hidden;
       padding: 1px;
+    }
+
+    .text {
+      margin-left: $base__size * 0.5;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
@@ -102,7 +114,15 @@ $chart__height: 240px;
 .analytics-view__header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-right: $base__size * 0.5;
+  max-width: 100%;
+
+  .analytics-view__header-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .analytics-view__link {

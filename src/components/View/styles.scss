@@ -1,7 +1,6 @@
 @import "../../styles/variables";
 
-$view-body__padding-y: $base__size * 3;
-$view-body__padding-x: $base__size * 3;
+$view-body__padding: $base__size * 3;
 
 $view-header__min-height: $base__size * 4;
 $view-header__padding-y: $base__size * 2;
@@ -16,6 +15,7 @@ $view-header__padding-x: $base__size * 3;
 .view__header {
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -28,10 +28,10 @@ $view-header__padding-x: $base__size * 3;
 }
 
 .view__body {
+  background-color: $color__gray-lighter;
   flex-grow: 1;
-  overflow-y: scroll;
-  padding: $view-body__padding-y $view-body__padding-x;
   font-size: $font-size__base;
   font-weight: 400;
-  background-color: $color__gray-lighter;
+  overflow-y: scroll;
+  padding: $view-body__padding;
 }

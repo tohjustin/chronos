@@ -105,9 +105,10 @@ const AnalyticsView = ({
       );
       break;
   }
-  const headerTextClass = classNames({
+  const headerTextClass = classNames("analytics-view__header-text", {
     "analytics-view__link": selectedDomain !== null
   });
+  const showRecords = !isLoadingRecords && hasRecords;
 
   return (
     <View.Container>
@@ -116,12 +117,8 @@ const AnalyticsView = ({
           <span className={headerTextClass} onClick={clearSelectedDomain}>
             Usage Analytics
           </span>
-          {!isLoadingRecords && hasRecords && (
-            <>
-              <Icon icon="slash" size={ICON_SIZE} />
-              <DomainPicker />
-            </>
-          )}
+          {showRecords && <Icon icon="slash" size={ICON_SIZE} />}
+          {showRecords && <DomainPicker />}
         </span>
         <span className="analytics-view__header">
           {!isLoadingRecords && <ActivityDateRangePicker />}

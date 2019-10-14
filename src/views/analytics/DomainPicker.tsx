@@ -33,7 +33,7 @@ const DomainPicker = (props: DomainPickerProps) => {
               src={favIconUrl}
             />
           )}
-          <span>{props.selectedDomain}</span>
+          <span className="text">{props.selectedDomain}</span>
         </span>
       )}
       <SelectMenu
