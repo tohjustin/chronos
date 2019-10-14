@@ -87,8 +87,8 @@ export const RatioToTotalDurationCard = connect((state: RootState) => ({
 }))(SingleValueMetricCard);
 
 export const TotalDomainVisitCountCard = connect((state: RootState) => ({
-  title: "Page Visits",
-  description: "Total unique pages visited",
+  title: "Domain Visits",
+  description: "Total unique domains visited",
   data: selectors.getTotalDomainVisitCount(state),
   isDuration: false,
   formattingFn: (d: number) => d.toLocaleString("en-US"),
