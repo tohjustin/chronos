@@ -21,10 +21,10 @@ const ActivityDateRangePicker = ({
   selectedTimeRange,
   setSelectedTimeRange
 }: ActivityDateRangePickerProps) => {
-  const handleDateRangeChange = (
-    range: { start: number; end: number } | null
-  ) => {
-    setSelectedTimeRange(range);
+  const handleDateRangeChange: typeof setSelectedTimeRange = range => {
+    if (range && !_.isEqual(range, selectedTimeRange)) {
+      setSelectedTimeRange(range);
+    }
   };
 
   // Computed values
