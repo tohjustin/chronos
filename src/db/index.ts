@@ -50,10 +50,15 @@ export class Database extends Dexie
   }
 
   public async exportDatabaseRecords(): Promise<DatabaseRecords> {
+    const activityTableRecords = (await exportTableRecords<ActivityRecord>(
+      this[ACTIVITY_TABLE]
+    )).map(record => {
+      delete record.id;
+      return record;
+    });
+
     return {
-      [ACTIVITY_TABLE]: await exportTableRecords<ActivityRecord>(
-        this[ACTIVITY_TABLE]
-      )
+      [ACTIVITY_TABLE]: activityTableRecords
     };
   }
 
