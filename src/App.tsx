@@ -1,6 +1,6 @@
 import { ConnectedRouter } from "connected-react-router";
 import { ThemeProvider } from "evergreen-ui";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { BarChart2, Clock, Settings } from "react-feather";
 import { hot } from "react-hot-loader";
 import { connect, Provider } from "react-redux";
@@ -9,20 +9,39 @@ import { HashRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 import Navbar from "./components/Navbar";
-import { Dispatch, actions, history, store } from "./store";
+import {
+  Dispatch,
+  RootState,
+  actions,
+  history,
+  selectors,
+  store
+} from "./store";
 import theme from "./theme";
 import AnalyticsView from "./views/analytics";
 import HistoryView from "./views/history";
 import SettingsView from "./views/settings";
+import {
+  SEARCH_PARAM_START_DATE,
+  SEARCH_PARAM_END_DATE
+} from "./store/router/constants";
+import { pickSearchParams } from "./utils/urlUtils";
 
 interface AppShellProps {
   loadRecords: () => void;
+  searchParams: string;
 }
 
-const AppShell = ({ loadRecords }: AppShellProps) => {
+const AppShell = ({ loadRecords, searchParams }: AppShellProps) => {
   useEffect(() => {
     loadRecords();
   }, [loadRecords]);
+  const search = useMemo(() => {
+    return pickSearchParams(searchParams, [
+      SEARCH_PARAM_START_DATE,
+      SEARCH_PARAM_END_DATE
+    ]).toString();
+  }, [searchParams]);
 
   return (
     <ThemeProvider value={theme}>
@@ -33,19 +52,21 @@ const AppShell = ({ loadRecords }: AppShellProps) => {
             {
               featherIcon: BarChart2,
               text: "Analytics",
-              to: "/analytics"
+              to: { pathname: "/analytics", search }
             },
             {
               featherIcon: Clock,
               text: "History",
-              to: "/history"
+              to: { pathname: "/history", search }
             }
           ]}
           secondaryItems={[
             {
               featherIcon: Settings,
               text: "Settings",
-              to: "/settings"
+              to: {
+                pathname: "/settings"
+              }
             }
           ]}
         />
@@ -62,11 +83,15 @@ const AppShell = ({ loadRecords }: AppShellProps) => {
   );
 };
 
+const mapStateToProps = (state: RootState) => ({
+  searchParams: selectors.getSearchParams(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({ loadRecords: actions.loadRecords }, dispatch);
 
 const ConnectedAppShell = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AppShell);
 

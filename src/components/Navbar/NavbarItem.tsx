@@ -1,10 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, NavLinkProps } from "react-router-dom";
 
-export interface NavbarItemProps {
+export interface NavbarItemProps extends Pick<NavLinkProps, "to"> {
   featherIcon: React.ComponentType;
   text: string;
-  to: string;
 }
 
 export const NavbarItem = (props: NavbarItemProps) => {
