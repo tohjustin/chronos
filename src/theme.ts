@@ -1,5 +1,9 @@
-import { defaultTheme } from "evergreen-ui";
+import { IntentTypes, defaultTheme } from "evergreen-ui";
+import classnames from "classnames";
 import _ from "lodash";
+
+const originalGetRowClassName = defaultTheme.getRowClassName;
+const originalGetTableCellClassName = defaultTheme.getTableCellClassName;
 
 const theme = _.merge(defaultTheme, {
   colors: {
@@ -15,6 +19,18 @@ const theme = _.merge(defaultTheme, {
       danger: "#bf0e08",
       warning: "#95591e"
     }
+  },
+  getTableCellClassName: (appearance: "default") => {
+    return classnames(
+      originalGetTableCellClassName(appearance),
+      "evergreen__table-cell"
+    );
+  },
+  getRowClassName: (appearance: "default", intent: IntentTypes) => {
+    return classnames(
+      originalGetRowClassName(appearance, intent),
+      "evergreen__row"
+    );
   },
   typography: {
     fontFamilies: {

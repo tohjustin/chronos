@@ -140,9 +140,3 @@ $chart__height: 240px;
   font-size: $font-size__base;
   font-family: $font-family;
 }
-
-// NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>
-// doesn't expose any props for adding classes to it's dialog component 🤢
-div[evergreen-portal-container] div[role="dialog"] {
-  z-index: $z-index__menu-select !important;
-}
