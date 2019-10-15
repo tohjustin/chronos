@@ -1,5 +1,4 @@
 import { Avatar, Spinner, Table } from "evergreen-ui";
-import pluralize from "pluralize";
 import React, { useCallback, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { useDebounce } from "use-debounce";
@@ -24,6 +23,10 @@ const INITIAL_ROW_COUNT = 150;
 const ROWS_TO_LOAD_PER_BATCH = 300;
 const ROW_HEIGHT = BASE_SIZE * 6;
 const AVATAR_SIZE = BASE_SIZE * 2.5;
+
+function formatRecordString(count: number) {
+  return `${count.toLocaleString("en-US")} ${count > 1 ? "records" : "record"}`;
+}
 
 const renderRow = ({ activity }: { activity: ActivityRecord }) => {
   const activityDateTime = formatTableDateTimeLabel(
@@ -135,17 +138,18 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
   }
 
   let footerText;
-  const recordString = pluralize("record", data.length, true);
+  const records = formatRecordString(data.length);
   switch (true) {
     case isDebounceActive:
-      footerText = `Sifting through ${recordString}...`;
+      footerText = `Sifting through ${records}...`;
       break;
-    case searchQuery !== "":
-      const matchedRecordString = pluralize("match", activities.length, true);
-      footerText = `Found ${matchedRecordString} out of ${recordString}`;
+    case searchQuery !== "": {
+      const matchedRecords = formatRecordString(activities.length);
+      footerText = `Found ${matchedRecords} out of ${records}`;
       break;
+    }
     default:
-      footerText = `Found ${recordString}`;
+      footerText = `Found ${records}`;
   }
 
   return (
