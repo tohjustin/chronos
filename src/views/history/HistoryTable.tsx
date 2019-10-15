@@ -1,8 +1,17 @@
-import { Avatar, Spinner, Table } from "evergreen-ui";
+import {
+  Avatar,
+  Heading,
+  Menu,
+  Pane,
+  Popover,
+  Spinner,
+  Table
+} from "evergreen-ui";
 import React, { useCallback, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { useDebounce } from "use-debounce";
 
+import Button from "../../components/Button";
 import ExternalLink from "../../components/ExternalLink";
 import { useClientDimensions } from "../../hooks";
 import { ActivityRecord } from "../../models/activity";
@@ -17,12 +26,42 @@ interface HistoryTableProps {
   data: ActivityRecord[];
 }
 
+enum SortOrder {
+  DurationAscending = "DURATION_ASCENDING",
+  DurationDescending = "DURATION_DESCENDING",
+  TimeAscending = "TIME_ASCENDING",
+  TimeDescending = "TIME_DESCENDING"
+}
+
+const AVATAR_SIZE = BASE_SIZE * 2.5;
+const DEFAULT_SORT_ORDER = "TIME_DESCENDING" as SortOrder;
 const FOOTER_HEIGHT = BASE_SIZE * 4;
 const HEADER_HEIGHT = BASE_SIZE * 4;
 const INITIAL_ROW_COUNT = 150;
-const ROWS_TO_LOAD_PER_BATCH = 300;
+const MENU_OPTIONS = [
+  {
+    label: "Sorted by Duration",
+    secondaryLabel: "Ascending",
+    value: "DURATION_ASCENDING" as SortOrder
+  },
+  {
+    label: "Sorted by Duration",
+    secondaryLabel: "Descending",
+    value: "DURATION_DESCENDING" as SortOrder
+  },
+  {
+    label: "Sorted by Time",
+    secondaryLabel: "Ascending",
+    value: "TIME_ASCENDING" as SortOrder
+  },
+  {
+    label: "Sorted by Time",
+    secondaryLabel: "Descending",
+    value: "TIME_DESCENDING" as SortOrder
+  }
+];
 const ROW_HEIGHT = BASE_SIZE * 6;
-const AVATAR_SIZE = BASE_SIZE * 2.5;
+const ROWS_TO_LOAD_PER_BATCH = 300;
 
 function formatRecordString(count: number) {
   return `${count.toLocaleString("en-US")} ${count > 1 ? "records" : "record"}`;
@@ -68,6 +107,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
   const [containerRef, { height: containerHeight }] = useClientDimensions();
   const [rowCount, setRowCount] = useState(INITIAL_ROW_COUNT);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_SORT_ORDER);
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
   const handleFilterChange = useCallback(setSearchQuery, []);
   const handleOnScroll = useCallback(
@@ -85,22 +125,46 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
   );
   const activities = useMemo(() => {
     const query = debouncedSearchQuery.trim().toLowerCase();
-    const matchedResults =
+    const result =
       query.length < 1
         ? data
         : data.filter(
-            activity =>
-              (activity.url && activity.url.toLowerCase().includes(query)) ||
-              (activity.title && activity.title.toLowerCase().includes(query))
+            record =>
+              record.url.toLowerCase().includes(query) ||
+              record.title.toLowerCase().includes(query)
           );
-    return matchedResults.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
-  }, [data, debouncedSearchQuery]);
+    switch (sortOrder) {
+      case "DURATION_ASCENDING":
+        return result
+          .slice()
+          .sort((a, b) =>
+            a.endTime - a.startTime > b.endTime - b.startTime ? 1 : -1
+          );
+      case "DURATION_DESCENDING":
+        return result
+          .slice()
+          .sort((a, b) =>
+            a.endTime - a.startTime > b.endTime - b.startTime ? -1 : 1
+          );
+      case "TIME_ASCENDING":
+        return result
+          .slice()
+          .sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
+      case "TIME_DESCENDING":
+        return result
+          .slice()
+          .sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
+      default:
+        console.warn("HistoryTable: Unknown `state.sortOrder`", sortOrder);
+        return result;
+    }
+  }, [data, debouncedSearchQuery, sortOrder]);
   const visibleActivities = useMemo(() => {
     return activities.slice(0, rowCount);
   }, [activities, rowCount]);
-  const isDebounceActive = debouncedSearchQuery !== searchQuery;
 
   let tableContent;
+  const isDebounceActive = debouncedSearchQuery !== searchQuery;
   const tableBodyHeight = containerHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
   switch (true) {
     case isDebounceActive:
@@ -137,6 +201,22 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
       );
   }
 
+  let buttonText;
+  switch (sortOrder) {
+    case "DURATION_ASCENDING":
+      buttonText = "Sorted by Duration (Ascending)";
+      break;
+    case "DURATION_DESCENDING":
+      buttonText = "Sorted by Duration (Descending)";
+      break;
+    case "TIME_ASCENDING":
+      buttonText = "Sorted by Time (Ascending)";
+      break;
+    case "TIME_DESCENDING":
+      buttonText = "Sorted by Time (Descending)";
+      break;
+  }
+
   let footerText;
   const records = formatRecordString(data.length);
   switch (true) {
@@ -161,6 +241,37 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
             onChange={handleFilterChange}
             value={searchQuery}
           />
+          <Popover
+            position="bottom-right"
+            content={
+              <Menu>
+                <Pane>
+                  <Heading size={100}>Sort Order</Heading>
+                  <Pane>
+                    {MENU_OPTIONS.map(option => (
+                      <Menu.Option
+                        key={option.value}
+                        isSelected={option.value === sortOrder}
+                        onSelect={() => setSortOrder(option.value)}
+                        secondaryText={option.secondaryLabel}
+                      >
+                        {option.label}
+                      </Menu.Option>
+                    ))}
+                  </Pane>
+                </Pane>
+              </Menu>
+            }
+            statelessProps={{ className: "history-view__sort-popover" }}
+          >
+            <Button
+              appearance="minimal"
+              isActive={true}
+              className="history-table__sort-button"
+            >
+              {buttonText}
+            </Button>
+          </Popover>
         </Table.Head>
         {tableContent}
         <Table.Cell height={FOOTER_HEIGHT} className="history-table__footer">

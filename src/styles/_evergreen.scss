@@ -1,5 +1,19 @@
 @import "variables";
 
+.evergreen__menu-item {
+  height: $base__size * 4;
+
+  span {
+    font-size: 12px;
+
+    &:first-of-type {
+      font-weight: 600;
+    }
+  }
+}
+
+.evergreen__menu-item,
+.evergreen__row,
 .evergreen__table-cell {
   svg[data-icon="tick"] {
     fill: $color__primary !important;

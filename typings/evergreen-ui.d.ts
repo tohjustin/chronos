@@ -915,9 +915,12 @@ declare module "evergreen-ui" {
   export class Label extends React.PureComponent<LabelProps> {}
 
   export interface MenuProps {
-    children: React.ReactNode[];
+    children: React.ReactNode | React.ReactNode[];
+    className?: string;
   }
-
+  export interface MenuGroupProps {
+    children: React.ReactNode | React.ReactNode[];
+  }
   export interface MenuItemProps {
     is?: string | (() => void);
     onSelect?: () => void;
@@ -927,12 +930,38 @@ declare module "evergreen-ui" {
     appearance?: "default";
     intent?: IntentTypes;
   }
+  export interface MenuOptionProps<T> {
+    appearance: "default";
+    isSelected: boolean;
+    id: string;
+    onSelect?: (newValue: any) => void;
+    children?: ReactNode;
+    secondaryText?: ReactNode;
+  }
+  export interface MenuOptionsGroupProps<T> {
+    selected: T | null;
+    options: {
+      label: number;
+      value: T;
+    }[];
+    onChange?: (newValue: T) => void;
+    title?: ReactNode;
+  }
 
   export class Menu extends React.PureComponent<MenuProps> {
+    public static Group = class MenuGroup extends React.PureComponent<
+      MenuGroupProps
+    > {};
     public static Item = class MenuItem extends React.PureComponent<
       MenuItemProps
     > {};
     public static Divider = class MenuDivider extends React.PureComponent {};
+    public static Option = class MenuOption extends React.PureComponent<
+      MenuOptionProps
+    > {};
+    public static OptionsGroup = class MenuOptionsGroup extends React.PureComponent<
+      MenuOptionsGroupProps
+    > {};
   }
 
   export interface PaneProps extends UiBoxPropsType {
@@ -1172,14 +1201,14 @@ declare module "evergreen-ui" {
   export class TabNavigation extends React.PureComponent<TabNavigationProps> {}
 
   export interface TextProps extends UiBoxPropsType {
-    size?: 300 | 400 | 500 | 600;
+    size?: 100 | 200 | 300 | 400 | 500 | 600;
     fontFamily?: "ui" | "display" | "mono";
   }
 
   export class Text extends React.PureComponent<TextProps> {}
 
   export interface HeadingProps extends UiBoxPropsType {
-    size?: 300 | 400 | 500 | 600;
+    size?: 100 | 200 | 300 | 400 | 500 | 600;
     fontFamily?: "ui" | "display" | "mono";
   }
 

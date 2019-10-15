@@ -2,6 +2,8 @@ import { IntentTypes, defaultTheme } from "evergreen-ui";
 import classnames from "classnames";
 import _ from "lodash";
 
+const originalGetHeadingStyle = defaultTheme.getHeadingStyle;
+const originalGetMenuItemClassName = defaultTheme.getMenuItemClassName;
 const originalGetRowClassName = defaultTheme.getRowClassName;
 const originalGetTableCellClassName = defaultTheme.getTableCellClassName;
 
@@ -19,6 +21,19 @@ const theme = _.merge(defaultTheme, {
       danger: "#bf0e08",
       warning: "#95591e"
     }
+  },
+  getHeadingStyle: (size: number) => {
+    return {
+      ...originalGetHeadingStyle(size),
+      fontFamily: "inherit",
+      fontWeight: 600
+    };
+  },
+  getMenuItemClassName: (appearance: "default", intent: IntentTypes) => {
+    return classnames(
+      originalGetMenuItemClassName(appearance, intent),
+      "evergreen__menu-item"
+    );
   },
   getTableCellClassName: (appearance: "default") => {
     return classnames(

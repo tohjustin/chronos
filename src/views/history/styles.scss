@@ -119,4 +119,23 @@
       font-weight: 600;
     }
   }
+
+  .history-table__sort-button {
+    height: $base__size * 2.5;
+    line-height: $base__size * 2.5;
+    margin-right: $base__size;
+    padding: 0 $base__size * 1.5;
+  }
+}
+
+.history-view__sort-popover {
+  nav[role="menu"] {
+    > div {
+      padding: $base__size 0;
+    }
+
+    h2 {
+      margin: $base__size $base__size * 2 $base__size $base__size * 5.5;
+    }
+  }
 }
