@@ -266,6 +266,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           >
             <Button
               appearance="minimal"
+              iconBefore="sort"
               isActive={true}
               className="history-table__sort-button"
             >
