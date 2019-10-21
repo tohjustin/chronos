@@ -1,0 +1,100 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+$table-row__padding-x: $base__size * 1.5;
+
+.table__container {
+  background: $color__white;
+  height: 100%;
+  box-shadow: $shadow__table;
+  border-radius: $border-radius__table;
+}
+
+.table__body-placeholder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: $color__gray-dark;
+  font-weight: 600;
+  font-size: $font-size__base;
+  font-family: $font-family;
+}
+
+.table__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  background: $color__white;
+  border-top: 1px solid $color__gray-light;
+  border-bottom-left-radius: $border-radius__table;
+  border-bottom-right-radius: $border-radius__table;
+  padding: 0;
+
+  div {
+    font-family: $font-family;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    padding: 0 $table-row__padding-x;
+  }
+}
+
+.table__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $color__white;
+  border-top-left-radius: $border-radius__table;
+  border-top-right-radius: $border-radius__table;
+  padding: 0;
+
+  input,
+  div {
+    font-family: $font-family;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  div {
+    padding: 0 $table-row__padding-x;
+  }
+}
+
+.table__row {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  min-width: 0;
+  padding: 0 $table-row__padding-x;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.table__sort-button {
+  height: $base__size * 2.5;
+  line-height: $base__size * 2.5;
+  margin-right: $table-row__padding-x;
+  padding: 0 $base__size * 1.5;
+}
+
+.table__sort-button--popover {
+  nav[role="menu"] {
+    > div {
+      padding: $base__size 0;
+    }
+
+    h2 {
+      margin: $base__size $base__size * 2 $base__size $base__size * 5.5;
+    }
+  }
+}
