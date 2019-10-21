@@ -24,6 +24,7 @@ $chart__height: 240px;
   display: inline-block;
   margin-top: -1 * $card__margin-y;
   margin-right: -1 * $card__margin-x;
+  width: calc(100% + #{$card__margin-x});
 }
 
 .analytics-view__card {
