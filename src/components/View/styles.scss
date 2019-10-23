@@ -32,6 +32,7 @@ $view-header__padding-x: $base__size * 3;
   flex-grow: 1;
   font-size: $font-size__base;
   font-weight: 400;
+  overflow-x: hidden;
   overflow-y: scroll;
   padding: $view-body__padding;
 }
