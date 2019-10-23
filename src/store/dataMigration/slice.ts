@@ -21,7 +21,7 @@ const INITIAL_STATE: DataMigrationState = {
 };
 
 const dataMigration = createSlice({
-  slice: "dataMigration",
+  name: "dataMigration",
   initialState: INITIAL_STATE,
   reducers: {
     exportDatabaseRecordsStart(state: DataMigrationState) {

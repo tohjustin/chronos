@@ -18,7 +18,7 @@ const INITIAL_STATE: ActivityState = {
 };
 
 const activity = createSlice({
-  slice: "activity",
+  name: "activity",
   initialState: INITIAL_STATE,
   reducers: {
     getRecordsStart(state: ActivityState) {
