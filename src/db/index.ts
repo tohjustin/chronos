@@ -95,9 +95,12 @@ export function InitDatabase(): Database | undefined {
     case "chrome":
     case "firefox":
       return new Database();
+    case undefined:
+      console.warn("[db] Missing build target");
+      return undefined;
     default:
       console.error(
-        "[db] Invalid build target specified",
+        "[db] Invalid build target specified:",
         process.env.REACT_APP_BUILD_TARGET
       );
       return undefined;
