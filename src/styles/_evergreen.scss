@@ -5,10 +5,12 @@
   height: $base__size * 4;
 
   span {
-    font-size: 12px;
+    font-size: $font-size__base;
+    font-weight: 600;
 
-    &:first-of-type {
-      font-weight: 600;
+    // menu item's sub-label
+    &:not(:first-of-type) {
+      font-weight: 400;
     }
   }
 }
