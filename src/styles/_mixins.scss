@@ -1,9 +1,67 @@
 @import "variables";
 
+$responsive-card__margin-x: $margin__card;
+$responsive-card__margin-y: $margin__card;
+
 @mixin grid-lines {
   color: $color__gray-light;
   stroke-width: 1px;
   stroke-dasharray: 2, 2;
+}
+
+@mixin responsive-card__width--100 {
+  margin-right: 0;
+  min-width: 450px;
+  width: calc(100% - #{$responsive-card__margin-x});
+}
+
+@mixin responsive-card__width--50 {
+  width: calc(50% - #{$responsive-card__margin-x});
+  margin-right: $responsive-card__margin-x;
+}
+
+@mixin responsive-card__width--25 {
+  width: calc(25% - #{$responsive-card__margin-x});
+  margin-right: $responsive-card__margin-x;
+}
+
+@mixin responsive-card-container {
+  display: inline-block;
+  margin-top: -1 * $responsive-card__margin-y;
+  margin-right: -1 * $responsive-card__margin-x;
+  width: calc(100% + #{$responsive-card__margin-x});
+}
+
+@mixin responsive-card {
+  float: left;
+  margin-top: $responsive-card__margin-y;
+
+  @media screen and (min-width: 1201px) {
+    &#{&}--sm {
+      @include responsive-card__width--25;
+    }
+
+    &#{&}--md {
+      @include responsive-card__width--50;
+    }
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 1200px) {
+    &#{&}--sm {
+      @include responsive-card__width--50;
+    }
+
+    &#{&}--md {
+      @include responsive-card__width--100;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    &#{&}--sm,
+    &#{&}--md {
+      @include responsive-card__width--100;
+    }
+  }
 }
 
 @mixin tooltip {

@@ -1,35 +1,14 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
-$card__margin-x: $base__size * 2;
-$card__margin-y: $base__size * 2;
 $chart__height: 240px;
 
-@mixin card__width--100 {
-  margin-right: 0;
-  min-width: 450px;
-  width: calc(100% - #{$card__margin-x});
-}
-
-@mixin card__width--50 {
-  width: calc(50% - #{$card__margin-x});
-  margin-right: $card__margin-x;
-}
-
-@mixin card__width--25 {
-  width: calc(25% - #{$card__margin-x});
-  margin-right: $card__margin-x;
-}
-
 .analytics-view__cards-container {
-  display: inline-block;
-  margin-top: -1 * $card__margin-y;
-  margin-right: -1 * $card__margin-x;
-  width: calc(100% + #{$card__margin-x});
+  @include responsive-card-container;
 }
 
 .analytics-view__card {
-  float: left;
-  margin-top: $card__margin-y;
+  @include responsive-card;
 
   .card__body {
     height: 100%;
@@ -38,33 +17,6 @@ $chart__height: 240px;
   &:not(.analytics-view__card--responsive) {
     .card__body {
       height: $chart__height;
-    }
-  }
-
-  @media screen and (min-width: 1201px) {
-    &#{&}--sm {
-      @include card__width--25;
-    }
-
-    &#{&}--md {
-      @include card__width--50;
-    }
-  }
-
-  @media screen and (min-width: 601px) and (max-width: 1200px) {
-    &#{&}--sm {
-      @include card__width--50;
-    }
-
-    &#{&}--md {
-      @include card__width--100;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    &#{&}--sm,
-    &#{&}--md {
-      @include card__width--100;
     }
   }
 }
