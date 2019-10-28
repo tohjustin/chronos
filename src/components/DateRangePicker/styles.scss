@@ -1,5 +1,9 @@
 @import "../../styles/variables";
 
+$date-range-picker__margin: $base__size * 1.5;
+
+$date-range-picker-button__margin: $base__size;
+
 .date-range-picker__container {
   display: flex;
 }
@@ -7,19 +11,19 @@
 .date-range-picker__ranges {
   display: flex;
   flex-direction: column;
-  padding: $base__size * 1.5;
+  padding: $date-range-picker__margin;
   border-right: $border__divider;
 
   button {
-    &:not(:last-of-type) {
-      margin-bottom: $base__size;
+    &:not(:first-of-type) {
+      margin-top: $date-range-picker-button__margin;
     }
   }
 }
 
 .date-range-picker__nav-bar {
-  position: absolute;
-  top: $base__size * 1.5;
-  right: $base__size * 1.5;
   display: flex;
+  position: absolute;
+  top: $date-range-picker__margin;
+  right: $date-range-picker__margin;
 }
