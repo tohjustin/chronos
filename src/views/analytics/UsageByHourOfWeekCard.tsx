@@ -16,7 +16,7 @@ import {
 
 interface UsageByHourOfWeekCardProps {
   title: string;
-  description: string;
+  info: string;
   data: {
     duration: number;
     hour: number;
@@ -35,7 +35,7 @@ const UsageByHourOfWeekCard = (props: UsageByHourOfWeekCardProps) => (
   <Card
     className="analytics-view__card analytics-view__card--sm"
     title={props.title}
-    description={props.description}
+    info={props.info}
     body={
       <WeeklyHourHeatmap
         colorRange={props.colorRange}
@@ -66,7 +66,7 @@ const UsageByHourOfWeekCard = (props: UsageByHourOfWeekCardProps) => (
 
 export const AverageUsageByHourOfWeekCard = connect((state: RootState) => ({
   title: "Usage by Time of Day",
-  description: "Average time spent on each hour",
+  info: "Average time spent on each hour",
   data: selectors.getAverageDurationByHourOfWeek(state),
   colorRange: CHART_COLOR_RANGE,
   thresholds: THRESHOLDS
@@ -75,7 +75,7 @@ export const AverageUsageByHourOfWeekCard = connect((state: RootState) => ({
 export const DomainAverageUsageByHourOfWeekCard = connect(
   (state: RootState) => ({
     title: "Usage by Time of Day",
-    description: "Average time spent on each hour",
+    info: "Average time spent on each hour",
     data: selectors.getSelectedDomainAverageDurationByHourOfWeek(state),
     colorRange: CHART_COLOR_RANGE,
     thresholds: THRESHOLDS

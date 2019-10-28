@@ -14,7 +14,7 @@ import {
 
 interface UsagePerDayCardProps {
   title: string;
-  description: string;
+  info: string;
   data: {
     timestamp: number;
     totalDuration: number;
@@ -66,7 +66,7 @@ const UsagePerDayCard = (props: UsagePerDayCardProps) => {
     <Card
       className="analytics-view__card analytics-view__card--md"
       title={props.title}
-      description={props.description}
+      info={props.info}
       body={
         <LineChart
           data={data}
@@ -114,13 +114,13 @@ const UsagePerDayCard = (props: UsagePerDayCardProps) => {
 
 export const DomainTotalUsagePerDayCard = connect((state: RootState) => ({
   title: "Usage Trend",
-  description: "Total time spent on each day",
+  info: "Total time spent on each day",
   data: selectors.getSelectedDomainTotalDurationByDate(state)
 }))(UsagePerDayCard);
 
 export const TotalUsagePerDayCard = connect((state: RootState) => ({
   title: "Usage Trend",
-  description: "Total time spent on each day",
+  info: "Total time spent on each day",
   data: selectors.getTotalDurationByDate(state)
 }))(UsagePerDayCard);
 

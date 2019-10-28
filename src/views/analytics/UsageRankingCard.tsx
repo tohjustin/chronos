@@ -10,7 +10,7 @@ import { computeSearchParams } from "../../utils/urlUtils";
 
 interface UsageRankingCardProps {
   title: string;
-  description: string;
+  info: string;
   data: {
     label: string;
     value: number;
@@ -27,7 +27,7 @@ const UsageRankingCard = (props: UsageRankingCardProps) => (
   <Card
     className="analytics-view__card analytics-view__card--md"
     title={props.title}
-    description={props.description}
+    info={props.info}
     body={
       props.data.length === 0 ? (
         <div className="analytics-view__placeholder">No activity</div>
@@ -49,7 +49,7 @@ export const DomainTotalUsageRankingCard = connect((state: RootState) => {
 
   return {
     title: "Usage Ranking",
-    description: `Top ${rowCount} pages based on total time spent`,
+    info: `Top ${rowCount} pages based on total time spent`,
     data: selectors
       .getSelectedDomainTotalDurationByPath(state)
       .slice(0, rowCount)
@@ -71,7 +71,7 @@ export const TotalUsageRankingCard = connect((state: RootState) => {
 
   return {
     title: "Usage Ranking",
-    description: `Top ${rowCount} websites based on total time spent`,
+    info: `Top ${rowCount} websites based on total time spent`,
     data: selectors
       .getTotalDurationByDomain(state)
       .slice(0, rowCount)

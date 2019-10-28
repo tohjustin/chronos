@@ -20,7 +20,7 @@ import {
 
 interface UsageByDayOfYearCardProps {
   title: string;
-  description: string;
+  info: string;
   data: {
     timestamp: number;
     totalDuration: number;
@@ -47,7 +47,7 @@ const UsageByDayOfYearCard = (props: UsageByDayOfYearCardProps) => {
     <Card
       className="analytics-view__card analytics-view__card--md"
       title={props.title}
-      description={props.description}
+      info={props.info}
       body={
         <CalendarHeatmap
           colorRange={props.colorRange}
@@ -76,7 +76,7 @@ export const DomainTotalUsageByDayOfYearCard = connect((state: RootState) => {
 
   return {
     title: "Historical Usage",
-    description: `Total time spent over the past ${MONTH_TO_SHOW} months`,
+    info: `Total time spent over the past ${MONTH_TO_SHOW} months`,
     data: selectors.getAllSelectedDomainTotalDurationByDate(state),
     colorRange: CHART_COLOR_RANGE,
     monthsToShow,

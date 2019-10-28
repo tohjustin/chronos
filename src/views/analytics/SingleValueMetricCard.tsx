@@ -8,7 +8,7 @@ import { TRANSITION_DELAY } from "../../styles/constants";
 
 interface SingleValueMetricCardProps {
   title: string;
-  description: string;
+  info: string;
   data: number;
   isDuration: boolean;
   decimals?: number;
@@ -22,7 +22,7 @@ const SingleValueMetricCard = (props: SingleValueMetricCardProps) => {
     <Card
       className="analytics-view__card analytics-view__card--responsive analytics-view__card--sm"
       title={props.title}
-      description={props.description}
+      info={props.info}
       body={
         <div>
           <Component
@@ -44,7 +44,7 @@ const SingleValueMetricCard = (props: SingleValueMetricCardProps) => {
 export const DomainAveragePageVisitDurationCard = connect(
   (state: RootState) => ({
     title: "Visit Duration",
-    description: "Average time spent on each page",
+    info: "Average time spent on each page",
     data: selectors.getSelectedDomainAveragePageVisitDuration(state),
     isDuration: true
   })
@@ -52,7 +52,7 @@ export const DomainAveragePageVisitDurationCard = connect(
 
 export const DomainRatioToTotalDurationCard = connect((state: RootState) => ({
   title: "Usage Percentage",
-  description: "Percentage of total browsing activity",
+  info: "Percentage of total browsing activity",
   data: selectors.getSelectedDomainRatioToTotalDuration(state) * 100,
   isDuration: false,
   decimals: 2,
@@ -62,7 +62,7 @@ export const DomainRatioToTotalDurationCard = connect((state: RootState) => ({
 
 export const DomainTotalPageVisitCountCard = connect((state: RootState) => ({
   title: "Page Visits",
-  description: "Total unique pages visited",
+  info: "Total unique pages visited",
   data: selectors.getSelectedDomainTotalPageVisitCount(state),
   isDuration: false,
   formattingFn: (d: number) => d.toLocaleString("en-US"),
@@ -71,14 +71,14 @@ export const DomainTotalPageVisitCountCard = connect((state: RootState) => ({
 
 export const DomainTotalUsageCard = connect((state: RootState) => ({
   title: "Total Usage",
-  description: "Total time spent on the website",
+  info: "Total time spent on the website",
   data: selectors.getSelectedDomainTotalDuration(state),
   isDuration: true
 }))(SingleValueMetricCard);
 
 export const RatioToTotalDurationCard = connect((state: RootState) => ({
   title: "Usage Percentage",
-  description: "Percentage of total time range",
+  info: "Percentage of total time range",
   data: selectors.getRatioToTotalDuration(state) * 100,
   isDuration: false,
   decimals: 2,
@@ -88,7 +88,7 @@ export const RatioToTotalDurationCard = connect((state: RootState) => ({
 
 export const TotalDomainVisitCountCard = connect((state: RootState) => ({
   title: "Domain Visits",
-  description: "Total unique domains visited",
+  info: "Total unique domains visited",
   data: selectors.getTotalDomainVisitCount(state),
   isDuration: false,
   formattingFn: (d: number) => d.toLocaleString("en-US"),
@@ -97,7 +97,7 @@ export const TotalDomainVisitCountCard = connect((state: RootState) => ({
 
 export const TotalPageVisitCountCard = connect((state: RootState) => ({
   title: "Page Visits",
-  description: "Total unique pages visited",
+  info: "Total unique pages visited",
   data: selectors.getTotalPageVisitCount(state),
   isDuration: false,
   formattingFn: (d: number) => d.toLocaleString("en-US"),
@@ -106,7 +106,7 @@ export const TotalPageVisitCountCard = connect((state: RootState) => ({
 
 export const TotalUsageCard = connect((state: RootState) => ({
   title: "Total Usage",
-  description: "Total time spent on the internet",
+  info: "Total time spent on the internet",
   data: selectors.getTotalDuration(state),
   isDuration: true
 }))(SingleValueMetricCard);

@@ -14,12 +14,12 @@ import {
 } from "../../utils/stringUtils";
 
 interface UsageByDayOfWeekCardProps {
+  title: string;
+  info: string;
   data: {
     day: number;
     duration: number;
   }[];
-  description: string;
-  title: string;
 }
 
 const MS_PER_HOUR = 1000 * 60 * 60;
@@ -51,8 +51,8 @@ const UsageByDayOfWeekCard = (props: UsageByDayOfWeekCardProps) => {
   return (
     <Card
       className="analytics-view__card analytics-view__card--sm"
-      title="Usage by Day of Week"
-      description="Total time spent on each day of week"
+      title={props.title}
+      info={props.info}
       body={
         <VerticalBarChart
           data={data}
@@ -97,15 +97,15 @@ const UsageByDayOfWeekCard = (props: UsageByDayOfWeekCardProps) => {
 };
 
 export const DomainTotalUsageByDayOfWeekCard = connect((state: RootState) => ({
-  data: selectors.getSelectedDomainTotalDurationByDayOfWeek(state),
-  description: "Total time spent on each day of week",
-  title: "Usage by Day of Week"
+  title: "Usage by Day of Week",
+  info: "Total time spent on each day of week",
+  data: selectors.getSelectedDomainTotalDurationByDayOfWeek(state)
 }))(UsageByDayOfWeekCard);
 
 export const TotalUsageByDayOfWeekCard = connect((state: RootState) => ({
-  data: selectors.getTotalDurationByDayOfWeek(state),
-  description: "Total time spent on each day of week",
-  title: "Usage by Day of Week"
+  title: "Usage by Day of Week",
+  info: "Total time spent on each day of week",
+  data: selectors.getTotalDurationByDayOfWeek(state)
 }))(UsageByDayOfWeekCard);
 
 export default UsageByDayOfWeekCard;
