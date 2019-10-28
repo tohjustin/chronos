@@ -1,5 +1,7 @@
 @import "../../styles/variables";
 
+$card-header__padding: $base__size * 2;
+
 .card {
   display: flex;
   flex-direction: column;
@@ -9,23 +11,41 @@
 
   .card__header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    border-bottom: 1px solid $color__gray-light;
-    padding: $base__size * 2;
+    padding: $card-header__padding $card-header__padding 0 $card-header__padding;
+    padding-bottom: 0;
     word-break: break-word;
 
-    h2 {
-      color: $color__black;
-      font-size: $font-size__md;
-      font-weight: 600;
-      margin: 0;
+    &--with-bottom-margin {
+      border-bottom: 1px solid $color__gray-light;
+      padding-bottom: $card-header__padding;
     }
 
-    p {
-      color: $color__gray-darker;
-      font-size: $font-size__base;
-      font-weight: 400;
-      margin: 0;
+    &--title {
+      display: flex;
+      align-items: center;
+
+      h2 {
+        color: $color__black;
+        font-size: $font-size__md;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      svg {
+        color: $color__gray;
+        margin-left: $base__size * 0.75;
+      }
+    }
+
+    &--description {
+      p {
+        color: $color__gray-darker;
+        font-size: $font-size__base;
+        font-weight: 400;
+        margin: 0;
+      }
     }
   }
 

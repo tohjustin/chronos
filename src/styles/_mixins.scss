@@ -5,3 +5,11 @@
   stroke-width: 1px;
   stroke-dasharray: 2, 2;
 }
+
+@mixin tooltip {
+  background-color: $color__black;
+  border-radius: $border-radius__tooltip;
+  color: $color__white;
+  max-width: $tooltip__max-width;
+  padding: $base__size;
+}

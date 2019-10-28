@@ -6,6 +6,7 @@ const originalGetHeadingStyle = defaultTheme.getHeadingStyle;
 const originalGetMenuItemClassName = defaultTheme.getMenuItemClassName;
 const originalGetRowClassName = defaultTheme.getRowClassName;
 const originalGetTableCellClassName = defaultTheme.getTableCellClassName;
+const originalGetTooltipProps = defaultTheme.getTooltipProps;
 
 const theme = _.merge(defaultTheme, {
   colors: {
@@ -35,17 +36,31 @@ const theme = _.merge(defaultTheme, {
       "evergreen__menu-item"
     );
   },
+  getRowClassName: (appearance: "default", intent: IntentTypes) => {
+    return classnames(
+      originalGetRowClassName(appearance, intent),
+      "evergreen__row"
+    );
+  },
   getTableCellClassName: (appearance: "default") => {
     return classnames(
       originalGetTableCellClassName(appearance),
       "evergreen__table-cell"
     );
   },
-  getRowClassName: (appearance: "default", intent: IntentTypes) => {
-    return classnames(
-      originalGetRowClassName(appearance, intent),
-      "evergreen__row"
-    );
+  getTooltipProps: (appearance: "default" | "card") => {
+    switch (appearance) {
+      case "card":
+        return {
+          ...originalGetTooltipProps(appearance),
+          className: "evergreen__tooltip--card"
+        };
+      case "default":
+      default:
+        return {
+          className: "evergreen__tooltip--default"
+        };
+    }
   },
   typography: {
     fontFamilies: {

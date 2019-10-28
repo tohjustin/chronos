@@ -1,3 +1,4 @@
+@import "mixins";
 @import "variables";
 
 .evergreen__menu-item {
@@ -17,6 +18,20 @@
 .evergreen__table-cell {
   svg[data-icon="tick"] {
     fill: $color__primary !important;
+  }
+}
+
+.evergreen__tooltip {
+  &--default {
+    @include tooltip;
+
+    p {
+      color: inherit;
+      font-size: $font-size__base;
+      font-weight: 400;
+      line-height: $font-size__base * 1.5;
+      text-align: center;
+    }
   }
 }
 

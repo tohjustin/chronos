@@ -1249,12 +1249,13 @@ declare module "evergreen-ui" {
   > {}
 
   export interface TooltipProps extends TextProps {
+    children: React.ReactNode;
+    content: React.ReactNode;
     appearance?: "default" | "card";
     position?: PositionTypes;
-    content: React.ReactNode;
     hideDelay?: number;
     isShown?: boolean;
-    children: React.ReactNode;
+    statelessProps?: PopoverStatelessProps;
   }
 
   export class Tooltip extends React.PureComponent<TooltipProps> {}

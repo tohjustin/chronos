@@ -1,11 +1,8 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
 .tooltip {
-  max-width: 240px;
-  padding: $base__size;
-  border-radius: $border-radius__tooltip;
-  background-color: $color__black;
-  color: $color__white;
+  @include tooltip;
 
   .tooltip__header {
     display: flex;
