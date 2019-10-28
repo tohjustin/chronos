@@ -16,6 +16,6 @@
 
 .settings-view__button-panel {
   button:not(:first-of-type) {
-    margin-left: $base__size * 1.5;
+    margin-left: $margin__button;
   }
 }

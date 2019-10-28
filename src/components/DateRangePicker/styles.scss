@@ -2,8 +2,6 @@
 
 $date-range-picker__margin: $base__size * 1.5;
 
-$date-range-picker-button__margin: $base__size;
-
 .date-range-picker__container {
   display: flex;
 }
@@ -16,7 +14,7 @@ $date-range-picker-button__margin: $base__size;
 
   button {
     &:not(:first-of-type) {
-      margin-top: $date-range-picker-button__margin;
+      margin-top: $margin__button;
     }
   }
 }
