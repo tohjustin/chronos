@@ -16,17 +16,9 @@
 
 .history-table__row {
   .history-table__row-icon {
-    border: 1px solid $color__white;
-    border-radius: 100%;
-    box-shadow: $shadow__favicon;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-right: $base__size * 1.5;
-    overflow: hidden;
+    @include avatar-border;
 
-    img {
-      background: $color__white;
-    }
+    margin-right: $base__size * 1.5;
 
     span {
       margin-top: -1px;

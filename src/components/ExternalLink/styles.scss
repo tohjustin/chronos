@@ -17,15 +17,10 @@
   }
 
   .external-link__icon {
-    height: $base__size * 2;
-    width: $base__size * 2;
-    background-color: $color__white;
-    border-radius: 100%;
-    box-shadow: $shadow__favicon;
-    flex-grow: 0;
-    flex-shrink: 0;
+    @include avatar-border;
+
+    height: $size__favicon;
+    width: $size__favicon;
     margin-right: $base__size;
-    overflow: hidden;
-    padding: 1px;
   }
 }

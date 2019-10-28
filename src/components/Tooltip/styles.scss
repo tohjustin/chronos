@@ -9,15 +9,11 @@
     align-content: center;
 
     img {
-      height: ($font-size__base * 1.5) - 2;
-      width: ($font-size__base * 1.5) - 2;
-      flex-grow: 0;
-      flex-shrink: 0;
-      background-color: $color__white;
-      border: 1px solid $color__white;
-      border-radius: 100%;
+      @include avatar-border;
+
+      height: $size__favicon;
+      width: $size__favicon;
       margin-right: $base__size;
-      overflow: hidden;
     }
 
     strong {

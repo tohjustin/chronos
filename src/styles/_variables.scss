@@ -29,11 +29,13 @@ $color__gray-lighter: #f6f6f6;
 $color__white: #fff;
 
 $color__danger: #ec4c47;
+$color__favicon-background: $color__white;
 $color__shadow: #{$color__black}6d;
 $color__success: #47b881;
 $color__warning: #d9822b;
 
 $border__divider: 1px solid $color__gray-light;
+$border__favicon: 1px solid $color__favicon-background;
 
 $border-radius__button: 3px;
 $border-radius__card: 4px;
@@ -47,6 +49,7 @@ $shadow__input: 0 0 1px $color__shadow;
 $shadow__table: 0 0 2px $color__shadow;
 
 $size__button: $base__size * 4;
+$size__favicon: $base__size * 2;
 $size__icon-button: $base__size * 3;
 $size__icon: $base__size * 2.5;
 $size__spinner: $base__size * 4;

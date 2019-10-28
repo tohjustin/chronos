@@ -3,6 +3,16 @@
 $responsive-card__margin-x: $margin__card;
 $responsive-card__margin-y: $margin__card;
 
+@mixin avatar-border {
+  background-color: $color__favicon-background;
+  border: $border__favicon;
+  border-radius: 100%;
+  box-shadow: $shadow__favicon;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
 @mixin grid-lines {
   color: $color__gray-light;
   stroke-width: 1px;
