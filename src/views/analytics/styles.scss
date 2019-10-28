@@ -28,6 +28,7 @@ $chart__height: 240px;
 
   button {
     flex-shrink: 0;
+    margin: 0;
   }
 
   .label {
@@ -68,7 +69,6 @@ $chart__height: 240px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-right: $base__size * 0.5;
   max-width: 100%;
 
   .analytics-view__header-text {
