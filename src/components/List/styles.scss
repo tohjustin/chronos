@@ -12,7 +12,7 @@
     padding: $base__size * 2 $base__size * 3;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $color__gray-light;
+      border-bottom: $border__divider;
     }
 
     &__label {

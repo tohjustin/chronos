@@ -18,7 +18,7 @@ $card-header__padding: $base__size * 2;
     word-break: break-word;
 
     &--with-bottom-margin {
-      border-bottom: 1px solid $color__gray-light;
+      border-bottom: $border__divider;
       padding-bottom: $card-header__padding;
     }
 
@@ -60,7 +60,7 @@ $card-header__padding: $base__size * 2;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border-top: 1px solid $color__gray-light;
+    border-top: $border__divider;
     padding: $base__size * 2;
   }
 }

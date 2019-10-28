@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   padding: $base__size * 1.5;
-  border-right: 1px solid #e4e7eb;
+  border-right: $border__divider;
 
   button {
     &:not(:last-of-type) {
