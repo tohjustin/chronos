@@ -33,11 +33,10 @@ $table-row__padding-x: $base__size * 1.5;
   padding: 0;
 
   div {
+    @include truncate-text;
+
     font-family: $font-family;
     font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     text-align: right;
     padding: 0 $table-row__padding-x;
   }
@@ -54,11 +53,10 @@ $table-row__padding-x: $base__size * 1.5;
 
   input,
   div {
+    @include truncate-text;
+
     font-family: $font-family;
     font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   div {
@@ -74,9 +72,7 @@ $table-row__padding-x: $base__size * 1.5;
   padding: 0 $table-row__padding-x;
 
   span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include truncate-text;
   }
 }
 

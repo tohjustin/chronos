@@ -71,3 +71,9 @@ $responsive-card__margin-y: $margin__card;
   max-width: $tooltip__max-width;
   padding: $base__size;
 }
+
+@mixin truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

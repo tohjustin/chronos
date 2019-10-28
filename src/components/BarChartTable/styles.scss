@@ -1,3 +1,4 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
 .bar-chart-table {
@@ -73,9 +74,7 @@
 
     // label-component
     > *:not(.bar-chart-table__label-external-link) {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include truncate-text;
     }
   }
 

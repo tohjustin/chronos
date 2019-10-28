@@ -51,10 +51,9 @@ $chart__height: 240px;
     }
 
     .text {
+      @include truncate-text;
+
       margin-left: $base__size * 0.5;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 }
@@ -72,9 +71,7 @@ $chart__height: 240px;
   max-width: 100%;
 
   .analytics-view__header-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include truncate-text;
   }
 }
 

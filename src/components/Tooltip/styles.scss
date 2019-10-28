@@ -21,16 +21,13 @@
     }
 
     strong {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include truncate-text;
     }
   }
 
   .tooltip__body {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include truncate-text;
+
     text-align: right;
   }
 }

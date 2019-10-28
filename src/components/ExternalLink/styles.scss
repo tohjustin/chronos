@@ -1,3 +1,4 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
 .external-link {
@@ -5,11 +6,10 @@
   align-content: center;
 
   a {
+    @include truncate-text;
+
     color: $color__black;
-    overflow: hidden;
     text-decoration: underline;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 
     &:hover {
       color: $color__primary;

@@ -41,16 +41,13 @@
     min-width: 0;
 
     strong {
+      @include truncate-text;
+
       font-weight: 600;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include truncate-text;
     }
   }
 
