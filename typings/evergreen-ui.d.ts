@@ -1283,6 +1283,7 @@ declare module "evergreen-ui" {
     className?: string;
   }
   interface TableVirtualBodyProps {
+    allowAutoHeight?: boolean;
     children?: React.ReactNode;
     className?: string;
     estimatedItemSize?: number;

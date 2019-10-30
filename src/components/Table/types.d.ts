@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface DatumWithId {
   id?: number;
 }
@@ -20,7 +18,9 @@ export interface TableSortButtonProps<U, V> {
 
 export interface TableRowProps<U> {
   datum: U;
-  rowIndex: number;
+  isSelectable?: boolean;
+  selectedIds?: number[];
+  onRowClick?: (datum: U) => void;
 }
 
 export interface TableProps<U extends DatumWithId, V = null> {
@@ -29,7 +29,9 @@ export interface TableProps<U extends DatumWithId, V = null> {
   filterFn?: (data: U[], filter: string) => U[];
   filterPlaceholder?: string;
   formatEntries?: (count: number) => string;
+  onRowClick?: (datum: U) => void;
   rowHeight?: number;
-  rowRenderer?: (props: TableRowProps<U>) => React.ReactNode;
+  rowRenderer?: (props: TableRowProps<U>) => JSX.Element;
+  selectedIds?: number[];
   sortOptions?: TableSortOption<U, V>[];
 }

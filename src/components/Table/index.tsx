@@ -30,8 +30,10 @@ function Table<U extends DatumWithId, V = null>({
   filterFn,
   filterPlaceholder = DEFAULT_FILTER_PLACEHOLDER,
   formatEntries = defaultFormatEntries,
+  onRowClick,
   rowHeight = DEFAULT_TABLE_ROW_HEIGHT,
   rowRenderer,
+  selectedIds,
   sortOptions
 }: TableProps<U, V>) {
   const [containerRef, { height: containerHeight }] = useClientDimensions();
@@ -51,7 +53,7 @@ function Table<U extends DatumWithId, V = null>({
         setRowCount(rowCount + ROWS_TO_LOAD_PER_BATCH);
       }
     },
-    [containerHeight, rowCount, rowHeight]
+    [containerHeight, rowCount, rowHeight, setRowCount]
   );
   const activities = useMemo(() => {
     let result = data;
@@ -97,16 +99,18 @@ function Table<U extends DatumWithId, V = null>({
       break;
     default: {
       const tableRowRenderer = rowRenderer ? rowRenderer : defaultRowRenderer;
+      const isSelectable = selectedIds !== undefined;
       tableContent = (
         <EvergreenTable.VirtualBody
+          allowAutoHeight={false}
           estimatedItemSize={rowHeight}
           height={tableBodyHeight}
           onScroll={handleScroll}
           overscanCount={Math.round(containerHeight / rowHeight) * 2}
           useAverageAutoHeightEstimation={false}
         >
-          {visibleActivities.map((datum, index) =>
-            tableRowRenderer({ datum, rowIndex: index })
+          {visibleActivities.map(datum =>
+            tableRowRenderer({ datum, isSelectable, onRowClick, selectedIds })
           )}
         </EvergreenTable.VirtualBody>
       );

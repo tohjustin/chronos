@@ -74,6 +74,14 @@ $table-row__padding-x: $base__size * 1.5;
   span {
     @include truncate-text;
   }
+
+  &--selectable {
+    cursor: pointer;
+  }
+
+  &--selected {
+    background-color: $color__primary-lightest;
+  }
 }
 
 .table__sort-button {
