@@ -22,4 +22,24 @@
       }
     }
   }
+
+  &#{&}--appearance-primary#{&}--intent-danger {
+    background-image: linear-gradient(to bottom, $color__danger, $color__danger-dark);
+    color: $color__white;
+
+    &:not([disabled]):not([data-disabled]):hover {
+      background-image: linear-gradient(to bottom, $color__danger-dark, $color__danger-darker);
+    }
+  }
+
+  &#{&}--appearance-minimal#{&}--intent-danger {
+    &:not([disabled]):not([data-disabled])[data-active] {
+      background-color: $color__danger;
+      color: $color__white;
+
+      &:hover {
+        background-color: $color__danger-dark;
+      }
+    }
+  }
 }

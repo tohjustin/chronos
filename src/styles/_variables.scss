@@ -29,6 +29,12 @@ $color__gray-lighter: #f6f6f6;
 $color__white: #fff;
 
 $color__danger: #ec4c47;
+$color__danger-dark: darken($color__danger, 12%);
+$color__danger-darker: darken($color__danger, 24%);
+$color__danger-darkest: darken($color__danger, 36%);
+$color__danger-light: lighten($color__danger, 12%);
+$color__danger-lighter: lighten($color__danger, 24%);
+$color__danger-lightest: lighten($color__danger, 36%);
 $color__favicon-background: $color__white;
 $color__shadow: #{$color__black}6d;
 $color__success: #47b881;

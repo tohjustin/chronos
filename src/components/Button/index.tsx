@@ -6,12 +6,14 @@ import "./styles.scss";
 
 const Button = (props: ButtonProps) => {
   const appearance = props.appearance;
+  const intent = props.intent;
 
   return (
     <EvergreenButton
       {...props}
       className={classNames("button", props.className, {
-        [`button--appearance-${appearance}`]: appearance !== undefined
+        [`button--appearance-${appearance}`]: appearance !== undefined,
+        [`button--intent-${intent}`]: intent !== undefined
       })}
       fontWeight="600"
     />
