@@ -10,7 +10,7 @@ import defaultRowRenderer, {
   DEFAULT_TABLE_ROW_HEIGHT
 } from "./DefaultTableRow";
 import TableSortButton from "./TableSortButton";
-import { TableProps } from "./types";
+import { DatumWithId, TableProps } from "./types";
 
 import "./styles.scss";
 
@@ -24,7 +24,7 @@ function defaultFormatEntries(count: number) {
   return `${count.toLocaleString("en-US")} ${count > 1 ? "entries" : "entry"}`;
 }
 
-function Table<U, V = null>({
+function Table<U extends DatumWithId, V = null>({
   data,
   defaultSortOrder = null,
   filterFn,
@@ -40,7 +40,7 @@ function Table<U, V = null>({
   const [sortOrder, setSortOrder] = useState<V | null>(defaultSortOrder);
   const [debouncedFilter] = useDebounce(filter, 500);
   const handleFilterChange = useCallback(setFilter, []);
-  const handleOnScroll = useCallback(
+  const handleScroll = useCallback(
     (scrollTop: number) => {
       // Poor attempt of implementing lazy loading 😰
       // This is neccessary b/c evergreen-ui's uses `react-tiny-virtual-list`
@@ -101,7 +101,7 @@ function Table<U, V = null>({
         <EvergreenTable.VirtualBody
           estimatedItemSize={rowHeight}
           height={tableBodyHeight}
-          onScroll={handleOnScroll}
+          onScroll={handleScroll}
           overscanCount={Math.round(containerHeight / rowHeight) * 2}
           useAverageAutoHeightEstimation={false}
         >

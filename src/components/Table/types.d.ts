@@ -1,5 +1,9 @@
 import React from "react";
 
+export interface DatumWithId {
+  id?: number;
+}
+
 export interface TableSortOption<U, V> {
   buttonLabel: string;
   optionLabel: string;
@@ -19,7 +23,7 @@ export interface TableRowProps<U> {
   rowIndex: number;
 }
 
-export interface TableProps<U, V = null> {
+export interface TableProps<U extends DatumWithId, V = null> {
   data: U[];
   defaultSortOrder: V | null;
   filterFn?: (data: U[], filter: string) => U[];
