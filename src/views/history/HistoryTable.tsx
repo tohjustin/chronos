@@ -17,6 +17,7 @@ import "./styles.scss";
 
 interface HistoryTableProps {
   data: ActivityRecord[];
+  autoFocus?: boolean;
 }
 
 enum HistoryTableSortOrder {
@@ -119,9 +120,10 @@ const HistoryTableRow = ({ datum }: { datum: ActivityRecord }) => {
   );
 };
 
-const HistoryTable = ({ data }: HistoryTableProps) => {
+const HistoryTable = ({ autoFocus, data }: HistoryTableProps) => {
   return (
     <Table
+      autoFocus={autoFocus}
       data={data}
       defaultSortOrder={DEFAULT_SORT_ORDER}
       filterFn={filterActivityRecords}

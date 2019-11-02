@@ -21,7 +21,7 @@ const HistoryView = ({ isLoadingRecords }: HistoryViewProps) => {
       viewContent = <LoadingView />;
       break;
     default:
-      viewContent = <HistoryTable />;
+      viewContent = <HistoryTable autoFocus={true} />;
       break;
   }
 
