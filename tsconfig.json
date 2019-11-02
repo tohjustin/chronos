@@ -19,7 +19,11 @@
     "sourceMap": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*", "typings/*"]
+    }
   },
   "include": [
     "**/*.ts",
