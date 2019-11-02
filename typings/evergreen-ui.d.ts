@@ -1280,7 +1280,12 @@ declare module "evergreen-ui" {
     className?: string;
   }
   interface TableSearchHeaderCellProps extends UiBoxPropsType {
+    value: string;
+    autoFocus?: boolean;
     className?: string;
+    icon?: IconNameTypes;
+    onChange?: (input: string) => void;
+    placeholder?: string;
   }
   interface TableVirtualBodyProps {
     allowAutoHeight?: boolean;
@@ -1302,7 +1307,7 @@ declare module "evergreen-ui" {
   export class Table extends React.PureComponent<TableProps> {
     static Cell: (props: TableCell) => JSX.Element;
     static Head: (props: TableHead) => JSX.Element;
-    static SearchHeaderCell: (props: TableSearchHeaderCell) => JSX.Element;
+    static SearchHeaderCell: (props: TableSearchHeaderCellProps) => JSX.Element;
     static Row: (props: TableRow) => JSX.Element;
     static VirtualBody: (props: TableVirtualBodyProps) => JSX.Element;
   }
