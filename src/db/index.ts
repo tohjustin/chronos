@@ -1,6 +1,6 @@
 import Dexie from "dexie";
 
-import { ActivityRecord } from "../models/activity";
+import { Activity, ActivityRecord } from "../models/activity";
 
 import {
   ActivityService,
@@ -13,7 +13,7 @@ export const ACTIVITY_TABLE = "activity";
 
 export class Database extends Dexie
   implements ActivityService, DataMigrationService {
-  private [ACTIVITY_TABLE]: Dexie.Table<ActivityRecord, number>;
+  private [ACTIVITY_TABLE]: Dexie.Table<Activity, number>;
 
   public constructor() {
     super("Database");
@@ -50,7 +50,7 @@ export class Database extends Dexie
   }
 
   public async exportDatabaseRecords(): Promise<DatabaseRecords> {
-    const activityTableRecords = (await exportTableRecords<ActivityRecord>(
+    const activityTableRecords = (await exportTableRecords<Activity>(
       this[ACTIVITY_TABLE]
     )).map(record => {
       delete record.id;

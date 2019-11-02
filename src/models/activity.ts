@@ -1,5 +1,5 @@
 /** Object representing a segment of web browsing activity */
-export interface ActivityRecord {
+export interface Activity {
   id?: number;
   startTime: number;
   endTime: number;
@@ -10,4 +10,9 @@ export interface ActivityRecord {
   title: string;
   favIconUrl: string;
   url: string;
+}
+
+/** Object representing a segment of web browsing activity stored in DB */
+export interface ActivityRecord extends Activity {
+  id: number;
 }
