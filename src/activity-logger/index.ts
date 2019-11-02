@@ -1,4 +1,4 @@
-import { InitDatabase } from "../db";
+import { InitDatabaseConnection } from "../db";
 import { ActivityService } from "../db/types";
 import { InitIdleService } from "../web-extensions/idle";
 import {
@@ -270,7 +270,7 @@ export class ActivityLogger {
  */
 export function InitActivityLogger(): void {
   // Initialize all dependencies
-  const db = InitDatabase();
+  const db = InitDatabaseConnection();
   const activityService = db;
   const idleService = InitIdleService();
   const tabsService = InitTabsService();

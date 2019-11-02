@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
-import { InitDatabase } from "../../db";
+import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
 import { RootState } from "../index";
 
@@ -63,9 +63,9 @@ const loadRecords = (): ThunkAction<
 > => async dispatch => {
   dispatch(activity.actions.getRecordsStart());
   try {
-    const db = InitDatabase();
+    const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB";
+      throw "Unable to initialize DB connection";
     }
 
     const records = await db.fetchAllActivityRecords();
@@ -82,9 +82,9 @@ const deleteRecords = (
 ): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
   dispatch(activity.actions.deleteRecordsStart());
   try {
-    const db = InitDatabase();
+    const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB";
+      throw "Unable to initialize DB connection";
     }
 
     await db.deleteActivityRecords(recordIds);

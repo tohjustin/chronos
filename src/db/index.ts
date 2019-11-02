@@ -11,7 +11,7 @@ import { exportTableRecords } from "./utils";
 
 export const ACTIVITY_TABLE = "activity";
 
-export class Database extends Dexie
+export class DatabaseConnection extends Dexie
   implements ActivityService, DataMigrationService {
   private [ACTIVITY_TABLE]: Dexie.Table<Activity, number>;
 
@@ -89,16 +89,16 @@ export class Database extends Dexie
 }
 
 /**
- * Initialize database for interacting with browser storage
+ * Initialize database connection for interacting with browser storage
  *
- * @returns `Database` object or `undefined` if the browser does not
+ * @returns `DatabaseConnection` object or `undefined` if the browser does not
  * support interactions with browser storage.
  */
-export function InitDatabase(): Database | undefined {
+export function InitDatabaseConnection(): DatabaseConnection | undefined {
   switch (process.env.REACT_APP_BUILD_TARGET) {
     case "chrome":
     case "firefox":
-      return new Database();
+      return new DatabaseConnection();
     case undefined:
       console.warn("[db] Missing build target");
       return undefined;
