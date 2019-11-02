@@ -25,6 +25,7 @@ function defaultFormatEntries(count: number) {
 }
 
 function Table<U extends DatumWithId, V = null>({
+  autoFocus,
   data,
   defaultSortOrder = null,
   filterFn,
@@ -138,6 +139,7 @@ function Table<U extends DatumWithId, V = null>({
         <EvergreenTable.Head height={HEADER_HEIGHT} className="table__header">
           {filterFn && (
             <EvergreenTable.SearchHeaderCell
+              autoFocus={autoFocus}
               flexGrow={100}
               onChange={handleFilterChange}
               value={filter}

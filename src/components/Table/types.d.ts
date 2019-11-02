@@ -25,7 +25,8 @@ export interface TableRowProps<U> {
 
 export interface TableProps<U extends DatumWithId, V = null> {
   data: U[];
-  defaultSortOrder: V | null;
+  autoFocus?: boolean;
+  defaultSortOrder?: V | null;
   filterFn?: (data: U[], filter: string) => U[];
   filterPlaceholder?: string;
   formatEntries?: (count: number) => string;
