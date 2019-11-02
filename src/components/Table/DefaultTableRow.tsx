@@ -24,11 +24,7 @@ function DefaultTableRow<T extends DatumWithId>({
           selectedIds.includes(datum.id)
       })}
       height={DEFAULT_TABLE_ROW_HEIGHT}
-      onClick={() => {
-        if (onRowClick) {
-          onRowClick(datum);
-        }
-      }}
+      onClick={isSelectable && onRowClick ? () => onRowClick(datum) : undefined}
     >
       <span>{JSON.stringify(datum)}</span>
     </Table.Row>

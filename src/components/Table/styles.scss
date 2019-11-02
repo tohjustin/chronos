@@ -10,11 +10,15 @@ $table-row__padding-x: $base__size * 1.5;
   border-radius: $border-radius__table;
 }
 
-.table__body-placeholder {
+.table__body {
+  background: $color__white;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.table__body-placeholder {
   color: $color__gray-dark;
   font-weight: 600;
   font-size: $font-size__base;
@@ -50,6 +54,16 @@ $table-row__padding-x: $base__size * 1.5;
   border-top-left-radius: $border-radius__table;
   border-top-right-radius: $border-radius__table;
   padding: 0;
+
+  &--disabled {
+    background: $color__gray-light;
+    cursor: not-allowed;
+
+    input {
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  }
 
   input,
   div {

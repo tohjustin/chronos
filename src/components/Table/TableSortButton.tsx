@@ -10,6 +10,7 @@ const DEFAULT_BUTTON_TEXT = "Sort";
 const DEFAULT_POPOVER_HEADER = "Sort Order";
 
 function TableSortButton<U, V>({
+  disabled,
   onSelect,
   sortOptions,
   sortOrder
@@ -46,6 +47,7 @@ function TableSortButton<U, V>({
     >
       <Button
         appearance="minimal"
+        disabled={disabled}
         iconBefore="sort"
         isActive={true}
         className="table__sort-button"

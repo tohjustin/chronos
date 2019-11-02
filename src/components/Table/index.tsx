@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Spinner, Table as EvergreenTable } from "evergreen-ui";
 import _ from "lodash";
 import React, { useCallback, useMemo, useState } from "react";
@@ -28,6 +29,7 @@ function Table<U extends DatumWithId, V = null>({
   autoFocus,
   data,
   defaultSortOrder = null,
+  disabled = true,
   filterFn,
   filterPlaceholder = DEFAULT_FILTER_PLACEHOLDER,
   formatEntries = defaultFormatEntries,
@@ -81,7 +83,7 @@ function Table<U extends DatumWithId, V = null>({
     case isDebounceActive:
       tableContent = (
         <div
-          className="table__body-placeholder"
+          className="table__body table__body-placeholder"
           style={{ height: tableBodyHeight }}
         >
           <Spinner size={SPINNER_SIZE} />
@@ -91,7 +93,7 @@ function Table<U extends DatumWithId, V = null>({
     case visibleActivities.length === 0:
       tableContent = (
         <div
-          className="table__body-placeholder"
+          className="table__body table__body-placeholder"
           style={{ height: tableBodyHeight }}
         >
           {filter === "" ? filterPlaceholder : "No matches found"}
@@ -100,10 +102,11 @@ function Table<U extends DatumWithId, V = null>({
       break;
     default: {
       const tableRowRenderer = rowRenderer ? rowRenderer : defaultRowRenderer;
-      const isSelectable = selectedIds !== undefined;
+      const isSelectable = !disabled && selectedIds !== undefined;
       tableContent = (
         <EvergreenTable.VirtualBody
           allowAutoHeight={false}
+          className="table__body"
           estimatedItemSize={rowHeight}
           height={tableBodyHeight}
           onScroll={handleScroll}
@@ -136,17 +139,23 @@ function Table<U extends DatumWithId, V = null>({
   return (
     <div ref={containerRef} className="table__container">
       <EvergreenTable>
-        <EvergreenTable.Head height={HEADER_HEIGHT} className="table__header">
+        <EvergreenTable.Head
+          height={HEADER_HEIGHT}
+          className={classNames("table__header", {
+            "table__header--disabled": disabled
+          })}
+        >
           {filterFn && (
             <EvergreenTable.SearchHeaderCell
               autoFocus={autoFocus}
               flexGrow={100}
-              onChange={handleFilterChange}
+              onChange={disabled ? undefined : handleFilterChange}
               value={filter}
             />
           )}
           {sortOptions && sortOptions.length > 0 && (
             <TableSortButton
+              disabled={disabled}
               onSelect={setSortOrder}
               sortOrder={sortOrder}
               sortOptions={sortOptions}
