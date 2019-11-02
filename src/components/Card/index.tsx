@@ -25,7 +25,14 @@ const Card = (props: CardProps) => (
       <div className="card__header--title">
         <h2>{props.title}</h2>
         {props.info && (
-          <Tooltip content={props.info}>
+          <Tooltip
+            content={props.info}
+            // TODO: Switch back to `className` once
+            // https://github.com/segmentio/evergreen/issues/666 is fixed
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            statelessProps={{ classNames: "card__header--tooltip" }}
+          >
             {/* evergreen-ui doesn't have a no-fill version of an "info-sign" */}
             {/* icon so we need to be creative here */}
             <Icon

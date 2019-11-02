@@ -23,20 +23,6 @@
   }
 }
 
-.evergreen__tooltip {
-  &--default {
-    @include tooltip;
-
-    p {
-      color: inherit;
-      font-size: $font-size__base;
-      font-weight: 400;
-      line-height: $font-size__base * 1.5;
-      text-align: center;
-    }
-  }
-}
-
 // NOTE: Resort to global style + !important b/c evergreen-ui's <SelectMenu/>
 // doesn't expose any props for adding classes to it's dialog component 🤢
 div[evergreen-portal-container] div[role="dialog"] {

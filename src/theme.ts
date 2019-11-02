@@ -6,7 +6,6 @@ const originalGetHeadingStyle = defaultTheme.getHeadingStyle;
 const originalGetMenuItemClassName = defaultTheme.getMenuItemClassName;
 const originalGetRowClassName = defaultTheme.getRowClassName;
 const originalGetTableCellClassName = defaultTheme.getTableCellClassName;
-const originalGetTooltipProps = defaultTheme.getTooltipProps;
 
 const theme = _.merge(defaultTheme, {
   colors: {
@@ -47,20 +46,6 @@ const theme = _.merge(defaultTheme, {
       originalGetTableCellClassName(appearance),
       "evergreen__table-cell"
     );
-  },
-  getTooltipProps: (appearance: "default" | "card") => {
-    switch (appearance) {
-      case "card":
-        return {
-          ...originalGetTooltipProps(appearance),
-          className: "evergreen__tooltip--card"
-        };
-      case "default":
-      default:
-        return {
-          className: "evergreen__tooltip--default"
-        };
-    }
   },
   typography: {
     fontFamilies: {

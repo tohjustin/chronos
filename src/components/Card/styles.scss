@@ -1,3 +1,4 @@
+@import "../../styles/mixins";
 @import "../../styles/variables";
 
 $card-header__padding: $base__size * 2;
@@ -8,59 +9,73 @@ $card-header__padding: $base__size * 2;
   background-color: $color__white;
   box-shadow: $shadow__card;
   border-radius: $border-radius__card;
+}
 
-  .card__header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: $card-header__padding $card-header__padding 0 $card-header__padding;
-    padding-bottom: 0;
-    word-break: break-word;
+.card__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $card-header__padding $card-header__padding 0 $card-header__padding;
+  padding-bottom: 0;
+  word-break: break-word;
 
-    &--with-bottom-margin {
-      border-bottom: $border__divider;
-      padding-bottom: $card-header__padding;
-    }
-
-    &--title {
-      display: flex;
-      align-items: center;
-
-      h2 {
-        color: $color__black;
-        font-size: $font-size__md;
-        font-weight: 600;
-        margin: 0;
-      }
-
-      svg {
-        color: $color__gray;
-        margin-left: $base__size * 0.75;
-      }
-    }
-
-    &--description {
-      p {
-        color: $color__gray-darker;
-        font-size: $font-size__base;
-        font-weight: 400;
-        margin: 0;
-      }
-    }
+  &--with-bottom-margin {
+    border-bottom: $border__divider;
+    padding-bottom: $card-header__padding;
   }
 
-  .card__body {
+  &--title {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: $base__size * 2;
+
+    h2 {
+      color: $color__black;
+      font-size: $font-size__md;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    svg {
+      color: $color__gray;
+      margin-left: $base__size * 0.75;
+    }
   }
 
-  .card__footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    border-top: $border__divider;
-    padding: $base__size * 2;
+  &--description {
+    p {
+      color: $color__gray-darker;
+      font-size: $font-size__base;
+      font-weight: 400;
+      margin: 0;
+    }
   }
+}
+
+// Not scoped under `.card__header` b/c evergreen-ui's tooltips are being render
+// in different location on the DOM
+.card__header--tooltip {
+  @include tooltip;
+
+  p {
+    color: inherit;
+    font-size: $font-size__base;
+    font-weight: 400;
+    line-height: $font-size__base * 1.5;
+    text-align: center;
+  }
+}
+
+.card__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $base__size * 2;
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: $border__divider;
+  padding: $base__size * 2;
 }
