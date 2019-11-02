@@ -1,10 +1,11 @@
+import classNames from "classnames";
 import { Avatar, Table as EvergreenTable } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 
 import ExternalLink from "../../components/ExternalLink";
 import Table from "../../components/Table";
-import { TableSortOption } from "../../components/Table/types";
+import { TableRowProps, TableSortOption } from "../../components/Table/types";
 import { ActivityRecord } from "../../models/activity";
 import { RootState, selectors } from "../../store";
 import { BASE_SIZE } from "../../styles/constants";
@@ -18,6 +19,9 @@ import "./styles.scss";
 interface HistoryTableProps {
   data: ActivityRecord[];
   autoFocus?: boolean;
+  disabled?: boolean;
+  selectedRecordIds?: number[];
+  onRowClick?: (datum: ActivityRecord) => void;
 }
 
 enum HistoryTableSortOrder {
@@ -85,17 +89,29 @@ function formatRecordString(count: number) {
   return `${count.toLocaleString("en-US")} ${count > 1 ? "records" : "record"}`;
 }
 
-const HistoryTableRow = ({ datum }: { datum: ActivityRecord }) => {
+const HistoryTableRow = ({
+  datum,
+  isSelectable,
+  onRowClick,
+  selectedIds
+}: TableRowProps<ActivityRecord>) => {
   const activityDateTime = formatTableDateTimeLabel(new Date(datum.startTime));
   const activityDuration = formatTableDurationLabel(
     datum.endTime - datum.startTime
   );
   return (
     <EvergreenTable.Row
-      className="history-table__row"
+      className={classNames("history-table__row", {
+        "history-table__row--selectable": isSelectable,
+        "history-table__row--selected":
+          selectedIds !== undefined &&
+          datum.id !== undefined &&
+          selectedIds.includes(datum.id)
+      })}
       data-activity-id={datum.id}
       height={ROW_HEIGHT}
       key={datum.id}
+      onClick={isSelectable && onRowClick ? () => onRowClick(datum) : undefined}
     >
       <EvergreenTable.Cell display="flex" alignItems="center" flexGrow={80}>
         <Avatar
@@ -120,17 +136,26 @@ const HistoryTableRow = ({ datum }: { datum: ActivityRecord }) => {
   );
 };
 
-const HistoryTable = ({ autoFocus, data }: HistoryTableProps) => {
+const HistoryTable = ({
+  autoFocus,
+  data,
+  disabled,
+  onRowClick,
+  selectedRecordIds
+}: HistoryTableProps) => {
   return (
     <Table
       autoFocus={autoFocus}
       data={data}
       defaultSortOrder={DEFAULT_SORT_ORDER}
+      disabled={disabled}
       filterFn={filterActivityRecords}
       filterPlaceholder="No activity"
       formatEntries={formatRecordString}
       rowHeight={ROW_HEIGHT}
       rowRenderer={HistoryTableRow}
+      onRowClick={onRowClick}
+      selectedIds={selectedRecordIds}
       sortOptions={SORT_OPTIONS}
     />
   );

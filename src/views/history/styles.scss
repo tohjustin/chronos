@@ -7,6 +7,10 @@
   margin-right: $base__size * 0.5;
 }
 
+.history-view__cancel-button {
+  margin-right: $margin__button;
+}
+
 .history-view__loading-container {
   display: flex;
   align-items: center;
@@ -15,6 +19,29 @@
 }
 
 .history-table__row {
+  $historyTableRowClass: &;
+
+  &--selectable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color__primary-lightest;
+    }
+
+    &#{$historyTableRowClass}--selected:hover {
+      background-color: $color__danger-lighter;
+    }
+  }
+
+  &--selected {
+    background-color: $color__danger-lightest;
+    text-decoration: line-through;
+
+    a {
+      pointer-events: none;
+    }
+  }
+
   .history-table__row-icon {
     @include avatar-border;
 

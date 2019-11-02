@@ -23,13 +23,19 @@ export const getAllRecords = (state: RootState) => {
 };
 
 /**
- * Retrieves the status of loading activity records into the redux store
+ * Retrieves the status of deleting activity records
+ */
+export const getIsDeletingRecords = (state: RootState) =>
+  state.activity.isDeleting;
+
+/**
+ * Retrieves the status of loading activity records
  */
 export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoading;
 
 /**
- * Retrieves the state of whether there are activity records in the store
+ * Retrieves the state of whether there are any activity records
  */
 export const getHasRecords = createSelector(
   getAllRecords,
@@ -38,7 +44,7 @@ export const getHasRecords = createSelector(
 
 /**
  * Retrieves the time range of all recorded activity (oldest & most recently
- * recorded activity in IndexedDB)
+ * recorded activity)
  */
 export const getActivityTimeRange = createSelector(
   getAllRecords,
