@@ -45,6 +45,10 @@ export class Database extends Dexie
     });
   }
 
+  public deleteActivityRecords(recordIds: number[]): Promise<void> {
+    return this[ACTIVITY_TABLE].bulkDelete(recordIds);
+  }
+
   public fetchAllActivityRecords(): Promise<ActivityRecord[]> {
     return this[ACTIVITY_TABLE].toCollection().toArray();
   }

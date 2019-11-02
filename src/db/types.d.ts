@@ -24,8 +24,14 @@ export interface ActivityService {
   ): Promise<number>;
 
   /**
+   * Deletes a list of activity records
+   * @param recordId List of activity records IDs to be deleted
+   */
+  deleteActivityRecords(recordIds: number[]): Promise<void>;
+
+  /**
    * Fetches all stored activity records
-   * @returns Collection of Activity Records
+   * @returns Collection of activity records
    */
   fetchAllActivityRecords(): Promise<ActivityRecord[]>;
 }
