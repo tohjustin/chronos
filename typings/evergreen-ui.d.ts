@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface, @typescript-eslint/no-explicit-any */
 /**
- * Typings obtained from https://github.com/segmentio/evergreen/issues/300
+ * Typings obtained & extended from https://github.com/segmentio/evergreen/issues/300
  */
 
 declare module "evergreen-ui" {
@@ -1312,6 +1312,34 @@ declare module "evergreen-ui" {
     static VirtualBody: (props: TableVirtualBodyProps) => JSX.Element;
   }
 
-  export const defaultTheme: any;
-  export const ThemeProvider: React.Provider<typeof defaultTheme>;
+  type ThemeClassNameGetter = (
+    appearance?: "default",
+    intent?: IntentTypes
+  ) => string;
+
+  export interface Theme {
+    avatarColors: string[];
+    badgeColors: string[];
+    colors: Colors;
+    elevations: Elevation[];
+    fills: Fills;
+    overlayBackgroundColor: string;
+    palette: Palette;
+    scales: ColorScales;
+    spinnerColor: string;
+    typography: Typography;
+    getAvatarProps(args: {
+      color: string;
+      hashValue?: string;
+      isSolid?: boolean;
+    }): { color: string; backgroundColor: string };
+    getHeadingStyle: (size: number) => React.CSSProperties;
+    getIconColor: (color: string) => string;
+    getMenuItemClassName: ThemeClassNameGetter;
+    getRowClassName: ThemeClassNameGetter;
+    getTableCellClassName: ThemeClassNameGetter;
+  }
+  export const ThemeProvider: React.Provider<Theme>;
+
+  export const defaultTheme: Theme;
 }

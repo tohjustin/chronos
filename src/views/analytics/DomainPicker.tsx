@@ -42,7 +42,7 @@ const DomainPicker = (props: DomainPickerProps) => {
         hasTitle={false}
         isMultiSelect
         onDeselect={() => props.setSelectedDomain(null)}
-        onSelect={item => props.setSelectedDomain(item.value)}
+        onSelect={item => props.setSelectedDomain(item.value as string)}
         options={Object.keys(props.allDomains)
           .sort()
           .map(domain => ({ label: domain, value: domain }))}
