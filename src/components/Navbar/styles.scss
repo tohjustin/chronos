@@ -3,9 +3,9 @@
 $navbar__height: 100vh;
 $navbar__width: $base__size * 10;
 
-$navbar__logoSize: $base__size * 4;
+$navbar__logo-size: $base__size * 4;
 
-$navbar-item__iconSize: $base__size * 3;
+$navbar-item__icon-size: $base__size * 3;
 $navbar-item__height: $base__size * 9;
 $navbar-item__width: $navbar__width;
 
@@ -38,8 +38,8 @@ $navbar-item__width: $navbar__width;
     width: $navbar-item__width;
 
     img {
-      height: $navbar__logoSize;
-      width: $navbar__logoSize;
+      height: $navbar__logo-size;
+      width: $navbar__logo-size;
     }
   }
 }
@@ -58,8 +58,8 @@ $navbar-item__width: $navbar__width;
   }
 
   svg {
-    height: $navbar-item__iconSize;
-    width: $navbar-item__iconSize;
+    height: $navbar-item__icon-size;
+    width: $navbar-item__icon-size;
     margin: $base__size * 0.5;
   }
 
