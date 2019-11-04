@@ -5,12 +5,20 @@
 body {
   font-family: $font-family;
   font-size: $font-size__base;
+  letter-spacing: $letter-spacing;
   line-height: $line-height;
   color: $color__black;
   margin: 0;
   padding: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+}
+
+text {
+  font-family: $font-family;
+  font-size: $font-size__base;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
 }
 
 .app__container {
