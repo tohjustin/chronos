@@ -2,6 +2,7 @@
 @import "../../styles/variables";
 
 $card-header__padding: $base__size * 2;
+$card-header__padding-bottom: $base__size * 1.5;
 
 .card {
   display: flex;
@@ -21,7 +22,7 @@ $card-header__padding: $base__size * 2;
 
   &--with-bottom-margin {
     border-bottom: $border__divider;
-    padding-bottom: $card-header__padding;
+    padding-bottom: $card-header__padding-bottom;
   }
 
   &--title {
