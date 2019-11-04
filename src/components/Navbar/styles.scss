@@ -5,6 +5,10 @@ $navbar__width: $base__size * 10;
 
 $navbar__logo-size: $base__size * 4;
 
+$navbar-item__color: $color__gray;
+$navbar-item__active-color: $color__white;
+$navbar-item__background-active-color: $color__primary;
+$navbar-item__background-color: $color__black;
 $navbar-item__icon-size: $base__size * 3;
 $navbar-item__height: $base__size * 9;
 $navbar-item__width: $navbar__width;
@@ -15,8 +19,8 @@ $navbar-item__width: $navbar__width;
   justify-content: space-between;
   height: $navbar__height;
   width: $navbar__width;
-  background: $color__black;
-  color: $color__gray;
+  background: $navbar-item__background-color;
+  color: $navbar-item__color;
   z-index: $z-index__navbar;
 
   a {
@@ -53,8 +57,8 @@ $navbar-item__width: $navbar__width;
   width: $navbar-item__width;
 
   &.active {
-    background: $color__primary;
-    color: $color__white;
+    background: $navbar-item__background-active-color;
+    color: $navbar-item__active-color;
   }
 
   svg {

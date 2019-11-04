@@ -50,19 +50,19 @@ const AppShell = ({ loadRecords, searchParams }: AppShellProps) => {
           className="app__navbar"
           primaryItems={[
             {
-              featherIcon: BarChart2,
+              icon: <BarChart2 />,
               text: "Analytics",
               to: { pathname: "/analytics", search }
             },
             {
-              featherIcon: Clock,
+              icon: <Clock />,
               text: "History",
               to: { pathname: "/history", search }
             }
           ]}
           secondaryItems={[
             {
-              featherIcon: Settings,
+              icon: <Settings />,
               text: "Settings",
               to: {
                 pathname: "/settings"
