@@ -1,13 +1,19 @@
 {
+  "manifest_version": 2,
   "name": "chronos",
+  "version": "0.1.0",
   "background": {
     "page": "index.html"
   },
+  "browser_action": {
+    "default_icon": "logo.png"
+  },
   "content_security_policy": "script-src 'self' 'unsafe-eval' http://localhost:8097; object-src 'self';",
-  "manifest_version": 2,
+  "icons": {
+    "96": "logo.png"
+  },
   "permissions": [
     "idle",
     "tabs"
-  ],
-  "version": "0.0.1"
+  ]
 }
