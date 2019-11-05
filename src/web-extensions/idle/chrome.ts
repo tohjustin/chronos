@@ -34,8 +34,7 @@ export class ChromeIdleService implements IdleService {
   queryState(detectionIntervalInSeconds: number): Promise<IdleState> {
     return new Promise(resolve => {
       this.idle.queryState(detectionIntervalInSeconds, newState => {
-        const temp = newState as IdleState;
-        resolve(temp);
+        resolve(newState as IdleState);
       });
     });
   }

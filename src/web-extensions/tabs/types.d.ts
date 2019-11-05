@@ -134,65 +134,32 @@ export interface TabsService {
 
 /** An object implementing a subset of Chrome Extension Tabs API */
 export interface ChromeTabsAPI {
-  /** Retrieves details about the specified tab. */
   get(tabId: number, callback: (tab: chrome.tabs.Tab) => void): void;
 
-  /**
-   * Fires when the active tab in a window changes. Note that the tab's URL may
-   * not be set at the time this event fired, but you can listen to onUpdated
-   * events to be notified when a URL is set.
-   * @since Chrome 18.
-   */
   onActivated: chrome.tabs.TabActivatedEvent;
-  /** Fired when a tab is closed. */
   onRemoved: chrome.tabs.TabRemovedEvent;
-  /** Fired when a tab is updated. */
   onUpdated: chrome.tabs.TabUpdatedEvent;
 }
 
 /** An object implementing a subset of Web Extensions Tabs API (Firefox) */
 export interface FirefoxTabsAPI {
-  /** Retrieves details about the specified tab. */
   get(tabId: number): Promise<browser.tabs.Tab>;
 
-  /**
-   * Fires when the active tab in a window changes. Note that the tab's URL may
-   * not be set at the time this event fired, but you can listen to onUpdated
-   * events to be notified when a URL is set.
-   */
   onActivated: WebExtEvent<
     (activeInfo: {
-      /** The ID of the tab that has become active. */
       tabId: number;
-      /**
-       * The ID of the tab that was previously active, if that tab is still
-       * open.
-       */
       previousTabId?: number;
-      /** The ID of the window the active tab changed inside of. */
       windowId: number;
     }) => void
   >;
-  /** Fired when a tab is closed. */
   onRemoved: WebExtEvent<
     (
       tabId: number,
       removeInfo: {
-        /** The window whose tab is closed. */
-        windowId: number;
-        /**
-         * True when the tab is being closed because its window is being
-         * closed.
-         */
         isWindowClosing: boolean;
+        windowId: number;
       }
     ) => void
   >;
-  /**
-   * Fired when a tab is updated.
-   * @param changeInfo Lists the changes to the state of the tab that was
-   * updated.
-   * @param tab Gives the state of the tab that was updated.
-   */
   onUpdated: browser.tabs._TabsOnUpdatedEvent;
 }

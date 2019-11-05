@@ -55,9 +55,7 @@ export class ChromeTabsService implements TabsService {
 
   get(tabId: number): Promise<Tab> {
     return new Promise(resolve => {
-      this.tabs.get(tabId, tab => {
-        resolve(tab);
-      });
+      this.tabs.get(tabId, resolve);
     });
   }
 }

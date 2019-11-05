@@ -78,49 +78,25 @@ export interface WindowsService {
 
 /** An object implementing a subset of Chrome Extension Windows API */
 export interface ChromeWindowsAPI {
-  /**
-   * The windowId value that represents the absence of a chrome browser window.
-   */
   WINDOW_ID_NONE: number;
 
-  /**
-   * Gets details about a window.
-   * @since Chrome 18.
-   */
   get(
     windowId: number,
     getInfo: chrome.windows.GetInfo,
     callback: (window: chrome.windows.BrowserWindow) => void
   ): void;
 
-  /**
-   * Fired when the currently focused window changes. Will be
-   * `chrome.windows.WINDOW_ID_NONE` if all chrome windows have lost focus.
-   *
-   * Note: On some Linux window managers, `WINDOW_ID_NONE` will always be sent
-   * immediately preceding a switch from one chrome window to another.
-   */
   onFocusChanged: chrome.windows.WindowIdEvent;
 }
 
 /** An object implementing a subset of Web Extensions Windows API (Firefox) */
 export interface FirefoxWindowsAPI {
-  /** The windowId value that represents the absence of a browser window. */
   WINDOW_ID_NONE: number;
 
-  /** Gets details about a window. */
   get(
     windowId: number,
     getInfo?: browser.windows.GetInfo
   ): Promise<browser.windows.Window>;
 
-  /**
-   * Fired when the currently focused window changes. Will be
-   * `windows.WINDOW_ID_NONE` if all browser windows have lost focus.
-   *
-   * Note: On some Linux window managers, `WINDOW_ID_NONE` will always be sent
-   * immediately preceding a switch from one browser window to another.
-   * @param windowId ID of the newly focused window.
-   */
   onFocusChanged: WebExtEvent<(windowId: number) => void>;
 }
