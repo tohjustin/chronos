@@ -7,7 +7,8 @@ import {
   TabRemovedEventCallback,
   TabsService,
   TabUpdatedEvent,
-  TabUpdatedEventCallback
+  TabUpdatedEventCallback,
+  TabUpdateProperties
 } from "./types";
 
 export class ChromeTabsService implements TabsService {
@@ -56,6 +57,12 @@ export class ChromeTabsService implements TabsService {
   get(tabId: number): Promise<Tab> {
     return new Promise(resolve => {
       this.tabs.get(tabId, resolve);
+    });
+  }
+
+  update(tabId: number, updateProps: TabUpdateProperties): Promise<Tab> {
+    return new Promise(resolve => {
+      this.tabs.update(tabId, updateProps, resolve);
     });
   }
 }

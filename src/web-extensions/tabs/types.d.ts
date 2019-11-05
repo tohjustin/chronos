@@ -73,6 +73,25 @@ export interface TabChangeInfo {
   title?: string;
 }
 
+export type TabUpdateProperties = {
+  /** A URL to navigate the tab to. */
+  url?: string;
+  /** Whether the tab should be active. Does not affect whether the window is focused (see `windows.update`). */
+  active?: boolean;
+  /** Adds or removes the tab from the current selection. */
+  highlighted?: boolean;
+  /** Whether the tab should be pinned. */
+  pinned?: boolean;
+  /** Whether the tab should be muted. */
+  muted?: boolean;
+  /** The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab. */
+  openerTabId?: number;
+  /** Whether the load should replace the current history entry for the tab. */
+  loadReplace?: boolean;
+  /** The ID of this tab's successor. If specified, the successor tab must be in the same window as this tab. */
+  successorTabId?: number;
+};
+
 /**
  * An object which allows the addition and removal of listeners for a tab event.
  */
@@ -119,6 +138,8 @@ export type TabUpdatedEvent = TabEvent<TabUpdatedEventCallback>;
 export interface TabsService {
   /** Retrieves details about the specified browser tab. */
   get(tabId: number): Promise<Tab>;
+  /** Modifies the properties of a tab. Properties that are not specified in `updateProperties` are not modified. */
+  update(tabId: number, updateProperties: TabUpdateProperties): Promise<Tab>;
 
   /**
    * Fires when the active tab in a window changes. Note that the tab's URL may
@@ -135,6 +156,11 @@ export interface TabsService {
 /** An object implementing a subset of Chrome Extension Tabs API */
 export interface ChromeTabsAPI {
   get(tabId: number, callback: (tab: chrome.tabs.Tab) => void): void;
+  update(
+    tabId: number,
+    updateProperties: chrome.tabs.UpdateProperties,
+    callback?: (tab?: chrome.tabs.Tab) => void
+  ): void;
 
   onActivated: chrome.tabs.TabActivatedEvent;
   onRemoved: chrome.tabs.TabRemovedEvent;
@@ -144,6 +170,20 @@ export interface ChromeTabsAPI {
 /** An object implementing a subset of Web Extensions Tabs API (Firefox) */
 export interface FirefoxTabsAPI {
   get(tabId: number): Promise<browser.tabs.Tab>;
+  update(
+    tabId: number,
+    updateProperties: {
+      active?: boolean;
+      highlighted?: boolean;
+      loadReplace?: boolean;
+      muted?: boolean;
+      openerTabId?: number;
+      pinned?: boolean;
+      selected?: boolean;
+      successorTabId?: number;
+      url?: string;
+    }
+  ): Promise<Tab>;
 
   onActivated: WebExtEvent<
     (activeInfo: {

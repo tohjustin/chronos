@@ -7,7 +7,8 @@ import {
   TabRemovedEventCallback,
   TabsService,
   TabUpdatedEvent,
-  TabUpdatedEventCallback
+  TabUpdatedEventCallback,
+  TabUpdateProperties
 } from "./types";
 
 export class FirefoxTabsService implements TabsService {
@@ -55,5 +56,9 @@ export class FirefoxTabsService implements TabsService {
 
   get(tabId: number): Promise<Tab> {
     return this.tabs.get(tabId);
+  }
+
+  update(tabId: number, updateProps: TabUpdateProperties): Promise<Tab> {
+    return this.tabs.update(tabId, updateProps);
   }
 }
