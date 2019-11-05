@@ -47,15 +47,24 @@ const ActivityDateRangePicker = ({
     },
     {
       label: "Last week",
-      value: { start: startOfToday - MS_PER_DAY * 6, end: endOfToday }
+      value: {
+        start: getStartOfDay(startOfToday - MS_PER_DAY * 6),
+        end: endOfToday
+      }
     },
     {
       label: "Last 2 weeks",
-      value: { start: startOfToday - MS_PER_DAY * 13, end: endOfToday }
+      value: {
+        start: getStartOfDay(startOfToday - MS_PER_DAY * 13),
+        end: endOfToday
+      }
     },
     {
       label: "Last 4 weeks",
-      value: { start: startOfToday - MS_PER_DAY * 27, end: endOfToday }
+      value: {
+        start: getStartOfDay(startOfToday - MS_PER_DAY * 27),
+        end: endOfToday
+      }
     },
     {
       label: "All activity",
