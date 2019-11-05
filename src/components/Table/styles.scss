@@ -8,98 +8,98 @@ $table-row__padding-x: $base__size * 1.5;
   height: 100%;
   box-shadow: $shadow__table;
   border-radius: $border-radius__table;
-}
 
-.table__body {
-  background: $color__white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  .table__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: $color__white;
+    border-top-left-radius: $border-radius__table;
+    border-top-right-radius: $border-radius__table;
+    padding: 0;
 
-.table__body-placeholder {
-  color: $color__gray-dark;
-  font-weight: 600;
-  font-size: $font-size__base;
-}
-
-.table__footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  background: $color__white;
-  border-top: $border__divider;
-  border-bottom-left-radius: $border-radius__table;
-  border-bottom-right-radius: $border-radius__table;
-  padding: 0;
-
-  div {
-    @include truncate-text;
-
-    font-weight: 600;
-    text-align: right;
-    padding: 0 $table-row__padding-x;
-  }
-}
-
-.table__header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: $color__white;
-  border-top-left-radius: $border-radius__table;
-  border-top-right-radius: $border-radius__table;
-  padding: 0;
-
-  &--disabled {
-    background: $color__gray-light;
-    cursor: not-allowed;
-
-    input {
-      pointer-events: none;
+    &--disabled {
+      background: $color__gray-light;
       cursor: not-allowed;
+
+      input {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+    }
+
+    input,
+    div {
+      @include truncate-text;
+
+      font-weight: 600;
+    }
+
+    div {
+      padding: 0 $table-row__padding-x;
+    }
+
+    .table__sort-button {
+      height: $base__size * 2.5;
+      line-height: $base__size * 2.5;
+      margin-right: $table-row__padding-x;
+      padding: 0 $base__size * 1.5;
     }
   }
 
-  input,
-  div {
-    @include truncate-text;
+  .table__body {
+    background: $color__white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
+  .table__body-placeholder {
+    color: $color__gray-dark;
     font-weight: 600;
+    font-size: $font-size__base;
   }
 
-  div {
+  .table__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    background: $color__white;
+    border-top: $border__divider;
+    border-bottom-left-radius: $border-radius__table;
+    border-bottom-right-radius: $border-radius__table;
+    padding: 0;
+
+    div {
+      @include truncate-text;
+
+      font-weight: 600;
+      text-align: right;
+      padding: 0 $table-row__padding-x;
+    }
+  }
+
+  .table__row {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    min-width: 0;
     padding: 0 $table-row__padding-x;
+
+    span {
+      @include truncate-text;
+    }
+
+    &--selectable {
+      cursor: pointer;
+    }
+
+    &--selected {
+      background-color: $color__primary-lightest;
+    }
   }
-}
-
-.table__row {
-  display: flex;
-  flex-direction: column;
-  margin-left: 0;
-  min-width: 0;
-  padding: 0 $table-row__padding-x;
-
-  span {
-    @include truncate-text;
-  }
-
-  &--selectable {
-    cursor: pointer;
-  }
-
-  &--selected {
-    background-color: $color__primary-lightest;
-  }
-}
-
-.table__sort-button {
-  height: $base__size * 2.5;
-  line-height: $base__size * 2.5;
-  margin-right: $table-row__padding-x;
-  padding: 0 $base__size * 1.5;
 }
 
 .table__sort-button--popover {
