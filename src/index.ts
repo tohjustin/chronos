@@ -12,7 +12,7 @@ export function isBackgroundPage(): boolean {
 // UI assets etc.)
 if (isBackgroundPage()) {
   console.log("[INFO] Script is loaded as a background page");
-  import("./background");
+  import("./background/index");
 } else {
   console.log("[INFO] Script is not loaded as a background page");
   import("./application");
