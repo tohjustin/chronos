@@ -29,6 +29,9 @@ const theme = _.merge(defaultTheme, {
       fontWeight: 600
     };
   },
+  getIconColor: () => {
+    return "currentColor";
+  },
   getMenuItemClassName: (appearance: "default", intent: IntentTypes) => {
     return classnames(
       originalGetMenuItemClassName(appearance, intent),
