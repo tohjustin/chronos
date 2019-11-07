@@ -19,6 +19,17 @@ $responsive-card__margin-y: $margin__card;
   stroke-dasharray: 2, 2;
 }
 
+@mixin input {
+  background-color: inherit;
+  border: none;
+  font-size: $font-size__base;
+  font-weight: 600;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 @mixin responsive-card__width--100 {
   margin-right: 0;
   min-width: 450px;

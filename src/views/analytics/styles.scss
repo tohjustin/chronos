@@ -60,7 +60,7 @@ $chart__height: 240px;
 
 .analytics-view__domain-picker-popover {
   input {
-    font-weight: 600;
+    @include input;
   }
 }
 
