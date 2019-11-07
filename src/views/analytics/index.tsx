@@ -1,5 +1,4 @@
-import classNames from "classnames";
-import { Icon } from "evergreen-ui";
+import { BackButton } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -7,7 +6,6 @@ import { bindActionCreators } from "redux";
 import View from "../../components/View";
 import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import { ICON_SIZE } from "../../styles/constants";
 import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
 import ErrorView from "../general/ErrorView";
 import LoadingView from "../general/LoadingView";
@@ -105,24 +103,27 @@ const AnalyticsView = ({
       );
       break;
   }
-  const headerTextClass = classNames("analytics-view__header-text", {
-    "analytics-view__link": selectedDomain !== null
-  });
   const showRecords = !isLoadingRecords && hasRecords;
 
   return (
     <View.Container>
       <View.Header>
         <span className="analytics-view__header">
-          <span className={headerTextClass} onClick={clearSelectedDomain}>
-            Usage Analytics
+          {!showRecords || selectedDomain === null ? (
+            <span className="analytics-view__header-text">Usage Analytics</span>
+          ) : (
+            <BackButton
+              className="analytics-view__header-back-button"
+              onClick={clearSelectedDomain}
+            />
+          )}
+        </span>
+        {showRecords && (
+          <span className="analytics-view__header">
+            <DomainPicker />
+            <ActivityDateRangePicker />
           </span>
-          {showRecords && <Icon icon="slash" size={ICON_SIZE} />}
-          {showRecords && <DomainPicker />}
-        </span>
-        <span className="analytics-view__header">
-          {!isLoadingRecords && <ActivityDateRangePicker />}
-        </span>
+        )}
       </View.Header>
       <View.Body>{viewContent}</View.Body>
     </View.Container>

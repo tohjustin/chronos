@@ -25,6 +25,7 @@ $chart__height: 240px;
   display: flex;
   align-items: center;
   max-width: 100%;
+  margin-right: $margin__button;
 
   button {
     flex-shrink: 0;
@@ -69,6 +70,11 @@ $chart__height: 240px;
   align-items: center;
   flex-wrap: wrap;
   max-width: 100%;
+
+  .analytics-view__header-back-button {
+    font-size: $font-size__base;
+    font-weight: 600;
+  }
 
   .analytics-view__header-text {
     @include truncate-text;

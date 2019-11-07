@@ -46,6 +46,7 @@ const DomainPicker = (props: DomainPickerProps) => {
         options={Object.keys(props.allDomains)
           .sort()
           .map(domain => ({ label: domain, value: domain }))}
+        position={Position.BOTTOM_RIGHT}
         selected={
           props.selectedDomain === null ? undefined : [props.selectedDomain]
         }
