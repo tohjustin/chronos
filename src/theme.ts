@@ -2,6 +2,15 @@ import { IntentTypes, defaultTheme } from "evergreen-ui";
 import classnames from "classnames";
 import _ from "lodash";
 
+import {
+  COLOR_BLACK,
+  COLOR_DANGER,
+  COLOR_GREY_DARKER,
+  COLOR_PRIMARY,
+  COLOR_SUCCESS,
+  COLOR_WARNING
+} from "./styles/constants";
+
 const originalGetHeadingStyle = defaultTheme.getHeadingStyle;
 const originalGetMenuItemClassName = defaultTheme.getMenuItemClassName;
 const originalGetRowClassName = defaultTheme.getRowClassName;
@@ -10,16 +19,16 @@ const originalGetTableCellClassName = defaultTheme.getTableCellClassName;
 const theme = _.merge(defaultTheme, {
   colors: {
     text: {
-      muted: "#62778c",
-      default: "#244360",
-      dark: "#244360",
-      selected: "#379af7",
+      muted: COLOR_GREY_DARKER,
+      default: COLOR_BLACK,
+      dark: COLOR_BLACK,
+      selected: COLOR_PRIMARY,
 
       // Intent
-      success: "#00783e",
-      info: "#379af7",
-      danger: "#bf0e08",
-      warning: "#95591e"
+      danger: COLOR_DANGER,
+      info: COLOR_PRIMARY,
+      success: COLOR_SUCCESS,
+      warning: COLOR_WARNING
     }
   },
   getHeadingStyle: (size: number) => {
