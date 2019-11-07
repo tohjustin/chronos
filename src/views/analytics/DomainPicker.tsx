@@ -1,11 +1,11 @@
-import { IconButton, SelectMenu } from "evergreen-ui";
+import { Avatar, IconButton, Position, SelectMenu } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Button from "../../components/Button";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import { BUTTON_MARGIN } from "../../styles/constants";
+import { BUTTON_MARGIN, ICON_SIZE_MD } from "../../styles/constants";
 
 interface DomainPickerProps {
   allDomains: {
@@ -24,16 +24,19 @@ const DomainPicker = (props: DomainPickerProps) => {
   return (
     <span className="analytics-view__domain-picker">
       {props.selectedDomain && (
-        <span className="label">
+        <span className="analytics-view__domain-picker-label">
           {favIconUrl && (
-            <img
-              key={props.selectedDomain}
-              alt="domain-icon"
-              className="icon"
+            <Avatar
+              className="analytics-view__domain-picker-icon"
+              hashValue={props.selectedDomain}
+              name={props.selectedDomain}
               src={favIconUrl}
+              size={ICON_SIZE_MD}
             />
           )}
-          <span className="text">{props.selectedDomain}</span>
+          <span className="analytics-view__domain-picker-text">
+            {props.selectedDomain}
+          </span>
         </span>
       )}
       <SelectMenu

@@ -5,7 +5,11 @@ import { Transition } from "react-transition-group";
 import { TransitionStatus } from "react-transition-group/Transition";
 
 import ExternalLink from "../../components/ExternalLink";
-import { BASE_SIZE, TRANSITION_DELAY } from "../../styles/constants";
+import {
+  BASE_SIZE,
+  ICON_SIZE_SM,
+  TRANSITION_DELAY
+} from "../../styles/constants";
 
 import { Datum } from "./types";
 
@@ -15,8 +19,6 @@ interface LabelCellProps extends Datum {
   showIcons: boolean;
   labelComponent?: React.ReactNode;
 }
-
-const AVATAR_SIZE = BASE_SIZE * 2;
 
 const LabelCell = ({
   hide,
@@ -61,7 +63,7 @@ const LabelCell = ({
               src={iconSrc}
               hashValue={label}
               name={label}
-              size={AVATAR_SIZE}
+              size={ICON_SIZE_SM}
             />
           )}
           <div

@@ -8,7 +8,7 @@ import Table from "../../components/Table";
 import { TableRowProps, TableSortOption } from "../../components/Table/types";
 import { ActivityRecord } from "../../models/activity";
 import { RootState, selectors } from "../../store";
-import { BASE_SIZE } from "../../styles/constants";
+import { BASE_SIZE, ICON_SIZE_MD } from "../../styles/constants";
 import {
   formatTableDurationLabel,
   formatTableDateTimeLabel
@@ -31,7 +31,6 @@ enum HistoryTableSortOrder {
   TimeDescending = "TIME_DESCENDING"
 }
 
-const AVATAR_SIZE = BASE_SIZE * 2.5;
 const ROW_HEIGHT = BASE_SIZE * 6;
 const DEFAULT_SORT_ORDER = "TIME_DESCENDING" as HistoryTableSortOrder;
 const SORT_OPTIONS: TableSortOption<ActivityRecord, HistoryTableSortOrder>[] = [
@@ -119,7 +118,7 @@ const HistoryTableRow = ({
           hashValue={datum.origin}
           name={datum.origin}
           src={datum.favIconUrl}
-          size={AVATAR_SIZE}
+          size={ICON_SIZE_MD}
         />
         <div className="history-table__row-label">
           <strong>{`${datum.title}`}</strong>
