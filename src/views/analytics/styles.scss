@@ -25,7 +25,6 @@ $chart__height: 240px;
   display: flex;
   align-items: center;
   max-width: 100%;
-  margin-right: $margin__button;
 
   button {
     flex-shrink: 0;
@@ -41,7 +40,6 @@ $chart__height: 240px;
     .analytics-view__domain-picker-icon {
       @include favicon;
 
-      margin-left: $base__size * 0.5;
       margin-right: $base__size;
     }
 
@@ -60,8 +58,19 @@ $chart__height: 240px;
 .analytics-view__header {
   display: flex;
   align-items: center;
+  flex-grow: 1;
   flex-wrap: wrap;
+  justify-content: flex-start;
   max-width: 100%;
+
+  &:not(:first-child) {
+    justify-content: flex-end;
+  }
+
+  .analytics-view__date-range-picker,
+  .analytics-view__domain-picker {
+    margin-left: $margin__button;
+  }
 
   .analytics-view__header-back-button {
     font-size: $font-size__base;

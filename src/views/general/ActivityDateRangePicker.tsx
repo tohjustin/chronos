@@ -85,11 +85,12 @@ const ActivityDateRangePicker = ({
 
   return (
     <DateRangePicker
-      position="bottom-right"
+      className="analytics-view__date-range-picker"
       disabledDays={disabledDays}
       fromMonth={disabledDays.before}
       month={month}
       onChange={handleDateRangeChange}
+      position="bottom-right"
       ranges={ranges}
       toMonth={disabledDays.after}
       value={selectedValue}
