@@ -59,7 +59,6 @@ $table-cell__size: $base__size * 2.5;
 
   &--today {
     color: $color__primary;
-    font-weight: inherit;
   }
 
   &--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
