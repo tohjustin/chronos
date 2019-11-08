@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as d3 from "d3";
 import { Icon, Popover, PositionTypes, IconButton } from "evergreen-ui";
 import _ from "lodash";
@@ -31,6 +32,7 @@ interface DateRangePickerProps
   > {
   onChange: (range: DefiniteTimeRange | null) => void;
 
+  className?: string;
   disabled?: boolean;
   position?: PositionTypes;
   ranges?: { label: string; value: DefiniteTimeRange }[];
@@ -48,6 +50,7 @@ function formatDateString(date: Date) {
 }
 
 const DateRangePicker = ({
+  className,
   disabled,
   onChange,
   position,
@@ -102,7 +105,7 @@ const DateRangePicker = ({
     <Popover
       position={position}
       content={() => (
-        <div className="date-range-picker__container">
+        <div className="date-range-picker__content">
           {ranges && (
             <div className="date-range-picker__ranges">
               {ranges.map(range => (
@@ -156,6 +159,7 @@ const DateRangePicker = ({
       )}
     >
       <Button
+        className={classNames("date-range-picker", className)}
         disabled={disabled}
         height={BUTTON_SIZE}
         iconBefore="timeline-events"
