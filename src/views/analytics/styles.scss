@@ -39,7 +39,7 @@ $chart__height: 240px;
     overflow: hidden;
 
     .analytics-view__domain-picker-icon {
-      @include avatar-border;
+      @include favicon;
 
       margin-left: $base__size * 0.5;
       margin-right: $base__size;

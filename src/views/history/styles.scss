@@ -42,14 +42,9 @@
   }
 
   .history-table__row-icon {
-    @include avatar-border;
+    @include favicon;
 
     margin-right: $base__size * 1.5;
-
-    span {
-      margin-top: -1px;
-      font-weight: 600;
-    }
   }
 
   .history-table__row-label {

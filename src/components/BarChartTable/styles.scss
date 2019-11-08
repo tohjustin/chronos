@@ -83,13 +83,8 @@
   }
 
   .bar-chart-table__label-icon {
-    @include avatar-border;
+    @include favicon;
 
     margin-right: $base__size;
-
-    span {
-      margin-top: -1px;
-      font-weight: 600;
-    }
   }
 }

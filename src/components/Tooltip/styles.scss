@@ -9,7 +9,7 @@
     align-content: center;
 
     img {
-      @include avatar-border;
+      @include favicon;
 
       height: $size__favicon;
       width: $size__favicon;

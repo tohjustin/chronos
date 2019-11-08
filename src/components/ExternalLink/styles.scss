@@ -17,7 +17,7 @@
   }
 
   .external-link__icon {
-    @include avatar-border;
+    @include favicon;
 
     height: $size__favicon;
     width: $size__favicon;
