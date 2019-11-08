@@ -431,14 +431,14 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
 );
 
 /**
- * Retrieves total number of unique page visits (by pathname + search) to a
- * selected domain that falls within the selected time range.
+ * Retrieves total number of unique page visits (by pathname + hash + search)
+ * to a selected domain that falls within the selected time range.
  */
 export const getSelectedDomainTotalPageVisitCount = createSelector(
   getSelectedDomainRecords,
   selectedDomainRecords => {
     return _.chain(selectedDomainRecords)
-      .uniqBy(records => `${records.pathname}${records.search}`)
+      .uniqBy(({ pathname, hash, search }) => `${pathname}${hash}${search}`)
       .value().length;
   }
 );
@@ -448,20 +448,12 @@ export const getSelectedDomainTotalPageVisitCount = createSelector(
  * falls within the selected time range
  */
 export const getSelectedDomainAveragePageVisitDuration = createSelector(
-  [
-    getSelectedDomainRecords,
-    getSelectedDomainTotalPageVisitCount,
-    getEffectiveTimeRange
-  ],
-  (
-    selectedDomainRecords,
-    selectedDomainTotalPageVisitCount,
-    effectiveTimeRange
-  ) => {
-    // (total duration on website) divide by (# of unique page visited)
+  [getSelectedDomainRecords, getEffectiveTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    // (total duration on website) divide by (# of page visited)
     return (
       computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
-      Math.max(selectedDomainTotalPageVisitCount, 1)
+      Math.max(selectedDomainRecords.length, 1)
     );
   }
 );
