@@ -49,6 +49,10 @@ $border-radius__card: 4px;
 $border-radius__table: 4px;
 $border-radius__tooltip: 2px;
 
+$margin__button: $base__size * 1.5;
+$margin__card: $base__size * 2;
+$margin__favicon: 2px;
+
 $shadow__card: 0 0 2px $color__shadow;
 $shadow__favicon: 0 0 2px $color__shadow;
 $shadow__header: 0 0 1px $color__shadow;
@@ -60,9 +64,6 @@ $size__favicon: $base__size * 2;
 $size__icon-button: $base__size * 3;
 $size__icon: $base__size * 2.5;
 $size__spinner: $base__size * 4;
-
-$margin__button: $base__size * 1.5;
-$margin__card: $base__size * 2;
 
 $tooltip__max-width: 240px;
 

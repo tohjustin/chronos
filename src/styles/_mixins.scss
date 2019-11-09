@@ -10,6 +10,7 @@ $responsive-card__margin-y: $margin__card;
   box-shadow: $shadow__favicon;
   flex-grow: 0;
   flex-shrink: 0;
+  margin: $margin__favicon;
   overflow: hidden;
 
   span {
