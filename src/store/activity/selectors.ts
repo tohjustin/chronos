@@ -34,39 +34,18 @@ export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoading;
 
 /**
+ * Retrieves the time range of all recorded activity found in database (oldest
+ * & most recently recorded activity)
+ */
+export const getActivityTimeRange = (state: RootState) =>
+  state.activity.totalTimeRange;
+
+/**
  * Retrieves the state of whether there are any activity records
  */
 export const getHasRecords = createSelector(
   getAllRecords,
   records => records.length > 0
-);
-
-/**
- * Retrieves the time range of all recorded activity (oldest & most recently
- * recorded activity)
- */
-export const getActivityTimeRange = createSelector(
-  getAllRecords,
-  (records): DefiniteTimeRange | null => {
-    if (records.length === 0) {
-      return null;
-    }
-
-    let oldestTimestamp = records[0].startTime;
-    let newestTimestamp = records[0].startTime;
-    for (let i = 1; i < records.length; i++) {
-      const timestamp = records[i].startTime;
-
-      if (timestamp < oldestTimestamp) {
-        oldestTimestamp = timestamp;
-      }
-      if (timestamp > newestTimestamp) {
-        newestTimestamp = timestamp;
-      }
-    }
-
-    return { start: oldestTimestamp, end: newestTimestamp };
-  }
 );
 
 /**

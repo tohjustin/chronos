@@ -1,4 +1,5 @@
 import ActivityRecord from "../models/activity";
+import { DefiniteTimeRange } from "../models/time";
 
 export interface DatabaseRecords {
   activity: ActivityRecord[];
@@ -34,6 +35,13 @@ export interface ActivityService {
    * @returns Collection of activity records
    */
   fetchAllActivityRecords(): Promise<ActivityRecord[]>;
+
+  /**
+   * Fetches time range of all stored activity records
+   * @returns Time Range composed of `startTime` of the oldest activity record
+   * & `endTime` of the newest activity record
+   */
+  fetchActivityTimeRange(): Promise<DefiniteTimeRange | null>;
 }
 
 /** Service for interacting with activity records */

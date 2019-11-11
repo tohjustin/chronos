@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction, Action } from "redux-starter-kit";
+import { batch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 
 import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
+import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../index";
 
 export interface ActivityState {
@@ -22,13 +24,18 @@ export interface ActivityState {
    * List of all (fetched) activity records
    */
   records: ActivityRecord[];
+  /**
+   * Time range of all recorded activity found in database
+   */
+  totalTimeRange: DefiniteTimeRange | null;
 }
 
 const INITIAL_STATE: ActivityState = {
   error: null,
   isDeleting: false,
   isLoading: false,
-  records: []
+  records: [],
+  totalTimeRange: null
 };
 
 const activity = createSlice({
@@ -60,6 +67,9 @@ const activity = createSlice({
     getRecordsFailure(state: ActivityState, action: PayloadAction<Error>) {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    setTotalTimeRange(state, action: PayloadAction<DefiniteTimeRange | null>) {
+      state.totalTimeRange = action.payload;
     }
   }
 });
@@ -77,8 +87,17 @@ const loadRecords = (): ThunkAction<
       throw "Unable to initialize DB connection";
     }
 
-    const records = await db.fetchAllActivityRecords();
-    dispatch(activity.actions.getRecordsSuccess(records));
+    const [records, activityTimeRange] = await Promise.all([
+      db.fetchAllActivityRecords(),
+      db.fetchActivityTimeRange()
+    ]);
+
+    // Batch actions to ensure UI animations transition smoothly when store
+    // updates
+    batch(() => [
+      dispatch(activity.actions.getRecordsSuccess(records || [])),
+      dispatch(activity.actions.setTotalTimeRange(activityTimeRange))
+    ]);
   } catch (error) {
     dispatch(activity.actions.getRecordsFailure(error));
   }

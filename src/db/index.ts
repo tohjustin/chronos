@@ -1,6 +1,7 @@
 import Dexie from "dexie";
 
 import { Activity, ActivityRecord } from "../models/activity";
+import { DefiniteTimeRange } from "../models/time";
 
 import {
   ActivityService,
@@ -51,6 +52,21 @@ export class DatabaseConnection extends Dexie
 
   public fetchAllActivityRecords(): Promise<ActivityRecord[]> {
     return this[ACTIVITY_TABLE].toCollection().toArray();
+  }
+
+  public fetchActivityTimeRange(): Promise<DefiniteTimeRange | null> {
+    return Promise.all([
+      this[ACTIVITY_TABLE].orderBy("startTime").first(),
+      this[ACTIVITY_TABLE].orderBy("startTime").last()
+    ] as Promise<Activity | undefined>[]).then(values => {
+      const [oldestRecord, newestRecord] = values;
+      return !oldestRecord || !newestRecord
+        ? null
+        : {
+            start: oldestRecord.startTime,
+            end: newestRecord.endTime
+          };
+    });
   }
 
   public async exportDatabaseRecords(): Promise<DatabaseRecords> {
