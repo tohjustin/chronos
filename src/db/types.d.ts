@@ -1,5 +1,5 @@
 import ActivityRecord from "../models/activity";
-import { DefiniteTimeRange } from "../models/time";
+import { DefiniteTimeRange, TimeRange } from "../models/time";
 
 export interface DatabaseRecords {
   activity: ActivityRecord[];
@@ -31,8 +31,14 @@ export interface ActivityService {
   deleteActivityRecords(recordIds: number[]): Promise<void>;
 
   /**
-   * Fetches all stored activity records
+   * Fetches all stored activity records that matches the query
    * @returns Collection of activity records
+   */
+  fetchActivityRecords(query: TimeRange): Promise<ActivityRecord[]>;
+
+  /**
+   * Fetches all stored activity records
+   * @returns Collection of all activity records
    */
   fetchAllActivityRecords(): Promise<ActivityRecord[]>;
 

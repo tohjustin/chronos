@@ -1,7 +1,7 @@
 import Dexie from "dexie";
 
 import { Activity, ActivityRecord } from "../models/activity";
-import { DefiniteTimeRange } from "../models/time";
+import { DefiniteTimeRange, TimeRange } from "../models/time";
 
 import {
   ActivityService,
@@ -52,6 +52,32 @@ export class DatabaseConnection extends Dexie
 
   public fetchAllActivityRecords(): Promise<ActivityRecord[]> {
     return this[ACTIVITY_TABLE].toCollection().toArray();
+  }
+
+  public fetchActivityRecords({
+    start: startTime,
+    end: endTime
+  }: TimeRange): Promise<ActivityRecord[]> {
+    // Use Dexie's `WhereClause` as much as possible to leverage IndexedDB's
+    // native querying support with is way faster than filtering with JS
+    if (startTime && endTime) {
+      return this[ACTIVITY_TABLE].where("startTime")
+        .aboveOrEqual(startTime)
+        .and(record => record.endTime <= endTime)
+        .toArray();
+    }
+    if (startTime) {
+      return this[ACTIVITY_TABLE].where("startTime")
+        .aboveOrEqual(startTime)
+        .toArray();
+    }
+    if (endTime) {
+      return this[ACTIVITY_TABLE].where("endTime")
+        .belowOrEqual(endTime)
+        .toArray();
+    }
+
+    return this.fetchAllActivityRecords();
   }
 
   public fetchActivityTimeRange(): Promise<DefiniteTimeRange | null> {
