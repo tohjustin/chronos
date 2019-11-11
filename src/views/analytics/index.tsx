@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { BackButton } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
@@ -58,23 +59,18 @@ const AnalyticsView = ({
   selectedDomainValidationStatus,
   selectedTimeRangeValidationStatus
 }: AnalyticsViewProps) => {
-  let viewContent;
+  let viewBody;
   switch (true) {
-    case isLoadingRecords:
-      viewContent = <LoadingView />;
-      break;
     case selectedDomainValidationStatus.isValid === false:
-      viewContent = (
-        <ErrorView message={selectedDomainValidationStatus.description} />
-      );
+    case selectedTimeRangeValidationStatus.isValid === false: {
+      const errorDescription =
+        selectedDomainValidationStatus.description ||
+        selectedTimeRangeValidationStatus.description;
+      viewBody = <ErrorView message={errorDescription} />;
       break;
-    case selectedTimeRangeValidationStatus.isValid === false:
-      viewContent = (
-        <ErrorView message={selectedTimeRangeValidationStatus.description} />
-      );
-      break;
+    }
     case selectedDomain !== null:
-      viewContent = (
+      viewBody = (
         <div className="analytics-view__cards-container">
           <DomainTotalUsageCard />
           <DomainRatioToTotalDurationCard />
@@ -89,7 +85,7 @@ const AnalyticsView = ({
       );
       break;
     default:
-      viewContent = (
+      viewBody = (
         <div className="analytics-view__cards-container">
           <TotalUsageCard />
           <RatioToTotalDurationCard />
@@ -103,13 +99,14 @@ const AnalyticsView = ({
       );
       break;
   }
-  const showRecords = !isLoadingRecords && hasRecords;
 
+  const isLoadingAndHasNoData = isLoadingRecords && !hasRecords;
+  const isLoadingAndHasData = isLoadingRecords && hasRecords;
   return (
     <View.Container>
       <View.Header>
         <span className="analytics-view__header">
-          {!showRecords || selectedDomain === null ? (
+          {selectedDomain === null ? (
             <span className="analytics-view__header-text">Usage Analytics</span>
           ) : (
             <BackButton
@@ -118,14 +115,21 @@ const AnalyticsView = ({
             />
           )}
         </span>
-        {showRecords && (
+        {!isLoadingAndHasNoData && (
           <span className="analytics-view__header">
             <DomainPicker />
             <ActivityDateRangePicker />
           </span>
         )}
       </View.Header>
-      <View.Body>{viewContent}</View.Body>
+      <View.Body
+        className={classNames({
+          "analytics-view__overlay-container": isLoadingRecords
+        })}
+      >
+        {isLoadingAndHasNoData ? <LoadingView /> : viewBody}
+        {isLoadingAndHasData && <LoadingView overlay={true} />}
+      </View.Body>
     </View.Container>
   );
 };

@@ -91,6 +91,11 @@ $chart__height: 240px;
   }
 }
 
+.analytics-view__overlay-container {
+  overflow: hidden;
+  position: relative;
+}
+
 .analytics-view__placeholder {
   color: $color__gray-dark;
   font-weight: 600;
