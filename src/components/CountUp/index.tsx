@@ -2,6 +2,12 @@ import classNames from "classnames";
 import React from "react";
 import ReactCountUp from "react-countup";
 
+import {
+  MS_PER_SECOND,
+  MS_PER_MINUTE,
+  MS_PER_HOUR
+} from "../../constants/time";
+
 import "./styles.scss";
 
 interface DurationCountUpProps {
@@ -31,10 +37,6 @@ interface CountUpProps {
   formattingFn?(value: number): string;
   formattingUnitFn?(value: number): string;
 }
-
-const MS_PER_SECOND = 1000;
-const MS_PER_MINUTE = 60 * 1000;
-const MS_PER_HOUR = 60 * 60 * 1000;
 
 const formatHour = (value: number) => {
   return value < MS_PER_HOUR

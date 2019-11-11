@@ -1,3 +1,4 @@
+import { MS_PER_DAY } from "../constants/time";
 import { ActivityRecord } from "../models/activity";
 import { DefiniteTimeRange } from "../models/time";
 
@@ -90,12 +91,12 @@ export function computeTotalDurationByDate(
     // Limit usage time up to maximum value of 24 hours
     if (totalDurationByDate[currentDate] > 0) {
       totalDurationByDate[currentDate] = Math.min(
-        1000 * 60 * 60 * 24,
+        MS_PER_DAY,
         totalDurationByDate[currentDate]
       );
     }
 
-    currentDate += 1000 * 60 * 60 * 24;
+    currentDate += MS_PER_DAY;
   }
 
   // Sort results by chronological order

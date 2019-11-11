@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
 
+import { MS_PER_DAY } from "../../constants/time";
 import { DefiniteTimeRange } from "../../models/time";
 import { RootState } from "../../store";
 import {
@@ -12,8 +13,6 @@ import {
 } from "../../utils/activityUtils";
 import { getDayCount } from "../../utils/dateUtils";
 import { selectors as routerSelectors } from "../router";
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 /**
  * Retrieves all activity records

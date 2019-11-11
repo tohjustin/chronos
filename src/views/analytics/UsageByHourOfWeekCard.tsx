@@ -7,6 +7,7 @@ import WeeklyHourHeatmap, {
   defaultProps as WeeklyHourHeatmapDefaultProps
 } from "../../components/WeeklyHourHeatmap";
 import { Datum } from "../../components/WeeklyHourHeatmap/types";
+import { MS_PER_MINUTE } from "../../constants/time";
 import { RootState, selectors } from "../../store";
 import { CHART_COLOR_RANGE } from "../../styles/constants";
 import {
@@ -26,7 +27,6 @@ interface UsageByHourOfWeekCardProps {
   thresholds: number[];
 }
 
-const MS_PER_MINUTE = 1000 * 60;
 const THRESHOLDS = [0, 1 / 60, 15, 30, 45, 60].map(
   minutes => minutes * MS_PER_MINUTE
 );

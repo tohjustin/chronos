@@ -3,8 +3,10 @@ import { createSelector } from "reselect";
 import { ValidationStatus } from "../../models/validate";
 import { RootState } from "../../store";
 import {
+  getStartOfDay,
   getTimestampFromDateString,
-  isValidDateString
+  isValidDateString,
+  getEndOfDay
 } from "../../utils/dateUtils";
 import { getAllDomains } from "../activity/selectors";
 
@@ -14,8 +16,6 @@ import {
   SEARCH_PARAM_START_DATE,
   SEARCH_PARAM_END_DATE
 } from "./constants";
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 /**
  * Retrieves browser's URL search parameters
@@ -71,19 +71,13 @@ export const getSelectedTimeRange = createSelector(
     const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
     const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
 
-    if (
-      !isValidDateString(startDateParam) ||
+    return !isValidDateString(startDateParam) ||
       !isValidDateString(endDateParam)
-    ) {
-      return DEFAULT_TIME_RANGE;
-    }
-    const start = getTimestampFromDateString(startDateParam);
-    const end = getTimestampFromDateString(endDateParam);
-
-    return {
-      start,
-      end: end + (MS_PER_DAY - 1)
-    };
+      ? DEFAULT_TIME_RANGE
+      : {
+          start: getStartOfDay(getTimestampFromDateString(startDateParam)),
+          end: getEndOfDay(getTimestampFromDateString(endDateParam))
+        };
   }
 );
 

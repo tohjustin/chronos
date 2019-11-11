@@ -1,4 +1,15 @@
 import * as d3 from "d3";
+import { DateTime, Duration, DurationObject } from "luxon";
+
+/**
+ * Formats a timestamp to a date string that conforms to `YYYY-MM-DD` format
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @returns formatted date string
+ */
+export function formatDateString(timestamp: number) {
+  return d3.timeFormat("%Y-%m-%d")(new Date(timestamp));
+}
 
 /**
  * Returns the number of days that are in the time interval
@@ -81,16 +92,6 @@ export function getStartOfDay(timestamp: number): number {
 }
 
 /**
- * Formats a timestamp to a date string that conforms to `YYYY-MM-DD` format
- *
- * @param timestamp - timestamp in milliseconds
- * @returns formatted date string
- */
-export function formatDateString(timestamp: number) {
-  return d3.timeFormat("%Y-%m-%d")(new Date(timestamp));
-}
-
-/**
  * Get timestamp of a date string that conforms to `YYYY-MM-DD` format.
  * Timestamp will have the same date & adjusted to the local start of day time.
  *
@@ -130,4 +131,40 @@ export function isValidDateString(s: string) {
   }
 
   return true;
+}
+
+/**
+ * Add duration (in terms of days) from the given timestamp
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @param day - duration in terms of days to substract
+ * @returns added time in milliseconds (unix time)
+ */
+export function addDays(timestamp: number, days: number): number {
+  return DateTime.fromMillis(timestamp)
+    .plus({ days })
+    .valueOf();
+}
+
+/**
+ * Subtract duration (in terms of days) from the given timestamp
+ *
+ * @param timestamp - timestamp in milliseconds
+ * @param day - duration in terms of days to substract
+ * @returns substracted time in milliseconds (unix time)
+ */
+export function minusDays(timestamp: number, days: number): number {
+  return DateTime.fromMillis(timestamp)
+    .minus({ days })
+    .valueOf();
+}
+
+/**
+ * Converts the given duration to milliseconds
+ *
+ * @param duration - `luxon` duration object
+ * @returns duration in milliseconds
+ */
+export function milliseconds(duration: DurationObject) {
+  return Duration.fromObject(duration).as("milliseconds");
 }

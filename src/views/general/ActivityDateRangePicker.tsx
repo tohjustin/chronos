@@ -6,15 +6,13 @@ import { bindActionCreators } from "redux";
 import DateRangePicker from "../../components/DateRangePicker";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import { getEndOfDay, getStartOfDay } from "../../utils/dateUtils";
+import { getEndOfDay, getStartOfDay, minusDays } from "../../utils/dateUtils";
 
 interface ActivityDateRangePickerProps {
   activityTimeRange: DefiniteTimeRange | null;
   selectedTimeRange: TimeRange | null;
   setSelectedTimeRange: (range: TimeRange | null) => void;
 }
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 const ActivityDateRangePicker = ({
   activityTimeRange,
@@ -28,7 +26,7 @@ const ActivityDateRangePicker = ({
   };
 
   // Computed values
-  const now = new Date().valueOf();
+  const now = Date.now();
   const startOfToday = getStartOfDay(now);
   const endOfToday = getEndOfDay(now);
   const activityStartTime = activityTimeRange
@@ -48,21 +46,21 @@ const ActivityDateRangePicker = ({
     {
       label: "Last week",
       value: {
-        start: getStartOfDay(startOfToday - MS_PER_DAY * 6),
+        start: minusDays(startOfToday, 6),
         end: endOfToday
       }
     },
     {
       label: "Last 2 weeks",
       value: {
-        start: getStartOfDay(startOfToday - MS_PER_DAY * 13),
+        start: minusDays(startOfToday, 13),
         end: endOfToday
       }
     },
     {
       label: "Last 4 weeks",
       value: {
-        start: getStartOfDay(startOfToday - MS_PER_DAY * 27),
+        start: minusDays(startOfToday, 27),
         end: endOfToday
       }
     },

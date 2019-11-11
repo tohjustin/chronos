@@ -10,6 +10,7 @@ import {
 } from "../../components/CalendarHeatmap/utils";
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
+import { MS_PER_HOUR } from "../../constants/time";
 import { TimeRange } from "../../models/time";
 import { RootState, selectors } from "../../store";
 import { CHART_COLOR_RANGE } from "../../styles/constants";
@@ -32,7 +33,6 @@ interface UsageByDayOfYearCardProps {
 }
 
 const MONTH_TO_SHOW = 6;
-const MS_PER_HOUR = 1000 * 60 * 60;
 const THRESHOLDS = [0, 1 / 3600, 0.5, 1, 2, 4].map(
   hours => hours * MS_PER_HOUR
 );

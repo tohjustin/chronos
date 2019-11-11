@@ -6,6 +6,7 @@ import Card from "../../components/Card";
 import LineChart from "../../components/LineChart";
 import { Datum } from "../../components/LineChart/types";
 import Tooltip from "../../components/Tooltip";
+import { MS_PER_HOUR } from "../../constants/time";
 import { RootState, selectors } from "../../store";
 import {
   formatTooltipDateLabel,
@@ -21,7 +22,6 @@ interface UsagePerDayCardProps {
   }[];
 }
 
-const MS_PER_HOUR = 1000 * 60 * 60;
 const MAX_TICK_COUNT = 5;
 const MIN_STEP = MS_PER_HOUR;
 

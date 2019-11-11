@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
+import { MS_PER_HOUR } from "../../constants/time";
 import VerticalBarChart from "../../components/VerticalBarChart";
 import { Datum } from "../../components/VerticalBarChart/types";
 import { RootState, selectors } from "../../store";
@@ -22,7 +23,6 @@ interface UsageByDayOfWeekCardProps {
   }[];
 }
 
-const MS_PER_HOUR = 1000 * 60 * 60;
 const MAX_TICK_COUNT = 5;
 const MIN_STEP = MS_PER_HOUR;
 

@@ -1,3 +1,4 @@
+import { MS_PER_DAY, MS_PER_HOUR } from "../../constants/time";
 import {
   formatDateString,
   getDayCount,
@@ -13,7 +14,7 @@ describe("getStartOfDay", () => {
   const START_OF_DAY = 1556434800000; // Apr 28, 2019 00:00:00.000 (Sun)
   const START_OF_NEXT_DAY = 1556521200000; // Apr 29, 2019 00:00:00.000 (Sun)
   const TEST_CASES = [...Array(13)].map((val, index) => [
-    START_OF_DAY + index * 2 * 60 * 60 * 1000,
+    START_OF_DAY + index * 2 * MS_PER_HOUR,
     index < 12 ? START_OF_DAY : START_OF_NEXT_DAY
   ]);
 
@@ -108,7 +109,7 @@ describe("getDayOfWeek", () => {
 
   describe("changing day-of-week", () => {
     const TEST_CASES = [...Array(7)].map((val, index) => [
-      TIMESTAMP + index * 24 * 60 * 60 * 1000,
+      TIMESTAMP + index * MS_PER_DAY,
       index
     ]);
 
@@ -119,7 +120,7 @@ describe("getDayOfWeek", () => {
 
   describe("changing time-of-day", () => {
     const TEST_CASES = [...Array(24)].map((val, index) => [
-      TIMESTAMP + index * 60 * 60 * 1000,
+      TIMESTAMP + index * MS_PER_HOUR,
       0
     ]);
 
@@ -134,7 +135,7 @@ describe("getHourOfWeek", () => {
 
   describe("changing day-of-week", () => {
     const TEST_CASES = [...Array(7)].map((val, index) => [
-      TIMESTAMP + index * 24 * 60 * 60 * 1000,
+      TIMESTAMP + index * MS_PER_DAY,
       { day: index, hour: 0 }
     ]);
 
@@ -145,7 +146,7 @@ describe("getHourOfWeek", () => {
 
   describe("changing time-of-day", () => {
     const TEST_CASES = [...Array(24)].map((val, index) => [
-      TIMESTAMP + index * 60 * 60 * 1000,
+      TIMESTAMP + index * MS_PER_HOUR,
       { day: 0, hour: index }
     ]);
 
