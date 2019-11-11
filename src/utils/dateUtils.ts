@@ -1,6 +1,8 @@
 import * as d3 from "d3";
 import { DateTime, Duration, DurationObject } from "luxon";
 
+import { TimeRange } from "../models/time";
+
 /**
  * Formats a timestamp to a date string that conforms to `YYYY-MM-DD` format
  *
@@ -127,6 +129,25 @@ export function isValidDateString(s: string) {
 
   const [, , day] = s.split("-");
   if (date.getUTCDate() !== Number.parseInt(day)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Check if time range `b` is contained within time range `a`
+ *
+ * @param a - time range to compare against
+ * @param b - time range under comparison
+ * @returns `true` if time range `b` is contained within time range `a`,
+ * `false` otherwise
+ */
+export function isWithinTimeRange(a: TimeRange, b: TimeRange) {
+  if (a.start !== null && (b.start === null || a.start > b.start)) {
+    return false;
+  }
+  if (a.end !== null && (b.end === null || a.end < b.end)) {
     return false;
   }
 

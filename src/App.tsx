@@ -9,6 +9,7 @@ import { HashRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 import Navbar from "./components/Navbar";
+import { TimeRange } from "./models/time";
 import {
   Dispatch,
   RootState,
@@ -17,31 +18,36 @@ import {
   selectors,
   store
 } from "./store";
-import theme from "./theme";
-import AnalyticsView from "./views/analytics";
-import HistoryView from "./views/history";
-import SettingsView from "./views/settings";
 import {
   SEARCH_PARAM_START_DATE,
   SEARCH_PARAM_END_DATE
 } from "./store/router/constants";
+import theme from "./theme";
 import { pickSearchParams } from "./utils/urlUtils";
+import AnalyticsView from "./views/analytics";
+import HistoryView from "./views/history";
+import SettingsView from "./views/settings";
 
 interface AppShellProps {
   loadRecords: () => void;
   searchParams: string;
+  selectedTimeRange: TimeRange;
 }
 
-const AppShell = ({ loadRecords, searchParams }: AppShellProps) => {
-  useEffect(() => {
-    loadRecords();
-  }, [loadRecords]);
+const AppShell = ({
+  loadRecords,
+  searchParams,
+  selectedTimeRange
+}: AppShellProps) => {
   const search = useMemo(() => {
     return pickSearchParams(searchParams, [
       SEARCH_PARAM_START_DATE,
       SEARCH_PARAM_END_DATE
     ]).toString();
   }, [searchParams]);
+  useEffect(() => {
+    loadRecords();
+  }, [loadRecords, selectedTimeRange]);
 
   return (
     <ThemeProvider value={theme}>
@@ -84,7 +90,8 @@ const AppShell = ({ loadRecords, searchParams }: AppShellProps) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  searchParams: selectors.getSearchParams(state)
+  searchParams: selectors.getSearchParams(state),
+  selectedTimeRange: selectors.getSelectedTimeRange(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

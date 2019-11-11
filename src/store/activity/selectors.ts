@@ -34,6 +34,19 @@ export const getIsLoadingRecords = (state: RootState) =>
   state.activity.isLoading;
 
 /**
+ * Retrieves time range of all (fetched) activity records in store
+ */
+export const getRecordsTimeRange = (state: RootState) => {
+  return state.activity.recordsTimeRange;
+};
+
+/**
+ * Retrieves selected time range
+ */
+export const getSelectedTimeRange = (state: RootState) =>
+  state.activity.selectedTimeRange;
+
+/**
  * Retrieves the time range of all recorded activity found in database (oldest
  * & most recently recorded activity)
  */
@@ -53,7 +66,7 @@ export const getHasRecords = createSelector(
  * range & the time range of all recorded activity
  */
 export const getEffectiveTimeRange = createSelector(
-  [getActivityTimeRange, routerSelectors.getSelectedTimeRange],
+  [getActivityTimeRange, getSelectedTimeRange],
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
     if (activityTimeRange === null) {
       return {
@@ -76,7 +89,7 @@ export const getEffectiveTimeRange = createSelector(
  * boundaries
  */
 export const getRecords = createSelector(
-  [getAllRecords, routerSelectors.getSelectedTimeRange],
+  [getAllRecords, getSelectedTimeRange],
   (records, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
     return records.filter(
@@ -283,7 +296,7 @@ export const getAllSelectedDomainTotalDurationByDate = createSelector(
  * boundaries
  */
 export const getSelectedDomainRecords = createSelector(
-  [getAllSelectedDomainRecords, routerSelectors.getSelectedTimeRange],
+  [getAllSelectedDomainRecords, getSelectedTimeRange],
   (allSelectedDomainRecords, selectedTimeRange) => {
     const { start: startTime, end: endTime } = selectedTimeRange;
     return allSelectedDomainRecords.filter(

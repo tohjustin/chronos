@@ -4,8 +4,13 @@ import { ThunkAction } from "redux-thunk";
 
 import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
-import { DefiniteTimeRange } from "../../models/time";
+import { DefiniteTimeRange, TimeRange } from "../../models/time";
+import { DEFAULT_TIME_RANGE } from "../router/constants";
+import { getSelectedTimeRange } from "../router/selectors";
+import { isWithinTimeRange } from "../../utils/dateUtils";
 import { RootState } from "../index";
+
+import { getRecordsTimeRange } from "./selectors";
 
 export interface ActivityState {
   /**
@@ -25,6 +30,14 @@ export interface ActivityState {
    */
   records: ActivityRecord[];
   /**
+   * Time range of all (fetched) activity records
+   */
+  recordsTimeRange: TimeRange | null;
+  /**
+   * Selected activity time range
+   */
+  selectedTimeRange: TimeRange;
+  /**
    * Time range of all recorded activity found in database
    */
   totalTimeRange: DefiniteTimeRange | null;
@@ -35,6 +48,8 @@ const INITIAL_STATE: ActivityState = {
   isDeleting: false,
   isLoading: false,
   records: [],
+  recordsTimeRange: null,
+  selectedTimeRange: DEFAULT_TIME_RANGE,
   totalTimeRange: null
 };
 
@@ -68,6 +83,12 @@ const activity = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    setRecordsTimeRange(state, action: PayloadAction<TimeRange | null>) {
+      state.recordsTimeRange = action.payload;
+    },
+    setSelectedTimeRange(state, action: PayloadAction<TimeRange>) {
+      state.selectedTimeRange = action.payload;
+    },
     setTotalTimeRange(state, action: PayloadAction<DefiniteTimeRange | null>) {
       state.totalTimeRange = action.payload;
     }
@@ -79,7 +100,25 @@ const loadRecords = (): ThunkAction<
   RootState,
   null,
   Action<string>
-> => async dispatch => {
+> => async (dispatch, getState) => {
+  const state = getState();
+  const selectedTimeRange = getSelectedTimeRange(state);
+  const recordsTimeRange = getRecordsTimeRange(state);
+  // Don't fetch data from DB if we already have it in the store
+  if (
+    recordsTimeRange &&
+    isWithinTimeRange(recordsTimeRange, selectedTimeRange)
+  ) {
+    if (selectedTimeRange.start !== null && selectedTimeRange.end !== null) {
+      dispatch(
+        activity.actions.setSelectedTimeRange(
+          selectedTimeRange as DefiniteTimeRange
+        )
+      );
+    }
+    return;
+  }
+
   dispatch(activity.actions.getRecordsStart());
   try {
     const db = InitDatabaseConnection();
@@ -88,7 +127,7 @@ const loadRecords = (): ThunkAction<
     }
 
     const [records, activityTimeRange] = await Promise.all([
-      db.fetchAllActivityRecords(),
+      db.fetchActivityRecords(selectedTimeRange),
       db.fetchActivityTimeRange()
     ]);
 
@@ -96,6 +135,8 @@ const loadRecords = (): ThunkAction<
     // updates
     batch(() => [
       dispatch(activity.actions.getRecordsSuccess(records || [])),
+      dispatch(activity.actions.setRecordsTimeRange(selectedTimeRange)),
+      dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
       dispatch(activity.actions.setTotalTimeRange(activityTimeRange))
     ]);
   } catch (error) {
