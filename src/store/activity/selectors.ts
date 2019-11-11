@@ -57,20 +57,14 @@ export const getEffectiveTimeRange = createSelector(
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
     if (activityTimeRange === null) {
       return {
-        start: selectedTimeRange.start || 0,
-        end: selectedTimeRange.end || 0
+        start: _.get(selectedTimeRange, "start") || 0,
+        end: _.get(selectedTimeRange, "end") || 0
       };
     }
 
     return {
-      start:
-        selectedTimeRange.start === null
-          ? activityTimeRange.start
-          : selectedTimeRange.start,
-      end:
-        selectedTimeRange.end === null
-          ? activityTimeRange.end
-          : selectedTimeRange.end
+      start: _.get(selectedTimeRange, "start") || activityTimeRange.start,
+      end: _.get(selectedTimeRange, "end") || activityTimeRange.end
     };
   }
 );
