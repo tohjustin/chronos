@@ -3,6 +3,7 @@ import { ActivityRecord } from "../models/activity";
 import { DefiniteTimeRange } from "../models/time";
 
 import {
+  addDays,
   getDayOfWeek,
   getDayOfWeekCount,
   getHourOfWeek,
@@ -96,7 +97,7 @@ export function computeTotalDurationByDate(
       );
     }
 
-    currentDate += MS_PER_DAY;
+    currentDate = addDays(currentDate, 1);
   }
 
   // Sort results by chronological order
