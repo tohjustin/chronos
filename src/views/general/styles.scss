@@ -28,3 +28,13 @@
   justify-content: center;
   height: 100%;
 }
+
+.loading-view__container--overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: $z-index__loading-overlay;
+  background: $color__overlay;
+}

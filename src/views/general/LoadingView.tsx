@@ -8,11 +8,20 @@ import "./styles.scss";
 
 interface LoadingViewProps {
   className?: string;
+  overlay?: boolean;
 }
 
 const LoadingView = (props: LoadingViewProps) => {
   return (
-    <div className={classNames("loading-view__container", props.className)}>
+    <div
+      className={classNames(
+        {
+          "loading-view__container": true,
+          "loading-view__container--overlay": props.overlay
+        },
+        props.className
+      )}
+    >
       <Spinner size={SPINNER_SIZE} />
     </div>
   );
