@@ -6,9 +6,21 @@ import { ActivityRecord } from "../../models/activity";
 import { RootState } from "../index";
 
 export interface ActivityState {
+  /**
+   * Error resulting from `deleteRecords` or `loadRecords` thunks
+   */
   error: Error | null;
+  /**
+   * Loading status of `deleteRecords` thunk
+   */
   isDeleting: boolean;
+  /**
+   * Loading status of `loadRecords` thunk
+   */
   isLoading: boolean;
+  /**
+   * List of all (fetched) activity records
+   */
   records: ActivityRecord[];
 }
 
@@ -26,12 +38,9 @@ const activity = createSlice({
     deleteRecordsStart(state: ActivityState) {
       state.isDeleting = true;
     },
-    deleteRecordsSuccess(
-      state,
-      { payload: deletedRecordIds }: PayloadAction<number[]>
-    ) {
+    deleteRecordsSuccess(state, action: PayloadAction<number[]>) {
       state.records = state.records.filter(
-        record => !deletedRecordIds.includes(record.id)
+        record => !action.payload.includes(record.id)
       );
       state.isDeleting = false;
       state.error = null;
@@ -43,8 +52,8 @@ const activity = createSlice({
     getRecordsStart(state: ActivityState) {
       state.isLoading = true;
     },
-    getRecordsSuccess(state, { payload }: PayloadAction<ActivityRecord[]>) {
-      state.records = payload;
+    getRecordsSuccess(state, action: PayloadAction<ActivityRecord[]>) {
+      state.records = action.payload;
       state.isLoading = false;
       state.error = null;
     },
