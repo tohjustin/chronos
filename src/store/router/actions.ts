@@ -48,8 +48,8 @@ const setSelectedTimeRange = (
   const state = getState();
   const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
   if (
-    (timeRange !== null && _.isEqual(timeRange, selectedTimeRange)) ||
-    (timeRange === null && selectedTimeRange === DEFAULT_TIME_RANGE)
+    _.isEqual(timeRange, selectedTimeRange) ||
+    (timeRange === null && _.isEqual(selectedTimeRange, DEFAULT_TIME_RANGE))
   ) {
     return;
   }
