@@ -285,11 +285,13 @@ export const getAllSelectedDomainRecords = createSelector(
  */
 export const getAllSelectedDomainTotalDurationByDate = createSelector(
   [getAllSelectedDomainRecords, getActivityTimeRange],
-  (allSelectedDomainRecords, activityTimeRange) => {
-    return computeTotalDurationByDate(
-      allSelectedDomainRecords,
-      activityTimeRange || { start: 0, end: Date.now() }
-    );
+  (allSelectedDomainRecords, getActivityTimeRange) => {
+    return getActivityTimeRange
+      ? computeTotalDurationByDate(
+          allSelectedDomainRecords,
+          getActivityTimeRange
+        )
+      : [];
   }
 );
 
@@ -363,7 +365,7 @@ export const getSelectedDomainTotalDurationByDate = createSelector(
   (selectedDomainRecords, effectiveTimeRange) => {
     return computeTotalDurationByDate(
       selectedDomainRecords,
-      effectiveTimeRange || { start: 0, end: Date.now() }
+      effectiveTimeRange
     );
   }
 );
