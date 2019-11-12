@@ -7,7 +7,7 @@ import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
 import { List, ListItem } from "../../components/List";
 import { useStorageEstimate } from "../../hooks";
-import { TimeRange } from "../../models/time";
+import { DefiniteTimeRange } from "../../models/time";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 
 import { formatBytes, formatDateDistance } from "./utils";
@@ -16,7 +16,7 @@ interface ExtensionDataCardProps {
   exportDatabaseRecords: () => void;
   importDatabaseRecords: (data: string) => void;
   isLoadingRecords: boolean;
-  activityTimeRange: TimeRange | null;
+  activityTimeRange: DefiniteTimeRange | null;
 }
 
 const ExtensionDataCard = (props: ExtensionDataCardProps) => {
@@ -56,8 +56,11 @@ const ExtensionDataCard = (props: ExtensionDataCardProps) => {
             label="Total data collected"
             isLoading={props.isLoadingRecords}
             value={
-              props.activityTimeRange && props.activityTimeRange.start
-                ? formatDateDistance(props.activityTimeRange.start, Date.now())
+              props.activityTimeRange
+                ? formatDateDistance(
+                    props.activityTimeRange.start,
+                    props.activityTimeRange.end
+                  )
                 : "-"
             }
           />
