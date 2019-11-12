@@ -45,7 +45,7 @@ export interface ActivityService {
   /**
    * Fetches time range of all stored activity records
    * @returns Time Range composed of `startTime` of the oldest activity record
-   * & `endTime` of the newest activity record
+   * & the current time
    */
   fetchActivityTimeRange(): Promise<DefiniteTimeRange | null>;
 }

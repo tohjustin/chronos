@@ -81,18 +81,16 @@ export class DatabaseConnection extends Dexie
   }
 
   public fetchActivityTimeRange(): Promise<DefiniteTimeRange | null> {
-    return Promise.all([
-      this[ACTIVITY_TABLE].orderBy("startTime").first(),
-      this[ACTIVITY_TABLE].orderBy("startTime").last()
-    ] as Promise<Activity | undefined>[]).then(values => {
-      const [oldestRecord, newestRecord] = values;
-      return !oldestRecord || !newestRecord
-        ? null
-        : {
-            start: oldestRecord.startTime,
-            end: newestRecord.endTime
-          };
-    });
+    return this[ACTIVITY_TABLE].orderBy("startTime")
+      .first()
+      .then(oldestRecord => {
+        return !oldestRecord
+          ? null
+          : {
+              start: oldestRecord.startTime,
+              end: Date.now()
+            };
+      });
   }
 
   public async exportDatabaseRecords(): Promise<DatabaseRecords> {
