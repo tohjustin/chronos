@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Frown } from "react-feather";
+import { AlertCircle } from "react-feather";
 
 import "./styles.scss";
 
@@ -13,7 +13,7 @@ const ErrorView = (props: ErrorViewProps) => {
   return (
     <div className={classNames("error-view__container", props.className)}>
       <div className="error-view__content">
-        <Frown />
+        <AlertCircle />
         <span>{props.message}</span>
       </div>
     </div>
