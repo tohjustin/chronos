@@ -46,7 +46,7 @@ export interface ActivityState {
 const INITIAL_STATE: ActivityState = {
   error: null,
   isDeleting: false,
-  isLoading: false,
+  isLoading: true,
   records: [],
   recordsTimeRange: null,
   selectedTimeRange: DEFAULT_TIME_RANGE,
