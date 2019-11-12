@@ -1,4 +1,5 @@
 import { push } from "connected-react-router";
+import _ from "lodash";
 import { Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
@@ -39,7 +40,7 @@ const setSelectedDomain = (
 };
 
 const setSelectedTimeRange = (
-  range: TimeRange | null
+  timeRange: TimeRange | null
 ): ThunkAction<void, RootState, null, Action<string>> => async (
   dispatch,
   getState
@@ -47,10 +48,8 @@ const setSelectedTimeRange = (
   const state = getState();
   const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
   if (
-    (range !== null &&
-      selectedTimeRange.end === range.end &&
-      selectedTimeRange.start === range.start) ||
-    (range === null && selectedTimeRange === DEFAULT_TIME_RANGE)
+    (timeRange !== null && _.isEqual(timeRange, selectedTimeRange)) ||
+    (timeRange === null && selectedTimeRange === DEFAULT_TIME_RANGE)
   ) {
     return;
   }
@@ -58,9 +57,9 @@ const setSelectedTimeRange = (
   const searchParams = getSearchParams(state);
   const newSearchParams = computeSearchParams(searchParams, {
     [SEARCH_PARAM_START_DATE]:
-      range && range.start ? formatDateString(range.start) : null,
+      timeRange && timeRange.start ? formatDateString(timeRange.start) : null,
     [SEARCH_PARAM_END_DATE]:
-      range && range.end ? formatDateString(range.end) : null
+      timeRange && timeRange.end ? formatDateString(timeRange.end) : null
   });
   dispatch(push(`?${newSearchParams.toString()}`));
 };
