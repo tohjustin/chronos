@@ -172,7 +172,7 @@ const DateRangePicker = ({
         height={BUTTON_SIZE}
         iconBefore="timeline-events"
       >
-        {initialFrom && initialTo ? (
+        {value ? (
           <>
             {formatDateString(initialFrom)}
             <Icon
