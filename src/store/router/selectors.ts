@@ -3,12 +3,13 @@ import { createSelector } from "reselect";
 import { ValidationStatus } from "../../models/validate";
 import { RootState } from "../../store";
 import {
+  getEndOfDay,
   getStartOfDay,
   getTimestampFromDateString,
   isValidDateString,
-  getEndOfDay
+  isWithinTimeRange
 } from "../../utils/dateUtils";
-import { getAllDomains } from "../activity/selectors";
+import { getAllDomains, getEffectiveTimeRange } from "../activity/selectors";
 
 import {
   DEFAULT_TIME_RANGE,
@@ -96,12 +97,12 @@ export const getSearchParamsSelectedTimeRangeValidationStatus = (
   state: RootState
 ): ValidationStatus => {
   const params = new URLSearchParams(state.router.location.search);
-  const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
-  const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
+  const startDateParam = params.get(SEARCH_PARAM_START_DATE);
+  const endDateParam = params.get(SEARCH_PARAM_END_DATE);
 
   if (
-    (!isValidDateString(startDateParam) && startDateParam !== "") ||
-    (!isValidDateString(endDateParam) && endDateParam !== "")
+    (startDateParam && !isValidDateString(startDateParam)) ||
+    (endDateParam && !isValidDateString(endDateParam))
   ) {
     return {
       isValid: false,
@@ -109,17 +110,15 @@ export const getSearchParamsSelectedTimeRangeValidationStatus = (
     };
   }
 
-  if (startDateParam === "" || endDateParam === "") {
-    return { isValid: true, description: "" };
-  }
-
-  const startTime = getTimestampFromDateString(startDateParam);
-  const endTime = getTimestampFromDateString(endDateParam);
-  if (startTime > endTime) {
-    return {
-      isValid: false,
-      description: "Selected date range is invalid"
-    };
+  if (startDateParam !== null && endDateParam !== null) {
+    const startTime = getTimestampFromDateString(startDateParam);
+    const endTime = getTimestampFromDateString(endDateParam);
+    if (startTime > endTime) {
+      return {
+        isValid: false,
+        description: "Selected date range is invalid"
+      };
+    }
   }
 
   return { isValid: true, description: "" };

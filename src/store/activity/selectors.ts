@@ -11,7 +11,7 @@ import {
   computeTotalDurationByDayOfWeek,
   isValidActivityRecord
 } from "../../utils/activityUtils";
-import { getDayCount } from "../../utils/dateUtils";
+import { getDayCount, getEndOfDay, getStartOfDay } from "../../utils/dateUtils";
 import { selectors as routerSelectors } from "../router";
 
 /**
@@ -62,22 +62,27 @@ export const getHasRecords = createSelector(
 );
 
 /**
- * Retrieves the effective time range - result of combining the selected time
- * range & the time range of all recorded activity
+ * Retrieves the effective time range: result of clamping the selected time
+ * range within the time range of all recorded activity & rounded to their
+ * start-of-day & end-of-day times respectively
  */
 export const getEffectiveTimeRange = createSelector(
   [getActivityTimeRange, getSelectedTimeRange],
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
     if (activityTimeRange === null) {
-      return {
-        start: _.get(selectedTimeRange, "start") || 0,
-        end: _.get(selectedTimeRange, "end") || 0
-      };
+      return { start: getStartOfDay(), end: getEndOfDay() };
     }
 
+    const selectedStartTime = _.get(selectedTimeRange, "start");
+    const selectedEndTime = _.get(selectedTimeRange, "end");
+    const { start, end } = activityTimeRange;
     return {
-      start: _.get(selectedTimeRange, "start") || activityTimeRange.start,
-      end: _.get(selectedTimeRange, "end") || activityTimeRange.end
+      start: getStartOfDay(
+        selectedStartTime ? _.clamp(selectedStartTime, start, end) : start
+      ),
+      end: getEndOfDay(
+        selectedEndTime ? _.clamp(selectedEndTime, start, end) : end
+      )
     };
   }
 );
