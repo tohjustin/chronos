@@ -91,7 +91,7 @@ const AppShell = ({
 
 const mapStateToProps = (state: RootState) => ({
   searchParams: selectors.getSearchParams(state),
-  selectedTimeRange: selectors.getSelectedTimeRange(state)
+  selectedTimeRange: selectors.getSearchParamsSelectedTimeRange(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

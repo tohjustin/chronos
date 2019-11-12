@@ -137,13 +137,13 @@ const AnalyticsView = ({
 const mapStateToProps = (state: RootState) => ({
   hasRecords: selectors.getHasRecords(state),
   isLoadingRecords: selectors.getIsLoadingRecords(state),
-  selectedDomainValidationStatus: selectors.getSelectedDomainValidationStatus(
+  selectedDomain: selectors.getSearchParamsSelectedDomain(state),
+  selectedDomainValidationStatus: selectors.getSearchParamsSelectedDomainValidationStatus(
     state
   ),
-  selectedTimeRangeValidationStatus: selectors.getSelectedTimeRangeValidationStatus(
+  selectedTimeRangeValidationStatus: selectors.getSearchParamsSelectedTimeRangeValidationStatus(
     state
-  ),
-  selectedDomain: selectors.getSelectedDomain(state)
+  )
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

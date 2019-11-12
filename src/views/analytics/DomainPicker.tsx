@@ -71,7 +71,7 @@ const DomainPicker = (props: DomainPickerProps) => {
 
 const mapStateToProps = (state: RootState) => ({
   allDomains: selectors.getAllDomains(state),
-  selectedDomain: selectors.getSelectedDomain(state)
+  selectedDomain: selectors.getSearchParamsSelectedDomain(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

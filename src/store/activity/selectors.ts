@@ -265,7 +265,7 @@ export const getTotalPageVisitCount = createSelector(
  * Retrieves all activity records of a selected domain
  */
 export const getAllSelectedDomainRecords = createSelector(
-  [getAllRecords, routerSelectors.getSelectedDomain],
+  [getAllRecords, routerSelectors.getSearchParamsSelectedDomain],
   (records, selectedDomain) => {
     return records.filter(
       record =>

@@ -15,8 +15,8 @@ import {
 } from "./constants";
 import {
   getSearchParams,
-  getSelectedDomain,
-  getSelectedTimeRange
+  getSearchParamsSelectedDomain,
+  getSearchParamsSelectedTimeRange
 } from "./selectors";
 
 const setSelectedDomain = (
@@ -26,7 +26,7 @@ const setSelectedDomain = (
   getState
 ) => {
   const state = getState();
-  const selectedDomain = getSelectedDomain(state);
+  const selectedDomain = getSearchParamsSelectedDomain(state);
   if (selectedDomain === domain) {
     return;
   }
@@ -45,7 +45,7 @@ const setSelectedTimeRange = (
   getState
 ) => {
   const state = getState();
-  const selectedTimeRange = getSelectedTimeRange(state);
+  const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
   if (
     (range !== null &&
       selectedTimeRange.end === range.end &&

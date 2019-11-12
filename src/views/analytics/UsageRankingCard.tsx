@@ -45,7 +45,7 @@ const UsageRankingCard = (props: UsageRankingCardProps) => (
 
 export const DomainTotalUsageRankingCard = connect((state: RootState) => {
   const rowCount = TABLE_ROW_COUNT;
-  const selectedDomain = selectors.getSelectedDomain(state);
+  const selectedDomain = selectors.getSearchParamsSelectedDomain(state);
 
   return {
     title: "Usage Ranking",

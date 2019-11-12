@@ -27,7 +27,7 @@ export const getSearchParams = (state: RootState) => {
 /**
  * Retrieves selected domain extracted from browser's URL search parameters
  */
-export const getSelectedDomain = createSelector(
+export const getSearchParamsSelectedDomain = createSelector(
   getSearchParams,
   searchParams => {
     const params = new URLSearchParams(searchParams);
@@ -40,7 +40,7 @@ export const getSelectedDomain = createSelector(
  * Retrieves validation status of the selected domain extracted from browser's
  * URL search parameters
  */
-export const getSelectedDomainValidationStatus = (
+export const getSearchParamsSelectedDomainValidationStatus = (
   state: RootState
 ): ValidationStatus => {
   const params = new URLSearchParams(state.router.location.search);
@@ -64,7 +64,7 @@ export const getSelectedDomainValidationStatus = (
 /**
  * Retrieves selected time range extracted from browser's URL search parameters
  */
-export const getSelectedTimeRange = createSelector(
+export const getSearchParamsSelectedTimeRange = createSelector(
   getSearchParams,
   searchParams => {
     const params = new URLSearchParams(searchParams);
@@ -85,7 +85,7 @@ export const getSelectedTimeRange = createSelector(
  * Retrieves validation status of the selected time range extracted from
  * browser's URL search parameters
  */
-export const getSelectedTimeRangeValidationStatus = (
+export const getSearchParamsSelectedTimeRangeValidationStatus = (
   state: RootState
 ): ValidationStatus => {
   const params = new URLSearchParams(state.router.location.search);

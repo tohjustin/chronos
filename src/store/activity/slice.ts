@@ -6,7 +6,7 @@ import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { DEFAULT_TIME_RANGE } from "../router/constants";
-import { getSelectedTimeRange } from "../router/selectors";
+import { getSearchParamsSelectedTimeRange } from "../router/selectors";
 import { isWithinTimeRange } from "../../utils/dateUtils";
 import { RootState } from "../index";
 
@@ -102,8 +102,8 @@ const loadRecords = (): ThunkAction<
   Action<string>
 > => async (dispatch, getState) => {
   const state = getState();
-  const selectedTimeRange = getSelectedTimeRange(state);
   const recordsTimeRange = getRecordsTimeRange(state);
+  const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
   // Don't fetch data from DB if we already have it in the store
   if (
     recordsTimeRange &&
