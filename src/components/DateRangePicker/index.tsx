@@ -7,7 +7,7 @@ import { DayPickerProps } from "react-day-picker";
 
 import Button from "../Button";
 import DayPicker from "../DayPicker";
-import { DefiniteTimeRange } from "../../models/time";
+import { TimeRange } from "../../models/time";
 import {
   BASE_SIZE,
   BUTTON_SIZE,
@@ -30,13 +30,15 @@ interface DateRangePickerProps
     | "tabIndex"
     | "toMonth"
   > {
-  onChange: (range: DefiniteTimeRange | null) => void;
+  onChange: (range: TimeRange | null) => void;
 
   className?: string;
+  defaultEndTime?: number;
+  defaultStartTime?: number;
   disabled?: boolean;
   position?: PositionTypes;
-  ranges?: { label: string; value: DefiniteTimeRange }[];
-  value?: DefiniteTimeRange;
+  ranges?: { label: string; value: TimeRange }[];
+  value?: TimeRange;
 }
 
 /**
@@ -51,6 +53,8 @@ function formatDateString(date: Date) {
 
 const DateRangePicker = ({
   className,
+  defaultEndTime,
+  defaultStartTime,
   disabled,
   onChange,
   position,
@@ -58,8 +62,12 @@ const DateRangePicker = ({
   value,
   ...otherProps
 }: DateRangePickerProps) => {
-  const initialFrom = value ? new Date(value.start) : null;
-  const initialTo = value ? new Date(value.end) : null;
+  const initialFrom =
+    value && value.start
+      ? new Date(value.start)
+      : new Date(defaultStartTime || "");
+  const initialTo =
+    value && value.end ? new Date(value.end) : new Date(defaultEndTime || "");
 
   const [from, setFrom] = useState<Date | null>(initialFrom);
   const [to, setTo] = useState<Date | null>(initialTo);
@@ -84,7 +92,7 @@ const DateRangePicker = ({
       setTo(day);
     }
   };
-  const handleRangeClick = (range: DefiniteTimeRange) => {
+  const handleRangeClick = (range: TimeRange) => {
     if (range) {
       setIsSelectingFirstDay(true);
       onChange(range);

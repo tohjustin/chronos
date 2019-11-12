@@ -102,20 +102,12 @@ const loadRecords = (): ThunkAction<
   Action<string>
 > => async (dispatch, getState) => {
   const state = getState();
-  const recordsTimeRange = getRecordsTimeRange(state);
   const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
+  const timeRange = getRecordsTimeRange(state);
+
   // Don't fetch data from DB if we already have it in the store
-  if (
-    recordsTimeRange &&
-    isWithinTimeRange(recordsTimeRange, selectedTimeRange)
-  ) {
-    if (selectedTimeRange.start !== null && selectedTimeRange.end !== null) {
-      dispatch(
-        activity.actions.setSelectedTimeRange(
-          selectedTimeRange as DefiniteTimeRange
-        )
-      );
-    }
+  if (timeRange && isWithinTimeRange(timeRange, selectedTimeRange)) {
+    dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange));
     return;
   }
 

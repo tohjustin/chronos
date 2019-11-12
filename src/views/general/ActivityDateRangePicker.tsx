@@ -26,64 +26,50 @@ const ActivityDateRangePicker = ({
   };
 
   // Computed values
-  const now = Date.now();
-  const startOfToday = getStartOfDay(now);
-  const endOfToday = getEndOfDay(now);
-  const activityStartTime = activityTimeRange
-    ? getStartOfDay(activityTimeRange.start)
-    : startOfToday;
+  const [startOfToday, endOfToday] = [getStartOfDay(), getEndOfDay()];
+  const [startTime, endTime] = [
+    activityTimeRange ? getStartOfDay(activityTimeRange.start) : startOfToday,
+    endOfToday
+  ];
   const disabledDays = {
-    before: new Date(activityStartTime),
-    after: new Date(endOfToday)
+    before: new Date(startTime),
+    after: new Date(endTime)
   };
-  // When the user has only one day of activity recorded, do not show the
-  // "All activity" option
+  const month = selectedTimeRange
+    ? new Date(selectedTimeRange.start || startTime)
+    : undefined;
   const ranges = [
     {
       label: "Today",
-      value: { start: startOfToday, end: endOfToday }
+      value: { start: startOfToday, end: null }
     },
     {
       label: "Last week",
-      value: {
-        start: minusDays(startOfToday, 6),
-        end: endOfToday
-      }
+      value: { start: minusDays(startOfToday, 6), end: null }
     },
     {
       label: "Last 2 weeks",
-      value: {
-        start: minusDays(startOfToday, 13),
-        end: endOfToday
-      }
+      value: { start: minusDays(startOfToday, 13), end: null }
     },
     {
       label: "Last 4 weeks",
-      value: {
-        start: minusDays(startOfToday, 27),
-        end: endOfToday
-      }
+      value: { start: minusDays(startOfToday, 27), end: null }
     },
     {
       label: "All activity",
-      value: {
-        start: activityStartTime === startOfToday ? 0 : activityStartTime,
-        end: endOfToday
-      }
+      value: startOfToday !== startTime ? { start: startTime, end: null } : null
     }
-  ].filter(range => range.value.start >= activityStartTime);
-  const selectedStartTime = _.get(selectedTimeRange, "start", null);
-  const selectedEndTime = _.get(selectedTimeRange, "end", null) || endOfToday;
-  let month: Date | undefined;
-  let selectedValue: { start: number; end: number } | undefined;
-  if (selectedTimeRange && selectedStartTime && selectedEndTime) {
-    month = new Date(selectedStartTime);
-    selectedValue = { start: selectedStartTime, end: selectedEndTime };
-  }
+  ].filter(({ value }) => value && value.start >= startTime) as {
+    label: string;
+    value: TimeRange;
+  }[];
+  const selectedValue = selectedTimeRange ? selectedTimeRange : undefined;
 
   return (
     <DateRangePicker
       className="analytics-view__date-range-picker"
+      defaultEndTime={endTime}
+      defaultStartTime={startTime}
       disabledDays={disabledDays}
       fromMonth={disabledDays.before}
       month={month}

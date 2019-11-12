@@ -71,12 +71,19 @@ export const getSearchParamsSelectedTimeRange = createSelector(
     const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
     const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
 
-    return !isValidDateString(startDateParam) ||
-      !isValidDateString(endDateParam)
+    return (startDateParam === "" && endDateParam === "") ||
+      (startDateParam !== "" && !isValidDateString(startDateParam)) ||
+      (endDateParam !== "" && !isValidDateString(endDateParam))
       ? DEFAULT_TIME_RANGE
       : {
-          start: getStartOfDay(getTimestampFromDateString(startDateParam)),
-          end: getEndOfDay(getTimestampFromDateString(endDateParam))
+          start:
+            startDateParam === ""
+              ? null
+              : getStartOfDay(getTimestampFromDateString(startDateParam)),
+          end:
+            endDateParam === ""
+              ? null
+              : getEndOfDay(getTimestampFromDateString(endDateParam))
         };
   }
 );
@@ -92,15 +99,18 @@ export const getSearchParamsSelectedTimeRangeValidationStatus = (
   const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
   const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
 
-  if (startDateParam === "" && endDateParam === "") {
-    return { isValid: true, description: "" };
-  }
-
-  if (!isValidDateString(startDateParam) || !isValidDateString(endDateParam)) {
+  if (
+    (!isValidDateString(startDateParam) && startDateParam !== "") ||
+    (!isValidDateString(endDateParam) && endDateParam !== "")
+  ) {
     return {
       isValid: false,
       description: "Selected date range is malformed"
     };
+  }
+
+  if (startDateParam === "" || endDateParam === "") {
+    return { isValid: true, description: "" };
   }
 
   const startTime = getTimestampFromDateString(startDateParam);
