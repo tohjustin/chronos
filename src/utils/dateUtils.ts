@@ -76,20 +76,22 @@ export function getHourOfWeek(
 /**
  * Returns the end of day based on the given timestamp
  *
- * @param timestamp - timestamp in milliseconds
+ * @param timestamp - timestamp in milliseconds, defaults to current time if
+ * not provided
  * @returns end of day in milliseconds (unix time)
  */
-export function getEndOfDay(timestamp: number): number {
+export function getEndOfDay(timestamp: number = Date.now()): number {
   return new Date(timestamp).setHours(23, 59, 59, 999);
 }
 
 /**
  * Returns the start of day based on the given timestamp
  *
- * @param timestamp - timestamp in milliseconds
+ * @param timestamp - timestamp in milliseconds, defaults to current time if
+ * not provided
  * @returns start of day in milliseconds (unix time)
  */
-export function getStartOfDay(timestamp: number): number {
+export function getStartOfDay(timestamp: number = Date.now()): number {
   return new Date(timestamp).setHours(0, 0, 0, 0);
 }
 
