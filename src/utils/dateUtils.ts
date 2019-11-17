@@ -116,10 +116,6 @@ export function getTimestampFromDateString(dateString: string) {
  * @returns `true` if input string is a valid date string, `false` otherwise
  */
 export function isValidDateString(s: string) {
-  if (s === null) {
-    return false;
-  }
-
   if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) {
     return false;
   }
