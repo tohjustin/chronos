@@ -31,12 +31,14 @@ import SettingsView from "./views/settings";
 interface AppShellProps {
   loadRecords: () => void;
   searchParams: string;
+  selectedDomain: string | null;
   selectedTimeRange: TimeRange;
 }
 
 const AppShell = ({
   loadRecords,
   searchParams,
+  selectedDomain,
   selectedTimeRange
 }: AppShellProps) => {
   const search = useMemo(() => {
@@ -47,7 +49,7 @@ const AppShell = ({
   }, [searchParams]);
   useEffect(() => {
     loadRecords();
-  }, [loadRecords, selectedTimeRange]);
+  }, [loadRecords, selectedDomain, selectedTimeRange]);
 
   return (
     <ThemeProvider value={theme}>
@@ -91,6 +93,7 @@ const AppShell = ({
 
 const mapStateToProps = (state: RootState) => ({
   searchParams: selectors.getSearchParams(state),
+  selectedDomain: selectors.getSearchParamsSelectedDomain(state),
   selectedTimeRange: selectors.getSearchParamsSelectedTimeRange(state)
 });
 

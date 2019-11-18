@@ -2,16 +2,18 @@ import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { batch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 
+import { DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";
 import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
-import { isWithinTimeRange } from "../../utils/dateUtils";
+import { extendTimeRange, isWithinTimeRange } from "../../utils/dateUtils";
 import { DEFAULT_TIME_RANGE } from "../router/constants";
+import { getSearchParamsSelectedDomain } from "../router/selectors";
 import { RootState } from "../index";
 
 import {
-  getRecordsTimeRange,
-  getEffectiveSearchParamsSelectedTimeRange
+  getEffectiveSearchParamsSelectedTimeRange,
+  getRecordsTimeRange
 } from "./selectors";
 
 export interface ActivityState {
@@ -111,12 +113,24 @@ const loadRecords = (): ThunkAction<
   Action<string>
 > => async (dispatch, getState) => {
   const state = getState();
-  const timeRange = getEffectiveSearchParamsSelectedTimeRange(state);
+  const isLoadingDomainAnalytics =
+    getSearchParamsSelectedDomain(state) !== null;
   const recordsTimeRange = getRecordsTimeRange(state);
+  const selectedTimeRange = getEffectiveSearchParamsSelectedTimeRange(state);
+
+  // Ensure we fetched enough data that's required to compute analytics
+  const requiredTimeRange = isLoadingDomainAnalytics
+    ? extendTimeRange(selectedTimeRange, {
+        months: DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW
+      })
+    : selectedTimeRange;
 
   // Don't fetch data from DB if we already have them in the store
-  if (recordsTimeRange && isWithinTimeRange(recordsTimeRange, timeRange)) {
-    dispatch(activity.actions.setSelectedTimeRange(timeRange));
+  if (
+    recordsTimeRange &&
+    isWithinTimeRange(recordsTimeRange, requiredTimeRange)
+  ) {
+    dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange));
     return;
   }
 
@@ -128,15 +142,15 @@ const loadRecords = (): ThunkAction<
     }
 
     const [records, activityTimeRange] = await Promise.all([
-      db.fetchActivityRecords(timeRange),
+      db.fetchActivityRecords(requiredTimeRange),
       db.fetchActivityTimeRange()
     ]);
 
     // Batch actions to ensure smooth UI transition on store updates
     batch(() => [
       dispatch(activity.actions.getRecordsSuccess(records || [])),
-      dispatch(activity.actions.setRecordsTimeRange(timeRange)),
-      dispatch(activity.actions.setSelectedTimeRange(timeRange)),
+      dispatch(activity.actions.setRecordsTimeRange(requiredTimeRange)),
+      dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
       dispatch(activity.actions.setTotalTimeRange(activityTimeRange))
     ]);
   } catch (error) {

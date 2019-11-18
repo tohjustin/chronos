@@ -10,6 +10,7 @@ import {
 } from "../../components/CalendarHeatmap/utils";
 import Card from "../../components/Card";
 import Tooltip from "../../components/Tooltip";
+import { HISTORICAL_USAGE_TIME_WINDOW } from "../../constants/analytics";
 import { MS_PER_HOUR } from "../../constants/time";
 import { TimeRange } from "../../models/time";
 import { RootState, selectors } from "../../store";
@@ -32,7 +33,6 @@ interface UsageByDayOfYearCardProps {
   thresholds: number[];
 }
 
-const MONTH_TO_SHOW = 6;
 const THRESHOLDS = [0, 1 / 3600, 0.5, 1, 2, 4].map(
   hours => hours * MS_PER_HOUR
 );
@@ -72,11 +72,10 @@ const UsageByDayOfYearCard = (props: UsageByDayOfYearCardProps) => {
 };
 
 export const DomainTotalUsageByDayOfYearCard = connect((state: RootState) => {
-  const monthsToShow = MONTH_TO_SHOW;
-
+  const monthsToShow = HISTORICAL_USAGE_TIME_WINDOW;
   return {
     title: "Historical Usage",
-    info: `Total time spent over the past ${MONTH_TO_SHOW} months`,
+    info: `Total time spent over the past ${monthsToShow} months`,
     data: selectors.getAllSelectedDomainTotalDurationByDate(state),
     colorRange: CHART_COLOR_RANGE,
     monthsToShow,

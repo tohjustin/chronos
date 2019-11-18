@@ -187,3 +187,33 @@ export function minusDays(timestamp: number, days: number): number {
 export function milliseconds(duration: DurationObject) {
   return Duration.fromObject(duration).as("milliseconds");
 }
+
+/**
+ * Modifies the time range's start time to a point in time that it's large enough
+ * to cover the given duration (relative to its end time)
+ *
+ * @param timeRange - time range
+ * @param duration - minimum duration the time range needs to cover
+ * @returns extended time range
+ */
+export function extendTimeRange(
+  timeRange: TimeRange,
+  durationObject: DurationObject
+) {
+  const durationInMs = milliseconds(durationObject);
+  const end = timeRange.end || getEndOfDay();
+
+  if (
+    timeRange.start !== null &&
+    durationInMs !== 0 &&
+    end - timeRange.start < durationInMs
+  ) {
+    return {
+      start:
+        timeRange.start === null ? null : getStartOfDay(end - durationInMs),
+      end: timeRange.end === null ? null : end
+    };
+  }
+
+  return timeRange;
+}
