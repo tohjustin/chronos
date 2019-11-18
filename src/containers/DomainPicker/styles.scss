@@ -1,0 +1,36 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.domain-picker {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+
+  button {
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .domain-picker__label {
+    display: flex;
+    align-items: center;
+    margin-right: $base__size;
+    overflow: hidden;
+
+    .domain-picker__icon {
+      @include favicon;
+
+      margin-right: $base__size;
+    }
+
+    .domain-picker__text {
+      @include truncate-text;
+    }
+  }
+}
+
+.domain-picker__popover {
+  input {
+    @include input;
+  }
+}

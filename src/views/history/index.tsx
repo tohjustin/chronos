@@ -6,9 +6,9 @@ import { bindActionCreators } from "redux";
 import Button from "../../components/Button";
 import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
-import { Dispatch, RootState, actions, selectors } from "../../store";
-import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
+import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
 import { ActivityRecord } from "../../models/activity";
+import { Dispatch, RootState, actions, selectors } from "../../store";
 
 import HistoryTable from "./HistoryTable";
 

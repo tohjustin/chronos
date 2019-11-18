@@ -7,6 +7,8 @@ import Button from "../../components/Button";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { BUTTON_MARGIN, ICON_SIZE_MD } from "../../styles/constants";
 
+import "./styles.scss";
+
 interface DomainPickerProps {
   allDomains: {
     [domain: string]: { favIconUrl?: string };
@@ -22,21 +24,19 @@ const DomainPicker = (props: DomainPickerProps) => {
       : undefined;
 
   return (
-    <span className="analytics-view__domain-picker">
+    <span className="domain-picker">
       {props.selectedDomain && (
-        <span className="analytics-view__domain-picker-label">
+        <span className="domain-picker__label">
           {favIconUrl && (
             <Avatar
-              className="analytics-view__domain-picker-icon"
+              className="domain-picker__icon"
               hashValue={props.selectedDomain}
               name={props.selectedDomain}
               src={favIconUrl}
               size={ICON_SIZE_MD}
             />
           )}
-          <span className="analytics-view__domain-picker-text">
-            {props.selectedDomain}
-          </span>
+          <span className="domain-picker__text">{props.selectedDomain}</span>
         </span>
       )}
       <SelectMenu
@@ -54,7 +54,7 @@ const DomainPicker = (props: DomainPickerProps) => {
           props.selectedDomain === null ? undefined : [props.selectedDomain]
         }
         statelessProps={{
-          className: "analytics-view__domain-picker-popover"
+          className: "domain-picker__popover"
         }}
       >
         {props.selectedDomain ? (

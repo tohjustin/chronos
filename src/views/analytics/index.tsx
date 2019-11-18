@@ -6,11 +6,11 @@ import { bindActionCreators } from "redux";
 import ErrorView from "../../components/ErrorView";
 import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
+import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
+import DomainPicker from "../../containers/DomainPicker";
 import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
-import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
 
-import DomainPicker from "./DomainPicker";
 import {
   DomainAveragePageVisitDurationCard,
   DomainTotalPageVisitCountCard,
