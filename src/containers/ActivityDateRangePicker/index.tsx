@@ -11,6 +11,7 @@ import { getEndOfDay, getStartOfDay, minusDays } from "../../utils/dateUtils";
 interface ActivityDateRangePickerProps {
   activityTimeRange: DefiniteTimeRange | null;
   effectiveTimeRange: DefiniteTimeRange;
+  isLoadingRecords: boolean;
   selectedTimeRange: TimeRange;
   selectedTimeRangeValidationStatus: ValidationStatus;
   setSelectedTimeRange: (range: TimeRange | null) => void;
@@ -19,6 +20,7 @@ interface ActivityDateRangePickerProps {
 const ActivityDateRangePicker = ({
   activityTimeRange,
   effectiveTimeRange,
+  isLoadingRecords,
   selectedTimeRange,
   selectedTimeRangeValidationStatus,
   setSelectedTimeRange
@@ -77,6 +79,7 @@ const ActivityDateRangePicker = ({
       className="analytics-view__date-range-picker"
       defaultStartTime={defaultStart}
       defaultEndTime={defaultEnd}
+      disabled={isLoadingRecords}
       disabledDays={disabledDays}
       fromMonth={disabledDays.before}
       month={month}
@@ -92,6 +95,7 @@ const ActivityDateRangePicker = ({
 const mapStateToProps = (state: RootState) => ({
   activityTimeRange: selectors.getActivityTimeRange(state),
   effectiveTimeRange: selectors.getEffectiveSelectedTimeRange(state),
+  isLoadingRecords: selectors.getIsLoadingRecords(state),
   selectedTimeRange: selectors.getSelectedTimeRange(state),
   selectedTimeRangeValidationStatus: selectors.getSearchParamsSelectedTimeRangeValidationStatus(
     state

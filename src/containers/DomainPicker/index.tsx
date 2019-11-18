@@ -13,6 +13,7 @@ interface DomainPickerProps {
   allDomains: {
     [domain: string]: { favIconUrl?: string };
   };
+  isLoadingRecords: boolean;
   selectedDomain: string | null;
   setSelectedDomain: (domain: string | null) => void;
 }
@@ -22,6 +23,7 @@ const MENU_WIDTH = 320;
 
 const DomainPicker = ({
   allDomains,
+  isLoadingRecords,
   selectedDomain,
   setSelectedDomain
 }: DomainPickerProps) => {
@@ -63,9 +65,13 @@ const DomainPicker = ({
         }}
       >
         {selectedDomain ? (
-          <IconButton icon="caret-down" />
+          <IconButton disabled={isLoadingRecords} icon="caret-down" />
         ) : (
-          <Button iconAfter="caret-down" marginRight={BUTTON_MARGIN}>
+          <Button
+            disabled={isLoadingRecords}
+            iconAfter="caret-down"
+            marginRight={BUTTON_MARGIN}
+          >
             Select Domain
           </Button>
         )}
@@ -76,6 +82,7 @@ const DomainPicker = ({
 
 const mapStateToProps = (state: RootState) => ({
   allDomains: selectors.getAllDomains(state),
+  isLoadingRecords: selectors.getIsLoadingRecords(state),
   selectedDomain: selectors.getSearchParamsSelectedDomain(state)
 });
 
