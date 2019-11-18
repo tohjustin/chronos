@@ -1,43 +1,41 @@
-import _ from "lodash";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import DateRangePicker from "../../components/DateRangePicker";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
+import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { getEndOfDay, getStartOfDay, minusDays } from "../../utils/dateUtils";
 
 interface ActivityDateRangePickerProps {
   activityTimeRange: DefiniteTimeRange | null;
-  selectedTimeRange: TimeRange | null;
+  effectiveTimeRange: DefiniteTimeRange;
+  selectedTimeRange: TimeRange;
+  selectedTimeRangeValidationStatus: ValidationStatus;
   setSelectedTimeRange: (range: TimeRange | null) => void;
 }
 
 const ActivityDateRangePicker = ({
   activityTimeRange,
+  effectiveTimeRange,
   selectedTimeRange,
+  selectedTimeRangeValidationStatus,
   setSelectedTimeRange
 }: ActivityDateRangePickerProps) => {
-  const handleDateRangeChange: typeof setSelectedTimeRange = range => {
-    if (range && !_.isEqual(range, selectedTimeRange)) {
-      setSelectedTimeRange(range);
-    }
-  };
-
   // Computed values
   const [startOfToday, endOfToday] = [getStartOfDay(), getEndOfDay()];
-  const [startTime, endTime] = [
-    activityTimeRange ? getStartOfDay(activityTimeRange.start) : startOfToday,
-    endOfToday
-  ];
+  const [defaultStart, defaultEnd] = activityTimeRange
+    ? [
+        getStartOfDay(activityTimeRange.start),
+        getEndOfDay(activityTimeRange.end)
+      ]
+    : [startOfToday, endOfToday];
   const disabledDays = {
-    before: new Date(startTime),
-    after: new Date(endTime)
+    before: new Date(defaultStart),
+    after: new Date(defaultEnd)
   };
-  const month = selectedTimeRange
-    ? new Date(selectedTimeRange.start || startTime)
-    : undefined;
+  const month = new Date(effectiveTimeRange.start);
   const ranges = [
     {
       label: "Today",
@@ -57,23 +55,32 @@ const ActivityDateRangePicker = ({
     },
     {
       label: "All activity",
-      value: startOfToday !== startTime ? { start: startTime, end: null } : null
+      value:
+        startOfToday !== defaultStart
+          ? { start: defaultStart, end: null }
+          : null
     }
-  ].filter(({ value }) => value && value.start >= startTime) as {
+  ].filter(range => range.value && range.value.start >= defaultStart) as {
     label: string;
     value: TimeRange;
   }[];
-  const selectedValue = selectedTimeRange ? selectedTimeRange : undefined;
+  // Treat `selectedValue` as unselected if time range is invalid
+  const selectedValue = selectedTimeRangeValidationStatus.isValid
+    ? {
+        start: selectedTimeRange.start ? effectiveTimeRange.start : null,
+        end: selectedTimeRange.end ? effectiveTimeRange.end : null
+      }
+    : undefined;
 
   return (
     <DateRangePicker
       className="analytics-view__date-range-picker"
-      defaultEndTime={endTime}
-      defaultStartTime={startTime}
+      defaultStartTime={defaultStart}
+      defaultEndTime={defaultEnd}
       disabledDays={disabledDays}
       fromMonth={disabledDays.before}
       month={month}
-      onChange={handleDateRangeChange}
+      onChange={setSelectedTimeRange}
       position="bottom-right"
       ranges={ranges}
       toMonth={disabledDays.after}
@@ -84,7 +91,11 @@ const ActivityDateRangePicker = ({
 
 const mapStateToProps = (state: RootState) => ({
   activityTimeRange: selectors.getActivityTimeRange(state),
-  selectedTimeRange: selectors.getSelectedTimeRange(state)
+  effectiveTimeRange: selectors.getEffectiveSelectedTimeRange(state),
+  selectedTimeRange: selectors.getSelectedTimeRange(state),
+  selectedTimeRangeValidationStatus: selectors.getSearchParamsSelectedTimeRangeValidationStatus(
+    state
+  )
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
