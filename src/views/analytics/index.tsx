@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { BackButton } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
@@ -43,7 +42,7 @@ import {
 import "./styles.scss";
 
 interface AnalyticsViewProps {
-  hasRecords: boolean;
+  isInitialized: boolean;
   isLoadingRecords: boolean;
   selectedDomain: string | null;
   selectedDomainValidationStatus: ValidationStatus;
@@ -53,14 +52,22 @@ interface AnalyticsViewProps {
 
 const AnalyticsView = ({
   clearSelectedDomain,
-  hasRecords,
+  isInitialized,
   isLoadingRecords,
   selectedDomain,
   selectedDomainValidationStatus,
   selectedTimeRangeValidationStatus
 }: AnalyticsViewProps) => {
   let viewBody;
+  const isLoadingAndHasData = isLoadingRecords && isInitialized;
+  const viewBodyClassNames = isLoadingAndHasData
+    ? "analytics-view__overlay-container"
+    : "";
+  const viewBodyOverlay = isLoadingAndHasData && <LoadingView overlay={true} />;
   switch (true) {
+    case !isInitialized:
+      viewBody = <LoadingView />;
+      break;
     case selectedDomainValidationStatus.isValid === false:
     case selectedTimeRangeValidationStatus.isValid === false: {
       const errorDescription =
@@ -100,8 +107,6 @@ const AnalyticsView = ({
       break;
   }
 
-  const isLoadingAndHasNoData = isLoadingRecords && !hasRecords;
-  const isLoadingAndHasData = isLoadingRecords && hasRecords;
   return (
     <View.Container>
       <View.Header>
@@ -115,27 +120,23 @@ const AnalyticsView = ({
             />
           )}
         </span>
-        {!isLoadingAndHasNoData && (
+        {isInitialized && (
           <span className="analytics-view__header">
             <DomainPicker />
             <ActivityDateRangePicker />
           </span>
         )}
       </View.Header>
-      <View.Body
-        className={classNames({
-          "analytics-view__overlay-container": isLoadingRecords
-        })}
-      >
-        {isLoadingAndHasNoData ? <LoadingView /> : viewBody}
-        {isLoadingAndHasData && <LoadingView overlay={true} />}
+      <View.Body className={viewBodyClassNames}>
+        {viewBody}
+        {viewBodyOverlay}
       </View.Body>
     </View.Container>
   );
 };
 
 const mapStateToProps = (state: RootState) => ({
-  hasRecords: selectors.getHasRecords(state),
+  isInitialized: selectors.getIsInitialized(state),
   isLoadingRecords: selectors.getIsLoadingRecords(state),
   selectedDomain: selectors.getSearchParamsSelectedDomain(state),
   selectedDomainValidationStatus: selectors.getSearchParamsSelectedDomainValidationStatus(

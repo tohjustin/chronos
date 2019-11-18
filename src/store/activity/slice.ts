@@ -5,12 +5,14 @@ import { ThunkAction } from "redux-thunk";
 import { InitDatabaseConnection } from "../../db";
 import { ActivityRecord } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
-import { DEFAULT_TIME_RANGE } from "../router/constants";
-import { getSearchParamsSelectedTimeRange } from "../router/selectors";
 import { isWithinTimeRange } from "../../utils/dateUtils";
+import { DEFAULT_TIME_RANGE } from "../router/constants";
 import { RootState } from "../index";
 
-import { getRecordsTimeRange } from "./selectors";
+import {
+  getRecordsTimeRange,
+  getEffectiveSearchParamsSelectedTimeRange
+} from "./selectors";
 
 export interface ActivityState {
   /**
@@ -21,6 +23,10 @@ export interface ActivityState {
    * Loading status of `deleteRecords` thunk
    */
   isDeleting: boolean;
+  /**
+   * Status of whether the initial record fetch has completed
+   */
+  isInitialized: boolean;
   /**
    * Loading status of `loadRecords` thunk
    */
@@ -46,7 +52,8 @@ export interface ActivityState {
 const INITIAL_STATE: ActivityState = {
   error: null,
   isDeleting: false,
-  isLoading: true,
+  isInitialized: false,
+  isLoading: false,
   records: [],
   recordsTimeRange: null,
   selectedTimeRange: DEFAULT_TIME_RANGE,
@@ -76,10 +83,12 @@ const activity = createSlice({
     },
     getRecordsSuccess(state, action: PayloadAction<ActivityRecord[]>) {
       state.records = action.payload;
+      state.isInitialized = true;
       state.isLoading = false;
       state.error = null;
     },
     getRecordsFailure(state: ActivityState, action: PayloadAction<Error>) {
+      state.isInitialized = true;
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -102,12 +111,12 @@ const loadRecords = (): ThunkAction<
   Action<string>
 > => async (dispatch, getState) => {
   const state = getState();
-  const selectedTimeRange = getSearchParamsSelectedTimeRange(state);
-  const timeRange = getRecordsTimeRange(state);
+  const timeRange = getEffectiveSearchParamsSelectedTimeRange(state);
+  const recordsTimeRange = getRecordsTimeRange(state);
 
-  // Don't fetch data from DB if we already have it in the store
-  if (timeRange && isWithinTimeRange(timeRange, selectedTimeRange)) {
-    dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange));
+  // Don't fetch data from DB if we already have them in the store
+  if (recordsTimeRange && isWithinTimeRange(recordsTimeRange, timeRange)) {
+    dispatch(activity.actions.setSelectedTimeRange(timeRange));
     return;
   }
 
@@ -119,16 +128,15 @@ const loadRecords = (): ThunkAction<
     }
 
     const [records, activityTimeRange] = await Promise.all([
-      db.fetchActivityRecords(selectedTimeRange),
+      db.fetchActivityRecords(timeRange),
       db.fetchActivityTimeRange()
     ]);
 
-    // Batch actions to ensure UI animations transition smoothly when store
-    // updates
+    // Batch actions to ensure smooth UI transition on store updates
     batch(() => [
       dispatch(activity.actions.getRecordsSuccess(records || [])),
-      dispatch(activity.actions.setRecordsTimeRange(selectedTimeRange)),
-      dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
+      dispatch(activity.actions.setRecordsTimeRange(timeRange)),
+      dispatch(activity.actions.setSelectedTimeRange(timeRange)),
       dispatch(activity.actions.setTotalTimeRange(activityTimeRange))
     ]);
   } catch (error) {

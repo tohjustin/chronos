@@ -2,7 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 
 import { MS_PER_DAY } from "../../constants/time";
-import { DefiniteTimeRange } from "../../models/time";
+import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { RootState } from "../../store";
 import {
   computeAverageDurationByHourOfWeek,
@@ -26,6 +26,12 @@ export const getAllRecords = (state: RootState) => {
  */
 export const getIsDeletingRecords = (state: RootState) =>
   state.activity.isDeleting;
+
+/**
+ * Retrieves the status of whether the initial record fetch has completed
+ */
+export const getIsInitialized = (state: RootState) =>
+  state.activity.isInitialized;
 
 /**
  * Retrieves the status of loading activity records
@@ -54,11 +60,23 @@ export const getActivityTimeRange = (state: RootState) =>
   state.activity.totalTimeRange;
 
 /**
- * Retrieves the state of whether there are any activity records
+ * Retrieves selected time range extracted from browser's URL search parameters
+ * clamped within the time range of all recorded activity
  */
-export const getHasRecords = createSelector(
-  getAllRecords,
-  records => records.length > 0
+export const getEffectiveSearchParamsSelectedTimeRange = createSelector(
+  [getActivityTimeRange, routerSelectors.getSearchParamsSelectedTimeRange],
+  (activityTimeRange, searchParamsSelectedTimeRange): TimeRange => {
+    const { start, end } = searchParamsSelectedTimeRange;
+    const startOfToday = getStartOfDay();
+
+    return {
+      start:
+        start !== null && activityTimeRange
+          ? _.clamp(start, activityTimeRange.start, startOfToday)
+          : start,
+      end: end === startOfToday ? null : end
+    };
+  }
 );
 
 /**
