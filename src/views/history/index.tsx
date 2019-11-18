@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Button from "../../components/Button";
+import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
-import LoadingView from "../general/LoadingView";
 import { ActivityRecord } from "../../models/activity";
 
 import HistoryTable from "./HistoryTable";

@@ -3,12 +3,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import ErrorView from "../../components/ErrorView";
+import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import ActivityDateRangePicker from "../general/ActivityDateRangePicker";
-import ErrorView from "../general/ErrorView";
-import LoadingView from "../general/LoadingView";
 
 import DomainPicker from "./DomainPicker";
 import {
