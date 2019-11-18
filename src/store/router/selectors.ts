@@ -6,10 +6,9 @@ import {
   getEndOfDay,
   getStartOfDay,
   getTimestampFromDateString,
-  isValidDateString,
-  isWithinTimeRange
+  isValidDateString
 } from "../../utils/dateUtils";
-import { getAllDomains, getEffectiveTimeRange } from "../activity/selectors";
+import { getAllDomains } from "../activity/selectors";
 
 import {
   DEFAULT_TIME_RANGE,
@@ -69,23 +68,27 @@ export const getSearchParamsSelectedTimeRange = createSelector(
   getSearchParams,
   searchParams => {
     const params = new URLSearchParams(searchParams);
-    const startDateParam = params.get(SEARCH_PARAM_START_DATE) || "";
-    const endDateParam = params.get(SEARCH_PARAM_END_DATE) || "";
+    const startDateParam = params.get(SEARCH_PARAM_START_DATE);
+    const endDateParam = params.get(SEARCH_PARAM_END_DATE);
 
-    return (startDateParam === "" && endDateParam === "") ||
-      (startDateParam !== "" && !isValidDateString(startDateParam)) ||
-      (endDateParam !== "" && !isValidDateString(endDateParam))
-      ? DEFAULT_TIME_RANGE
-      : {
-          start:
-            startDateParam === ""
-              ? null
-              : getStartOfDay(getTimestampFromDateString(startDateParam)),
-          end:
-            endDateParam === ""
-              ? null
-              : getEndOfDay(getTimestampFromDateString(endDateParam))
-        };
+    if (
+      (startDateParam === null && endDateParam === null) ||
+      (endDateParam !== null && !isValidDateString(endDateParam)) ||
+      (startDateParam !== null && !isValidDateString(startDateParam))
+    ) {
+      return DEFAULT_TIME_RANGE;
+    }
+
+    return {
+      start:
+        startDateParam === null
+          ? null
+          : getStartOfDay(getTimestampFromDateString(startDateParam)),
+      end:
+        endDateParam === null
+          ? null
+          : getEndOfDay(getTimestampFromDateString(endDateParam))
+    };
   }
 );
 
@@ -101,19 +104,22 @@ export const getSearchParamsSelectedTimeRangeValidationStatus = (
   const endDateParam = params.get(SEARCH_PARAM_END_DATE);
 
   if (
-    (startDateParam && !isValidDateString(startDateParam)) ||
-    (endDateParam && !isValidDateString(endDateParam))
+    (startDateParam !== null && !isValidDateString(startDateParam)) ||
+    (endDateParam !== null && !isValidDateString(endDateParam))
   ) {
     return {
       isValid: false,
-      description: "Selected date range is malformed"
+      description: "Selected date range contains malformed value(s)"
     };
   }
 
-  if (startDateParam !== null && endDateParam !== null) {
-    const startTime = getTimestampFromDateString(startDateParam);
-    const endTime = getTimestampFromDateString(endDateParam);
-    if (startTime > endTime) {
+  if (startDateParam !== null || endDateParam !== null) {
+    const today = getStartOfDay();
+    const startTime =
+      startDateParam !== null ? getTimestampFromDateString(startDateParam) : 0;
+    const endTime =
+      endDateParam !== null ? getTimestampFromDateString(endDateParam) : today;
+    if (startTime > endTime || startTime > today || endTime > today) {
       return {
         isValid: false,
         description: "Selected date range is invalid"
