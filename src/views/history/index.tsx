@@ -98,9 +98,11 @@ const HistoryView = ({
           <span className="history-view__header">
             <span>Usage History</span>
           </span>
-          <span className="history-view__header">
-            <ActivityDateRangePicker />
-          </span>
+          {isInitialized && (
+            <span className="history-view__header">
+              <ActivityDateRangePicker />
+            </span>
+          )}
         </>
       );
       break;
