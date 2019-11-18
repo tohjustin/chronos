@@ -62,12 +62,14 @@ const DateRangePicker = ({
   value,
   ...otherProps
 }: DateRangePickerProps) => {
-  const initialFrom =
-    value && value.start
-      ? new Date(value.start)
-      : new Date(defaultStartTime || "");
-  const initialTo =
-    value && value.end ? new Date(value.end) : new Date(defaultEndTime || "");
+  let initialFrom: Date | null = null;
+  let initialTo: Date | null = null;
+  if (value) {
+    const start: number | null = value.start || defaultStartTime || null;
+    const end: number | null = value.end || defaultEndTime || null;
+    initialFrom = start ? new Date(start) : null;
+    initialTo = end ? new Date(end) : null;
+  }
 
   const [from, setFrom] = useState<Date | null>(initialFrom);
   const [to, setTo] = useState<Date | null>(initialTo);
@@ -172,7 +174,7 @@ const DateRangePicker = ({
         height={BUTTON_SIZE}
         iconBefore="timeline-events"
       >
-        {value ? (
+        {value && initialFrom && initialTo ? (
           <>
             {formatDateString(initialFrom)}
             <Icon
