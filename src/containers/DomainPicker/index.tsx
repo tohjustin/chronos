@@ -17,47 +17,52 @@ interface DomainPickerProps {
   setSelectedDomain: (domain: string | null) => void;
 }
 
-const DomainPicker = (props: DomainPickerProps) => {
+const MENU_HEIGHT = 400;
+const MENU_WIDTH = 320;
+
+const DomainPicker = ({
+  allDomains,
+  selectedDomain,
+  setSelectedDomain
+}: DomainPickerProps) => {
   const favIconUrl =
-    props.selectedDomain && props.allDomains[props.selectedDomain]
-      ? props.allDomains[props.selectedDomain].favIconUrl
+    selectedDomain && allDomains[selectedDomain]
+      ? allDomains[selectedDomain].favIconUrl
       : undefined;
 
   return (
     <span className="domain-picker">
-      {props.selectedDomain && (
+      {selectedDomain && (
         <span className="domain-picker__label">
           {favIconUrl && (
             <Avatar
               className="domain-picker__icon"
-              hashValue={props.selectedDomain}
-              name={props.selectedDomain}
+              hashValue={selectedDomain}
+              name={selectedDomain}
               src={favIconUrl}
               size={ICON_SIZE_MD}
             />
           )}
-          <span className="domain-picker__text">{props.selectedDomain}</span>
+          <span className="domain-picker__text">{selectedDomain}</span>
         </span>
       )}
       <SelectMenu
-        height={400}
-        width={320}
+        height={MENU_HEIGHT}
+        width={MENU_WIDTH}
         hasTitle={false}
         isMultiSelect
-        onDeselect={() => props.setSelectedDomain(null)}
-        onSelect={item => props.setSelectedDomain(item.value as string)}
-        options={Object.keys(props.allDomains)
+        onDeselect={() => setSelectedDomain(null)}
+        onSelect={item => setSelectedDomain(item.value as string)}
+        options={Object.keys(allDomains)
           .sort()
           .map(domain => ({ label: domain, value: domain }))}
         position={Position.BOTTOM_RIGHT}
-        selected={
-          props.selectedDomain === null ? undefined : [props.selectedDomain]
-        }
+        selected={selectedDomain === null ? undefined : [selectedDomain]}
         statelessProps={{
           className: "domain-picker__popover"
         }}
       >
-        {props.selectedDomain ? (
+        {selectedDomain ? (
           <IconButton icon="caret-down" />
         ) : (
           <Button iconAfter="caret-down" marginRight={BUTTON_MARGIN}>
