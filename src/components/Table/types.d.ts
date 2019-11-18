@@ -32,6 +32,7 @@ export interface TableProps<U extends DatumWithId, V = null> {
   filterFn?: (data: U[], filter: string) => U[];
   filterPlaceholder?: string;
   formatEntries?: (count: number) => string;
+  isLoading?: boolean;
   onRowClick?: (datum: U) => void;
   rowHeight?: number;
   rowRenderer?: (props: TableRowProps<U>) => JSX.Element;

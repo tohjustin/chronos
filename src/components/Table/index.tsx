@@ -16,6 +16,7 @@ import { DatumWithId, TableProps } from "./types";
 import "./styles.scss";
 
 const DEFAULT_FILTER_PLACEHOLDER = "No entries";
+const DEFAULT_LOADING_FOOTER_PLACEHOLDER = "Loading entries...";
 const FOOTER_HEIGHT = BASE_SIZE * 4;
 const HEADER_HEIGHT = BASE_SIZE * 4;
 const INITIAL_ROW_COUNT = 150;
@@ -29,10 +30,11 @@ function Table<U extends DatumWithId, V = null>({
   autoFocus,
   data,
   defaultSortOrder = null,
-  disabled = true,
+  disabled = false,
   filterFn,
   filterPlaceholder = DEFAULT_FILTER_PLACEHOLDER,
   formatEntries = defaultFormatEntries,
+  isLoading,
   onRowClick,
   rowHeight = DEFAULT_TABLE_ROW_HEIGHT,
   rowRenderer,
@@ -81,6 +83,7 @@ function Table<U extends DatumWithId, V = null>({
   const tableBodyHeight = containerHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
   switch (true) {
     case isDebounceActive:
+    case isLoading:
       tableContent = (
         <div
           className="table__body table__body-placeholder"
@@ -127,6 +130,9 @@ function Table<U extends DatumWithId, V = null>({
     case isDebounceActive:
       footerText = `Sifting through ${entriesWithUnit}...`;
       break;
+    case isLoading:
+      footerText = DEFAULT_LOADING_FOOTER_PLACEHOLDER;
+      break;
     case filter !== "": {
       const matchedRecords = formatEntries(activities.length);
       footerText = `Found ${matchedRecords} out of ${entriesWithUnit}`;
@@ -149,7 +155,7 @@ function Table<U extends DatumWithId, V = null>({
             <EvergreenTable.SearchHeaderCell
               autoFocus={autoFocus}
               flexGrow={100}
-              onChange={disabled ? undefined : handleFilterChange}
+              onChange={!disabled ? handleFilterChange : undefined}
               value={filter}
             />
           )}
