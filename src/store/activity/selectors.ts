@@ -62,11 +62,10 @@ export const getHasRecords = createSelector(
 );
 
 /**
- * Retrieves the effective time range: result of clamping the selected time
- * range within the time range of all recorded activity & rounded to their
- * start-of-day & end-of-day times respectively
+ * Retrieves selected time range clamped within the time range of all recorded
+ * activity
  */
-export const getEffectiveTimeRange = createSelector(
+export const getEffectiveSelectedTimeRange = createSelector(
   [getActivityTimeRange, getSelectedTimeRange],
   (activityTimeRange, selectedTimeRange): DefiniteTimeRange => {
     if (activityTimeRange === null) {
@@ -145,7 +144,7 @@ export const getAllDomains = createSelector(
  * activity's timestamp
  */
 export const getAverageDurationByHourOfWeek = createSelector(
-  [getRecords, getEffectiveTimeRange],
+  [getRecords, getEffectiveSelectedTimeRange],
   (records, effectiveTimeRange) => {
     return computeAverageDurationByHourOfWeek(records, effectiveTimeRange);
   }
@@ -156,7 +155,7 @@ export const getAverageDurationByHourOfWeek = createSelector(
  * time duration that falls within the selected time range.
  */
 export const getRatioToTotalDuration = createSelector(
-  [getRecords, getEffectiveTimeRange],
+  [getRecords, getEffectiveSelectedTimeRange],
   (records, effectiveTimeRange) => {
     const dayCount = getDayCount(
       effectiveTimeRange.start,
@@ -175,7 +174,7 @@ export const getRatioToTotalDuration = createSelector(
  * selected time range
  */
 export const getTotalDuration = createSelector(
-  [getRecords, getEffectiveTimeRange],
+  [getRecords, getEffectiveSelectedTimeRange],
   (records, effectiveTimeRange) => {
     return computeTotalDuration(records, effectiveTimeRange);
   }
@@ -186,7 +185,7 @@ export const getTotalDuration = createSelector(
  * selected time range, grouped by the date of the activity's timestamp
  */
 export const getTotalDurationByDate = createSelector(
-  [getRecords, getEffectiveTimeRange],
+  [getRecords, getEffectiveSelectedTimeRange],
   (records, effectiveTimeRange) => {
     return computeTotalDurationByDate(records, effectiveTimeRange);
   }
@@ -197,7 +196,7 @@ export const getTotalDurationByDate = createSelector(
  * selected time range, grouped by the day-of-week of the activity's timestamp
  */
 export const getTotalDurationByDayOfWeek = createSelector(
-  [getRecords, getEffectiveTimeRange],
+  [getRecords, getEffectiveSelectedTimeRange],
   (records, effectiveTimeRange) => {
     return computeTotalDurationByDayOfWeek(records, effectiveTimeRange);
   }
@@ -320,7 +319,7 @@ export const getSelectedDomainRecords = createSelector(
  * day-of-week of the activity's timestamp
  */
 export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (selectedDomainRecords, effectiveTimeRange) => {
     return computeAverageDurationByHourOfWeek(
       selectedDomainRecords,
@@ -335,7 +334,7 @@ export const getSelectedDomainAverageDurationByHourOfWeek = createSelector(
  * selected time range.
  */
 export const getSelectedDomainRatioToTotalDuration = createSelector(
-  [getRecords, getSelectedDomainRecords, getEffectiveTimeRange],
+  [getRecords, getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (records, selectedDomainRecords, effectiveTimeRange) => {
     return (
       computeTotalDuration(selectedDomainRecords, effectiveTimeRange) /
@@ -349,7 +348,7 @@ export const getSelectedDomainRatioToTotalDuration = createSelector(
  * falls within the selected time range.
  */
 export const getSelectedDomainTotalDuration = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (selectedDomainRecords, effectiveTimeRange) => {
     return computeTotalDuration(selectedDomainRecords, effectiveTimeRange);
   }
@@ -361,7 +360,7 @@ export const getSelectedDomainTotalDuration = createSelector(
  * timestamp
  */
 export const getSelectedDomainTotalDurationByDate = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (selectedDomainRecords, effectiveTimeRange) => {
     return computeTotalDurationByDate(
       selectedDomainRecords,
@@ -376,7 +375,7 @@ export const getSelectedDomainTotalDurationByDate = createSelector(
  * activity's timestamp
  */
 export const getSelectedDomainTotalDurationByDayOfWeek = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (selectedDomainRecords, effectiveTimeRange) => {
     return computeTotalDurationByDayOfWeek(
       selectedDomainRecords,
@@ -440,7 +439,7 @@ export const getSelectedDomainTotalPageVisitCount = createSelector(
  * falls within the selected time range
  */
 export const getSelectedDomainAveragePageVisitDuration = createSelector(
-  [getSelectedDomainRecords, getEffectiveTimeRange],
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
   (selectedDomainRecords, effectiveTimeRange) => {
     // (total duration on website) divide by (# of page visited)
     return (
