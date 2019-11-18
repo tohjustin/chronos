@@ -116,6 +116,7 @@ const AnalyticsView = ({
           ) : (
             <BackButton
               className="analytics-view__header-back-button"
+              disabled={isLoadingRecords}
               onClick={clearSelectedDomain}
             />
           )}
