@@ -111,7 +111,7 @@ const AnalyticsView = ({
     <View.Container>
       <View.Header>
         <span className="analytics-view__header">
-          {selectedDomain === null ? (
+          {!isInitialized || selectedDomain === null ? (
             <span className="analytics-view__header-text">Usage Analytics</span>
           ) : (
             <BackButton
