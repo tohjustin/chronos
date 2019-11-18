@@ -18,6 +18,7 @@ interface HistoryTableProps {
   data: ActivityRecord[];
   autoFocus?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
   selectedRecordIds?: number[];
   onRowClick?: (datum: ActivityRecord) => void;
 }
@@ -137,6 +138,7 @@ const HistoryTable = ({
   autoFocus,
   data,
   disabled,
+  isLoading,
   onRowClick,
   selectedRecordIds
 }: HistoryTableProps) => {
@@ -149,6 +151,7 @@ const HistoryTable = ({
       filterFn={filterActivityRecords}
       filterPlaceholder="No activity"
       formatEntries={formatRecordString}
+      isLoading={isLoading}
       rowHeight={ROW_HEIGHT}
       rowRenderer={HistoryTableRow}
       onRowClick={onRowClick}

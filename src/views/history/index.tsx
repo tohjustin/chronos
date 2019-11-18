@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Button, IconButton } from "../../components/Button";
+import ErrorView from "../../components/ErrorView";
 import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
 import { ActivityRecord } from "../../models/activity";
+import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 
 import HistoryTable from "./HistoryTable";
@@ -20,13 +22,17 @@ interface HistoryViewProps {
     onerror?: () => void
   ) => void;
   isDeletingRecords: boolean;
+  isInitialized: boolean;
   isLoadingRecords: boolean;
+  selectedTimeRangeValidationStatus: ValidationStatus;
 }
 
 const HistoryView = ({
   deleteRecords,
   isDeletingRecords,
-  isLoadingRecords
+  isInitialized,
+  isLoadingRecords,
+  selectedTimeRangeValidationStatus
 }: HistoryViewProps) => {
   const [selectedRecordIds, setSelectedRecordIds] = useState<number[]>([]);
   const handleCancelClick = useCallback(() => {
@@ -93,21 +99,27 @@ const HistoryView = ({
             <span>Usage History</span>
           </span>
           <span className="history-view__header">
-            {!isLoadingRecords && <ActivityDateRangePicker />}
+            <ActivityDateRangePicker />
           </span>
         </>
       );
       break;
   }
   switch (true) {
-    case isLoadingRecords:
+    case !isInitialized:
       viewContent = <LoadingView />;
       break;
+    case selectedTimeRangeValidationStatus.isValid === false: {
+      const errorDescription = selectedTimeRangeValidationStatus.description;
+      viewContent = <ErrorView message={errorDescription} />;
+      break;
+    }
     default:
       viewContent = (
         <HistoryTable
           autoFocus={true}
           disabled={disabled}
+          isLoading={isLoadingRecords}
           onRowClick={handleRowClick}
           selectedRecordIds={selectedRecordIds}
         />
@@ -125,7 +137,11 @@ const HistoryView = ({
 
 const mapStateToProps = (state: RootState) => ({
   isDeletingRecords: selectors.getIsDeletingRecords(state),
-  isLoadingRecords: selectors.getIsLoadingRecords(state)
+  isInitialized: selectors.getIsInitialized(state),
+  isLoadingRecords: selectors.getIsLoadingRecords(state),
+  selectedTimeRangeValidationStatus: selectors.getSearchParamsSelectedTimeRangeValidationStatus(
+    state
+  )
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
