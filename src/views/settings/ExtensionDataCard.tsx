@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import Button from "../../components/Button";
+import { Button } from "../../components/Button";
 import Card from "../../components/Card";
 import FileUploadButton from "../../components/FileUploadButton";
 import { List, ListItem } from "../../components/List";

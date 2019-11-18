@@ -2,7 +2,7 @@ import { Heading, Menu, Pane, Popover } from "evergreen-ui";
 import _ from "lodash";
 import React from "react";
 
-import Button from "../Button";
+import { Button } from "../Button";
 
 import { TableSortButtonProps } from "./types";
 

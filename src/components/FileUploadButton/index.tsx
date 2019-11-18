@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import Button from "../Button";
+import { Button } from "../Button";
 
 import "./styles.scss";
 

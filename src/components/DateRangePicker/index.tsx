@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import * as d3 from "d3";
-import { Icon, Popover, PositionTypes, IconButton } from "evergreen-ui";
+import { Icon, Popover, PositionTypes } from "evergreen-ui";
 import _ from "lodash";
 import React, { useState } from "react";
 import { DayPickerProps } from "react-day-picker";
 
-import Button from "../Button";
+import { Button, IconButton } from "../Button";
 import DayPicker from "../DayPicker";
 import { TimeRange } from "../../models/time";
 import {

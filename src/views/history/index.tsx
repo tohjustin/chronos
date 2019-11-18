@@ -1,9 +1,8 @@
-import { IconButton } from "evergreen-ui";
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import Button from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";

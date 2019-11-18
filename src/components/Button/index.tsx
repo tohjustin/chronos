@@ -1,10 +1,15 @@
 import classNames from "classnames";
-import { Button as EvergreenButton, ButtonProps } from "evergreen-ui";
+import {
+  Button as EvergreenButton,
+  ButtonProps,
+  IconButton as EvergreenIconButton,
+  IconButtonProps
+} from "evergreen-ui";
 import React from "react";
 
 import "./styles.scss";
 
-const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
   const appearance = props.appearance;
   const intent = props.intent;
 
@@ -20,4 +25,18 @@ const Button = (props: ButtonProps) => {
   );
 };
 
-export default Button;
+export const IconButton = (props: IconButtonProps) => {
+  const appearance = props.appearance;
+  const intent = props.intent;
+
+  return (
+    <EvergreenIconButton
+      {...props}
+      className={classNames("button", props.className, {
+        [`button--appearance-${appearance}`]: appearance !== undefined,
+        [`button--intent-${intent}`]: intent !== undefined
+      })}
+      fontWeight="600"
+    />
+  );
+};

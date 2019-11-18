@@ -1,9 +1,9 @@
-import { Avatar, IconButton, Position, SelectMenu } from "evergreen-ui";
+import { Avatar, Position, SelectMenu } from "evergreen-ui";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import Button from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { BUTTON_MARGIN, ICON_SIZE_MD } from "../../styles/constants";
 
