@@ -16,6 +16,10 @@ import {
 
 import "./styles.scss";
 
+interface HandleClickOptions {
+  closePopover: () => void;
+}
+
 interface DateRangePickerProps
   extends Pick<
     DayPickerProps,
@@ -75,7 +79,7 @@ const DateRangePicker = ({
   const [to, setTo] = useState<Date | null>(initialTo);
   const [isSelectingFirstDay, setIsSelectingFirstDay] = useState(true);
 
-  const handleDayClick = (day: Date) => {
+  const handleDayClick = (day: Date, options: HandleClickOptions) => {
     if (isSelectingFirstDay) {
       setIsSelectingFirstDay(false);
       setFrom(day);
@@ -85,6 +89,7 @@ const DateRangePicker = ({
       const nextFrom = from !== null && day > from ? from : day;
       const nextTo = from !== null && day > from ? day : from;
       if (nextFrom && nextTo) {
+        options.closePopover();
         onChange({ start: nextFrom.valueOf(), end: nextTo.valueOf() });
       }
     }
@@ -94,9 +99,10 @@ const DateRangePicker = ({
       setTo(day);
     }
   };
-  const handleRangeClick = (range: TimeRange) => {
+  const handleRangeClick = (range: TimeRange, options: HandleClickOptions) => {
     if (range) {
       setIsSelectingFirstDay(true);
+      options.closePopover();
       onChange(range);
     }
   };
@@ -113,60 +119,70 @@ const DateRangePicker = ({
 
   return (
     <Popover
+      isShown={disabled ? false : undefined}
       position={position}
-      content={() => (
-        <div className="date-range-picker__content">
-          {ranges && (
-            <div className="date-range-picker__ranges">
-              {ranges.map(range => (
-                <Button
-                  key={range.label}
-                  appearance="minimal"
-                  isActive={_.isEqual(range.value, value)}
-                  onClick={() => handleRangeClick(range.value)}
-                >
-                  {range.label}
-                </Button>
-              ))}
-            </div>
-          )}
-          <DayPicker
-            {...otherProps}
-            modifiers={modifiers}
-            numberOfMonths={2}
-            onDayClick={handleDayClick}
-            onDayMouseEnter={handleDayMouseEnter}
-            pagedNavigation
-            selectedDays={selectedDays}
-            navbarElement={({
-              onPreviousClick,
-              onNextClick,
-              showPreviousButton,
-              showNextButton
-            }) => {
-              return (
-                <div className="date-range-picker__nav-bar">
-                  <IconButton
+      content={({ close }) => {
+        const handleClickOptions = {
+          closePopover: close
+        };
+        return (
+          <div className="date-range-picker__content">
+            {ranges && (
+              <div className="date-range-picker__ranges">
+                {ranges.map(range => (
+                  <Button
+                    key={range.label}
                     appearance="minimal"
-                    disabled={!showPreviousButton}
-                    icon="chevron-left"
-                    height={ICON_BUTTON_SIZE}
-                    marginRight={BASE_SIZE}
-                    onClick={() => onPreviousClick()}
-                  />
-                  <IconButton
-                    appearance="minimal"
-                    disabled={!showNextButton}
-                    icon="chevron-right"
-                    height={ICON_BUTTON_SIZE}
-                    onClick={() => onNextClick()}
-                  />
-                </div>
-              );
-            }}
-          />
-        </div>
-      )}
+                    isActive={_.isEqual(range.value, value)}
+                    onClick={() =>
+                      handleRangeClick(range.value, handleClickOptions)
+                    }
+                  >
+                    {range.label}
+                  </Button>
+                ))}
+              </div>
+            )}
+            <DayPicker
+              {...otherProps}
+              modifiers={modifiers}
+              numberOfMonths={2}
+              onDayClick={(day: Date) =>
+                handleDayClick(day, handleClickOptions)
+              }
+              onDayMouseEnter={handleDayMouseEnter}
+              pagedNavigation
+              selectedDays={selectedDays}
+              navbarElement={({
+                onPreviousClick,
+                onNextClick,
+                showPreviousButton,
+                showNextButton
+              }) => {
+                return (
+                  <div className="date-range-picker__nav-bar">
+                    <IconButton
+                      appearance="minimal"
+                      disabled={!showPreviousButton}
+                      icon="chevron-left"
+                      height={ICON_BUTTON_SIZE}
+                      marginRight={BASE_SIZE}
+                      onClick={() => onPreviousClick()}
+                    />
+                    <IconButton
+                      appearance="minimal"
+                      disabled={!showNextButton}
+                      icon="chevron-right"
+                      height={ICON_BUTTON_SIZE}
+                      onClick={() => onNextClick()}
+                    />
+                  </div>
+                );
+              }}
+            />
+          </div>
+        );
+      }}
     >
       <Button
         className={classNames("date-range-picker", className)}

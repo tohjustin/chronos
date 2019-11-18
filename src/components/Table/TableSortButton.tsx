@@ -23,26 +23,32 @@ function TableSortButton<U, V>({
 
   return (
     <Popover
+      isShown={disabled ? false : undefined}
       position="bottom-right"
-      content={
-        <Menu>
-          <Pane>
-            <Heading size={100}>{DEFAULT_POPOVER_HEADER}</Heading>
+      content={({ close }) => {
+        return (
+          <Menu>
             <Pane>
-              {_.map(sortOptions, option => (
-                <Menu.Option
-                  key={option.value}
-                  isSelected={option.value === sortOrder}
-                  onSelect={() => onSelect(option.value)}
-                  secondaryText={option.optionSublabel}
-                >
-                  {option.optionLabel}
-                </Menu.Option>
-              ))}
+              <Heading size={100}>{DEFAULT_POPOVER_HEADER}</Heading>
+              <Pane>
+                {_.map(sortOptions, option => (
+                  <Menu.Option
+                    key={option.value}
+                    isSelected={option.value === sortOrder}
+                    onSelect={() => {
+                      close();
+                      onSelect(option.value);
+                    }}
+                    secondaryText={option.optionSublabel}
+                  >
+                    {option.optionLabel}
+                  </Menu.Option>
+                ))}
+              </Pane>
             </Pane>
-          </Pane>
-        </Menu>
-      }
+          </Menu>
+        );
+      }}
       statelessProps={{ className: "table__sort-button--popover" }}
     >
       <Button

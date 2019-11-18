@@ -51,6 +51,7 @@ const DomainPicker = ({
       <SelectMenu
         height={MENU_HEIGHT}
         width={MENU_WIDTH}
+        closeOnSelect={true}
         hasTitle={false}
         isMultiSelect
         onDeselect={() => setSelectedDomain(null)}
