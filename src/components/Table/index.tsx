@@ -26,7 +26,7 @@ function defaultFormatEntries(count: number) {
   return `${count.toLocaleString("en-US")} ${count > 1 ? "entries" : "entry"}`;
 }
 
-function Table<U extends DatumWithId, V = null>({
+function Table<U extends DatumWithId, V, W = null>({
   autoFocus,
   data,
   defaultSortOrder = null,
@@ -38,13 +38,14 @@ function Table<U extends DatumWithId, V = null>({
   onRowClick,
   rowHeight = DEFAULT_TABLE_ROW_HEIGHT,
   rowRenderer,
+  rowRendererProps,
   selectedIds,
   sortOptions
-}: TableProps<U, V>) {
+}: TableProps<U, V, W>) {
   const [containerRef, { height: containerHeight }] = useClientDimensions();
   const [rowCount, setRowCount] = useState(INITIAL_ROW_COUNT);
   const [filter, setFilter] = useState("");
-  const [sortOrder, setSortOrder] = useState<V | null>(defaultSortOrder);
+  const [sortOrder, setSortOrder] = useState<W | null>(defaultSortOrder);
   const [debouncedFilter] = useDebounce(filter, 500);
   const handleFilterChange = useCallback(setFilter, []);
   const handleScroll = useCallback(
@@ -117,7 +118,13 @@ function Table<U extends DatumWithId, V = null>({
           useAverageAutoHeightEstimation={false}
         >
           {visibleActivities.map(datum =>
-            tableRowRenderer({ datum, isSelectable, onRowClick, selectedIds })
+            tableRowRenderer({
+              datum,
+              isSelectable,
+              onRowClick,
+              selectedIds,
+              ...(rowRendererProps as V)
+            })
           )}
         </EvergreenTable.VirtualBody>
       );

@@ -17,17 +17,17 @@ export interface TableSortButtonProps<U, V> {
   sortOrder: TableSortOption | null;
 }
 
-export interface TableRowProps<U> {
+export interface TableRowBaseProps<U> {
   datum: U;
   isSelectable?: boolean;
   selectedIds?: number[];
   onRowClick?: (datum: U) => void;
 }
 
-export interface TableProps<U extends DatumWithId, V = null> {
+export interface TableProps<U extends DatumWithId, V, W = null> {
   data: U[];
   autoFocus?: boolean;
-  defaultSortOrder?: V | null;
+  defaultSortOrder?: W | null;
   disabled?: boolean;
   filterFn?: (data: U[], filter: string) => U[];
   filterPlaceholder?: string;
@@ -35,7 +35,8 @@ export interface TableProps<U extends DatumWithId, V = null> {
   isLoading?: boolean;
   onRowClick?: (datum: U) => void;
   rowHeight?: number;
-  rowRenderer?: (props: TableRowProps<U>) => JSX.Element;
+  rowRenderer?: (props: TableRowBaseProps<U> & V) => JSX.Element;
+  rowRendererProps?: V;
   selectedIds?: number[];
-  sortOptions?: TableSortOption<U, V>[];
+  sortOptions?: TableSortOption<U, W>[];
 }

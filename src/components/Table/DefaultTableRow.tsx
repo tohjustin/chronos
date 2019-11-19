@@ -4,7 +4,7 @@ import React from "react";
 
 import { BASE_SIZE } from "../../styles/constants";
 
-import { DatumWithId, TableRowProps } from "./types";
+import { DatumWithId, TableRowBaseProps } from "./types";
 
 export const DEFAULT_TABLE_ROW_HEIGHT = BASE_SIZE * 3;
 
@@ -13,7 +13,7 @@ function DefaultTableRow<T extends DatumWithId>({
   isSelectable,
   onRowClick,
   selectedIds
-}: TableRowProps<T>): JSX.Element {
+}: TableRowBaseProps<T>): JSX.Element {
   return (
     <Table.Row
       className={classNames("table__row", {
