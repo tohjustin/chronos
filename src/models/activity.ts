@@ -1,3 +1,12 @@
+/** Object representing a raw segment of web browsing activity */
+export interface RawActivity {
+  url: string;
+  startTime: number;
+  endTime: number;
+  title: string;
+  favIconUrl: string;
+}
+
 /** Object representing a segment of web browsing activity */
 export interface Activity {
   id?: number;

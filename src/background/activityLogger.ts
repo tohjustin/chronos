@@ -1,5 +1,6 @@
 import { InitDatabaseConnection } from "../db";
 import { ActivityService } from "../db/types";
+import { RawActivity } from "../models/activity";
 import { InitIdleService } from "../web-extensions/idle";
 import {
   IdleService,
@@ -46,14 +47,6 @@ export type EventCallback =
       args: Parameters<BrowserWindowFocusChangedEventCallback>;
     };
 
-export interface Activity {
-  endTime: number;
-  favIconUrl: string;
-  startTime: number;
-  title: string;
-  url: string;
-}
-
 export interface ActivityLoggerDependencies {
   activityService: ActivityService;
   idleService: IdleService;
@@ -67,7 +60,7 @@ export interface TabWithRequiredFields extends Tab {
   url: string;
 }
 
-const EMPTY_ACTIVITY = {
+const EMPTY_ACTIVITY: RawActivity = {
   url: "",
   favIconUrl: "",
   title: "",
@@ -82,7 +75,7 @@ export class ActivityLogger {
   private tabsService: TabsService;
   private windowsService: WindowsService;
 
-  public currentActivity: Activity;
+  public currentActivity: RawActivity;
 
   constructor(dependencies: ActivityLoggerDependencies) {
     this.activityService = dependencies.activityService;
@@ -93,7 +86,7 @@ export class ActivityLogger {
     this.currentActivity = { ...EMPTY_ACTIVITY };
   }
 
-  private hasActiveActivity(activity: Activity): boolean {
+  private hasActiveActivity(activity: RawActivity): boolean {
     return activity.url !== EMPTY_ACTIVITY.url;
   }
 
@@ -221,7 +214,7 @@ export class ActivityLogger {
    * Logs current activity, activity will not be logged if its URL is invalid or
    * matches any blacklisted domains
    */
-  private async log(activity: Activity): Promise<void> {
+  private async log(activity: RawActivity): Promise<void> {
     if (!this.hasActiveActivity(activity)) {
       return;
     }
