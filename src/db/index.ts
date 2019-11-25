@@ -59,26 +59,24 @@ export class DatabaseConnection extends Dexie
     );
   }
 
-  public createActivityRecord({
-    url,
-    favIconUrl,
-    title: pageTitle,
-    startTime,
-    endTime
-  }: RawActivity): Promise<number> {
-    const { activity, domain, title } = generateRecords({
-      url,
-      favIconUrl,
-      title: pageTitle,
-      startTime,
-      endTime
-    });
-    // TODO: Make this atomic via transactions
-    const id = this[ACTIVITY_TABLE].add(activity as ActivityTableRecord);
-    this[DOMAIN_TABLE].put(domain);
-    title && this[TITLE_TABLE].put(title);
+  public async createActivityRecord(rawActivity: RawActivity): Promise<void> {
 
-    return id;
+    const { activity, domain, title } = generateRecords(rawActivity);
+    try {
+      await this.transaction(
+        "rw",
+        [this[ACTIVITY_TABLE], this[DOMAIN_TABLE], this[TITLE_TABLE]],
+        async () => {
+          await this[ACTIVITY_TABLE].add(activity);
+          await this[DOMAIN_TABLE].put(domain);
+          if (title) {
+            await this[TITLE_TABLE].put(title);
+          }
+        }
+      );
+    } catch (err) {
+      new Error(err);
+    }
   }
 
   public deleteActivityRecords(recordIds: number[]): Promise<void> {

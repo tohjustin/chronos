@@ -33,9 +33,8 @@ export interface ActivityService {
   /**
    * Creates & stores an activity record
    * @param activity raw activity data
-   * @returns ID of the created record
    */
-  createActivityRecord(activity: RawActivity): Promise<number>;
+  createActivityRecord(activity: RawActivity): Promise<void>;
 
   /**
    * Deletes a list of activity records
