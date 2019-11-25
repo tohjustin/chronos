@@ -1,6 +1,6 @@
 import Dexie from "dexie";
 
-import { Activity, Domain } from "../models/activity";
+import { Activity, Domain, RawActivity } from "../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../models/time";
 
 import {
@@ -59,13 +59,13 @@ export class DatabaseConnection extends Dexie
     );
   }
 
-  public createActivityRecord(
-    url: string,
-    favIconUrl: string,
-    pageTitle: string,
-    startTime: number,
-    endTime: number
-  ): Promise<number> {
+  public createActivityRecord({
+    url,
+    favIconUrl,
+    title: pageTitle,
+    startTime,
+    endTime
+  }: RawActivity): Promise<number> {
     const { activity, domain, title } = generateRecords({
       url,
       favIconUrl,

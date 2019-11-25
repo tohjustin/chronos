@@ -221,13 +221,7 @@ export class ActivityLogger {
 
     // TODO: Add logic to exclude tracking user-defined blacklisted domains
     try {
-      await this.activityService.createActivityRecord(
-        activity.url,
-        activity.favIconUrl,
-        activity.title,
-        activity.startTime,
-        activity.endTime
-      );
+      await this.activityService.createActivityRecord(activity);
     } catch (e) {
       console.error(
         "[activity-logger] log: Unable to create activity record",

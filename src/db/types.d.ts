@@ -1,4 +1,4 @@
-import ActivityTableRecord from "../models/activity";
+import { RawActivity } from "../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../models/time";
 
 /** Object representing a segment of web browsing activity stored in DB */
@@ -32,20 +32,10 @@ export interface DatabaseRecords {
 export interface ActivityService {
   /**
    * Creates & stores an activity record
-   * @param url activity URL
-   * @param favIconUrl page favicon URL
-   * @param title page title
-   * @param startTime activity start time in milliseconds
-   * @param endTime activity end time in milliseconds
+   * @param activity raw activity data
    * @returns ID of the created record
    */
-  createActivityRecord(
-    url: string,
-    favIconUrl: string,
-    title: string,
-    startTime: number,
-    endTime: number
-  ): Promise<number>;
+  createActivityRecord(activity: RawActivity): Promise<number>;
 
   /**
    * Deletes a list of activity records
