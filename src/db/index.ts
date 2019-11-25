@@ -60,6 +60,9 @@ export class DatabaseConnection extends Dexie
   }
 
   public async createActivityRecord(rawActivity: RawActivity): Promise<void> {
+    if (rawActivity.startTime >= rawActivity.endTime) {
+      new Error(`[db]: Invalid time range, ${JSON.stringify(rawActivity)}`);
+    }
 
     const { activity, domain, title } = generateRecords(rawActivity);
     try {

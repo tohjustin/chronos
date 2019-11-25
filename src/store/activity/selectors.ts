@@ -9,8 +9,7 @@ import {
   computeAverageDurationByHourOfWeek,
   computeTotalDuration,
   computeTotalDurationByDate,
-  computeTotalDurationByDayOfWeek,
-  isValidActivityRecord
+  computeTotalDurationByDayOfWeek
 } from "../../utils/activityUtils";
 import { getDayCount, getEndOfDay, getStartOfDay } from "../../utils/dateUtils";
 import { selectors as routerSelectors } from "../router";
@@ -26,7 +25,7 @@ export const getAllDomains = (state: RootState): Record<string, Domain> => {
  * Retrieves all activity records
  */
 export const getAllRecords = (state: RootState): Activity[] => {
-  return state.activity.records.filter(isValidActivityRecord);
+  return state.activity.records;
 };
 
 /**

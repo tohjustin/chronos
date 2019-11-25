@@ -254,7 +254,3 @@ export function computeAverageDurationByHourOfWeek(
       return a.day * 24 + a.hour < b.day * 24 + b.hour ? -1 : 1;
     });
 }
-
-export function isValidActivityRecord(record: Activity) {
-  return record.startTime < record.endTime;
-}
