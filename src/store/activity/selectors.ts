@@ -2,6 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 
 import { MS_PER_DAY } from "../../constants/time";
+import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { RootState } from "../../store";
 import {
@@ -15,9 +16,16 @@ import { getDayCount, getEndOfDay, getStartOfDay } from "../../utils/dateUtils";
 import { selectors as routerSelectors } from "../router";
 
 /**
+ * Retrieves all visited domains
+ */
+export const getAllDomains = (state: RootState): Record<string, Domain> => {
+  return state.activity.domains;
+};
+
+/**
  * Retrieves all activity records
  */
-export const getAllRecords = (state: RootState) => {
+export const getAllRecords = (state: RootState): Activity[] => {
   return state.activity.records.filter(isValidActivityRecord);
 };
 
@@ -123,40 +131,6 @@ export const getRecords = createSelector(
 );
 
 /**
- * Retrieves the set of domains & the domain's favicon URL from all activity
- * records
- * @remarks We return a hash-map to enable faster lookups for `favIconUrl`
- */
-export const getAllDomains = createSelector(
-  getAllRecords,
-  (records): { [domain: string]: { favIconUrl?: string } } => {
-    const allDomains = new Set<string>();
-    const favIconUrlByDomain = new Map<string, string>();
-
-    records.forEach(record => {
-      const { origin, favIconUrl } = record;
-      const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
-      if (!allDomains.has(domain)) {
-        allDomains.add(domain);
-      }
-      if (allDomains.has(domain) && favIconUrl) {
-        favIconUrlByDomain.set(domain, favIconUrl);
-      }
-    });
-
-    return [...allDomains].reduce(
-      (acc: { [domain: string]: { favIconUrl?: string } }, domain) => {
-        acc[domain] = {
-          favIconUrl: favIconUrlByDomain.get(domain)
-        };
-        return acc;
-      },
-      {}
-    );
-  }
-);
-
-/**
  * Retrieves average duration of all activity records that falls within the
  * selected time range, grouped by the hour-of-day & day-of-week of the
  * activity's timestamp
@@ -222,24 +196,19 @@ export const getTotalDurationByDayOfWeek = createSelector(
 
 /**
  * Retrieves total duration of all activity records that falls within the
- * selected time range, grouped by domain of the activity's URL
+ * selected time range, grouped by domain & sorted in descreasing duration.
  */
 export const getTotalDurationByDomain = createSelector(
   getRecords,
   records => {
     const totalDurationByDomain: { [domain: string]: number } = {};
-    const favIconUrlByDomain: { [domain: string]: string } = {};
-
+    const favIconUrlByDomain: { [domain: string]: string | undefined } = {};
     records.forEach(record => {
-      const { origin, startTime, endTime } = record;
-      const domain = origin.replace(/(https?:\/\/|www\.)/g, "");
-
-      if (domain !== undefined) {
-        const duration = endTime - startTime;
-        const prevTotalDuration = totalDurationByDomain[domain] || 0;
-        totalDurationByDomain[domain] = prevTotalDuration + duration;
-        favIconUrlByDomain[domain] = record.favIconUrl;
-      }
+      const { domain, startTime, endTime } = record;
+      const duration = endTime - startTime;
+      const prevTotalDuration = totalDurationByDomain[domain] || 0;
+      totalDurationByDomain[domain] = prevTotalDuration + duration;
+      favIconUrlByDomain[domain] = record.favIconUrl;
     });
 
     // Sort results by domains with highest duration
@@ -262,24 +231,18 @@ export const getTotalDurationByDomain = createSelector(
 export const getTotalDomainVisitCount = createSelector(
   getRecords,
   records => {
-    return _.chain(records)
-      .uniqBy(record => record.origin)
-      .value().length;
+    return _.uniqBy(records, record => record.domain).length;
   }
 );
 
 /**
- * Retrieves total number of unique page visits (by origin + pathname + search)
- * that falls within the selected time range.
+ * Retrieves total number of unique page visits by url that falls within the
+ * selected time range.
  */
 export const getTotalPageVisitCount = createSelector(
   getRecords,
   records => {
-    return _.chain(records)
-      .uniqBy(
-        records => `${records.origin}${records.pathname}${records.search}`
-      )
-      .value().length;
+    return _.uniqBy(records, record => record.url).length;
   }
 );
 
@@ -289,10 +252,7 @@ export const getTotalPageVisitCount = createSelector(
 export const getAllSelectedDomainRecords = createSelector(
   [getAllRecords, routerSelectors.getSearchParamsSelectedDomain],
   (records, selectedDomain) => {
-    return records.filter(
-      record =>
-        selectedDomain === record.origin.replace(/(https?:\/\/|www\.)/g, "")
-    );
+    return records.filter(record => selectedDomain === record.domain);
   }
 );
 
@@ -411,44 +371,37 @@ export const getSelectedDomainTotalDurationByPath = createSelector(
   getSelectedDomainRecords,
   selectedDomainRecords => {
     const totalDurationByPathname: {
-      [path: string]: { totalDuration: number; title: string; path: string };
+      [path: string]: { totalDuration: number; title?: string; path: string };
     } = {};
 
     selectedDomainRecords.forEach(record => {
-      const { hash, pathname, search, startTime, endTime } = record;
-      const path = `${pathname}${hash}${search}`;
-      if (path !== "") {
-        const duration = endTime - startTime;
-        const prevTotalDuration = totalDurationByPathname[path]
-          ? totalDurationByPathname[path].totalDuration
-          : 0;
-        totalDurationByPathname[path] = {
-          path,
-          title: record.title,
-          totalDuration: prevTotalDuration + duration
-        };
-      }
+      const { path, startTime, endTime } = record;
+      const duration = endTime - startTime;
+      const prevTotalDuration = totalDurationByPathname[path]
+        ? totalDurationByPathname[path].totalDuration
+        : 0;
+      totalDurationByPathname[path] = {
+        path,
+        title: record.title,
+        totalDuration: prevTotalDuration + duration
+      };
     });
 
     // Sort results by paths with highest duration
-    return Object.entries(totalDurationByPathname)
-      .map(([, value]) => value)
-      .sort((a, b) => {
-        return a.totalDuration > b.totalDuration ? -1 : 1;
-      });
+    return Object.values(totalDurationByPathname).sort((a, b) => {
+      return a.totalDuration > b.totalDuration ? -1 : 1;
+    });
   }
 );
 
 /**
- * Retrieves total number of unique page visits (by pathname + hash + search)
- * to a selected domain that falls within the selected time range.
+ * Retrieves total number of unique page visits to a selected domain that falls
+ * within the selected time range.
  */
 export const getSelectedDomainTotalPageVisitCount = createSelector(
   getSelectedDomainRecords,
   selectedDomainRecords => {
-    return _.chain(selectedDomainRecords)
-      .uniqBy(({ pathname, hash, search }) => `${pathname}${hash}${search}`)
-      .value().length;
+    return _.uniqBy(selectedDomainRecords, record => record.path).length;
   }
 );
 

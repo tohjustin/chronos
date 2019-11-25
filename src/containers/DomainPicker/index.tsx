@@ -4,15 +4,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Button, IconButton } from "../../components/Button";
+import { Domain } from "../../models/activity";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 import { BUTTON_MARGIN, ICON_SIZE_MD } from "../../styles/constants";
 
 import "./styles.scss";
 
 interface DomainPickerProps {
-  allDomains: {
-    [domain: string]: { favIconUrl?: string };
-  };
+  allDomains: Record<string, Domain>;
   isLoadingRecords: boolean;
   selectedDomain: string | null;
   setSelectedDomain: (domain: string | null) => void;

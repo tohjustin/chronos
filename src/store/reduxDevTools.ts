@@ -1,18 +1,18 @@
 import _ from "lodash";
 import { composeWithDevTools } from "remote-redux-devtools";
 
-import { ActivityRecord } from "../models/activity";
+import { Activity } from "../models/activity";
 
 import { ActivityState } from "./activity/slice";
 import { RootAction, RootState } from "./index";
 
 type SanitizedActivityAction = {
   type: string;
-  payload: ActivityRecord[] | string;
+  payload: Activity[] | string;
 };
 type RootSanitizedActions = RootAction | SanitizedActivityAction;
 interface SanitizedActivityState extends Omit<ActivityState, "records"> {
-  records: ActivityRecord[] | string;
+  records: Activity[] | string;
 }
 interface RootSanitizedState extends Omit<RootState, "activity"> {
   activity: SanitizedActivityState;

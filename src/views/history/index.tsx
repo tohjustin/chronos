@@ -7,7 +7,7 @@ import ErrorView from "../../components/ErrorView";
 import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
-import { ActivityRecord } from "../../models/activity";
+import { Activity } from "../../models/activity";
 import { ValidationStatus } from "../../models/validate";
 import { Dispatch, RootState, actions, selectors } from "../../store";
 
@@ -44,7 +44,7 @@ const HistoryView = ({
     });
   }, [deleteRecords, selectedRecordIds]);
   const handleRowClick = useCallback(
-    (record: ActivityRecord) => {
+    (record: Activity) => {
       const recordId = record.id;
       if (recordId) {
         setSelectedRecordIds(

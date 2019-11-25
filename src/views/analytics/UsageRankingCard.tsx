@@ -55,9 +55,7 @@ export const DomainTotalUsageRankingCard = connect((state: RootState) => {
       .slice(0, rowCount)
       .map(datum => ({
         label: datum.path,
-        labelSrc: selectedDomain
-          ? `https://${selectedDomain}${datum.path}`
-          : undefined,
+        labelSrc: selectedDomain ? `${selectedDomain}${datum.path}` : undefined,
         value: datum.totalDuration
       })),
     rowCount,
@@ -88,7 +86,7 @@ export const TotalUsageRankingCard = connect((state: RootState) => {
             {datum.domain}
           </Link>
         ),
-        labelSrc: `https://${datum.domain}`,
+        labelSrc: datum.domain,
         value: datum.totalDuration,
         iconSrc: datum.favIconUrl
       })),

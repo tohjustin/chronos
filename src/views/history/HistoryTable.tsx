@@ -5,8 +5,11 @@ import { connect } from "react-redux";
 
 import ExternalLink from "../../components/ExternalLink";
 import Table from "../../components/Table";
-import { TableRowProps, TableSortOption } from "../../components/Table/types";
-import { ActivityRecord } from "../../models/activity";
+import {
+  TableRowBaseProps,
+  TableSortOption
+} from "../../components/Table/types";
+import { Activity } from "../../models/activity";
 import { RootState, selectors } from "../../store";
 import { BASE_SIZE, ICON_SIZE_MD } from "../../styles/constants";
 import {
@@ -15,12 +18,12 @@ import {
 } from "../../utils/stringUtils";
 
 interface HistoryTableProps {
-  data: ActivityRecord[];
+  data: Activity[];
   autoFocus?: boolean;
   disabled?: boolean;
   isLoading?: boolean;
   selectedRecordIds?: number[];
-  onRowClick?: (datum: ActivityRecord) => void;
+  onRowClick?: (datum: Activity) => void;
 }
 
 enum HistoryTableSortOrder {
@@ -32,7 +35,7 @@ enum HistoryTableSortOrder {
 
 const ROW_HEIGHT = BASE_SIZE * 6;
 const DEFAULT_SORT_ORDER = "TIME_DESCENDING" as HistoryTableSortOrder;
-const SORT_OPTIONS: TableSortOption<ActivityRecord, HistoryTableSortOrder>[] = [
+const SORT_OPTIONS: TableSortOption<Activity, HistoryTableSortOrder>[] = [
   {
     buttonLabel: "Sorted by Duration (Ascending)",
     optionLabel: "Sorted by Duration",
@@ -74,12 +77,13 @@ const SORT_OPTIONS: TableSortOption<ActivityRecord, HistoryTableSortOrder>[] = [
       data.slice().sort((a, b) => (a.startTime > b.startTime ? -1 : 1))
   }
 ];
+const TITLE_PLACEHOLDER = "-";
 
-function filterActivityRecords(data: ActivityRecord[], filter: string) {
+function filterActivityRecords(data: Activity[], filter: string) {
   return data.filter(
     record =>
       record.url.toLowerCase().includes(filter) ||
-      record.title.toLowerCase().includes(filter)
+      (record.title && record.title.toLowerCase().includes(filter))
   );
 }
 
@@ -92,11 +96,12 @@ const HistoryTableRow = ({
   isSelectable,
   onRowClick,
   selectedIds
-}: TableRowProps<ActivityRecord>) => {
+}: TableRowBaseProps<Activity>) => {
   const activityDateTime = formatTableDateTimeLabel(new Date(datum.startTime));
   const activityDuration = formatTableDurationLabel(
     datum.endTime - datum.startTime
   );
+
   return (
     <EvergreenTable.Row
       className={classNames("history-table__row", {
@@ -114,13 +119,13 @@ const HistoryTableRow = ({
       <EvergreenTable.Cell display="flex" alignItems="center" flexGrow={80}>
         <Avatar
           className="history-table__row-icon"
-          hashValue={datum.origin}
-          name={datum.origin}
+          hashValue={datum.domain}
+          name={datum.domain}
           src={datum.favIconUrl}
           size={ICON_SIZE_MD}
         />
         <div className="history-table__row-label">
-          <strong>{`${datum.title}`}</strong>
+          <strong>{datum.title || TITLE_PLACEHOLDER}</strong>
           <ExternalLink url={datum.url} />
         </div>
       </EvergreenTable.Cell>

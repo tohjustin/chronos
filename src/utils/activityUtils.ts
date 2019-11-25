@@ -1,5 +1,5 @@
 import { MS_PER_DAY } from "../constants/time";
-import { ActivityRecord } from "../models/activity";
+import { Activity } from "../models/activity";
 import { DefiniteTimeRange } from "../models/time";
 
 import {
@@ -11,7 +11,7 @@ import {
 } from "./dateUtils";
 
 export function computeTotalDuration(
-  records: ActivityRecord[],
+  records: Activity[],
   effectiveTimeRange: DefiniteTimeRange
 ) {
   let totalDuration = 0;
@@ -48,7 +48,7 @@ export function computeTotalDuration(
 }
 
 export function computeTotalDurationByDate(
-  records: ActivityRecord[],
+  records: Activity[],
   effectiveTimeRange: DefiniteTimeRange
 ) {
   const totalDurationByDate: { [timestamp: string]: number } = {};
@@ -112,7 +112,7 @@ export function computeTotalDurationByDate(
 }
 
 export function computeTotalDurationByDayOfWeek(
-  records: ActivityRecord[],
+  records: Activity[],
   effectiveTimeRange: DefiniteTimeRange
 ) {
   const totalDurationByDayOfWeek: { [dayOfWeek: string]: number } = {};
@@ -157,7 +157,7 @@ export function computeTotalDurationByDayOfWeek(
 }
 
 export function computeAverageDurationByHourOfWeek(
-  records: ActivityRecord[],
+  records: Activity[],
   effectiveTimeRange: DefiniteTimeRange
 ) {
   const avgDurationByHourOfWeek: { [hourOfWeek: string]: number } = {};
@@ -255,6 +255,6 @@ export function computeAverageDurationByHourOfWeek(
     });
 }
 
-export function isValidActivityRecord(record: ActivityRecord) {
+export function isValidActivityRecord(record: Activity) {
   return record.startTime < record.endTime;
 }

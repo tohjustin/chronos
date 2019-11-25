@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 
 import { DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";
 import { InitDatabaseConnection } from "../../db";
-import { ActivityRecord } from "../../models/activity";
+import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { extendTimeRange, isWithinTimeRange } from "../../utils/dateUtils";
 import { DEFAULT_TIME_RANGE } from "../router/constants";
@@ -34,9 +34,13 @@ export interface ActivityState {
    */
   isLoading: boolean;
   /**
+   * Map of all (fetched) domain records, keyed by domain value
+   */
+  domains: Record<string, Domain>;
+  /**
    * List of all (fetched) activity records
    */
-  records: ActivityRecord[];
+  records: Activity[];
   /**
    * Time range of all (fetched) activity records
    */
@@ -52,6 +56,7 @@ export interface ActivityState {
 }
 
 const INITIAL_STATE: ActivityState = {
+  domains: {},
   error: null,
   isDeleting: false,
   isInitialized: false,
@@ -71,7 +76,7 @@ const activity = createSlice({
     },
     deleteRecordsSuccess(state, action: PayloadAction<number[]>) {
       state.records = state.records.filter(
-        record => !action.payload.includes(record.id)
+        record => !action.payload.includes(record.id as number)
       );
       state.isDeleting = false;
       state.error = null;
@@ -83,7 +88,7 @@ const activity = createSlice({
     getRecordsStart(state: ActivityState) {
       state.isLoading = true;
     },
-    getRecordsSuccess(state, action: PayloadAction<ActivityRecord[]>) {
+    getRecordsSuccess(state, action: PayloadAction<Activity[]>) {
       state.records = action.payload;
       state.isInitialized = true;
       state.isLoading = false;
@@ -93,6 +98,9 @@ const activity = createSlice({
       state.isInitialized = true;
       state.isLoading = false;
       state.error = action.payload;
+    },
+    setDomains(state, action: PayloadAction<Record<string, Domain>>) {
+      state.domains = action.payload;
     },
     setRecordsTimeRange(state, action: PayloadAction<TimeRange | null>) {
       state.recordsTimeRange = action.payload;
@@ -141,7 +149,8 @@ const loadRecords = (): ThunkAction<
       throw "Unable to initialize DB connection";
     }
 
-    const [records, activityTimeRange] = await Promise.all([
+    const [allDomains, records, activityTimeRange] = await Promise.all([
+      db.fetchAllActivityDomains(),
       db.fetchActivityRecords(requiredTimeRange),
       db.fetchActivityTimeRange()
     ]);
@@ -149,6 +158,7 @@ const loadRecords = (): ThunkAction<
     // Batch actions to ensure smooth UI transition on store updates
     batch(() => [
       dispatch(activity.actions.getRecordsSuccess(records || [])),
+      dispatch(activity.actions.setDomains(allDomains || {})),
       dispatch(activity.actions.setRecordsTimeRange(requiredTimeRange)),
       dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
       dispatch(activity.actions.setTotalTimeRange(activityTimeRange))

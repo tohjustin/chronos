@@ -1,4 +1,4 @@
-/** Object representing a raw segment of web browsing activity */
+/** Object representing a raw (unprocessed) segment of web browsing activity */
 export interface RawActivity {
   url: string;
   startTime: number;
@@ -9,19 +9,18 @@ export interface RawActivity {
 
 /** Object representing a segment of web browsing activity */
 export interface Activity {
-  id?: number;
+  id: number;
+  url: string;
+  domain: string;
+  path: string;
   startTime: number;
   endTime: number;
-  origin: string;
-  pathname: string;
-  search: string;
-  hash: string;
-  title: string;
-  favIconUrl: string;
-  url: string;
+  title?: string;
+  favIconUrl?: string;
 }
 
-/** Object representing a segment of web browsing activity stored in DB */
-export interface ActivityRecord extends Activity {
-  id: number;
+/** Object representing a domain & its metadata */
+export interface Domain {
+  id: string;
+  favIconUrl: string;
 }
