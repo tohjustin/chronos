@@ -198,24 +198,24 @@ export const getTotalDurationByDayOfWeek = createSelector(
  * selected time range, grouped by domain & sorted in descreasing duration.
  */
 export const getTotalDurationByDomain = createSelector(
-  getRecords,
-  records => {
+  [getRecords, getAllDomains],
+  (records, allDomains) => {
     const totalDurationByDomain: { [domain: string]: number } = {};
-    const favIconUrlByDomain: { [domain: string]: string | undefined } = {};
     records.forEach(record => {
       const { domain, startTime, endTime } = record;
       const duration = endTime - startTime;
       const prevTotalDuration = totalDurationByDomain[domain] || 0;
       totalDurationByDomain[domain] = prevTotalDuration + duration;
-      favIconUrlByDomain[domain] = record.favIconUrl;
     });
 
     // Sort results by domains with highest duration
     return Object.entries(totalDurationByDomain)
-      .map(([key, value]) => ({
-        domain: key,
-        favIconUrl: favIconUrlByDomain[key],
-        totalDuration: value
+      .map(([domain, totalDuration]) => ({
+        domain,
+        totalDuration,
+        favIconUrl: allDomains[domain]
+          ? allDomains[domain].favIconUrl
+          : undefined
       }))
       .sort((a, b) => {
         return a.totalDuration > b.totalDuration ? -1 : 1;
