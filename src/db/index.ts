@@ -178,52 +178,25 @@ export class DatabaseConnection extends Dexie
   }
 
   public async importDatabaseRecords(data: DatabaseRecords): Promise<void> {
+    const totalCount = data[ACTIVITY_TABLE].length;
     try {
-      await Dexie.delete(DATABASE_NAME);
-      console.log(`[db] DB was resetted successfully`);
-    } catch (err) {
-      console.error(`[db] Unable to reset DB`, err);
-      return;
-    }
-
-    let isImportSuccessful = false;
-    const totalRecordCount = data[ACTIVITY_TABLE].length;
-    try {
+      console.log(`[db] Begin importing ${totalCount} records...`);
       await this.transaction(
         "rw",
         [this[ACTIVITY_TABLE], this[DOMAIN_TABLE], this[TITLE_TABLE]],
         async () => {
+          await this[ACTIVITY_TABLE].clear();
+          await this[DOMAIN_TABLE].clear();
+          await this[TITLE_TABLE].clear();
+
           await this[ACTIVITY_TABLE].bulkAdd(data[ACTIVITY_TABLE]);
           await this[DOMAIN_TABLE].bulkAdd(data[DOMAIN_TABLE]);
           await this[TITLE_TABLE].bulkAdd(data[TITLE_TABLE]);
         }
       );
-
-      isImportSuccessful = true;
-      console.log(
-        `[db] ${totalRecordCount} records were imported successfully`
-      );
+      console.log("[db] All records were imported successfully");
     } catch (err) {
-      if (err instanceof Dexie.BulkError) {
-        const successRecordCount = totalRecordCount - err.failures.length;
-        console.error(
-          `[db] ${successRecordCount} out of ${totalRecordCount} records were imported successfully`,
-          err
-        );
-      } else {
-        console.error(`[db] `, err);
-      }
-    }
-
-    if (!isImportSuccessful) {
-      try {
-        console.log(`[db] clearing DB due to unsuccessful import...`);
-        await Dexie.delete(DATABASE_NAME);
-        console.log(`[db] DB was resetted successfully`);
-      } catch (err) {
-        console.error(`[db] Unable to reset DB`, err);
-        return;
-      }
+      console.error("[db]", err);
     }
   }
 }
