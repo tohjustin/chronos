@@ -83,7 +83,7 @@ function filterActivityRecords(data: Activity[], filter: string) {
   return data.filter(
     record =>
       record.url.toLowerCase().includes(filter) ||
-      (record.title && record.title.toLowerCase().includes(filter))
+      record.title.toLowerCase().includes(filter)
   );
 }
 

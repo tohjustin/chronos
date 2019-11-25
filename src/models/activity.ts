@@ -15,8 +15,8 @@ export interface Activity {
   path: string;
   startTime: number;
   endTime: number;
-  title?: string;
-  favIconUrl?: string;
+  title: string;
+  favIconUrl: string;
 }
 
 /** Object representing a domain & its metadata */
