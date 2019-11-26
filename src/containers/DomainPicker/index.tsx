@@ -38,6 +38,7 @@ const DomainPicker = ({
           {favIconUrl && (
             <Avatar
               className="domain-picker__icon"
+              key={selectedDomain}
               hashValue={selectedDomain}
               name={selectedDomain}
               src={favIconUrl}
@@ -52,7 +53,7 @@ const DomainPicker = ({
         width={MENU_WIDTH}
         closeOnSelect={true}
         hasTitle={false}
-        isMultiSelect
+        isMultiSelect={false}
         onDeselect={() => setSelectedDomain(null)}
         onSelect={item => setSelectedDomain(item.value as string)}
         options={Object.keys(allDomains)
