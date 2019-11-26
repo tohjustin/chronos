@@ -77,7 +77,7 @@ const LabelCell = ({
               ) : (
                 <span title={label}>{label}</span>
               )}
-              {labelSrc && (
+              {labelSrc && labelSrc.startsWith("http") && (
                 <ExternalLink
                   className="bar-chart-table__label-external-link"
                   style={{ visibility: isHovered ? "unset" : "hidden" }}
