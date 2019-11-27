@@ -71,8 +71,20 @@ export class DatabaseConnection extends Dexie
         [this[ACTIVITY_TABLE], this[DOMAIN_TABLE], this[TITLE_TABLE]],
         async () => {
           await this[ACTIVITY_TABLE].add(activity);
-          await this[DOMAIN_TABLE].put(domain);
-          if (title) {
+
+          // Ensure that we don't overwrite existing domain favIconUrls with ""
+          if (
+            domain.favIconUrl !== "" ||
+            (await this[DOMAIN_TABLE].get({ id: domain.id })) !== undefined
+          ) {
+            await this[DOMAIN_TABLE].put(domain);
+          }
+
+          // Ensure that we don't overwrite existing URL titles with ""
+          if (
+            title.title !== "" ||
+            (await this[TITLE_TABLE].get({ id: title.id })) !== undefined
+          ) {
             await this[TITLE_TABLE].put(title);
           }
         }

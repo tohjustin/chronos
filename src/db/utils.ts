@@ -92,7 +92,7 @@ export function generateRecords({
 }: RawActivity): {
   activity: ActivityTableRecord;
   domain: DomainTableRecord;
-  title?: TitleTableRecord;
+  title: TitleTableRecord;
 } {
   const urlObject = new URL(rawUrl);
   const { domain, path, favIconUrl } = getActivityData(urlObject, iconUrl);
@@ -102,6 +102,6 @@ export function generateRecords({
   return {
     activity,
     domain: { id: domain, favIconUrl },
-    title: title !== "" ? { id: url, title } : undefined
+    title: { id: url, title }
   };
 }
