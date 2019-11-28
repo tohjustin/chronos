@@ -13,7 +13,7 @@ import {
 } from "./types";
 import { createUrl, exportTableRecords, generateRecords } from "./utils";
 
-const DATABASE_NAME = "chronos_db";
+const DATABASE_NAME = "db";
 export const ACTIVITY_TABLE = "activity";
 export const DOMAIN_TABLE = "domain";
 export const TITLE_TABLE = "title";
