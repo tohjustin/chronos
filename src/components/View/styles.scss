@@ -5,8 +5,10 @@ $view-body__padding: $base__size * 3;
 $view-header__min-height: $base__size * 4;
 $view-header__padding-y: $base__size * 2;
 $view-header__padding-x: $base__size * 3;
+$view-header__height: $view-header__min-height + $view-header__padding-y * 2;
 
 .view__container {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -35,4 +37,18 @@ $view-header__padding-x: $base__size * 3;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: $view-body__padding;
+}
+
+.view__body--loading-overlay {
+  position: absolute;
+  top: $view-header__height;
+  left: 0;
+  height: calc(100% - #{$view-header__height});
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index__loading-overlay;
+  background: $color__overlay;
 }

@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import ErrorView from "../../components/ErrorView";
-import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
 import DomainPicker from "../../containers/DomainPicker";
@@ -59,14 +58,9 @@ const AnalyticsView = ({
   selectedTimeRangeValidationStatus
 }: AnalyticsViewProps) => {
   let viewBody;
-  const isLoadingAndHasData = isLoadingRecords && isInitialized;
-  const viewBodyClassNames = isLoadingAndHasData
-    ? "analytics-view__overlay-container"
-    : "";
-  const viewBodyOverlay = isLoadingAndHasData && <LoadingView overlay={true} />;
   switch (true) {
     case !isInitialized:
-      viewBody = <LoadingView />;
+      viewBody = null;
       break;
     case selectedDomainValidationStatus.isValid === false:
     case selectedTimeRangeValidationStatus.isValid === false: {
@@ -128,10 +122,7 @@ const AnalyticsView = ({
           </span>
         )}
       </View.Header>
-      <View.Body className={viewBodyClassNames}>
-        {viewBody}
-        {viewBodyOverlay}
-      </View.Body>
+      <View.Body isLoading={isLoadingRecords}>{viewBody}</View.Body>
     </View.Container>
   );
 };

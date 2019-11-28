@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 
 import { Button, IconButton } from "../../components/Button";
 import ErrorView from "../../components/ErrorView";
-import LoadingView from "../../components/LoadingView";
 import View from "../../components/View";
 import ActivityDateRangePicker from "../../containers/ActivityDateRangePicker";
 import { Activity } from "../../models/activity";
@@ -109,7 +108,7 @@ const HistoryView = ({
   }
   switch (true) {
     case !isInitialized:
-      viewContent = <LoadingView />;
+      viewContent = null;
       break;
     case selectedTimeRangeValidationStatus.isValid === false: {
       const errorDescription = selectedTimeRangeValidationStatus.description;
@@ -132,7 +131,7 @@ const HistoryView = ({
   return (
     <View.Container>
       <View.Header>{headerContent}</View.Header>
-      <View.Body>{viewContent}</View.Body>
+      <View.Body isLoading={!isInitialized}>{viewContent}</View.Body>
     </View.Container>
   );
 };
