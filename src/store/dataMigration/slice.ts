@@ -1,9 +1,11 @@
 import FileSaver from "file-saver";
+import { batch } from "react-redux";
 import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
 import packageInfo from "../../../package.json";
 import { InitDatabaseConnection } from "../../db";
+import { actions as activityActions } from "../activity";
 import { RootState } from "../index";
 
 export interface DataMigrationState {
@@ -97,7 +99,11 @@ const importDatabaseRecords = (
 
     const data = JSON.parse(rawData);
     await db.importDatabaseRecords(data);
-    dispatch(dataMigration.actions.importDatabaseRecordsSuccess());
+
+    batch(() => [
+      dispatch(dataMigration.actions.importDatabaseRecordsSuccess()),
+      dispatch(activityActions.loadRecords({ forceReload: true }))
+    ]);
   } catch (error) {
     console.error(error);
     dispatch(dataMigration.actions.importDatabaseRecordsFailure(error));

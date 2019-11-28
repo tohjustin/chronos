@@ -114,12 +114,12 @@ const activity = createSlice({
   }
 });
 
-const loadRecords = (): ThunkAction<
-  void,
-  RootState,
-  null,
-  Action<string>
-> => async (dispatch, getState) => {
+const loadRecords = (
+  options: { forceReload: boolean } = { forceReload: false }
+): ThunkAction<void, RootState, null, Action<string>> => async (
+  dispatch,
+  getState
+) => {
   const state = getState();
   const isLoadingDomainAnalytics =
     getSearchParamsSelectedDomain(state) !== null;
@@ -135,6 +135,7 @@ const loadRecords = (): ThunkAction<
 
   // Don't fetch data from DB if we already have them in the store
   if (
+    !options.forceReload &&
     recordsTimeRange &&
     isWithinTimeRange(recordsTimeRange, requiredTimeRange)
   ) {
