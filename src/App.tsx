@@ -9,6 +9,7 @@ import { HashRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
 import Navbar from "./components/Navbar";
+import GlobalStatusOverlay from "./containers/GlobalStatusOverlay";
 import { TimeRange } from "./models/time";
 import {
   Dispatch,
@@ -30,6 +31,8 @@ import SettingsView from "./views/settings";
 
 interface AppShellProps {
   loadRecords: () => void;
+  isExportingDatabaseRecords: boolean;
+  isImportingDatabaseRecords: boolean;
   searchParams: string;
   selectedDomain: string | null;
   selectedTimeRange: TimeRange;
@@ -37,6 +40,8 @@ interface AppShellProps {
 
 const AppShell = ({
   loadRecords,
+  isExportingDatabaseRecords,
+  isImportingDatabaseRecords,
   searchParams,
   selectedDomain,
   selectedTimeRange
@@ -56,6 +61,7 @@ const AppShell = ({
       <div className="app__container">
         <Navbar
           className="app__navbar"
+          isDisabled={isExportingDatabaseRecords || isImportingDatabaseRecords}
           primaryItems={[
             {
               icon: <BarChart2 />,
@@ -79,6 +85,7 @@ const AppShell = ({
           ]}
         />
         <div className="app__view">
+          <GlobalStatusOverlay />
           <Switch>
             <Route path="/analytics" component={AnalyticsView} />
             <Route path="/history" component={HistoryView} />
@@ -92,6 +99,8 @@ const AppShell = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
+  isExportingDatabaseRecords: selectors.getIsExportingDatabaseRecords(state),
+  isImportingDatabaseRecords: selectors.getIsImportingDatabaseRecords(state),
   searchParams: selectors.getSearchParams(state),
   selectedDomain: selectors.getSearchParamsSelectedDomain(state),
   selectedTimeRange: selectors.getSearchParamsSelectedTimeRange(state)
