@@ -1,0 +1,37 @@
+@import "../../styles/variables";
+
+$dialog-header__padding: $base__size * 2;
+$dialog-header__padding-bottom: $base__size * 1.5;
+
+.dialog {
+  border-radius: $border-radius__dialog;
+
+  // dialog header
+  > div:nth-child(1) {
+    padding: $dialog-header__padding;
+    padding-bottom: $dialog-header__padding-bottom;
+
+    h4 {
+      color: $color__black;
+      font-size: $font-size__md;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  // dialog body
+  > div:nth-child(2) {
+    min-height: unset;
+
+    p {
+      font-size: $font-size__base;
+    }
+  }
+
+  // dialog footer
+  > div:nth-child(3) {
+    button {
+      font-weight: 600;
+    }
+  }
+}
