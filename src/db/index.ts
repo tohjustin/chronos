@@ -75,7 +75,7 @@ export class DatabaseConnection extends Dexie
           // Ensure that we don't overwrite existing domain favIconUrls with ""
           if (
             domain.favIconUrl !== "" ||
-            (await this[DOMAIN_TABLE].get({ id: domain.id })) !== undefined
+            (await this[DOMAIN_TABLE].get({ id: domain.id })) === undefined
           ) {
             await this[DOMAIN_TABLE].put(domain);
           }
@@ -83,7 +83,7 @@ export class DatabaseConnection extends Dexie
           // Ensure that we don't overwrite existing URL titles with ""
           if (
             title.title !== "" ||
-            (await this[TITLE_TABLE].get({ id: title.id })) !== undefined
+            (await this[TITLE_TABLE].get({ id: title.id })) === undefined
           ) {
             await this[TITLE_TABLE].put(title);
           }
@@ -169,9 +169,9 @@ export class DatabaseConnection extends Dexie
   }
 
   public async exportDatabaseRecords(): Promise<DatabaseRecords> {
-    const activityTableRecords = (await exportTableRecords<ActivityTableRecord>(
-      this[ACTIVITY_TABLE]
-    )).map(record => {
+    const activityTableRecords = (
+      await exportTableRecords<ActivityTableRecord>(this[ACTIVITY_TABLE])
+    ).map(record => {
       delete record.id;
       return record;
     });
