@@ -117,19 +117,22 @@ export class DatabaseConnection extends Dexie
     start: startTime,
     end: endTime
   }: TimeRange): Promise<Activity[]> {
-    let query;
-    // Use Dexie's `WhereClause` as much as possible to leverage IndexedDB's
-    // native querying support with is way faster than filtering with JS
+    let query = this[ACTIVITY_TABLE].toCollection();
     if (startTime && endTime) {
-      query = this[ACTIVITY_TABLE].where("startTime")
-        .aboveOrEqual(startTime)
-        .and(record => record.endTime <= endTime);
+      // Dexie doesn't support native queries over multiple keys so we'll
+      // query over either (<OLDEST_RECORD>, endTime) or (startTime, <NOW>),
+      // whichever range that has the smaller interval.
+      const activityTimeRange = await this.fetchActivityTimeRange();
+      if (activityTimeRange) {
+        query =
+          endTime - activityTimeRange.start > Date.now() - startTime
+            ? this[ACTIVITY_TABLE].where("startTime").aboveOrEqual(startTime)
+            : this[ACTIVITY_TABLE].where("endTime").belowOrEqual(endTime);
+      }
     } else if (startTime) {
       query = this[ACTIVITY_TABLE].where("startTime").aboveOrEqual(startTime);
     } else if (endTime) {
       query = this[ACTIVITY_TABLE].where("endTime").belowOrEqual(endTime);
-    } else {
-      query = this[ACTIVITY_TABLE].toCollection();
     }
 
     const [
