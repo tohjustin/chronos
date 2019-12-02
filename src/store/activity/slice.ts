@@ -16,6 +16,7 @@ import { RootState } from "../index";
 
 import {
   getEffectiveSearchParamsSelectedTimeRange,
+  getIsInitialized,
   getRecordsTimeRange
 } from "./selectors";
 
@@ -153,20 +154,32 @@ const loadRecords = (
       throw "Unable to initialize DB connection";
     }
 
-    const [allDomains, records, activityTimeRange] = await Promise.all([
-      db.fetchAllActivityDomains(),
-      db.fetchActivityRecords(requiredTimeRange),
-      db.fetchActivityTimeRange()
-    ]);
+    // Only fetch all domains & activity time range on initialization
+    if (options.forceReload || !getIsInitialized(state)) {
+      const [allDomains, totalTimeRange, records] = await Promise.all([
+        db.fetchAllActivityDomains(),
+        db.fetchActivityTimeRange(),
+        db.fetchActivityRecords(requiredTimeRange)
+      ]);
 
-    // Batch actions to ensure smooth UI transition on store updates
-    batch(() => [
-      dispatch(activity.actions.getRecordsSuccess(records || [])),
-      dispatch(activity.actions.setDomains(allDomains || {})),
-      dispatch(activity.actions.setRecordsTimeRange(requiredTimeRange)),
-      dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
-      dispatch(activity.actions.setTotalTimeRange(activityTimeRange))
-    ]);
+      // Batch actions to ensure smooth UI transition on store updates
+      batch(() => [
+        dispatch(activity.actions.getRecordsSuccess(records || [])),
+        dispatch(activity.actions.setRecordsTimeRange(requiredTimeRange)),
+        dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange)),
+        dispatch(activity.actions.setDomains(allDomains || {})),
+        dispatch(activity.actions.setTotalTimeRange(totalTimeRange))
+      ]);
+    } else {
+      const records = await db.fetchActivityRecords(requiredTimeRange);
+
+      // Batch actions to ensure smooth UI transition on store updates
+      batch(() => [
+        dispatch(activity.actions.getRecordsSuccess(records || [])),
+        dispatch(activity.actions.setRecordsTimeRange(requiredTimeRange)),
+        dispatch(activity.actions.setSelectedTimeRange(selectedTimeRange))
+      ]);
+    }
   } catch (error) {
     dispatch(activity.actions.getRecordsFailure(error));
   }
