@@ -2,7 +2,10 @@ import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { batch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 
-import { DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";
+import {
+  ANALYTICS_REQUIRED_TIME_WINDOW,
+  DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW
+} from "../../constants/analytics";
 import { InitDatabaseConnection } from "../../db";
 import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
@@ -127,11 +130,11 @@ const loadRecords = (
   const selectedTimeRange = getEffectiveSearchParamsSelectedTimeRange(state);
 
   // Ensure we fetched enough data that's required to compute analytics
-  const requiredTimeRange = isLoadingDomainAnalytics
-    ? extendTimeRange(selectedTimeRange, {
-        months: DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW
-      })
-    : selectedTimeRange;
+  const requiredTimeRange = extendTimeRange(selectedTimeRange, {
+    months: isLoadingDomainAnalytics
+      ? DOMAIN_ANALYTICS_REQUIRED_TIME_WINDOW
+      : ANALYTICS_REQUIRED_TIME_WINDOW
+  });
 
   // Don't fetch data from DB if we already have them in the store
   if (
