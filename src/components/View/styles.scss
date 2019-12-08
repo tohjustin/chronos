@@ -37,6 +37,13 @@ $view-header__height: $view-header__min-height + $view-header__padding-y * 2;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: $view-body__padding;
+
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=748518 🤦
+  @supports (-moz-appearance:none) {
+    > *:last-child {
+      margin-bottom: $view-body__padding;
+    }
+  }
 }
 
 .view__body--loading-overlay {
