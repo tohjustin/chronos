@@ -4,6 +4,7 @@ import _ from "lodash";
 import React, { useEffect, useRef } from "react";
 
 import { usePrevious } from "../../hooks";
+import { IS_FIREFOX } from "../../utils/browserUtils";
 
 import { Datum } from "./types";
 
@@ -19,6 +20,11 @@ interface ChartProps {
 function resetData(data: Datum[]) {
   return data.map(d => ({ ...d, y: 0 }));
 }
+
+// Match $dot__radius in "src/components/LineChart/styles.scss", we define it
+// here again since firefox doesn't allow SVGCircle attributes to be defined via
+// stylesheets 🤦
+const DOT_RADIUS = IS_FIREFOX ? 3 : null;
 
 const Chart = ({
   data,
@@ -82,6 +88,7 @@ const Chart = ({
       .attr("class", "line-chart__dot")
       .style("opacity", isTransitioningFromASingleDot ? 1 : 0)
       .attr("cx", () => width / 2)
+      .attr("r", () => DOT_RADIUS)
       .attr("cy", () =>
         prevData && isTransitioningFromASingleDot
           ? prevScaleY(prevData[0].y)

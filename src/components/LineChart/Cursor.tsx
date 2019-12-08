@@ -11,7 +11,7 @@ interface CursorProps {
 }
 
 // Match $dot__radius in "src/components/LineChart/styles.scss", we define it
-// here again since FF doesn't allow SVGCircle attributes to be defined via
+// here again since firefox doesn't allow SVGCircle attributes to be defined via
 // stylesheets 🤦
 const DOT_RADIUS = IS_FIREFOX ? 3 : undefined;
 

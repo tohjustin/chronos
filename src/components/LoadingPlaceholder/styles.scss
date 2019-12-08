@@ -2,19 +2,24 @@
 
 .loading-placeholder {
   height: 1em;
-  animation: loading-placeholder-pulse 1.5s infinite;
 }
 
-@keyframes loading-placeholder-pulse {
-  0% {
-    background-color: $color__gray-light;
+@supports not (-moz-appearance:none) {
+  .loading-placeholder {
+    animation: loading-placeholder-pulse 1.5s infinite;
   }
 
-  50% {
-    background-color: $color__gray-lighter;
-  }
+  @keyframes loading-placeholder-pulse {
+    0% {
+      background-color: $color__gray-light;
+    }
 
-  100% {
-    background-color: $color__gray-light;
+    50% {
+      background-color: $color__gray-lighter;
+    }
+
+    100% {
+      background-color: $color__gray-light;
+    }
   }
 }

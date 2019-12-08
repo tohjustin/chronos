@@ -31,13 +31,10 @@ $hover__transition--opacity: opacity 0.25s;
     stroke-width: $dot__stroke-width;
   }
 
-  // Support pulsing animation only on Chrome since FF doesn't allow SVGCircle
-  // attributes to be defined via stylesheets 🤦
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+  // Support pulsing animation only on Chrome since firefox doesn't allow
+  // SVGCircle attributes to be defined via stylesheets 🤦
+  @supports not (-moz-appearance:none) {
     .line-chart__dot {
-      fill: $color__white;
-      stroke: $color__primary;
-      stroke-width: $dot__stroke-width;
       r: $dot__radius;
 
       &--pulsing {
