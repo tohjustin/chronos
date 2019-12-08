@@ -1,3 +1,5 @@
+import { IS_CHROMIUM, IS_FIREFOX } from "../../utils/browserUtils";
+
 import { ChromeTabsService } from "./chrome";
 import { FirefoxTabsService } from "./firefox";
 import { TabsService } from "./types";
@@ -9,16 +11,14 @@ import { TabsService } from "./types";
  * interactions with browser tabs.
  */
 export function InitTabsService(): TabsService | undefined {
-  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
-  switch (buildTarget) {
-    case "chrome":
+  switch (true) {
+    case IS_CHROMIUM:
       return new ChromeTabsService();
-    case "firefox":
+    case IS_FIREFOX:
       return new FirefoxTabsService();
     default:
       console.error(
-        "[tabs-service] InitTabsService: Missing or unsupported build target",
-        buildTarget
+        "[tabs-service] Only Chromium or Firefox based browsers are supported"
       );
       return undefined;
   }

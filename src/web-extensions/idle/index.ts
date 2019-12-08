@@ -1,3 +1,5 @@
+import { IS_CHROMIUM, IS_FIREFOX } from "../../utils/browserUtils";
+
 import { ChromeIdleService } from "./chrome";
 import { FirefoxIdleService } from "./firefox";
 import { IdleService } from "./types";
@@ -9,16 +11,14 @@ import { IdleService } from "./types";
  * interactions with browser idle state & events.
  */
 export function InitIdleService(): IdleService | undefined {
-  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
-  switch (buildTarget) {
-    case "chrome":
+  switch (true) {
+    case IS_CHROMIUM:
       return new ChromeIdleService();
-    case "firefox":
+    case IS_FIREFOX:
       return new FirefoxIdleService();
     default:
       console.error(
-        "[idle-service] InitIdleService: Missing or unsupported build target",
-        buildTarget
+        "[idle-service] Only Chromium or Firefox based browsers are supported"
       );
       return undefined;
   }

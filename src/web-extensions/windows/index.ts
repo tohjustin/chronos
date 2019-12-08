@@ -1,3 +1,5 @@
+import { IS_CHROMIUM, IS_FIREFOX } from "../../utils/browserUtils";
+
 import { ChromeWindowsService } from "./chrome";
 import { FirefoxWindowsService } from "./firefox";
 import { WindowsService } from "./types";
@@ -9,16 +11,14 @@ import { WindowsService } from "./types";
  * support interactions with browser windows.
  */
 export function InitWindowsService(): WindowsService | undefined {
-  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
-  switch (buildTarget) {
-    case "chrome":
+  switch (true) {
+    case IS_CHROMIUM:
       return new ChromeWindowsService();
-    case "firefox":
+    case IS_FIREFOX:
       return new FirefoxWindowsService();
     default:
       console.error(
-        "[windows-service] InitWindowsService: Missing or unsupported build target",
-        buildTarget
+        "[windows-service] Only Chromium or Firefox based browsers are supported"
       );
       return undefined;
   }

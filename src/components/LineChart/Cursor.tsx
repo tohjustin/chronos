@@ -1,5 +1,7 @@
 import React from "react";
 
+import { IS_FIREFOX } from "../../utils/browserUtils";
+
 interface CursorProps {
   isHovering: boolean;
   height: number;
@@ -11,8 +13,7 @@ interface CursorProps {
 // Match $dot__radius in "src/components/LineChart/styles.scss", we define it
 // here again since FF doesn't allow SVGCircle attributes to be defined via
 // stylesheets 🤦
-const DOT_RADIUS =
-  process.env.REACT_APP_BUILD_TARGET === "firefox" ? 3 : undefined;
+const DOT_RADIUS = IS_FIREFOX ? 3 : undefined;
 
 const Cursor = ({ height, isHovering, x, y }: CursorProps) => {
   if (x === null || y === null) {

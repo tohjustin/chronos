@@ -1,3 +1,5 @@
+import { IS_CHROMIUM, IS_FIREFOX } from "../../utils/browserUtils";
+
 import { ChromeExtensionService } from "./chrome";
 import { FirefoxExtensionService } from "./firefox";
 import { ExtensionService } from "./types";
@@ -9,16 +11,14 @@ import { ExtensionService } from "./types";
  * interactions with browser extension APIs & events.
  */
 export function InitExtensionService(): ExtensionService | undefined {
-  const buildTarget = process.env.REACT_APP_BUILD_TARGET;
-  switch (buildTarget) {
-    case "chrome":
+  switch (true) {
+    case IS_CHROMIUM:
       return new ChromeExtensionService();
-    case "firefox":
+    case IS_FIREFOX:
       return new FirefoxExtensionService();
     default:
       console.error(
-        "[extension-service] InitExtensionService: Missing or unsupported build target",
-        buildTarget
+        "[extension-service] Only Chromium or Firefox based browsers are supported"
       );
       return undefined;
   }

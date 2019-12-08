@@ -2,6 +2,7 @@ import Dexie from "dexie";
 
 import { Activity, Domain, RawActivity } from "../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../models/time";
+import { IS_CHROMIUM, IS_FIREFOX } from "../utils/browserUtils";
 
 import {
   ActivityService,
@@ -223,17 +224,13 @@ export class DatabaseConnection extends Dexie
  * support interactions with browser storage.
  */
 export function InitDatabaseConnection(): DatabaseConnection | undefined {
-  switch (process.env.REACT_APP_BUILD_TARGET) {
-    case "chrome":
-    case "firefox":
+  switch (true) {
+    case IS_CHROMIUM:
+    case IS_FIREFOX:
       return new DatabaseConnection();
-    case undefined:
-      console.warn("[db] Missing build target");
-      return undefined;
     default:
       console.error(
-        "[db] Invalid build target specified:",
-        process.env.REACT_APP_BUILD_TARGET
+        "[db] Only Chromium or Firefox based browsers are supported"
       );
       return undefined;
   }

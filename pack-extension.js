@@ -4,7 +4,6 @@ const AdmZip = require("adm-zip");
 const fs = require("fs-extra");
 const path = require("path");
 
-const BUILD_TARGET = process.env.REACT_APP_BUILD_TARGET;
 const GIT_COMMIT_SHA = process.env.REACT_APP_GIT_COMMIT_SHA;
 const WEBPACK_BUILD_DIR = "./build";
 
@@ -17,9 +16,6 @@ fs.renameSync(
 let outputFilename = path.basename(WEBPACK_BUILD_DIR);
 if (GIT_COMMIT_SHA) {
   outputFilename += `-${GIT_COMMIT_SHA}`;
-}
-if (BUILD_TARGET) {
-  outputFilename += `-${BUILD_TARGET}`;
 }
 
 const zip = new AdmZip();
