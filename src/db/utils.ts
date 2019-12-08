@@ -1,7 +1,7 @@
 import Dexie from "dexie";
 
 import { RawActivity } from "../models/activity";
-import { getBrowserFavIconUrl } from "../utils/imageUtils";
+import { getBrowserFavIconUrl } from "../utils/browserUtils";
 
 import {
   DomainTableRecord,
