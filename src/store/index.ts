@@ -43,7 +43,7 @@ export const selectors = {
 };
 
 // Setup store enhancers
-const finalCompose = process.env.REACT_APP_DEBUG_MODE
+const finalCompose = process.env.REACT_APP_REMOTE_DEBUG_MODE
   ? composeWithDevTools
   : compose;
 export const history = createHashHistory();

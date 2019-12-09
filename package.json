@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "cross-env REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) react-app-rewired start",
-    "start:debug": "REACT_APP_DEBUG_MODE=true npm run start",
+    "start:remote-debug": "REACT_APP_REMOTE_DEBUG_MODE=true npm run start",
     "build": "cross-env-shell REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) INLINE_RUNTIME_CHUNK=false PUBLIC_URL=. \"react-app-rewired build && node pack-extension.js\"",
     "tsc": "tsc",
     "lint": "npm run lint:ts && npm run lint:scss",
