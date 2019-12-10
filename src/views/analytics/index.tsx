@@ -147,7 +147,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AnalyticsView);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsView);

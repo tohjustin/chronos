@@ -148,7 +148,4 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({ deleteRecords: actions.deleteRecords }, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HistoryView);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryView);
