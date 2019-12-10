@@ -2,8 +2,8 @@
   "name": "chronos",
   "description": "Browser extension for visualizing web browsing activity",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://github.com/tohjustin/chronos#readme",
+  "license": "MIT",
+  "homepage": "https://github.com/tohjustin/chronos",
   "repository": {
     "type": "git",
     "url": "https://github.com/tohjustin/chronos.git"
