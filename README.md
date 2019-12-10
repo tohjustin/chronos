@@ -5,7 +5,7 @@
 ## About
 
 [![CircleCI](https://circleci.com/gh/tohjustin/chronos/tree/master.svg?style=shield)](https://circleci.com/gh/tohjustin/chronos/tree/master)
-[![Release](https://badge-service.appspot.com/static?subject=release&status=v0.1.0)](https://github.com/tohjustin/chronos/releases)
+[![Release](https://badge-service.appspot.com/static?subject=release&status=v1.0.0)](https://github.com/tohjustin/chronos/releases)
 [![License](https://badge-service.appspot.com/static?subject=license&status=MIT)](https://opensource.org/licenses/MIT)
 
 Chronos is a browser extension for visualizing web browsing activity.
@@ -154,6 +154,6 @@ Build the extension & output bundle into `/build`
 yarn build
 ```
 
-# License
+## License
 
 Chronos is [MIT licensed](./LICENSE).
