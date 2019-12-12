@@ -7,6 +7,7 @@
 [![CircleCI](https://circleci.com/gh/tohjustin/chronos/tree/master.svg?style=shield)](https://circleci.com/gh/tohjustin/chronos/tree/master)
 [![Release](https://badge-service.appspot.com/static?subject=release&status=v1.0.0)](https://github.com/tohjustin/chronos/releases)
 [![License](https://badge-service.appspot.com/static?subject=license&status=MIT)](https://opensource.org/licenses/MIT)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos?ref=badge_shield)
 
 Chronos is a browser extension for visualizing web browsing activity.
 
@@ -157,3 +158,6 @@ yarn build
 ## License
 
 Chronos is [MIT licensed](./LICENSE).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos?ref=badge_large)
