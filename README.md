@@ -24,16 +24,16 @@ __Not at all!__ All recorded web browsing activity is stored locally on your dev
 
 Users have the ability to export all recorded data or import data (backed-up from a different browser or machine) via the application's settings page.
 
-#### What browsers do you support?
+#### What browsers are supported?
 
-[//]: # (TODO: Add links to install extension for each browser platform)
-Here's the list of browsers that are currently supported:
+Here's the list of supported browsers:
 
-* Brave
-* Chrome
-* Firefox
-* Opera
+* Brave & Chrome ([Chrome Web Store](https://chrome.google.com/webstore/detail/chronos/ihinclpfkgmmabjjmkldhegakmdhdcio))
+* Firefox ([Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/chronos-app))
+* Opera ([Opera Add-ons](https://addons.opera.com/en/extensions/details/chronos))
 * Edge Chromium (coming soon)
+
+[//]: # (TODO: How do I request a feature?)
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ Here's the list of browsers that are currently supported:
 
 The application consists of two main components:
 
-* __Background Page__: Script (a.k.a `ActivityLogger`) that runs in the background & listens to browser events to record web browsing activity into the browser's client-side storage: [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
+* __Background Page__: Script (a.k.a `ActivityLogger`) that runs in the background & listens to browser events to record web browsing activity into the browser's client-side storage ([IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)).
 * __Extension Page__: React application that retrieves & visualizes web browsing activity data stored in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
 
 ### Development Workflow
@@ -157,3 +157,5 @@ yarn build
 ## License
 
 Chronos is [MIT licensed](./LICENSE).
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftohjustin%2Fchronos?ref=badge_large)
