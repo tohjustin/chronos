@@ -67,7 +67,7 @@ const exportDatabaseRecords = (): ThunkAction<
   try {
     const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB connection";
+      throw Error("Unable to initialize DB connection");
     }
 
     const data = await db.exportDatabaseRecords();
@@ -94,7 +94,7 @@ const importDatabaseRecords = (
   try {
     const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB connection";
+      throw Error("Unable to initialize DB connection");
     }
 
     const data = JSON.parse(rawData);

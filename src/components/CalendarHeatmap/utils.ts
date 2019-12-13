@@ -57,7 +57,7 @@ export function computeHeatmapData(
     const monthOfFirstDayOfWeek = formatMonth(firstDateOfWeek);
     const monthOfLastDayOfWeek = formatMonth(lastDateOfWeek);
     const isFirstDayOfMonth = firstDateOfWeek.getDate() === 1;
-    const hasMonthChange = monthOfFirstDayOfWeek != monthOfLastDayOfWeek;
+    const hasMonthChange = monthOfFirstDayOfWeek !== monthOfLastDayOfWeek;
 
     return isFirstDayOfMonth || hasMonthChange ? monthOfLastDayOfWeek : "";
   };

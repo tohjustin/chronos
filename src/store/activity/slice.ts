@@ -151,7 +151,7 @@ const loadRecords = (
   try {
     const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB connection";
+      throw Error("Unable to initialize DB connection");
     }
 
     // Only fetch all domains & activity time range on initialization
@@ -194,7 +194,7 @@ const deleteRecords = (
   try {
     const db = InitDatabaseConnection();
     if (db === undefined) {
-      throw "Unable to initialize DB connection";
+      throw Error("Unable to initialize DB connection");
     }
 
     await db.deleteActivityRecords(recordIds);
