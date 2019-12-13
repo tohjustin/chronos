@@ -21,10 +21,10 @@
     "react-hooks"
   ],
   "rules": {
-    "@typescript-eslint/explicit-function-return-type": false,
-    "@typescript-eslint/explicit-member-accessibility": false,
-    "@typescript-eslint/prefer-interface": false,
-    "import/default": false,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/prefer-interface": 0,
+    "import/default": 0,
     "import/order": [
       "error",
       {
