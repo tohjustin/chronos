@@ -29,19 +29,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsc --noEmit && lint-staged"
+      "pre-commit": "npm run check"
     }
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ],
-    "*.{scss}": [
-      "stylelint --fix",
-      "git add"
-    ]
   },
   "browserslist": [
     "last 1 chrome version",
