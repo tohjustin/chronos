@@ -116,19 +116,33 @@ yarn start:remote-debug
 
 ### Linting & Testing
 
-Lint the entire codebase
+#### Static Check & Lint
+
+Run `tsc`, [ESLint](https://eslint.org/), [stylelint](https://stylelint.io/) & [Prettier](https://prettier.io/)
 
 ```shell
-yarn lint
+yarn run check
 ```
 
-Run the TypeScript compiler
+Fix [ESLint](https://eslint.org/) all fixable errors & warnings
 
 ```shell
-yarn tsc
+yarn lint:fix
 ```
 
-Run all unit tests
+Fix [stylelint](https://stylelint.io/) all fixable errors & warnings
+
+```shell
+yarn stylelint:fix
+```
+
+Fix [Prettier](https://prettier.io/) all fixable errors & warnings
+
+```shell
+yarn prettier:fix
+```
+
+#### Unit Tests
 
 ```shell
 yarn test
@@ -140,7 +154,7 @@ Run all unit tests & enable [Node Debugger](https://nodejs.org/docs/latest-v12.x
 yarn test:debug
 ```
 
-Run all unit tests & watch for changes
+Run all tests & watch for changes
 
 ```shell
 yarn test:watch
