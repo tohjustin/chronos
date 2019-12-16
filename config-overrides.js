@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const fs = require("fs-extra");
 const path = require("path");
 const RewireReactHotLoader = require("react-app-rewire-hot-loader");

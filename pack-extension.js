@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const AdmZip = require("adm-zip");
 const fs = require("fs-extra");
 const path = require("path");
