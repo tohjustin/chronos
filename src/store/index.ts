@@ -9,6 +9,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 
+import { InitDatabaseService } from "../db";
 import { ValueOf } from "../utils/typeUtils";
 
 import {
@@ -47,7 +48,11 @@ const finalCompose = process.env.REACT_APP_REMOTE_DEBUG_MODE
   ? composeWithDevTools
   : compose;
 export const history = createHashHistory();
-const middleware = [thunk, routerMiddleware(history)];
+const databaseService = InitDatabaseService();
+const middleware = [
+  thunk.withExtraArgument({ databaseService }),
+  routerMiddleware(history)
+];
 const storeEnhancers = [applyMiddleware(...middleware)];
 const composedEnhancer = finalCompose(...storeEnhancers) as StoreEnhancer;
 

@@ -1,14 +1,12 @@
-import { createSlice, PayloadAction, Action } from "redux-starter-kit";
+import { createSlice, PayloadAction } from "redux-starter-kit";
 import { batch } from "react-redux";
-import { ThunkAction } from "redux-thunk";
 
 import { ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";
-import { InitDatabaseService } from "../../db";
 import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { extendTimeRange, isWithinTimeRange } from "../../utils/dateUtils";
 import { DEFAULT_TIME_RANGE } from "../router/constants";
-import { RootState } from "../index";
+import { ThunkAction } from "../types";
 
 import {
   getEffectiveSearchParamsSelectedTimeRange,
@@ -116,10 +114,7 @@ const activity = createSlice({
 
 const loadRecords = (
   options: { forceReload: boolean } = { forceReload: false }
-): ThunkAction<void, RootState, null, Action<string>> => async (
-  dispatch,
-  getState
-) => {
+): ThunkAction => async (dispatch, getState, { databaseService }) => {
   const state = getState();
   const recordsTimeRange = getRecordsTimeRange(state);
   const selectedTimeRange = getEffectiveSearchParamsSelectedTimeRange(state);
@@ -141,17 +136,16 @@ const loadRecords = (
 
   dispatch(activity.actions.getRecordsStart());
   try {
-    const db = InitDatabaseService();
-    if (db === undefined) {
-      throw Error("Unable to initialize DB connection");
+    if (databaseService === undefined) {
+      throw Error("Unable to connect to DB");
     }
 
     // Only fetch all domains & activity time range on initialization
     if (options.forceReload || !getIsInitialized(state)) {
       const [allDomains, totalTimeRange, records] = await Promise.all([
-        db.fetchAllActivityDomains(),
-        db.fetchActivityTimeRange(),
-        db.fetchActivityRecords(requiredTimeRange)
+        databaseService.fetchAllActivityDomains(),
+        databaseService.fetchActivityTimeRange(),
+        databaseService.fetchActivityRecords(requiredTimeRange)
       ]);
 
       // Batch actions to ensure smooth UI transition on store updates
@@ -163,7 +157,9 @@ const loadRecords = (
         dispatch(activity.actions.setTotalTimeRange(totalTimeRange))
       ]);
     } else {
-      const records = await db.fetchActivityRecords(requiredTimeRange);
+      const records = await databaseService.fetchActivityRecords(
+        requiredTimeRange
+      );
 
       // Batch actions to ensure smooth UI transition on store updates
       batch(() => [
@@ -181,15 +177,14 @@ const deleteRecords = (
   recordIds: number[],
   onSuccess?: () => void,
   onError?: () => void
-): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
+): ThunkAction => async (dispatch, getState, { databaseService }) => {
   dispatch(activity.actions.deleteRecordsStart());
   try {
-    const db = InitDatabaseService();
-    if (db === undefined) {
-      throw Error("Unable to initialize DB connection");
+    if (databaseService === undefined) {
+      throw Error("Unable to connect to DB");
     }
 
-    await db.deleteActivityRecords(recordIds);
+    await databaseService.deleteActivityRecords(recordIds);
     if (onSuccess) {
       onSuccess();
     }

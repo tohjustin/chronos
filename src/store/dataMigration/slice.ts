@@ -1,12 +1,10 @@
 import FileSaver from "file-saver";
 import { batch } from "react-redux";
-import { createSlice, PayloadAction, Action } from "redux-starter-kit";
-import { ThunkAction } from "redux-thunk";
+import { createSlice, PayloadAction } from "redux-starter-kit";
 
 import packageInfo from "../../../package.json";
-import { InitDatabaseService } from "../../db";
 import { actions as activityActions } from "../activity";
-import { RootState } from "../index";
+import { ThunkAction } from "../types";
 
 export interface DataMigrationState {
   exportingDatabaseRecordsError: Error | null;
@@ -57,20 +55,18 @@ const dataMigration = createSlice({
   }
 });
 
-const exportDatabaseRecords = (): ThunkAction<
-  void,
-  RootState,
-  null,
-  Action<string>
-> => async dispatch => {
+const exportDatabaseRecords = (): ThunkAction => async (
+  dispatch,
+  getState,
+  { databaseService }
+) => {
   dispatch(dataMigration.actions.exportDatabaseRecordsStart());
   try {
-    const db = InitDatabaseService();
-    if (db === undefined) {
-      throw Error("Unable to initialize DB connection");
+    if (databaseService === undefined) {
+      throw Error("Unable to connect to DB");
     }
 
-    const data = await db.exportDatabaseRecords();
+    const data = await databaseService.exportDatabaseRecords();
     const file = new File(
       [JSON.stringify(data)],
       `${packageInfo.name}_backup_${Date.now()}.json`,
@@ -87,18 +83,19 @@ const exportDatabaseRecords = (): ThunkAction<
   }
 };
 
-const importDatabaseRecords = (
-  rawData: string
-): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
+const importDatabaseRecords = (rawData: string): ThunkAction => async (
+  dispatch,
+  getState,
+  { databaseService }
+) => {
   dispatch(dataMigration.actions.importDatabaseRecordsStart());
   try {
-    const db = InitDatabaseService();
-    if (db === undefined) {
-      throw Error("Unable to initialize DB connection");
+    if (databaseService === undefined) {
+      throw Error("Unable to connect to DB");
     }
 
     const data = JSON.parse(rawData);
-    await db.importDatabaseRecords(data);
+    await databaseService.importDatabaseRecords(data);
 
     batch(() => [
       dispatch(dataMigration.actions.importDatabaseRecordsSuccess()),
