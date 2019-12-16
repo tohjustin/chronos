@@ -227,23 +227,17 @@ export const getTotalDurationByDomain = createSelector(
  * Retrieves total number of unique domain visits that falls within the
  * selected time range.
  */
-export const getTotalDomainVisitCount = createSelector(
-  getRecords,
-  records => {
-    return _.uniqBy(records, record => record.domain).length;
-  }
-);
+export const getTotalDomainVisitCount = createSelector(getRecords, records => {
+  return _.uniqBy(records, record => record.domain).length;
+});
 
 /**
  * Retrieves total number of unique page visits by url that falls within the
  * selected time range.
  */
-export const getTotalPageVisitCount = createSelector(
-  getRecords,
-  records => {
-    return _.uniqBy(records, record => record.url).length;
-  }
-);
+export const getTotalPageVisitCount = createSelector(getRecords, records => {
+  return _.uniqBy(records, record => record.url).length;
+});
 
 /**
  * Retrieves all activity records of a selected domain

@@ -134,7 +134,9 @@ describe("getHourOfWeek", () => {
   const TIMESTAMP = 1556436600000; // Apr 28, 2019 0030H (Sun)
 
   describe("changing day-of-week", () => {
-    const TEST_CASES = [...Array(7)].map((val, index) => [
+    const TEST_CASES: [number, { day: number; hour: number }][] = [
+      ...Array(7)
+    ].map((val, index) => [
       TIMESTAMP + index * MS_PER_DAY,
       { day: index, hour: 0 }
     ]);
@@ -145,7 +147,9 @@ describe("getHourOfWeek", () => {
   });
 
   describe("changing time-of-day", () => {
-    const TEST_CASES = [...Array(24)].map((val, index) => [
+    const TEST_CASES: [number, { day: number; hour: number }][] = [
+      ...Array(24)
+    ].map((val, index) => [
       TIMESTAMP + index * MS_PER_HOUR,
       { day: 0, hour: index }
     ]);
@@ -157,7 +161,7 @@ describe("getHourOfWeek", () => {
 });
 
 describe("formatDateString", () => {
-  const TEST_CASES = [
+  const TEST_CASES: [number, string][] = [
     [1546329600000, "2019-01-01"], // Jan 1, 2019 00:00:00.000 (Tue)
     [1546372800000, "2019-01-01"], // Jan 1, 2019 12:00:00.000 (Tue)
     [1548921600000, "2019-01-31"], // Jan 31, 2019 00:00:00.000 (Thu)
@@ -174,7 +178,7 @@ describe("formatDateString", () => {
 });
 
 describe("getTimestampFromDateString", () => {
-  const TEST_CASES = [
+  const TEST_CASES: [string, number][] = [
     ["2019-01-01", 1546329600000], // Jan 1, 2019 00:00:00.000 (Tue)
     ["2019-01-31", 1548921600000], // Jan 31, 2019 00:00:00.000 (Thu)
     ["2019-10-01", 1569913200000], // Oct 1, 2019 00:00:00.000 (Tue)
@@ -190,7 +194,7 @@ describe("getTimestampFromDateString", () => {
 });
 
 describe("isValidDateString", () => {
-  const TEST_CASES = [
+  const TEST_CASES: [string, boolean][] = [
     // valid cases
     ["2019-01-01", true],
     ["2019-01-31", true],
