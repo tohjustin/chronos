@@ -3,7 +3,7 @@ import { batch } from "react-redux";
 import { ThunkAction } from "redux-thunk";
 
 import { ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";
-import { InitDatabaseConnection } from "../../db";
+import { InitDatabaseService } from "../../db";
 import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import { extendTimeRange, isWithinTimeRange } from "../../utils/dateUtils";
@@ -141,7 +141,7 @@ const loadRecords = (
 
   dispatch(activity.actions.getRecordsStart());
   try {
-    const db = InitDatabaseConnection();
+    const db = InitDatabaseService();
     if (db === undefined) {
       throw Error("Unable to initialize DB connection");
     }
@@ -184,7 +184,7 @@ const deleteRecords = (
 ): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
   dispatch(activity.actions.deleteRecordsStart());
   try {
-    const db = InitDatabaseConnection();
+    const db = InitDatabaseService();
     if (db === undefined) {
       throw Error("Unable to initialize DB connection");
     }

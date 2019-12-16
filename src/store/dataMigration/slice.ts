@@ -4,7 +4,7 @@ import { createSlice, PayloadAction, Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
 import packageInfo from "../../../package.json";
-import { InitDatabaseConnection } from "../../db";
+import { InitDatabaseService } from "../../db";
 import { actions as activityActions } from "../activity";
 import { RootState } from "../index";
 
@@ -65,7 +65,7 @@ const exportDatabaseRecords = (): ThunkAction<
 > => async dispatch => {
   dispatch(dataMigration.actions.exportDatabaseRecordsStart());
   try {
-    const db = InitDatabaseConnection();
+    const db = InitDatabaseService();
     if (db === undefined) {
       throw Error("Unable to initialize DB connection");
     }
@@ -92,7 +92,7 @@ const importDatabaseRecords = (
 ): ThunkAction<void, RootState, null, Action<string>> => async dispatch => {
   dispatch(dataMigration.actions.importDatabaseRecordsStart());
   try {
-    const db = InitDatabaseConnection();
+    const db = InitDatabaseService();
     if (db === undefined) {
       throw Error("Unable to initialize DB connection");
     }

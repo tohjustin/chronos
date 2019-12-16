@@ -1,4 +1,4 @@
-import { RawActivity } from "../models/activity";
+import { Activity, Domain, RawActivity } from "../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../models/time";
 
 /** Object representing a segment of web browsing activity stored in DB */
@@ -28,7 +28,7 @@ export interface DatabaseRecords {
   title: TitleTableRecord[];
 }
 
-/** Service for interacting with activity records */
+/** Service for managing with activity records */
 export interface ActivityService {
   /**
    * Creates & stores an activity record
@@ -68,7 +68,7 @@ export interface ActivityService {
   fetchActivityTimeRange(): Promise<DefiniteTimeRange | null>;
 }
 
-/** Service for interacting with activity records */
+/** Service for exporting & importing activity records */
 export interface DataMigrationService {
   /**
    * Export all table records in database
@@ -79,5 +79,10 @@ export interface DataMigrationService {
   /**
    * Import table records into database (overwrites existing records)
    */
-  importDatabaseRecords(records: DatabaseRecords): void;
+  importDatabaseRecords(records: DatabaseRecords): Promise<void>;
 }
+
+/** Service for managing, exporting & importing activity records */
+export interface DatabaseService
+  extends ActivityService,
+    DataMigrationService {}
