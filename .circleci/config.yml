@@ -19,8 +19,8 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Lint
-          command: yarn lint
+          name: Static Check & Lint
+          command: yarn run check
       - run:
           name: Test
           command: yarn test
