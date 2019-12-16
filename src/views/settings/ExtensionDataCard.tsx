@@ -30,7 +30,7 @@ const ExtensionDataCard = ({
   const [showConfirmImportDialog, setShowConfirmImportDialog] = useState<
     boolean
   >(false);
-  const [storageUsage, storageQuota] = useStorageEstimate();
+  const [storageUsage] = useStorageEstimate();
 
   const handleFileUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -63,11 +63,9 @@ const ExtensionDataCard = ({
         <>
           <List className="settings-view__list">
             <ListItem
-              label="Storage data used"
+              label="Estimated storage data used"
               isLoading={isLoadingRecords}
-              value={`${formatBytes(storageUsage)} / ${formatBytes(
-                storageQuota
-              )}`}
+              value={`${formatBytes(storageUsage)}`}
             />
             <ListItem
               label="Total data collected"
