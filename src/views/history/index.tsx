@@ -75,7 +75,7 @@ const HistoryView = ({
               icon="cross"
               onClick={handleCancelClick}
             />
-            <span>{headerText}</span>
+            <span className="history-view__status">{headerText}</span>
           </span>
           <Button
             appearance="primary"
