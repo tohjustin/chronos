@@ -162,10 +162,22 @@ yarn test:watch
 
 ### Packaging
 
+#### Extension
+
 Build the extension & output bundle into `/build`
 
 ```shell
 yarn build
+```
+
+#### Extension Demo (Web Application)
+
+For demo purposes, we can build the extension as a web application that has the extension's UI, populated with pre-generated web browsing activity data.
+
+Build the extension as a demo web application & output bundle into `/build`
+
+```shell
+yarn build:demo
 ```
 
 ## License
