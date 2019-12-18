@@ -1,15 +1,15 @@
 import Dexie from "dexie";
 
-import { Activity, Domain, RawActivity } from "../models/activity";
-import { DefiniteTimeRange, TimeRange } from "../models/time";
-
+import { Activity, Domain, RawActivity } from "../../models/activity";
+import { DefiniteTimeRange, TimeRange } from "../../models/time";
 import {
   ActivityTableRecord,
   DatabaseRecords,
   DatabaseService,
   DomainTableRecord,
   TitleTableRecord
-} from "./types";
+} from "../types";
+
 import { createUrl, exportTableRecords, generateRecords } from "./utils";
 
 const DATABASE_NAME = "db";

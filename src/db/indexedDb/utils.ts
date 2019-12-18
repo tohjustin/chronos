@@ -1,13 +1,12 @@
 import Dexie from "dexie";
 
-import { RawActivity } from "../models/activity";
-import { getBrowserFavIconUrl } from "../utils/browserUtils";
-
+import { RawActivity } from "../../models/activity";
+import { getBrowserFavIconUrl } from "../../utils/browserUtils";
 import {
   DomainTableRecord,
   TitleTableRecord,
   ActivityTableRecord
-} from "./types";
+} from "../types";
 
 /**
  * Exports all records `T` in the given Dexie table into an array.
