@@ -61,10 +61,12 @@ The recommended way to develop the application is to temporarily install the ext
     * __Firefox__: [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
     * __Opera__: [opera://extensions](opera://extensions)
 
-3. Temporarily install the extension (requires "Developer mode" to be enabled):
+3. Temporarily install the extension (select `manifest.json` found in `/build`):
 
     * __Brave__/__Chrome__/__Opera__: Click on the _"Load Unpacked"_ button located at the top of the page
     * __Firefox__: Click on the _"Load Temporary Add-on..."_ button located at the top of the page
+
+    NOTE: Depending on the browser platform, you might be required to enable "Developer mode".
 
 4. Once installed successfully, you should see the `chronos`'s icon in your browser's navbar. Click on it to navigate to `chronos`'s extension page.
 
