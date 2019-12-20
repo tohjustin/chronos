@@ -24,3 +24,6 @@ jobs:
       - run:
           name: Test
           command: yarn test:ci
+      - run:
+          name: Build (demo)
+          command: yarn build:demo
