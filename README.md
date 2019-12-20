@@ -49,7 +49,7 @@ The application consists of two main components:
 
 The recommended way to develop the application is to temporarily install the extension into your browser with the following steps:
 
-1. Start the application's `webpack-dev-server` (ignore the page served on [http://localhost:3000](http://localhost:3000)):
+1. Start the application's `webpack-dev-server`:
 
     ```bash
     yarn start
@@ -119,7 +119,7 @@ yarn start:remote-debug
 
 ### Linting & Testing
 
-#### Static Check & Lint
+#### Static Checking & Linting
 
 Run `tsc`, [ESLint](https://eslint.org/), [stylelint](https://stylelint.io/) & [Prettier](https://prettier.io/)
 
@@ -145,7 +145,9 @@ Fix [Prettier](https://prettier.io/) all fixable errors & warnings
 yarn prettier:fix
 ```
 
-#### Unit Tests
+#### Unit Testing
+
+Run all unit tests & watch for changes
 
 ```shell
 yarn test
@@ -157,10 +159,10 @@ Run all unit tests & enable [Node Debugger](https://nodejs.org/docs/latest-v12.x
 yarn test:debug
 ```
 
-Run all tests & watch for changes
+Run all unit tests
 
 ```shell
-yarn test:watch
+yarn test:ci
 ```
 
 ### Packaging

@@ -23,4 +23,4 @@ jobs:
           command: yarn run check
       - run:
           name: Test
-          command: yarn test
+          command: yarn test:ci
