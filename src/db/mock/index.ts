@@ -34,7 +34,6 @@ export class MockDatabaseConnection implements DatabaseService {
   }
 
   public fetchAllActivityRecords(): Promise<Activity[]> {
-    console.log("fetchAllActivityRecords");
     return new Promise(resolve => {
       resolve(this.activityRecords);
     });
@@ -44,7 +43,6 @@ export class MockDatabaseConnection implements DatabaseService {
     start: startTime,
     end: endTime
   }: TimeRange): Promise<Activity[]> {
-    console.log("fetchActivityRecords");
     return new Promise(resolve => {
       let result;
       if (startTime !== null && endTime !== null) {
