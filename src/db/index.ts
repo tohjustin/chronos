@@ -5,6 +5,7 @@ import { MockDatabaseConnection } from "./mock";
 import { DatabaseService } from "./types";
 
 const BUILD_TARGET = process.env.REACT_APP_BUILD_TARGET;
+const NODE_ENV = process.env.NODE_ENV;
 
 /**
  * Initialize database service for managing activity records
@@ -15,6 +16,7 @@ const BUILD_TARGET = process.env.REACT_APP_BUILD_TARGET;
 export function InitDatabaseService(): DatabaseService | undefined {
   switch (true) {
     case BUILD_TARGET === "demo":
+    case NODE_ENV === "test":
       return new MockDatabaseConnection();
     case IS_CHROMIUM:
     case IS_FIREFOX:
