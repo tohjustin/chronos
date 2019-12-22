@@ -120,6 +120,6 @@
     "write-file-webpack-plugin": "4.5.1"
   },
   "engines": {
-    "node" : "~10.17.0"
+    "node" : "^12.14.0"
   }
 }
