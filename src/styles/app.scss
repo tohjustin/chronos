@@ -2,6 +2,8 @@
 @import "normalize";
 @import "variables";
 
+$banner__height: $base__size * 3;
+
 body {
   font-family: $font-family;
   font-size: $font-size__base;
@@ -27,9 +29,15 @@ text {
   height: 100vh;
 }
 
+.app__banner {
+  display: flex;
+  height: $banner__height;
+}
+
 .app__container {
   display: flex;
-  height: 100%;
+  height: calc(100% - #{$banner__height});
+  flex-grow: 1;
 }
 
 .app__view {

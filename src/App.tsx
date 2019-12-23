@@ -8,6 +8,7 @@ import { Switch, Route, Redirect } from "react-router";
 import { HashRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 
+import DemoBanner from "./components/DemoBanner";
 import Navbar from "./components/Navbar";
 import GlobalStatusOverlay from "./containers/GlobalStatusOverlay";
 import { TimeRange } from "./models/time";
@@ -58,6 +59,7 @@ const AppShell = ({
 
   return (
     <ThemeProvider value={theme}>
+      <DemoBanner className="app__banner" />
       <div className="app__container">
         <Navbar
           className="app__navbar"

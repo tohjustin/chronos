@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color__primary;
+  color: $color__white;
+  font-size: $font-size__base;
+  font-weight: 600;
+
+  a {
+    color: inherit;
+  }
+}

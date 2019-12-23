@@ -177,6 +177,10 @@ yarn build
 
 #### Extension Demo (Web Application)
 
+> __NOTE__: Make sure you have created `.env` before proceeding
+>
+> * see [.env.example](./.env.example) for list of environment variables to populate
+
 For demo purposes, we can build the extension as a web application that has the extension's UI, populated with pre-generated web browsing activity data.
 
 Build the extension as a demo web application & output bundle into `/build`
