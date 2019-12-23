@@ -49,7 +49,7 @@ const HistoryView = ({
         const count = selectedRecordIds.length;
         setSelectedRecordIds([]);
         toaster.success(
-          `Successfully deleted ${count} ${count > 1 ? "record" : "records"}`,
+          `Successfully deleted ${count} ${count > 1 ? "records" : "record"}`,
           { id: DELETE_TOASTER_ID }
         );
       },
@@ -83,7 +83,7 @@ const HistoryView = ({
       const headerText = isDeletingRecords
         ? "Deleting records..."
         : `${selectedRecordIds.length} ${
-            selectedRecordIds.length > 1 ? "record" : "records"
+            selectedRecordIds.length > 1 ? "records" : "record"
           } selected`;
       headerContent = (
         <>
