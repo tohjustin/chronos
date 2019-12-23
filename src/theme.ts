@@ -29,6 +29,12 @@ const theme = _.merge(defaultTheme, {
       info: COLOR_PRIMARY,
       success: COLOR_SUCCESS,
       warning: COLOR_WARNING
+    },
+    intent: {
+      danger: COLOR_DANGER,
+      none: COLOR_PRIMARY,
+      success: COLOR_SUCCESS,
+      warning: COLOR_WARNING
     }
   },
   getHeadingStyle: (size: number) => {

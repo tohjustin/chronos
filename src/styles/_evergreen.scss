@@ -24,12 +24,57 @@
 }
 
 // NOTE: Resort to global style + !important b/c evergreen-ui doesn't expose any
-// props for overwriting z-indexes of its dialog-based components 🤢
+// props for overwriting z-indexes of its alert & dialog-based components 🤢
 div[evergreen-portal-container] {
   // Dialog
   div[data-state="entered"],
   // SelectMenu
   div[role="dialog"] {
     z-index: $z-index__dialog !important;
+  }
+}
+
+// NOTE: Resort to global style + !important b/c evergreen-ui doesn't expose any
+// props for overwriting z-indexes of its alert-based components 🤢
+div[data-evergreen-toaster-container] {
+  /* stylelint-disable no-descending-specificity */
+  > span {
+    z-index: $z-index__alert !important;
+  }
+
+  button {
+    color: $color__black;
+  }
+
+  div[role="alert"] {
+    svg[data-icon="error"] {
+      fill: $color__danger !important;
+    }
+
+    svg[data-icon="info-sign"] {
+      fill: $color__primary !important;
+    }
+
+    svg[data-icon="tick-circle"] {
+      fill: $color__success !important;
+    }
+
+    svg[data-icon="warning-sign"] {
+      fill: $color__warning !important;
+    }
+
+    h4 {
+      color: $color__black;
+      font-size: $font-size__md;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p {
+      color: $color__gray-darker;
+      font-size: $font-size__base;
+      font-weight: 400;
+      margin: 0;
+    }
   }
 }

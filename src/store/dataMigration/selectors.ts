@@ -15,6 +15,13 @@ export const getExportingDatabaseRecordsError = (state: RootState) => {
 };
 
 /**
+ * Retrieves success status from exporting database records
+ */
+export const getExportingDatabaseRecordsSuccess = (state: RootState) => {
+  return state.dataMigration.exportingDatabaseRecordsSuccess;
+};
+
+/**
  * Retrieves the status of importing database records
  */
 export const getIsImportingDatabaseRecords = (state: RootState) => {
@@ -26,4 +33,11 @@ export const getIsImportingDatabaseRecords = (state: RootState) => {
  */
 export const getImportingDatabaseRecordsError = (state: RootState) => {
   return state.dataMigration.importingDatabaseRecordsError;
+};
+
+/**
+ * Retrieves success status from importing database records
+ */
+export const getImportingDatabaseRecordsSuccess = (state: RootState) => {
+  return state.dataMigration.importingDatabaseRecordsSuccess;
 };

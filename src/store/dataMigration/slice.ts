@@ -8,14 +8,18 @@ import { ThunkAction } from "../types";
 
 export interface DataMigrationState {
   exportingDatabaseRecordsError: Error | null;
+  exportingDatabaseRecordsSuccess: boolean | null;
   importingDatabaseRecordsError: Error | null;
+  importingDatabaseRecordsSuccess: boolean | null;
   isExportingDatabaseRecords: boolean;
   isImportingDatabaseRecords: boolean;
 }
 
 const INITIAL_STATE: DataMigrationState = {
   exportingDatabaseRecordsError: null,
+  exportingDatabaseRecordsSuccess: null,
   importingDatabaseRecordsError: null,
+  importingDatabaseRecordsSuccess: null,
   isExportingDatabaseRecords: false,
   isImportingDatabaseRecords: false
 };
@@ -26,6 +30,7 @@ const dataMigration = createSlice({
   reducers: {
     exportDatabaseRecordsStart(state: DataMigrationState) {
       state.isExportingDatabaseRecords = true;
+      state.exportingDatabaseRecordsSuccess = null;
     },
     exportDatabaseRecordsFailure(
       state: DataMigrationState,
@@ -33,13 +38,16 @@ const dataMigration = createSlice({
     ) {
       state.isExportingDatabaseRecords = false;
       state.exportingDatabaseRecordsError = action.payload;
+      state.exportingDatabaseRecordsSuccess = false;
     },
     exportDatabaseRecordsSuccess(state: DataMigrationState) {
       state.isExportingDatabaseRecords = false;
       state.exportingDatabaseRecordsError = null;
+      state.exportingDatabaseRecordsSuccess = true;
     },
     importDatabaseRecordsStart(state: DataMigrationState) {
       state.isImportingDatabaseRecords = true;
+      state.importingDatabaseRecordsSuccess = null;
     },
     importDatabaseRecordsFailure(
       state: DataMigrationState,
@@ -47,10 +55,12 @@ const dataMigration = createSlice({
     ) {
       state.isImportingDatabaseRecords = false;
       state.importingDatabaseRecordsError = action.payload;
+      state.importingDatabaseRecordsSuccess = false;
     },
     importDatabaseRecordsSuccess(state: DataMigrationState) {
       state.isImportingDatabaseRecords = false;
       state.importingDatabaseRecordsError = null;
+      state.importingDatabaseRecordsSuccess = true;
     }
   }
 });
