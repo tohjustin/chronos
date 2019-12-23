@@ -71,10 +71,14 @@ export class MockDatabaseConnection implements DatabaseService {
   }
 
   public exportDatabaseRecords(): Promise<DatabaseRecords> {
-    throw new Error("Mock database does not support data export");
+    return Promise.reject(
+      new Error("Mock database does not support data export")
+    );
   }
 
   public importDatabaseRecords(): Promise<void> {
-    throw new Error("Mock database does not support data import");
+    return Promise.reject(
+      new Error("Mock database does not support data import")
+    );
   }
 }

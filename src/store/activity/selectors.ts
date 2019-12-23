@@ -32,7 +32,19 @@ export const getAllRecords = (state: RootState): Activity[] => {
  * Retrieves the status of deleting activity records
  */
 export const getIsDeletingRecords = (state: RootState) =>
-  state.activity.isDeleting;
+  state.activity.isDeletingRecords;
+
+/**
+ * Retrieves the error occurred from deleting activity records
+ */
+export const getDeletingRecordsError = (state: RootState) =>
+  state.activity.deletingRecordsError;
+
+/**
+ * Retrieves the success status from deleting activity records
+ */
+export const getDeletingRecordsSuccess = (state: RootState) =>
+  state.activity.deletingRecordsSuccess;
 
 /**
  * Retrieves the status of whether the initial record fetch has completed

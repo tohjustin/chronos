@@ -16,13 +16,17 @@ import {
 
 export interface ActivityState {
   /**
-   * Error resulting from `deleteRecords` or `loadRecords` thunks
-   */
-  error: Error | null;
-  /**
    * Loading status of `deleteRecords` thunk
    */
-  isDeleting: boolean;
+  isDeletingRecords: boolean;
+  /**
+   * Error resulting from `deleteRecords` thunk
+   */
+  deletingRecordsError: Error | null;
+  /**
+   * Success status of `deleteRecords` thunk
+   */
+  deletingRecordsSuccess: boolean | null;
   /**
    * Status of whether the initial record fetch has completed
    */
@@ -31,6 +35,10 @@ export interface ActivityState {
    * Loading status of `loadRecords` thunk
    */
   isLoading: boolean;
+  /**
+   * Error resulting from `loadRecords` thunk
+   */
+  error: Error | null;
   /**
    * Map of all (fetched) domain records, keyed by domain value
    */
@@ -54,9 +62,11 @@ export interface ActivityState {
 }
 
 const INITIAL_STATE: ActivityState = {
+  deletingRecordsError: null,
+  deletingRecordsSuccess: null,
   domains: {},
   error: null,
-  isDeleting: false,
+  isDeletingRecords: false,
   isInitialized: false,
   isLoading: false,
   records: [],
@@ -70,18 +80,21 @@ const activity = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     deleteRecordsStart(state: ActivityState) {
-      state.isDeleting = true;
+      state.isDeletingRecords = true;
+      state.deletingRecordsSuccess = null;
     },
     deleteRecordsSuccess(state, action: PayloadAction<number[]>) {
       state.records = state.records.filter(
         record => !action.payload.includes(record.id as number)
       );
-      state.isDeleting = false;
-      state.error = null;
+      state.isDeletingRecords = false;
+      state.deletingRecordsError = null;
+      state.deletingRecordsSuccess = true;
     },
     deleteRecordsFailure(state: ActivityState, action: PayloadAction<Error>) {
-      state.isDeleting = false;
-      state.error = action.payload;
+      state.isDeletingRecords = false;
+      state.deletingRecordsError = action.payload;
+      state.deletingRecordsSuccess = false;
     },
     getRecordsStart(state: ActivityState) {
       state.isLoading = true;
@@ -176,7 +189,7 @@ const loadRecords = (
 const deleteRecords = (
   recordIds: number[],
   onSuccess?: () => void,
-  onError?: () => void
+  onError?: (error: Error) => void
 ): ThunkAction => async (dispatch, getState, { databaseService }) => {
   dispatch(activity.actions.deleteRecordsStart());
   try {
@@ -191,7 +204,7 @@ const deleteRecords = (
     dispatch(activity.actions.deleteRecordsSuccess(recordIds));
   } catch (error) {
     if (onError) {
-      onError();
+      onError(error);
     }
     dispatch(activity.actions.deleteRecordsFailure(error));
   }

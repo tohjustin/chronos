@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import { toaster } from "evergreen-ui";
+import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -18,13 +19,17 @@ interface HistoryViewProps {
   deleteRecords: (
     recordIds: number[],
     onSuccess?: () => void,
-    onerror?: () => void
+    onerror?: (error: Error) => void
   ) => void;
+  deleteRecordsError: Error | null;
+  deleteRecordsSuccess: boolean | null;
   isDeletingRecords: boolean;
   isInitialized: boolean;
   isLoadingRecords: boolean;
   selectedTimeRangeValidationStatus: ValidationStatus;
 }
+
+const DELETE_TOASTER_ID = "history-view-delete-toaster";
 
 const HistoryView = ({
   deleteRecords,
@@ -38,9 +43,23 @@ const HistoryView = ({
     setSelectedRecordIds([]);
   }, [setSelectedRecordIds]);
   const handleDeleteClick = useCallback(() => {
-    deleteRecords(selectedRecordIds, () => {
-      setSelectedRecordIds([]);
-    });
+    deleteRecords(
+      selectedRecordIds,
+      () => {
+        const count = selectedRecordIds.length;
+        setSelectedRecordIds([]);
+        toaster.success(
+          `Successfully deleted ${count} ${count > 1 ? "record" : "records"}`,
+          { id: DELETE_TOASTER_ID }
+        );
+      },
+      error => {
+        toaster.danger("Fail to delete records", {
+          id: DELETE_TOASTER_ID,
+          description: error.message
+        });
+      }
+    );
   }, [deleteRecords, selectedRecordIds]);
   const handleRowClick = useCallback(
     (record: Activity) => {
