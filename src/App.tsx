@@ -1,5 +1,5 @@
 import { ConnectedRouter } from "connected-react-router";
-import { ThemeProvider } from "evergreen-ui";
+import { ThemeProvider, toaster } from "evergreen-ui";
 import React, { useEffect, useMemo } from "react";
 import { BarChart2, Clock, Settings } from "react-feather";
 import { hot } from "react-hot-loader";
@@ -31,13 +31,18 @@ import HistoryView from "./views/history";
 import SettingsView from "./views/settings";
 
 interface AppShellProps {
-  loadRecords: () => void;
+  loadRecords: (
+    onSuccess?: () => void,
+    onError?: (error: Error) => void
+  ) => void;
   isExportingDatabaseRecords: boolean;
   isImportingDatabaseRecords: boolean;
   searchParams: string;
   selectedDomain: string | null;
   selectedTimeRange: TimeRange;
 }
+
+const LOAD_TOASTER_ID = "app-shell-load-toaster";
 
 const AppShell = ({
   loadRecords,
@@ -54,7 +59,12 @@ const AppShell = ({
     ]).toString();
   }, [searchParams]);
   useEffect(() => {
-    loadRecords();
+    loadRecords(undefined, error => {
+      toaster.danger("Fail to load records", {
+        id: LOAD_TOASTER_ID,
+        description: error.message
+      });
+    });
   }, [loadRecords, selectedDomain, selectedTimeRange]);
 
   return (

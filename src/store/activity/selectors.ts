@@ -56,7 +56,19 @@ export const getIsInitialized = (state: RootState) =>
  * Retrieves the status of loading activity records
  */
 export const getIsLoadingRecords = (state: RootState) =>
-  state.activity.isLoading;
+  state.activity.isLoadingRecords;
+
+/**
+ * Retrieves the error occurred from loading activity records
+ */
+export const getLoadingRecordsError = (state: RootState) =>
+  state.activity.loadingRecordsError;
+
+/**
+ * Retrieves the success status from loading activity records
+ */
+export const getLoadingRecordsSuccess = (state: RootState) =>
+  state.activity.loadingRecordsSuccess;
 
 /**
  * Retrieves time range of all (fetched) activity records in store

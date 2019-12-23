@@ -34,11 +34,15 @@ export interface ActivityState {
   /**
    * Loading status of `loadRecords` thunk
    */
-  isLoading: boolean;
+  isLoadingRecords: boolean;
   /**
-   * Error resulting from `loadRecords` thunk
+   * Error resulting from `loadRecords` thunks
    */
-  error: Error | null;
+  loadingRecordsError: Error | null;
+  /**
+   * Success status from `loadRecords` thunks
+   */
+  loadingRecordsSuccess: boolean | null;
   /**
    * Map of all (fetched) domain records, keyed by domain value
    */
@@ -65,10 +69,11 @@ const INITIAL_STATE: ActivityState = {
   deletingRecordsError: null,
   deletingRecordsSuccess: null,
   domains: {},
-  error: null,
   isDeletingRecords: false,
   isInitialized: false,
-  isLoading: false,
+  isLoadingRecords: false,
+  loadingRecordsError: null,
+  loadingRecordsSuccess: null,
   records: [],
   recordsTimeRange: null,
   selectedTimeRange: DEFAULT_TIME_RANGE,
@@ -97,18 +102,21 @@ const activity = createSlice({
       state.deletingRecordsSuccess = false;
     },
     getRecordsStart(state: ActivityState) {
-      state.isLoading = true;
+      state.isLoadingRecords = true;
+      state.loadingRecordsSuccess = null;
     },
     getRecordsSuccess(state, action: PayloadAction<Activity[]>) {
       state.records = action.payload;
       state.isInitialized = true;
-      state.isLoading = false;
-      state.error = null;
+      state.isLoadingRecords = false;
+      state.loadingRecordsError = null;
+      state.loadingRecordsSuccess = true;
     },
     getRecordsFailure(state: ActivityState, action: PayloadAction<Error>) {
       state.isInitialized = true;
-      state.isLoading = false;
-      state.error = action.payload;
+      state.isLoadingRecords = false;
+      state.loadingRecordsError = action.payload;
+      state.loadingRecordsSuccess = false;
     },
     setDomains(state, action: PayloadAction<Record<string, Domain>>) {
       state.domains = action.payload;
@@ -126,6 +134,8 @@ const activity = createSlice({
 });
 
 const loadRecords = (
+  onSuccess?: () => void,
+  onError?: (error: Error) => void,
   options: { forceReload: boolean } = { forceReload: false }
 ): ThunkAction => async (dispatch, getState, { databaseService }) => {
   const state = getState();
@@ -150,7 +160,7 @@ const loadRecords = (
   dispatch(activity.actions.getRecordsStart());
   try {
     if (databaseService === undefined) {
-      throw Error("Unable to connect to DB");
+      throw Error("Unable to connect to database");
     }
 
     // Only fetch all domains & activity time range on initialization
@@ -160,6 +170,10 @@ const loadRecords = (
         databaseService.fetchActivityTimeRange(),
         databaseService.fetchActivityRecords(requiredTimeRange)
       ]);
+
+      if (onSuccess) {
+        onSuccess();
+      }
 
       // Batch actions to ensure smooth UI transition on store updates
       batch(() => [
@@ -174,6 +188,10 @@ const loadRecords = (
         requiredTimeRange
       );
 
+      if (onSuccess) {
+        onSuccess();
+      }
+
       // Batch actions to ensure smooth UI transition on store updates
       batch(() => [
         dispatch(activity.actions.getRecordsSuccess(records || [])),
@@ -182,6 +200,9 @@ const loadRecords = (
       ]);
     }
   } catch (error) {
+    if (onError) {
+      onError(error);
+    }
     dispatch(activity.actions.getRecordsFailure(error));
   }
 };

@@ -109,7 +109,9 @@ const importDatabaseRecords = (rawData: string): ThunkAction => async (
 
     batch(() => [
       dispatch(dataMigration.actions.importDatabaseRecordsSuccess()),
-      dispatch(activityActions.loadRecords({ forceReload: true }))
+      dispatch(
+        activityActions.loadRecords(undefined, undefined, { forceReload: true })
+      )
     ]);
   } catch (error) {
     console.error(error);
