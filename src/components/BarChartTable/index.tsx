@@ -12,6 +12,7 @@ interface BarChartTableProps {
 
   className?: string;
   formatValue?: (value: number) => string;
+  maxValue?: number;
   rowCount?: number;
   showIcons?: boolean;
 }
@@ -19,6 +20,7 @@ interface BarChartTableProps {
 export const NO_DATA_LABEL = "_NIL_";
 
 export const defaultProps = {
+  maxValue: undefined,
   rowCount: 10,
   showIcons: true
 };
@@ -27,18 +29,14 @@ const BarChartTable = ({
   className,
   data,
   formatValue,
+  maxValue,
   rowCount = defaultProps.rowCount,
   showIcons = defaultProps.showIcons
 }: BarChartTableProps) => {
   const rowData = [...new Array(rowCount)].map((_, index) => {
-    return (
-      (data && data[index]) || {
-        label: NO_DATA_LABEL,
-        value: 0
-      }
-    );
+    return data?.[index] ?? { label: NO_DATA_LABEL, value: 0 };
   });
-  const maxValue = d3.max(rowData.map(d => d.value)) || 1;
+  const max = maxValue ?? d3.max(rowData.map(d => d.value)) ?? 1;
 
   return (
     <div className={classNames("bar-chart-table", className)}>
@@ -61,7 +59,7 @@ const BarChartTable = ({
             key={index}
             {...datum}
             hide={datum.label === NO_DATA_LABEL}
-            maxValue={maxValue}
+            maxValue={max}
             showIcons={showIcons}
           />
         ))}

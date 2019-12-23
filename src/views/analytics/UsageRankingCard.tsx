@@ -17,6 +17,7 @@ interface UsageRankingCardProps {
     iconSrc?: string;
     labelSrc?: string;
   }[];
+  maxValue: number;
   rowCount: number;
   showIcons: boolean;
 }
@@ -34,6 +35,7 @@ const UsageRankingCard = (props: UsageRankingCardProps) => (
       ) : (
         <BarChartTable
           data={props.data}
+          maxValue={props.maxValue}
           formatValue={formatTableDurationLabel}
           rowCount={props.rowCount}
           showIcons={props.showIcons}
@@ -58,6 +60,7 @@ export const DomainTotalUsageRankingCard = connect((state: RootState) => {
         labelSrc: selectedDomain ? `${selectedDomain}${datum.path}` : undefined,
         value: datum.totalDuration
       })),
+    maxValue: selectors.getSelectedDomainTotalDuration(state),
     rowCount,
     showIcons: false
   };
@@ -90,6 +93,7 @@ export const TotalUsageRankingCard = connect((state: RootState) => {
         value: datum.totalDuration,
         iconSrc: datum.favIconUrl
       })),
+    maxValue: selectors.getTotalDuration(state),
     rowCount,
     showIcons: true
   };
