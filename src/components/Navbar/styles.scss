@@ -1,6 +1,5 @@
 @import "../../styles/variables";
 
-$navbar__height: 100vh;
 $navbar__width: $base__size * 10;
 
 $navbar__logo-size: $base__size * 4;
@@ -17,7 +16,7 @@ $navbar-item__width: $navbar__width;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: $navbar__height;
+  height: 100%;
   width: $navbar__width;
   background: $navbar-item__background-color;
   color: $navbar-item__color;
