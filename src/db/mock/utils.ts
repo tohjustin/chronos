@@ -33,7 +33,7 @@ const generateId: () => number = (function() {
 })();
 
 function randomRangeValue([min, max]: Range): number {
-  return Math.random() * (max - min) + min;
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 function randomArrayElement<T>(arr: T[]): T {
