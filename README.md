@@ -172,7 +172,7 @@ yarn test:ci
 Build the extension & output bundle into `/build`
 
 ```shell
-yarn build
+yarn build:extension
 ```
 
 #### Extension Demo (Web Application)

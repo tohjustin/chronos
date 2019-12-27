@@ -12,8 +12,9 @@
     "start": "cross-env REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) react-app-rewired start",
     "start:demo": "cross-env REACT_APP_BUILD_TARGET=demo REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) react-app-rewired start",
     "start:remote-debug": "REACT_APP_REMOTE_DEBUG_MODE=true npm run start",
-    "build": "cross-env-shell REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) INLINE_RUNTIME_CHUNK=false PUBLIC_URL=. \"react-app-rewired build && node pack-extension.js\"",
+    "build": "npm run build:demo",
     "build:demo": "cross-env-shell REACT_APP_BUILD_TARGET=demo REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) INLINE_RUNTIME_CHUNK=false PUBLIC_URL=. \"react-app-rewired build\"",
+    "build:extension": "cross-env-shell REACT_APP_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) INLINE_RUNTIME_CHUNK=false PUBLIC_URL=. \"react-app-rewired build && node pack-extension.js\"",
     "eject": "react-app-rewired eject",
     "check": "npm run type-check && npm run lint && npm run stylelint && npm run prettier",
     "type-check": "tsc --noEmit",
@@ -120,6 +121,6 @@
     "write-file-webpack-plugin": "4.5.1"
   },
   "engines": {
-    "node" : "^12.14.0"
+    "node": "^12.14.0"
   }
 }
