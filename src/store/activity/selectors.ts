@@ -1,6 +1,10 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
 
+import {
+  DURATION_BUCKET_SIZE,
+  MAX_BUCKET_COUNT
+} from "../../constants/analytics";
 import { MS_PER_DAY } from "../../constants/time";
 import { Activity, Domain } from "../../models/activity";
 import { DefiniteTimeRange, TimeRange } from "../../models/time";
@@ -9,7 +13,8 @@ import {
   computeAverageDurationByHourOfWeek,
   computeTotalDuration,
   computeTotalDurationByDate,
-  computeTotalDurationByDayOfWeek
+  computeTotalDurationByDayOfWeek,
+  computeTotalDurationByDurationBuckets
 } from "../../utils/activityUtils";
 import { getDayCount, getEndOfDay, getStartOfDay } from "../../utils/dateUtils";
 import { selectors as routerSelectors } from "../router";
@@ -248,6 +253,22 @@ export const getTotalDurationByDomain = createSelector(
 );
 
 /**
+ * Retrieves total duration of all activity records that falls within the
+ * selected time range, bucketed by the activity's duration
+ */
+export const getTotalDurationByDurationBuckets = createSelector(
+  [getRecords, getEffectiveSelectedTimeRange],
+  (records, effectiveTimeRange) => {
+    return computeTotalDurationByDurationBuckets(
+      records,
+      effectiveTimeRange,
+      DURATION_BUCKET_SIZE,
+      MAX_BUCKET_COUNT
+    );
+  }
+);
+
+/**
  * Retrieves total number of unique domain visits that falls within the
  * selected time range.
  */
@@ -375,6 +396,22 @@ export const getSelectedDomainTotalDurationByDayOfWeek = createSelector(
     return computeTotalDurationByDayOfWeek(
       selectedDomainRecords,
       effectiveTimeRange
+    );
+  }
+);
+
+/**
+ * Retrieves total duration of all activity records of a selected domain that
+ * falls within the selected time range, bucketed by the activity's duration
+ */
+export const getSelectedDomainTotalDurationByDurationBuckets = createSelector(
+  [getSelectedDomainRecords, getEffectiveSelectedTimeRange],
+  (selectedDomainRecords, effectiveTimeRange) => {
+    return computeTotalDurationByDurationBuckets(
+      selectedDomainRecords,
+      effectiveTimeRange,
+      DURATION_BUCKET_SIZE,
+      MAX_BUCKET_COUNT
     );
   }
 );

@@ -156,6 +156,44 @@ export function computeTotalDurationByDayOfWeek(
     .sort((a, b) => (a.day < b.day ? -1 : 1));
 }
 
+export function computeTotalDurationByDurationBuckets(
+  records: Activity[],
+  effectiveTimeRange: DefiniteTimeRange,
+  bucketSize: number,
+  maxBucketCount = 1
+) {
+  const totalDurationByBuckets: { [durationBucket: string]: number } = {};
+  const minDate = getStartOfDay(effectiveTimeRange.start);
+  const maxDate = getStartOfDay(effectiveTimeRange.end);
+
+  // zero out entries
+  for (let i = 0; i < maxBucketCount; i++) {
+    totalDurationByBuckets[i] = 0;
+  }
+
+  const maxBucketIndex = maxBucketCount - 1;
+  records.forEach(record => {
+    const startTime = record.startTime >= minDate ? record.startTime : minDate;
+    const endTime = record.endTime <= maxDate ? record.endTime : maxDate;
+    const duration = endTime - startTime;
+    if (duration > 0) {
+      const bucketIndex = Math.min(
+        Math.floor(duration / bucketSize),
+        maxBucketIndex
+      );
+      totalDurationByBuckets[bucketIndex] += duration;
+    }
+  });
+
+  // Sort results by chronological order
+  return Object.entries(totalDurationByBuckets)
+    .map(([bucketIndex, duration]) => ({
+      bucket: Number(bucketIndex) * bucketSize,
+      duration
+    }))
+    .sort((a, b) => (a.bucket < b.bucket ? -1 : 1));
+}
+
 export function computeAverageDurationByHourOfWeek(
   records: Activity[],
   effectiveTimeRange: DefiniteTimeRange

@@ -94,6 +94,47 @@ export function formatTooltipDayOfWeekLabel(day: number): string {
   return formatDayOfWeek(day);
 }
 
+function getBucketDuration(duration: number) {
+  // Round up to nearest seconds
+  const durationInSecs = Math.round(duration / 1000);
+  const seconds = Math.floor(durationInSecs) % 60;
+  const minutes = Math.floor(durationInSecs / 60);
+
+  let result = "";
+  if (minutes > 0) {
+    result += `${minutes} min`;
+  }
+  if (seconds > 0) {
+    result += ` ${seconds} s`;
+  }
+  return result.trim();
+}
+
+/**
+ * Converts a duration bucket into human-readable format for tooltips
+ * @param duration duration bucket in milliseconds
+ * @returns duration bucket in human-readable format
+ */
+export function formatTooltipDurationBucketLabel(
+  bucketIndex: number,
+  bucketSize: number,
+  bucketCount: number
+): string {
+  const startDuration = bucketIndex * bucketSize;
+  const startResult = getBucketDuration(startDuration);
+  if (bucketIndex === bucketCount - 1) {
+    return `Above ${startResult}`;
+  }
+
+  const endDuration = (bucketIndex + 1) * bucketSize;
+  const endResult = getBucketDuration(endDuration);
+  if (bucketIndex === 0) {
+    return `Below ${endResult}`;
+  }
+
+  return `${startResult} ~ ${endResult}`;
+}
+
 /**
  * Converts a duration into human-readable format for tooltips
  * @param duration duration in milliseconds

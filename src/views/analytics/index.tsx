@@ -30,6 +30,10 @@ import {
   DomainAverageUsageByHourOfWeekCard
 } from "./UsageByHourOfWeekCard";
 import {
+  DomainTotalUsageDistributionCard,
+  TotalUsageDistributionCard
+} from "./UsageDistributionCard";
+import {
   DomainTotalUsagePerDayCard,
   TotalUsagePerDayCard
 } from "./UsagePerDayCard";
@@ -81,6 +85,7 @@ const AnalyticsView = ({
           <DomainTotalUsageRankingCard />
           <DomainAverageUsageByHourOfWeekCard />
           <DomainTotalUsageByDayOfWeekCard />
+          <DomainTotalUsageDistributionCard />
           <DomainTotalUsageByDayOfYearCard />
         </div>
       );
@@ -96,6 +101,7 @@ const AnalyticsView = ({
           <TotalUsageRankingCard />
           <AverageUsageByHourOfWeekCard />
           <TotalUsageByDayOfWeekCard />
+          <TotalUsageDistributionCard />
         </div>
       );
       break;
