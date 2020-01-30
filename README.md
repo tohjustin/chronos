@@ -6,8 +6,8 @@
 
 [![CircleCI](https://circleci.com/gh/tohjustin/chronos/tree/master.svg?style=shield)](https://circleci.com/gh/tohjustin/chronos/tree/master)
 [![Known Vulnerabilities](https://snyk.io/test/github/tohjustin/chronos/badge.svg?targetFile=package.json)](https://snyk.io/test/github/tohjustin/chronos?targetFile=package.json)
-[![Release](https://badge-service.appspot.com/static?subject=release&status=v1.0.0)](https://github.com/tohjustin/chronos/releases)
-[![License](https://badge-service.appspot.com/static?subject=license&status=MIT)](https://opensource.org/licenses/MIT)
+[![Release](https://aegisbadges.appspot.com/static?subject=release&status=v1.0.0&color=379AF7)](https://github.com/tohjustin/chronos/releases)
+[![License](https://aegisbadges.appspot.com/static?subject=license&status=MIT&color=379AF7)](https://opensource.org/licenses/MIT)
 
 Chronos is a browser extension for visualizing web browsing activity.
 
