@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "redux-starter-kit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { batch } from "react-redux";
 
 import { ANALYTICS_REQUIRED_TIME_WINDOW } from "../../constants/analytics";

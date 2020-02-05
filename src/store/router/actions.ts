@@ -1,6 +1,6 @@
+import { Action } from "@reduxjs/toolkit";
 import { push } from "connected-react-router";
 import _ from "lodash";
-import { Action } from "redux-starter-kit";
 import { ThunkAction } from "redux-thunk";
 
 import { TimeRange } from "../../models/time";

@@ -56,7 +56,7 @@ const middleware = [
 const storeEnhancers = [applyMiddleware(...middleware)];
 const composedEnhancer = finalCompose(...storeEnhancers) as StoreEnhancer;
 
-// Using `createStore` directly instead of RSK's `configureStore` b/e we need to
+// Using `createStore` directly instead of RSK's `configureStore` b/c we need to
 // compose with `remote-redux-devtools`.
 export const store = createStore(
   combineReducers({

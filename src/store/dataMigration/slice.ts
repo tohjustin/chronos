@@ -1,6 +1,6 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import FileSaver from "file-saver";
 import { batch } from "react-redux";
-import { createSlice, PayloadAction } from "redux-starter-kit";
 
 import packageInfo from "../../../package.json";
 import { actions as activityActions } from "../activity";

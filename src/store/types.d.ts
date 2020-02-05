@@ -1,4 +1,4 @@
-import { Action } from "redux-starter-kit";
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction as ThunkActionType } from "redux-thunk";
 
 import { DatabaseService } from "../db/types";
