@@ -29,9 +29,9 @@ Users have the ability to export all recorded data or import data (backed-up fro
 Here's the list of supported browsers:
 
 * Brave & Chrome ([Chrome Web Store](https://chrome.google.com/webstore/detail/chronos/ihinclpfkgmmabjjmkldhegakmdhdcio))
+* Edge Chromium ([Edge Extension Store](https://microsoftedge.microsoft.com/addons/detail/lojilcmafodjobdcannaljdllkliofpo))
 * Firefox ([Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/chronos-app))
-* Opera ([Opera Add-ons](https://addons.opera.com/en/extensions/details/chronos))
-* Edge Chromium (coming soon)
+* Opera (under addons review)
 
 [//]: # (TODO: How do I request a feature?)
 
