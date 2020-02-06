@@ -16,9 +16,10 @@ interface DemoBannerProps {
 }
 
 const BUILD_TARGET = process.env.REACT_APP_BUILD_TARGET;
-const PROJECT_HOMEPAGE = process.env.REACT_APP_PROJECT_HOMEPAGE;
-const FIREFOX_ADDONS_URL = process.env.REACT_APP_FIREFOX_ADDONS_URL;
 const CHROME_WEBSTORE_URL = process.env.REACT_APP_CHROME_WEBSTORE_URL;
+const EDGE_WEBSTORE_URL = process.env.REACT_APP_EDGE_WEBSTORE_URL;
+const FIREFOX_ADDONS_URL = process.env.REACT_APP_FIREFOX_ADDONS_URL;
+const PROJECT_HOMEPAGE = process.env.REACT_APP_PROJECT_HOMEPAGE;
 
 const DemoBanner = ({ className }: DemoBannerProps) => {
   if (BUILD_TARGET !== "demo") {
@@ -37,18 +38,21 @@ const DemoBanner = ({ className }: DemoBannerProps) => {
 
   let description;
   switch (true) {
-    case IS_SAFARI:
-      description = <>&nbsp;This extension is not available on Safari.</>;
-      break;
-    // TODO: Update this when extension is available on Edge Chromium
-    case IS_EDGE:
+    case IS_CHROME && CHROME_WEBSTORE_URL !== undefined:
       description = (
-        <>&nbsp;This extension will be available soon on Edge Chromium.</>
+        <>
+          &nbsp;Download the extension from&nbsp;
+          <a href={CHROME_WEBSTORE_URL}>Chrome Web Store</a>.
+        </>
       );
       break;
-    // TODO: Update this when extension is available on Opera Stable
-    case IS_OPERA:
-      description = <>&nbsp;This extension will be available soon on Opera.</>;
+    case IS_EDGE && EDGE_WEBSTORE_URL !== undefined:
+      description = (
+        <>
+          &nbsp;Download the extension from&nbsp;
+          <a href={EDGE_WEBSTORE_URL}>Edge Addons</a>.
+        </>
+      );
       break;
     case IS_FIREFOX && FIREFOX_ADDONS_URL !== undefined:
       description = (
@@ -58,13 +62,12 @@ const DemoBanner = ({ className }: DemoBannerProps) => {
         </>
       );
       break;
-    case IS_CHROME && CHROME_WEBSTORE_URL !== undefined:
-      description = (
-        <>
-          &nbsp;Download the extension from&nbsp;
-          <a href={CHROME_WEBSTORE_URL}>Chrome Web Store</a>.
-        </>
-      );
+    // TODO: Update this when extension is available on Opera Stable
+    case IS_OPERA:
+      description = <>&nbsp;This extension will be available soon on Opera.</>;
+      break;
+    case IS_SAFARI:
+      description = <>&nbsp;This extension is not available on Safari.</>;
       break;
   }
 
