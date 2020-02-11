@@ -5,12 +5,14 @@ import OperaIcon from "../assets/opera-icon.png";
 
 const USER_AGENT = navigator.userAgent.toLowerCase();
 
-export const IS_CHROME = USER_AGENT.includes("chrome/");
 export const IS_EDGE = USER_AGENT.includes("edg/");
 export const IS_FIREFOX = USER_AGENT.includes("firefox/");
 export const IS_OPERA = USER_AGENT.includes("opr/");
 export const IS_SAFARI =
   USER_AGENT.includes("safari/") && !USER_AGENT.includes("chrome/");
+export const IS_CHROME =
+  USER_AGENT.includes("chrome/") &&
+  !(IS_EDGE || IS_FIREFOX || IS_OPERA || IS_SAFARI);
 
 export const IS_CHROMIUM = IS_CHROME || IS_EDGE || IS_OPERA;
 
