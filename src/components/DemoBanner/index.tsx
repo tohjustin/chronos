@@ -64,7 +64,12 @@ const DemoBanner = ({ className }: DemoBannerProps) => {
       break;
     // TODO: Update this when extension is available on Opera Stable
     case IS_OPERA:
-      description = <>&nbsp;This extension will be available soon on Opera.</>;
+      description = (
+        <>
+          &nbsp;This extension is under review & will be available soon on&nbsp;
+          <a href="https://addons.opera.com/en/">Opera Add-ons</a>.
+        </>
+      );
       break;
     case IS_SAFARI:
       description = <>&nbsp;This extension is not available on Safari.</>;
