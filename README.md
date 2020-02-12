@@ -31,7 +31,7 @@ Here's the list of supported browsers:
 * Brave & Chrome ([Chrome Web Store](https://chrome.google.com/webstore/detail/chronos/ihinclpfkgmmabjjmkldhegakmdhdcio))
 * Edge Chromium ([Edge Extension Store](https://microsoftedge.microsoft.com/addons/detail/lojilcmafodjobdcannaljdllkliofpo))
 * Firefox ([Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/chronos-app))
-* Opera (under addons review)
+* Opera (under Opera Add-ons review)
 
 [//]: # (TODO: How do I request a feature?)
 
