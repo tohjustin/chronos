@@ -2,7 +2,7 @@
 @import "normalize";
 @import "variables";
 
-$banner__height: $base__size * 3;
+$banner__padding: $base__size / 2 $base__size * 1.5;
 
 body {
   font-family: $font-family;
@@ -27,21 +27,29 @@ text {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
+  min-width: 412px;
 }
 
 .app__banner {
-  display: flex;
-  height: $banner__height;
+  padding: $banner__padding;
+  flex: 0 0 auto;
 }
 
 .app__container {
   display: flex;
-  height: calc(100% - #{$banner__height});
-  flex-grow: 1;
-}
-
-.app__view {
   height: 100%;
-  width: 100%;
-  overflow-y: scroll;
+  overflow: auto;
+  flex: 1 0;
+
+  .app__navbar {
+    flex: 0 0;
+  }
+
+  .app__view {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    flex: 1 0;
+  }
 }

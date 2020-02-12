@@ -38,7 +38,6 @@ $responsive-card__margin-y: $margin__card;
 
 @mixin responsive-card__width--100 {
   margin-right: 0;
-  min-width: 450px;
   width: calc(100% - #{$responsive-card__margin-x});
 }
 
