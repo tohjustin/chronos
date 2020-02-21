@@ -6,6 +6,7 @@ import {
   addDays,
   getDayOfWeek,
   getDayOfWeekCount,
+  getEndOfDay,
   getHourOfWeek,
   getStartOfDay
 } from "./dateUtils";
@@ -164,7 +165,7 @@ export function computeTotalDurationByDurationBuckets(
 ) {
   const totalDurationByBuckets: { [durationBucket: string]: number } = {};
   const minDate = getStartOfDay(effectiveTimeRange.start);
-  const maxDate = getStartOfDay(effectiveTimeRange.end);
+  const maxDate = getEndOfDay(effectiveTimeRange.end);
 
   // zero out entries
   for (let i = 0; i < maxBucketCount; i++) {
