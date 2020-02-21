@@ -168,7 +168,7 @@ yarn test:ci
 
 #### Extension
 
-Build the extension & output bundle into `/build`
+Build the extension & output bundle into `/build` & a zip file `build-<GIT_COMMIT_SHA>.zip` which can be used across all supported browsers.
 
 ```shell
 yarn build:extension
