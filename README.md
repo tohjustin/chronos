@@ -37,16 +37,31 @@ Here's the list of supported browsers:
 
 ## Getting Started
 
+### Table of Contents
+
+* [Overview](#overview)
+* [Development Workflow](#development-workflow)
+  * [Debugging the background page](#debugging-the-background-page)
+  * [Debugging the extension page](#debugging-the-extension-page)
+    * [React DevTools](#react-devtools)
+    * [Redux DevTools](#redux-devtools)
+* [Linting & Testing](#linting-&-testing)
+  * [Static Checking & Linting](#static-checking-&-linting)
+  * [Unit Testing](#unit-testing)
+* [Packaging](#packaging)
+  * [Extension](#extension)
+  * [Extension Demo (Web Application)](#extension-demo-web-application)
+
 ### Overview
 
 The application consists of two main components:
 
-* __Background Page__: Script (a.k.a `ActivityLogger`) that runs in the background & listens to browser events to record web browsing activity into the browser's client-side storage ([IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)).
-* __Extension Page__: React application that retrieves & visualizes web browsing activity data stored in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+* __Background Page__: A script (a.k.a `ActivityLogger`) that runs in the background & listens to browser tab events to record web browsing activity into the browser's client-side storage ([IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)).
+* __Extension Page__: A web application that visualizes the user's web browsing activity by using the data stored in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) by the background page.
 
 ### Development Workflow
 
-The recommended way to develop the application is to temporarily install the extension into your browser with the following steps:
+The recommended way to develop the application is to temporarily install the extension on your browser with the following steps:
 
 1. Start the application's `webpack-dev-server`:
 
@@ -63,20 +78,20 @@ The recommended way to develop the application is to temporarily install the ext
 
 3. Temporarily install the extension (select `manifest.json` found in `/build`):
 
+    > NOTE: Depending on the browser platform, you might be required to enable "Developer mode".
+
     * __Brave__/__Chrome__/__Opera__: Click on the _"Load Unpacked"_ button located at the top of the page
     * __Firefox__: Click on the _"Load Temporary Add-on..."_ button located at the top of the page
 
-    NOTE: Depending on the browser platform, you might be required to enable "Developer mode".
+4. Once installed successfully, you should see the `chronos`'s icon in your browser's navigation bar. Click on it to navigate to `chronos`'s extension page.
 
-4. Once installed successfully, you should see the `chronos`'s icon in your browser's navbar. Click on it to navigate to `chronos`'s extension page.
-
-5. You can start modifying the codebase & observe the changes right away without having to reinstall the extension. (i.e. hot-reloading should work out of the box)
+5. You can start modifying the codebase & observe the changes right away without having to reinstall the extension (i.e. hot-reloading should work out of the box).
 
 #### Debugging the background page
 
 1. Go to the browser's extension management page
 
-2. Open the DevTools panel of the extension's background page:
+2. To open the DevTools panel of the extension's background page:
 
     * __Brave__/__Chrome__/__Opera__: Click on _"index.html"_ link located on the extension's details card
     * __Firefox__: Click on _"Inspect"_ button located on the extension's details card
