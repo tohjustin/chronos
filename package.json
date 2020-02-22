@@ -1,6 +1,6 @@
 {
   "name": "chronos",
-  "description": "Browser extension for visualizing web browsing activity",
+  "description": "Browser extension for recording & visualizing web browsing activity",
   "version": "1.1.1",
   "license": "MIT",
   "homepage": "https://github.com/tohjustin/chronos",

@@ -8,7 +8,7 @@
 [![Release](https://aegisbadges.appspot.com/static?subject=release&status=v1.1.1&color=379AF7)](https://github.com/tohjustin/chronos/releases)
 [![License](https://aegisbadges.appspot.com/static?subject=license&status=MIT&color=379AF7)](https://opensource.org/licenses/MIT)
 
-Chronos is a browser extension for visualizing web browsing activity.
+Chronos is a browser extension for recording & visualizing web browsing activity.
 
 <p align="center">
   <img src="./docs/home-page.png">

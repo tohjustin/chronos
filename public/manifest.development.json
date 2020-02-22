@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "chronos",
   "short_name": "chronos",
-  "description": "Browser extension for visualizing web browsing activity",
+  "description": "Browser extension for recording & visualizing web browsing activity",
   "version": "1.1.1",
   "icons": {
     "16": "logo16.png",
