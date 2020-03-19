@@ -7,7 +7,7 @@ import { DateString, Datum } from "./types";
 const formatDateString = d3.timeFormat("%Y-%m-%d");
 
 export const parseDateString = (s: DateString): Date =>
-  new Date(`${s} 00:00:00`);
+  new Date(`${s.replace(/-/g, "/")} 00:00:00`);
 
 export const formatDate = (date: Date) => formatDateString(date) as DateString;
 
