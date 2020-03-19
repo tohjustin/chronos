@@ -64,6 +64,11 @@ const DomainPicker = ({
         statelessProps={{
           className: "domain-picker__popover"
         }}
+        emptyView={
+          <div className="domain-picker__placeholder">
+            <span>No domains found</span>
+          </div>
+        }
       >
         {selectedDomain ? (
           <IconButton disabled={isLoadingRecords} icon="caret-down" />

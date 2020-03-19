@@ -33,4 +33,14 @@
   input {
     @include input;
   }
+
+  .domain-picker__placeholder {
+    align-items: center;
+    color: $color__gray-dark;
+    display: flex;
+    font-size: $font-size__base;
+    font-weight: 600;
+    height: 100%;
+    justify-content: center;
+  }
 }
