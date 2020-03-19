@@ -34,6 +34,8 @@ $view-header__height: $view-header__min-height + $view-header__padding-y * 2;
   flex-grow: 1;
   font-size: $font-size__base;
   font-weight: 400;
+  // Add redundant height property here to allow the div's height grow properly in Safari
+  height: 1px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: $view-body__padding;
