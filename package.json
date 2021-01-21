@@ -41,7 +41,7 @@
     "last 1 opera version"
   ],
   "dependencies": {
-    "@reduxjs/toolkit": "1.2.5",
+    "@reduxjs/toolkit": "1.5.0",
     "classnames": "2.2.6",
     "connected-react-router": "6.8.0",
     "d3": "5.15.0",
