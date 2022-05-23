@@ -46,7 +46,7 @@
     "connected-react-router": "6.8.0",
     "d3": "5.15.0",
     "d3-interpolate-path": "2.1.2",
-    "dexie": "2.0.4",
+    "dexie": "3.2.2",
     "evergreen-ui": "4.23.3",
     "file-saver": "2.0.2",
     "history": "4.10.1",
