@@ -50,7 +50,7 @@
     "evergreen-ui": "4.23.3",
     "file-saver": "2.0.2",
     "history": "4.10.1",
-    "lodash": "4.17.15",
+    "lodash": "4.17.17",
     "luxon": "1.22.0",
     "react": "16.13.0",
     "react-countup": "4.3.3",
