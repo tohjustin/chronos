@@ -47,7 +47,7 @@
     "d3": "5.15.0",
     "d3-interpolate-path": "2.1.2",
     "dexie": "2.0.4",
-    "evergreen-ui": "4.23.3",
+    "evergreen-ui": "7.0.0",
     "file-saver": "2.0.2",
     "history": "4.10.1",
     "lodash": "4.17.15",
